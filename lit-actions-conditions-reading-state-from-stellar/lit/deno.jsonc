@@ -1,0 +1,6 @@
+{
+  "tasks": {
+    "bundle": "deno run --allow-read --allow-write --allow-env --allow-net --allow-run esbuild.js",
+    "test": "deno run --allow-net dist/litAction_simulate.js"
+  }
+}
