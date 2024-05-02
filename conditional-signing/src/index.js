@@ -1,4 +1,4 @@
-import { LitNodeClientNodeJs } from "@lit-protocol/lit-node-client";
+import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import { LitAbility, LitActionResource } from "@lit-protocol/auth-helpers";
 import { disconnectWeb3 } from "@lit-protocol/auth-browser";
 import * as ethers from "ethers";
@@ -42,6 +42,7 @@ async function buttonClick() {
           },
         },
       ],
+      sessionSigs,
       chain: "ethereum",
     },
   });
@@ -49,7 +50,7 @@ async function buttonClick() {
 }
 
 async function getLitNodeClient() {
-  const litNodeClient = new LitNodeClientNodeJs({
+  const litNodeClient = new LitNodeClient({
     litNetwork: "cayenne",
   });
 

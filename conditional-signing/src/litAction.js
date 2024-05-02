@@ -1,7 +1,7 @@
 export const litActionCode = `
 const go = async () => {
   // test an access control condition
-  const testResult = await Lit.Actions.checkConditions({conditions, authSig, chain})
+  const testResult = await Lit.Actions.checkConditions({conditions, sessionSigs, chain})
 
   console.log('testResult', testResult)
 
@@ -19,8 +19,6 @@ const go = async () => {
   // the signature share will be automatically returned in the HTTP response from the node
   const sigShare = await LitActions.signEcdsa({ toSign, publicKey: "0x02e5896d70c1bc4b4844458748fe0f936c7919d7968341e391fb6d82c258192e64", sigName: "sig1" });
 };
-
-
 
 go();
 `;
