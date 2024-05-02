@@ -50,7 +50,7 @@ async function buttonClick() {
 
 async function getLitNodeClient() {
   const litNodeClient = new LitNodeClientNodeJs({
-    litNetwork: "habanero",
+    litNetwork: "cayenne",
   });
 
   console.log("Connecting litNodeClient to network...");
