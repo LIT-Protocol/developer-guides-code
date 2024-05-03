@@ -11,8 +11,7 @@
     "@lit-protocol/auth-browser": "^6.0.0-alpha.1",
     "@lit-protocol/auth-helpers": "^6.0.0-alpha.1",
     "@lit-protocol/lit-node-client": "^6.0.0-alpha.1",
-    "ethers": "5.7.2",
-    "siwe": "^2.3.2"
+    "ethers": "5.7.2"
   },
   "devDependencies": {
     "parcel-bundler": "^1.12.5",
