@@ -31,20 +31,12 @@ async function buttonClick() {
     console.log("Connected account:", await ethersSigner.getAddress());
 
     const litNodeClient = await getLitNodeClient();
-    // const pkp = await mintPkp(ethersSigner);
-    // console.log("Minted PKP Public Key", pkp.publicKey);
 
     const sessionSigs = await getSessionSigs(litNodeClient, ethersSigner);
     console.log("Got Session Signatures!");
 
     const authSig = await genAuthSig(litNodeClient, ethersSigner);
-    // const authSig = await checkAndSignAuthMessage({
-    //   chain: "ethereum",
-    //   nonce: await litNodeClient.getLatestBlockhash(),
-    //   statement: "Change me to whatever you like",
-    //   expiration: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(), // 24 hours
-    // });
-    console.log("Got Auth Sig for conditional check!", authSig);
+    console.log("Got Auth Sig for Lit Action conditional check!", authSig);
 
     const litActionSignatures = await litNodeClient.executeJs({
       sessionSigs,
@@ -69,9 +61,7 @@ async function buttonClick() {
         dataToSign: ethers.utils.arrayify(
           ethers.utils.keccak256([1, 2, 3, 4, 5])
         ),
-        // publicKey: pkp.publicKey,
-        publicKey:
-          "041e7a220a697f47491525798337bfaac6073c6094fdde9187d749d28d947f59fe73fbae024fc0b87d2a61068ea8087e94ecc843820752295307537f9d06432876",
+        publicKey: await getPkpPublicKey(ethersSigner),
       },
     });
     console.log("litActionSignatures: ", litActionSignatures);
@@ -94,7 +84,17 @@ async function getLitNodeClient() {
   return litNodeClient;
 }
 
+async function getPkpPublicKey(ethersSigner) {
+  if (process.env.PKP_PUBLIC_KEY !== undefined)
+    return process.env.PKP_PUBLIC_KEY;
+
+  const pkp = await mintPkp(ethersSigner);
+  console.log("Minted PKP!", pkp);
+  return pkp.publicKey;
+}
+
 async function mintPkp(ethersSigner) {
+  console.log("Minting new PKP...");
   const litContracts = new LitContracts({
     signer: ethersSigner,
     network: LitNetwork.Cayenne,

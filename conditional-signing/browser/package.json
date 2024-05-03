@@ -8,6 +8,7 @@
     "start": "parcel ./src/index.html"
   },
   "dependencies": {
+    "@dotenvx/dotenvx": "^0.37.1",
     "@lit-protocol/auth-browser": "^6.0.0-alpha.2",
     "@lit-protocol/auth-helpers": "^6.0.0-alpha.2",
     "@lit-protocol/constants": "^6.0.0-alpha.2",
