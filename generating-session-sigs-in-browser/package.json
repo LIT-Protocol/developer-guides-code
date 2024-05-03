@@ -8,13 +8,13 @@
     "start": "parcel ./src/index.html"
   },
   "dependencies": {
-    "@lit-protocol/auth-browser": "^5.0.0",
-    "@lit-protocol/auth-helpers": "^5.0.0",
-    "@lit-protocol/lit-node-client": "^6.0.0-alpha.1",
-    "ethers": "5.7.2",
-    "siwe": "^2.3.2"
+    "@lit-protocol/auth-browser": "^6.0.0-alpha.2",
+    "@lit-protocol/auth-helpers": "^6.0.0-alpha.2",
+    "@lit-protocol/lit-node-client": "^6.0.0-alpha.2",
+    "ethers": "5.7.2"
   },
   "devDependencies": {
-    "parcel-bundler": "^1.12.5"
+    "parcel-bundler": "^1.12.5",
+    "tslib": "^2.6.2"
   }
 }
