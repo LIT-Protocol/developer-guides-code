@@ -1,4 +1,4 @@
-import { LitNodeClientNodeJs } from "@lit-protocol/lit-node-client";
+import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import {
   createSiweMessageWithRecaps,
   generateAuthSig,
@@ -28,7 +28,7 @@ async function buttonClick() {
 }
 
 async function getLitNodeClient() {
-  const litNodeClient = new LitNodeClientNodeJs({
+  const litNodeClient = new LitNodeClient({
     litNetwork: "habanero",
   });
 
