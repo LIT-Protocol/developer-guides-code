@@ -8,10 +8,12 @@ import {
   LitActionResource,
   LitPKPResource,
 } from "@lit-protocol/auth-helpers";
-import { disconnectWeb3 } from "@lit-protocol/auth-browser";
+import {
+  checkAndSignAuthMessage,
+  disconnectWeb3,
+} from "@lit-protocol/auth-browser";
 import * as ethers from "ethers";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
-import { SiweMessage } from "siwe";
 
 import { litActionCode } from "./litAction";
 
@@ -36,6 +38,12 @@ async function buttonClick() {
     console.log("Got Session Signatures!");
 
     const authSig = await genAuthSig(litNodeClient, ethersSigner);
+    // const authSig = await checkAndSignAuthMessage({
+    //   chain: "ethereum",
+    //   nonce: await litNodeClient.getLatestBlockhash(),
+    //   statement: "Change me to whatever you like",
+    //   expiration: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(), // 24 hours
+    // });
     console.log("Got Auth Sig for conditional check!", authSig);
 
     const litActionSignatures = await litNodeClient.executeJs({
@@ -49,10 +57,10 @@ async function buttonClick() {
             standardContractType: "",
             chain: "ethereum",
             method: "eth_getBalance",
-            parameters: [":userAddress"],
+            parameters: [":userAddress", "latest"],
             returnValueTest: {
-              comparator: "=",
-              value: "0xA89543a7145C68E52a4D584f1ceb123605131211",
+              comparator: ">=",
+              value: "0",
             },
           },
         ],
@@ -122,8 +130,6 @@ async function getSessionSigs(litNodeClient, ethersSigner) {
 
 function getAuthNeededCallback(litNodeClient, ethersSigner) {
   return async ({ resourceAbilityRequests, expiration, uri }) => {
-    console.log("resources", resourceAbilityRequests);
-
     const toSign = await createSiweMessageWithRecaps({
       uri,
       expiration,
@@ -141,19 +147,16 @@ function getAuthNeededCallback(litNodeClient, ethersSigner) {
 }
 
 async function genAuthSig(litNodeClient, ethersSigner) {
-  const siweMessage = new SiweMessage({
-    domain: "http://localhost", // change to your domain ex: example.app.com
-    address: await ethersSigner.getAddress(),
-    statement: "Sign a session key to use with Lit Protocol", // configure to what ever you would like
+  const toSign = await createSiweMessageWithRecaps({
     uri: "http://localhost",
-    version: "1",
-    chainId: "1",
-    expiration: new Date(Date.now() + 1000 * 60 * 60 * 48).toISOString(), // 48 hours,
+    expiration: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(), // 24 hours
+    walletAddress: await ethersSigner.getAddress(),
     nonce: await litNodeClient.getLatestBlockhash(),
+    litNodeClient: litNodeClient,
   });
 
   return await generateAuthSig({
     signer: ethersSigner,
-    toSign: siweMessage.prepareMessage(),
+    toSign,
   });
 }
