@@ -1508,7 +1508,7 @@
     tslib "1.14.1"
     util "0.12.5"
 
-"@lit-protocol/constants@6.0.0-alpha.2":
+"@lit-protocol/constants@6.0.0-alpha.2", "@lit-protocol/constants@^6.0.0-alpha.2":
   version "6.0.0-alpha.2"
   resolved "https://registry.yarnpkg.com/@lit-protocol/constants/-/constants-6.0.0-alpha.2.tgz#ba64e405e6eddb9c8cdd20e7a38b95b7c6377321"
   integrity sha512-QutSTtxbDp9eOb+RYb8rm7PCoyGoS15qsS75Up7ZABh4U02aO9bOFpTFFI83ibVnxdKWbLHFTszp4gUsrEHHQA==
@@ -1521,7 +1521,7 @@
     siwe "^2.0.5"
     tslib "1.14.1"
 
-"@lit-protocol/contracts-sdk@6.0.0-alpha.2":
+"@lit-protocol/contracts-sdk@6.0.0-alpha.2", "@lit-protocol/contracts-sdk@^6.0.0-alpha.2":
   version "6.0.0-alpha.2"
   resolved "https://registry.yarnpkg.com/@lit-protocol/contracts-sdk/-/contracts-sdk-6.0.0-alpha.2.tgz#4bbc6b07bc0a121bc58f0f179bf0c652a72abc97"
   integrity sha512-Iz+SoqxkHpwmLkIBPmtl7zVnh7Y20IgMXLdn3xF9roEdpk9kDB73srPn2r5vLHyQ8J4JNU5JVCnh9c5vlwjKqg==

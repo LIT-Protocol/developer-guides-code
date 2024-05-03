@@ -1,6 +1,14 @@
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
-import { LitAbility, LitActionResource } from "@lit-protocol/auth-helpers";
+import { LitNetwork } from "@lit-protocol/constants";
+import {
+  createSiweMessageWithRecaps,
+  generateAuthSig,
+  LitAbility,
+  LitActionResource,
+  LitPKPResource,
+} from "@lit-protocol/auth-helpers";
 import { disconnectWeb3 } from "@lit-protocol/auth-browser";
+import { LitContracts } from "@lit-protocol/contracts-sdk";
 import * as ethers from "ethers";
 
 import { litActionCode } from "./litAction";
@@ -20,6 +28,10 @@ async function buttonClick() {
 
     const litNodeClient = await getLitNodeClient();
 
+    // Enable this if you don't already have a PKP
+    // const pkp = await mintPkp(ethersSigner);
+    // console.log("Minted PKP Public Key", pkp.publicKey);
+
     const sessionSigs = await getSessionSigs(litNodeClient, ethersSigner);
     console.log("Got Session Signatures!");
 
@@ -34,8 +46,9 @@ async function buttonClick() {
       sessionSigs,
       jsParams: {
         toSign: message,
+        // publicKey: pkp.publicKey,
         publicKey:
-          "0x04f444e7d05b5a7c0eeec713eb66018837e7ea3913da3fc1f1203142a4b67ad48b8adb5ce66045a400f2fc5d6fde6cff1719568dbeeb6466d6782ded45e5fd810a",
+          "041e7a220a697f47491525798337bfaac6073c6094fdde9187d749d28d947f59fe73fbae024fc0b87d2a61068ea8087e94ecc843820752295307537f9d06432876",
         sigName: "sig",
       },
     });
@@ -49,7 +62,7 @@ async function buttonClick() {
 
 async function getLitNodeClient() {
   const litNodeClient = new LitNodeClient({
-    litNetwork: "cayenne",
+    litNetwork: LitNetwork.Cayenne,
   });
 
   console.log("Connecting litNodeClient to network...");
@@ -59,10 +72,19 @@ async function getLitNodeClient() {
   return litNodeClient;
 }
 
+async function mintPkp(ethersSigner) {
+  const litContracts = new LitContracts({
+    signer: ethersSigner,
+    network: LitNetwork.Cayenne,
+  });
+
+  await litContracts.connect();
+
+  return (await litContracts.pkpNftContractUtils.write.mint()).pkp;
+}
+
 function getAuthNeededCallback(litNodeClient, ethersSigner) {
   return async ({ resourceAbilityRequests, expiration, uri }) => {
-    console.log("resources", resourceAbilityRequests);
-
     const toSign = await createSiweMessageWithRecaps({
       uri,
       expiration,
@@ -90,6 +112,10 @@ async function getSessionSigs(litNodeClient, ethersSigner) {
       {
         resource: new LitActionResource("*"),
         ability: LitAbility.LitActionExecution,
+      },
+      {
+        resource: new LitPKPResource("*"),
+        ability: LitAbility.PKPSigning,
       },
     ],
     authNeededCallback: getAuthNeededCallback(litNodeClient, ethersSigner),
