@@ -1,0 +1,61 @@
+{
+  "name": "user-wallets",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@lit-protocol/auth-helpers": "^5.0.0",
+    "@lit-protocol/constants": "^5.0.0",
+    "@lit-protocol/contracts-sdk": "^5.0.0",
+    "@lit-protocol/encryption": "^5.0.0",
+    "@lit-protocol/lit-auth-client": "^5.0.0",
+    "@lit-protocol/lit-node-client": "^5.0.0",
+    "@lit-protocol/pkp-ethers": "^5.0.0",
+    "@simplewebauthn/browser": "^10.0.0",
+    "@testing-library/jest-dom": "^6.4.5",
+    "@testing-library/react": "^15.0.6",
+    "@testing-library/user-event": "^14.5.2",
+    "assert": "^2.1.0",
+    "browserify-zlib": "^0.2.0",
+    "buffer": "^6.0.3",
+    "crypto": "^1.0.1",
+    "crypto-browserify": "^3.12.0",
+    "http": "^0.0.1-security",
+    "https": "^1.0.0",
+    "https-browserify": "^1.0.0",
+    "jszip": "^3.10.1",
+    "react": "^18.3.1",
+    "react-app-rewired": "^2.2.1",
+    "react-dom": "^18.3.1",
+    "react-scripts": "5.0.1",
+    "stream": "^0.0.2",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
+    "url": "^0.11.3",
+    "web-vitals": "^3.5.2",
+    "zlib": "^1.0.5"
+  },
+  "scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
