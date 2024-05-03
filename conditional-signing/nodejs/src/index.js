@@ -3,6 +3,8 @@ import { LitAbility, LitActionResource } from "@lit-protocol/auth-helpers";
 import { Wallet } from "ethers";
 import { SiweMessage } from "siwe";
 
+import { litActionCode } from "./litAction.js";
+
 (async () => {
   let litNodeClient;
 
@@ -11,7 +13,31 @@ import { SiweMessage } from "siwe";
     litNodeClient = await getLitNodeClient();
 
     const sessionSigs = await getSessionSigs(litNodeClient, wallet);
-    console.log("Got Session Signatures!", sessionSigs);
+    // console.log("Got Session Signatures!", sessionSigs);
+
+    const litActionSignatures = await litNodeClient.executeJs({
+      code: litActionCode,
+      sessionSigs,
+      jsParams: {
+        conditions: [
+          {
+            conditionType: "evmBasic",
+            contractAddress: "",
+            standardContractType: "",
+            chain: "ethereum",
+            method: "eth_getBalance",
+            parameters: [":userAddress", "latest"],
+            returnValueTest: {
+              comparator: ">=",
+              value: "1",
+            },
+          },
+        ],
+        sessionSigs,
+        chain: "ethereum",
+      },
+    });
+    console.log("litActionSignatures", litActionSignatures);
   } catch (error) {
     console.error(error);
   } finally {
