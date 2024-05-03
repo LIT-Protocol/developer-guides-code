@@ -52,7 +52,7 @@ async function buttonClick() {
             parameters: [":userAddress", "latest"],
             returnValueTest: {
               comparator: ">=",
-              value: "0",
+              value: "1",
             },
           },
         ],
