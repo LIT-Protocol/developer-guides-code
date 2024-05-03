@@ -8,9 +8,11 @@
     "start": "parcel ./src/index.html"
   },
   "dependencies": {
-    "@lit-protocol/auth-browser": "^6.0.0-alpha.1",
-    "@lit-protocol/auth-helpers": "^6.0.0-alpha.1",
-    "@lit-protocol/lit-node-client": "^6.0.0-alpha.1",
+    "@lit-protocol/auth-browser": "^6.0.0-alpha.2",
+    "@lit-protocol/auth-helpers": "^6.0.0-alpha.2",
+    "@lit-protocol/constants": "^6.0.0-alpha.2",
+    "@lit-protocol/contracts-sdk": "^6.0.0-alpha.2",
+    "@lit-protocol/lit-node-client": "^6.0.0-alpha.2",
     "ethers": "5.7.2"
   },
   "devDependencies": {
