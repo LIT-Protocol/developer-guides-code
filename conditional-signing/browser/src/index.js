@@ -1,8 +1,13 @@
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
-import { LitAbility, LitActionResource } from "@lit-protocol/auth-helpers";
+import {
+  createSiweMessageWithRecaps,
+  generateAuthSig,
+  LitAbility,
+  LitActionResource,
+  LitPKPResource,
+} from "@lit-protocol/auth-helpers";
 import { disconnectWeb3 } from "@lit-protocol/auth-browser";
 import * as ethers from "ethers";
-import { SiweMessage } from "siwe";
 
 import { litActionCode } from "./litAction";
 
@@ -11,42 +16,52 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function buttonClick() {
-  console.log("Clicked");
-  disconnectWeb3();
+  try {
+    console.log("Clicked");
 
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
-  await provider.send("eth_requestAccounts", []);
-  const ethersSigner = provider.getSigner();
-  console.log("Connected account:", await ethersSigner.getAddress());
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    await provider.send("eth_requestAccounts", []);
+    const ethersSigner = provider.getSigner();
+    console.log("Connected account:", await ethersSigner.getAddress());
 
-  const litNodeClient = await getLitNodeClient();
+    const litNodeClient = await getLitNodeClient();
 
-  const sessionSigs = await getSessionSigs(litNodeClient, ethersSigner);
-  console.log("Got Session Signatures!");
+    const sessionSigs = await getSessionSigs(litNodeClient, ethersSigner);
+    console.log("Got Session Signatures!");
 
-  const litActionSignatures = await litNodeClient.executeJs({
-    code: litActionCode,
-    sessionSigs,
-    jsParams: {
-      conditions: [
-        {
-          conditionType: "evmBasic",
-          contractAddress: "",
-          standardContractType: "",
-          chain: "ethereum",
-          method: "eth_getBalance",
-          parameters: [":userAddress", "latest"],
-          returnValueTest: {
-            comparator: ">=",
-            value: "1",
-          },
-        },
-      ],
+    const litActionSignatures = await litNodeClient.executeJs({
       sessionSigs,
-      chain: "ethereum",
-    },
-  });
-  console.log("litActionSignatures: ", litActionSignatures);
+      code: litActionCode,
+      jsParams: {
+        dataToSign: "Hello World",
+        publicKey:
+          "0x04f444e7d05b5a7c0eeec713eb66018837e7ea3913da3fc1f1203142a4b67ad48b8adb5ce66045a400f2fc5d6fde6cff1719568dbeeb6466d6782ded45e5fd810a",
+      },
+      // jsParams: {
+      //   conditions: [
+      //     {
+      //       conditionType: "evmBasic",
+      //       contractAddress: "",
+      //       standardContractType: "",
+      //       chain: "ethereum",
+      //       method: "eth_getBalance",
+      //       parameters: [":userAddress", "latest"],
+      //       returnValueTest: {
+      //         comparator: ">=",
+      //         value: "1",
+      //       },
+      //     },
+      //   ],
+      // sessionSigs,
+      // chain: "ethereum",
+      // },
+    });
+    console.log("litActionSignatures: ", litActionSignatures);
+  } catch (error) {
+    console.error(error);
+  } finally {
+    // disconnectWeb3();
+  }
 }
 
 async function getLitNodeClient() {
@@ -62,33 +77,22 @@ async function getLitNodeClient() {
 }
 
 function getAuthNeededCallback(litNodeClient, ethersSigner) {
-  return async ({ resources, expiration, uri }) => {
-    const nonce = await litNodeClient.getLatestBlockhash();
-    const address = await ethersSigner.getAddress();
+  return async ({ resourceAbilityRequests, expiration, uri }) => {
+    console.log("resources", resourceAbilityRequests);
 
-    const siweMessage = new SiweMessage({
-      domain: "localhost", // change to your domain ex: example.app.com
-      address,
-      statement: "Sign a session key to use with Lit Protocol", // configure to what ever you would like
+    const toSign = await createSiweMessageWithRecaps({
       uri,
-      version: "1",
-      chainId: "1",
-      expirationTime: expiration,
-      resources,
-      nonce,
+      expiration,
+      resources: resourceAbilityRequests,
+      walletAddress: await ethersSigner.getAddress(),
+      nonce: await litNodeClient.getLatestBlockhash(),
+      litNodeClient,
     });
 
-    const messageToSign = siweMessage.prepareMessage();
-    const signature = await ethersSigner.signMessage(messageToSign);
-
-    console.log(signature);
-
-    const authSig = {
-      sig: signature,
-      derivedVia: "web3.eth.personal.sign",
-      signedMessage: messageToSign,
-      address,
-    };
+    const authSig = await generateAuthSig({
+      signer: ethersSigner,
+      toSign,
+    });
 
     return authSig;
   };
@@ -98,24 +102,24 @@ async function getSessionSigs(litNodeClient, ethersSigner) {
   console.log("Getting Session Signatures...");
   return litNodeClient.getSessionSigs({
     chain: "ethereum",
-    expiration: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(), // 24 hours
+    expiration: new Date(Date.now() + 1000 * 60 * 60 * 48).toISOString(), // 48 hours
     resourceAbilityRequests: [
+      {
+        resource: new LitPKPResource("*"),
+        ability: LitAbility.PKPSigning,
+      },
       {
         resource: new LitActionResource("*"),
         ability: LitAbility.LitActionExecution,
       },
-      {
-        resource: new LitActionResource("*"),
-        ability: LitAbility.AccessControlConditionSigning,
-      },
-      {
-        resource: new LitActionResource("*"),
-        ability: LitAbility.AccessControlConditionDecryption,
-      },
-      {
-        resource: new LitActionResource("*"),
-        ability: LitAbility.PKPSigning,
-      },
+      // {
+      //   resource: new LitActionResource("*"),
+      //   ability: LitAbility.AccessControlConditionSigning,
+      // },
+      // {
+      //   resource: new LitActionResource("*"),
+      //   ability: LitAbility.AccessControlConditionDecryption,
+      // },
     ],
     authNeededCallback: getAuthNeededCallback(litNodeClient, ethersSigner),
   });
