@@ -159,7 +159,7 @@ export function EncryptDecrypt() {
       LitJsSdk.disconnectWeb3();
 
       const client = new LitJsSdk.LitNodeClient({
-          litNetwork: "cayenne", 
+          litNetwork: "habanero", 
           debug: true,
       });
       
@@ -172,7 +172,6 @@ export function EncryptDecrypt() {
             chain,
             method: "eth_getBalance",
             parameters: [":userAddress", "latest"],
-
             returnValueTest: {
               comparator: ">=",
               value: "000000000000", // 0.000001 ETH
@@ -197,7 +196,7 @@ export function EncryptDecrypt() {
     LitJsSdk.disconnectWeb3();
 
     const client = new LitJsSdk.LitNodeClient({
-        litNetwork: "cayenne", 
+        litNetwork: "habanero", 
         debug: true,
     });
     
@@ -210,7 +209,6 @@ export function EncryptDecrypt() {
           chain,
           method: "eth_getBalance",
           parameters: [":userAddress", "latest"],
-
           returnValueTest: {
             comparator: ">=",
             value: "000000000000", // 0.000001 ETH
