@@ -10,10 +10,11 @@
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^0.37.1",
-    "@lit-protocol/auth-helpers": "^6.0.0-alpha.1",
-    "@lit-protocol/lit-node-client-nodejs": "^6.0.0-alpha.1",
-    "ethers": "5.7.2",
-    "siwe": "^2.3.2"
+    "@lit-protocol/auth-helpers": "^6.0.0-alpha.4",
+    "@lit-protocol/constants": "^6.0.0-alpha.4",
+    "@lit-protocol/contracts-sdk": "^6.0.0-alpha.4",
+    "@lit-protocol/lit-node-client-nodejs": "^6.0.0-alpha.4",
+    "ethers": "5.7.2"
   },
   "devDependencies": {
     "tslib": "^2.6.2"
