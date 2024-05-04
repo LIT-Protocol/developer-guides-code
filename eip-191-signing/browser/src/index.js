@@ -43,6 +43,8 @@ async function buttonClick() {
       },
     });
     console.log("litActionSignatures: ", litActionSignatures);
+
+    verifySignature(litActionSignatures.signatures.sig);
   } catch (error) {
     console.error(error);
   } finally {
@@ -121,4 +123,20 @@ function getAuthNeededCallback(litNodeClient, ethersSigner) {
       toSign,
     });
   };
+}
+
+function verifySignature(signature) {
+  console.log("Verifying signature...");
+  const dataSigned = `0x${signature.dataSigned}`;
+  const encodedSig = ethersUtils.joinSignature({
+    v: signature.recid,
+    r: `0x${signature.r}`,
+    s: `0x${signature.s}`,
+  });
+
+  const recoveredPubkey = ethersUtils.recoverPublicKey(dataSigned, encodedSig);
+  console.log("Recovered uncompressed public key: ", recoveredPubkey);
+
+  const recoveredAddress = ethersUtils.recoverAddress(dataSigned, encodedSig);
+  console.log("Recovered address from signature: ", recoveredAddress);
 }
