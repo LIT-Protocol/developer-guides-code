@@ -44,7 +44,7 @@ After clicking the button a couple things will happen:
    Getting Session Signatures...
    ```
 3. You will then be prompted by your wallet to sign a message, this message will be used to authenticate you with the Lit network
-4. After signing that message, you will be prompted by your wallet to sign another message. This message is the SIWE message the Lit Action will derive an address from to use for the conditional check of whether or not to sign a message with your PKP. the Lit Action will **only** sign a message with your PKP if the derived address as 1 or more Wei on Ethereum Mainnet
+4. After signing that message, you will be prompted by your wallet to sign another message. This message is the SIWE message the Lit Action will derive an address from to use for the conditional check of whether or not to sign a message with your PKP. The Lit Action will **only** sign a message with your PKP if the derived address as 1 or more Wei on Ethereum Mainnet
    - After signing this message, you should see in the JavaScript console something similar to:
      ```json
      Got Auth Sig for Lit Action conditional check!

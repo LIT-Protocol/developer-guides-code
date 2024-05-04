@@ -82,7 +82,10 @@ async function getLitNodeClient() {
 }
 
 async function getPkpPublicKey(ethersSigner) {
-  if (process.env.PKP_PUBLIC_KEY !== undefined)
+  if (
+    process.env.PKP_PUBLIC_KEY !== undefined &&
+    process.env.PKP_PUBLIC_KEY !== ""
+  )
     return process.env.PKP_PUBLIC_KEY;
 
   const pkp = await mintPkp(ethersSigner);
