@@ -1,4 +1,4 @@
-import { LitNodeClient } from "@lit-protocol/lit-node-client";
+import { LitNodeClientNodeJs } from "@lit-protocol/lit-node-client-nodejs";
 import { LitNetwork } from "@lit-protocol/constants";
 import {
   createSiweMessageWithRecaps,
@@ -8,27 +8,22 @@ import {
   LitPKPResource,
 } from "@lit-protocol/auth-helpers";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
-import { disconnectWeb3 } from "@lit-protocol/auth-browser";
-import * as ethers from "ethers";
+import {
+  providers as ethersProviders,
+  utils as ethersUtils,
+  Wallet,
+} from "ethers";
 
-import { litActionCode } from "./litAction";
+import { litActionCode } from "./litAction.js";
 
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("myButton").addEventListener("click", buttonClick);
-});
+(async () => {
+  let litNodeClient;
 
-async function buttonClick() {
   try {
-    console.log("Clicked");
+    const wallet = getWallet();
+    litNodeClient = await getLitNodeClient();
 
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    await provider.send("eth_requestAccounts", []);
-    const ethersSigner = provider.getSigner();
-    console.log("Connected account:", await ethersSigner.getAddress());
-
-    const litNodeClient = await getLitNodeClient();
-
-    const sessionSigs = await getSessionSigs(litNodeClient, ethersSigner);
+    const sessionSigs = await getSessionSigs(litNodeClient, wallet);
     console.log("Got Session Signatures!");
 
     const message = new Uint8Array(
@@ -50,20 +45,28 @@ async function buttonClick() {
   } catch (error) {
     console.error(error);
   } finally {
-    disconnectWeb3();
+    litNodeClient.disconnect();
   }
-}
+})();
 
-async function getLitNodeClient() {
-  const litNodeClient = new LitNodeClient({
-    litNetwork: LitNetwork.Cayenne,
-  });
+function getWallet(privateKey) {
+  if (privateKey !== undefined)
+    return new Wallet(
+      privateKey,
+      new ethersProviders.JsonRpcProvider(
+        "https://chain-rpc.litprotocol.com/http"
+      )
+    );
 
-  console.log("Connecting litNodeClient to network...");
-  await litNodeClient.connect();
+  if (process.env.PRIVATE_KEY === undefined)
+    throw new Error("Please provide the env: PRIVATE_KEY");
 
-  console.log("litNodeClient connected!");
-  return litNodeClient;
+  return new Wallet(
+    process.env.PRIVATE_KEY,
+    new ethersProviders.JsonRpcProvider(
+      "https://chain-rpc.litprotocol.com/http"
+    )
+  );
 }
 
 async function getPkpPublicKey(ethersSigner) {
@@ -90,6 +93,18 @@ async function mintPkp(ethersSigner) {
   return (await litContracts.pkpNftContractUtils.write.mint()).pkp;
 }
 
+async function getLitNodeClient() {
+  const litNodeClient = new LitNodeClientNodeJs({
+    litNetwork: LitNetwork.Cayenne,
+  });
+
+  console.log("Connecting litNodeClient to network...");
+  await litNodeClient.connect();
+
+  console.log("litNodeClient connected!");
+  return litNodeClient;
+}
+
 async function getSessionSigs(litNodeClient, ethersSigner) {
   console.log("Getting Session Signatures...");
   return litNodeClient.getSessionSigs({
@@ -97,12 +112,12 @@ async function getSessionSigs(litNodeClient, ethersSigner) {
     expiration: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(), // 24 hours
     resourceAbilityRequests: [
       {
-        resource: new LitActionResource("*"),
-        ability: LitAbility.LitActionExecution,
-      },
-      {
         resource: new LitPKPResource("*"),
         ability: LitAbility.PKPSigning,
+      },
+      {
+        resource: new LitActionResource("*"),
+        ability: LitAbility.LitActionExecution,
       },
     ],
     authNeededCallback: getAuthNeededCallback(litNodeClient, ethersSigner),
@@ -120,11 +135,9 @@ function getAuthNeededCallback(litNodeClient, ethersSigner) {
       litNodeClient,
     });
 
-    const authSig = await generateAuthSig({
+    return await generateAuthSig({
       signer: ethersSigner,
       toSign,
     });
-
-    return authSig;
   };
 }

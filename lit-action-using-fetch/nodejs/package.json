@@ -1,0 +1,22 @@
+{
+  "name": "lit-action-using-fetch-nodejs",
+  "version": "0.1.0",
+  "description": "Example of executing a Lit Action that makes a API request using Fetch",
+  "main": "src/index.js",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "start": "npx @dotenvx/dotenvx run -- node src/index.js"
+  },
+  "dependencies": {
+    "@dotenvx/dotenvx": "^0.37.1",
+    "@lit-protocol/auth-helpers": "^6.0.0-alpha.4",
+    "@lit-protocol/constants": "^6.0.0-alpha.4",
+    "@lit-protocol/contracts-sdk": "^6.0.0-alpha.4",
+    "@lit-protocol/lit-node-client-nodejs": "^6.0.0-alpha.4",
+    "ethers": "5.7.2"
+  },
+  "devDependencies": {
+    "tslib": "^2.6.2"
+  }
+}
