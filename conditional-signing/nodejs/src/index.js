@@ -40,7 +40,7 @@ import { litActionCode } from "./litAction.js";
             parameters: [":userAddress", "latest"],
             returnValueTest: {
               comparator: ">=",
-              value: "0",
+              value: "1",
             },
           },
         ],

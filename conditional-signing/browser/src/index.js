@@ -8,12 +8,9 @@ import {
   LitActionResource,
   LitPKPResource,
 } from "@lit-protocol/auth-helpers";
-import {
-  checkAndSignAuthMessage,
-  disconnectWeb3,
-} from "@lit-protocol/auth-browser";
-import * as ethers from "ethers";
+import { disconnectWeb3 } from "@lit-protocol/auth-browser";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
+import * as ethers from "ethers";
 
 import { litActionCode } from "./litAction";
 
@@ -109,7 +106,7 @@ async function getSessionSigs(litNodeClient, ethersSigner) {
   console.log("Getting Session Signatures...");
   return litNodeClient.getSessionSigs({
     chain: "ethereum",
-    expiration: new Date(Date.now() + 1000 * 60 * 60 * 48).toISOString(), // 48 hours
+    expiration: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(), // 24 hours
     resourceAbilityRequests: [
       {
         resource: new LitPKPResource("*"),
