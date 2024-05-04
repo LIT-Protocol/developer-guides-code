@@ -84,10 +84,13 @@ After clicking the button a couple things will happen:
      "logs": ""
    }
    ```
-   If the address does not have 1 or more Wei, you should see the error:
+   If the address does not have 1 or more Wei, you should see an empty signature:
    ```json
+   litActionSignatures:
    {
-     "errorCode": "unknown_error",
-     "message": "There was an error getting the signing shares from the nodes"
+     "success": true,
+     "signedData": {},
+     "decryptedData": {},
+     "claimData": {}
    }
    ```
