@@ -159,7 +159,7 @@ export function EncryptDecrypt() {
       LitJsSdk.disconnectWeb3();
 
       const client = new LitJsSdk.LitNodeClient({
-          litNetwork: "habanero", 
+          litNetwork: "cayenne", 
           debug: true,
       });
       
@@ -196,7 +196,7 @@ export function EncryptDecrypt() {
     LitJsSdk.disconnectWeb3();
 
     const client = new LitJsSdk.LitNodeClient({
-        litNetwork: "habanero", 
+        litNetwork: "cayenne", 
         debug: true,
     });
     
