@@ -4,6 +4,8 @@ export const litActionCode = `
   const resp = await fetch(url).then((response) => response.json());
   const temp = resp.properties.periods[0].temperature;
 
+  console.log(temp);
+
   // only sign if the temperature is above 60. If it's below 60, exit.
   if (temp < 60) {
     return;

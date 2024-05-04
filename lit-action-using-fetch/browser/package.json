@@ -1,22 +1,22 @@
 {
-  "name": "generating-session-sigs-in-browser",
+  "name": "lit-action-using-fetch-browser",
   "version": "0.1.0",
-  "description": "Example of generating a Lit Session Signature within the browser",
+  "description": "Example of executing a Lit Action that makes a API request using Fetch",
   "source": "src/index.html",
   "license": "MIT",
   "scripts": {
     "start": "parcel ./src/index.html"
   },
   "dependencies": {
-    "@lit-protocol/auth-browser": "^6.0.0-alpha.2",
-    "@lit-protocol/auth-helpers": "^6.0.0-alpha.2",
-    "@lit-protocol/constants": "^6.0.0-alpha.2",
-    "@lit-protocol/contracts-sdk": "^6.0.0-alpha.2",
-    "@lit-protocol/lit-node-client": "^6.0.0-alpha.2",
+    "@dotenvx/dotenvx": "^0.37.1",
+    "@lit-protocol/auth-browser": "^6.0.0-alpha.11",
+    "@lit-protocol/auth-helpers": "^6.0.0-alpha.11",
+    "@lit-protocol/constants": "^6.0.0-alpha.11",
+    "@lit-protocol/contracts-sdk": "^6.0.0-alpha.11",
+    "@lit-protocol/lit-node-client": "^6.0.0-alpha.11",
     "ethers": "5.7.2"
   },
   "devDependencies": {
-    "parcel-bundler": "^1.12.5",
-    "tslib": "^2.6.2"
+    "parcel-bundler": "^1.12.5"
   }
 }
