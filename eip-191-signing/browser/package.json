@@ -1,7 +1,7 @@
 {
-  "name": "generating-session-sigs-in-browser",
+  "name": "generating-eip-191-sigs-in-browser",
   "version": "0.1.0",
-  "description": "Example of generating a Lit Session Signature within the browser",
+  "description": "Example of generating an EIP-191 signature using a Lit Action",
   "source": "src/index.html",
   "license": "MIT",
   "scripts": {
