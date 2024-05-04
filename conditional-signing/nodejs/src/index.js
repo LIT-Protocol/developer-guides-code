@@ -9,7 +9,11 @@ import {
   LitPKPResource,
 } from "@lit-protocol/auth-helpers";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
-import { Wallet, utils as ethersUtils } from "ethers";
+import {
+  providers as ethersProviders,
+  utils as ethersUtils,
+  Wallet,
+} from "ethers";
 
 import { litActionCode } from "./litAction.js";
 
@@ -61,16 +65,30 @@ import { litActionCode } from "./litAction.js";
 })();
 
 function getWallet(privateKey) {
-  if (privateKey !== undefined) return new Wallet(privateKey);
+  if (privateKey !== undefined)
+    return new Wallet(
+      privateKey,
+      new ethersProviders.JsonRpcProvider(
+        "https://chain-rpc.litprotocol.com/http"
+      )
+    );
 
   if (process.env.PRIVATE_KEY === undefined)
     throw new Error("Please provide the env: PRIVATE_KEY");
 
-  return new Wallet(process.env.PRIVATE_KEY);
+  return new Wallet(
+    process.env.PRIVATE_KEY,
+    new ethersProviders.JsonRpcProvider(
+      "https://chain-rpc.litprotocol.com/http"
+    )
+  );
 }
 
 async function getPkpPublicKey(ethersSigner) {
-  if (process.env.PKP_PUBLIC_KEY !== undefined)
+  if (
+    process.env.PKP_PUBLIC_KEY !== undefined &&
+    process.env.PKP_PUBLIC_KEY !== ""
+  )
     return process.env.PKP_PUBLIC_KEY;
 
   const pkp = await mintPkp(ethersSigner);
