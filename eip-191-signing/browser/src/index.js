@@ -13,6 +13,8 @@ import * as ethers from "ethers";
 
 import { litActionCode } from "./litAction";
 
+const PKP_PUBLIC_KEY = process.env.PKP_PUBLIC_KEY;
+
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("myButton").addEventListener("click", buttonClick);
 });
@@ -65,11 +67,8 @@ async function getLitNodeClient() {
 }
 
 async function getPkpPublicKey(ethersSigner) {
-  if (
-    process.env.PKP_PUBLIC_KEY !== undefined &&
-    process.env.PKP_PUBLIC_KEY !== ""
-  )
-    return process.env.PKP_PUBLIC_KEY;
+  if (PKP_PUBLIC_KEY !== undefined && PKP_PUBLIC_KEY !== "")
+    return PKP_PUBLIC_KEY;
 
   const pkp = await mintPkp(ethersSigner);
   console.log("Minted PKP!", pkp);

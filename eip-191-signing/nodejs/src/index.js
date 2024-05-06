@@ -16,6 +16,9 @@ import {
 
 import { litActionCode } from "./litAction.js";
 
+const PRIVATE_KEY = process.env.PRIVATE_KEY;
+const PKP_PUBLIC_KEY = process.env.PKP_PUBLIC_KEY;
+
 (async () => {
   let litNodeClient;
 
@@ -56,11 +59,11 @@ function getWallet(privateKey) {
       )
     );
 
-  if (process.env.PRIVATE_KEY === undefined)
+  if (PRIVATE_KEY === undefined)
     throw new Error("Please provide the env: PRIVATE_KEY");
 
   return new Wallet(
-    process.env.PRIVATE_KEY,
+    PRIVATE_KEY,
     new ethersProviders.JsonRpcProvider(
       "https://chain-rpc.litprotocol.com/http"
     )
@@ -68,11 +71,8 @@ function getWallet(privateKey) {
 }
 
 async function getPkpPublicKey(ethersSigner) {
-  if (
-    process.env.PKP_PUBLIC_KEY !== undefined &&
-    process.env.PKP_PUBLIC_KEY !== ""
-  )
-    return process.env.PKP_PUBLIC_KEY;
+  if (PKP_PUBLIC_KEY !== undefined && PKP_PUBLIC_KEY !== "")
+    return PKP_PUBLIC_KEY;
 
   const pkp = await mintPkp(ethersSigner);
   console.log("Minted PKP!", pkp);
