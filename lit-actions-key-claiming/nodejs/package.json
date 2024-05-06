@@ -1,0 +1,24 @@
+{
+  "name": "claiming-keys-in-nodejs",
+  "version": "0.1.0",
+  "description": "Example of claiming keys within a Lit Action",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "start": "npx @dotenvx/dotenvx run -- node src/index.js"
+  },
+  "dependencies": {
+    "@dotenvx/dotenvx": "^0.37.1",
+    "@lit-protocol/auth-browser": "^6.0.0-alpha.11",
+    "@lit-protocol/auth-helpers": "^6.0.0-alpha.11",
+    "@lit-protocol/constants": "^6.0.0-alpha.11",
+    "@lit-protocol/lit-auth-client": "^6.0.0-alpha.11",
+    "@lit-protocol/lit-node-client": "^6.0.0-alpha.11",
+    "@simplewebauthn/browser": "^10.0.0",
+    "ethers": "5.7.2"
+  },
+  "devDependencies": {
+    "tslib": "^2.6.2"
+  }
+}
