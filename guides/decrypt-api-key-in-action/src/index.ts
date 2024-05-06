@@ -2,6 +2,7 @@ import { LitNodeClient, encryptString } from "@lit-protocol/lit-node-client";
 import { genWallet } from "./wallet";
 import { genSession } from "./session";
 import { genActionSource} from "./contstants";
+import { LitAbility, LitAccessControlConditionResource, LitActionResource } from "@lit-protocol/auth-helpers";
 
 const url = `<your http endpoint for api-key usage>`;
 const key = '<your api key>';
@@ -43,6 +44,18 @@ const { ciphertext, dataToEncryptHash } = await encryptString(
 );
 
 console.log("cipher text:", ciphertext, "hash:", dataToEncryptHash);
+const accsResourceString = 
+    await LitAccessControlConditionResource.generateResourceString(accessControlConditions, dataToEncryptHash);
+const sessionForDecryption = genSession(wallet, client, [
+    {
+        resource: new LitActionResource('*'),
+        ability: LitAbility.LitActionExecution,
+    },
+    {
+        resource: new LitAccessControlConditionResource(accsResourceString),
+        ability: LitAbility.AccessControlConditionDecryption,
+    }
+]);
 
 const res = await client.executeJs({
     sessionSigs: session,
@@ -52,3 +65,5 @@ const res = await client.executeJs({
         dataToEncryptHash
     }
 });
+
+console.log("result from action execution:", res);
