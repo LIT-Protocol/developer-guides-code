@@ -67,7 +67,7 @@ const PRIVATE_KEY = process.env.PRIVATE_KEY;
           permittedAuthMethodTypes: [AuthMethodType.EthWallet],
           permittedAuthMethodIds: [authMethodId],
           permittedAuthMethodPubkeys: ["0x"],
-          permittedAuthMethodScopes: [],
+          permittedAuthMethodScopes: [[BigNumber.from(1)]],
           addPkpEthAddressAsPermittedAddress: true,
           sendPkpToItself: true,
         }
