@@ -134,10 +134,6 @@ async function getSessionSigs(litNodeClient, ethersSigner) {
         resource: new LitActionResource("*"),
         ability: LitAbility.LitActionExecution,
       },
-      {
-        resource: new LitAccessControlConditionResource("*"),
-        ability: LitAbility.AccessControlConditionSigning,
-      },
     ],
     authNeededCallback: getAuthNeededCallback(litNodeClient, ethersSigner),
   });
