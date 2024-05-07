@@ -17,7 +17,6 @@ import {
 import { litActionCode } from "./litAction.js";
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
-const PKP_PUBLIC_KEY = process.env.PKP_PUBLIC_KEY;
 
 (async () => {
   let litNodeClient;
