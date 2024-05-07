@@ -8,7 +8,11 @@ import {
   LitPKPResource,
 } from "@lit-protocol/auth-helpers";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
-import { providers as ethersProviders, Wallet } from "ethers";
+import {
+  providers as ethersProviders,
+  utils as ethersUtils,
+  Wallet,
+} from "ethers";
 
 import { litActionCode } from "./litAction.js";
 
@@ -20,26 +24,35 @@ const PKP_PUBLIC_KEY = process.env.PKP_PUBLIC_KEY;
 
   try {
     const wallet = getWallet();
-    litNodeClient = await getLitNodeClient();
+
+    const litNodeClient = new LitNodeClientNodeJs({
+      litNetwork: LitNetwork.Cayenne,
+    });
+    console.log("Connecting litNodeClient to network...");
+    await litNodeClient.connect();
+    console.log("litNodeClient connected!");
 
     const sessionSigs = await getSessionSigs(litNodeClient, wallet);
     console.log("Got Session Signatures!");
 
-    const result = await litNodeClient.executeJs({
+    const keyClaimResult = await litNodeClient.executeJs({
       sessionSigs,
       code: litActionCode,
       jsParams: {
         userId: "yourUserId",
       },
     });
-    console.log("result: ", result);
+    console.log("keyClaimResult: ", keyClaimResult);
 
     const litContractClient = new LitContracts({
       signer: wallet,
     });
+    console.log("Connecting litContractClient to network...");
+    await litContractClient.connect();
+    console.log("litContractClient connected!");
 
     const tx = await litContractClient.pkpNftContractUtils.write.claimAndMint(
-      result.claims["yourUserId"].derivedKeyId,
+      `0x${result.claims["yourUserId"].derivedKeyId}`,
       result.claims["yourUserId"].signatures
     );
     console.log("Claim and Mint Tx:", tx);
@@ -68,39 +81,6 @@ function getWallet(privateKey) {
       "https://chain-rpc.litprotocol.com/http"
     )
   );
-}
-
-async function getPkpPublicKey(ethersSigner) {
-  if (PKP_PUBLIC_KEY !== undefined && PKP_PUBLIC_KEY !== "")
-    return PKP_PUBLIC_KEY;
-
-  const pkp = await mintPkp(ethersSigner);
-  console.log("Minted PKP!", pkp);
-  return pkp.publicKey;
-}
-
-async function mintPkp(ethersSigner) {
-  console.log("Minting new PKP...");
-  const litContracts = new LitContracts({
-    signer: ethersSigner,
-    network: LitNetwork.Cayenne,
-  });
-
-  await litContracts.connect();
-
-  return (await litContracts.pkpNftContractUtils.write.mint()).pkp;
-}
-
-async function getLitNodeClient() {
-  const litNodeClient = new LitNodeClientNodeJs({
-    litNetwork: LitNetwork.Cayenne,
-  });
-
-  console.log("Connecting litNodeClient to network...");
-  await litNodeClient.connect();
-
-  console.log("litNodeClient connected!");
-  return litNodeClient;
 }
 
 async function getSessionSigs(litNodeClient, ethersSigner) {
