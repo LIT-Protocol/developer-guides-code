@@ -6,7 +6,8 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "start": "npx @dotenvx/dotenvx run -- node src/index.js"
+    "start:noAuthMethods": "npx @dotenvx/dotenvx run -- node src/claimKeyNoAuthMethods.js",
+    "start:withAuthMethods": "npx @dotenvx/dotenvx run -- node src/claimKeyWithAuthMethods.js"
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^0.37.1",

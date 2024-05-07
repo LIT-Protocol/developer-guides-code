@@ -20,7 +20,7 @@ const PRIVATE_KEY = process.env.PRIVATE_KEY;
   try {
     const wallet = getWallet();
 
-    const litNodeClient = new LitNodeClientNodeJs({
+    litNodeClient = new LitNodeClientNodeJs({
       litNetwork: LitNetwork.Cayenne,
     });
     console.log("Connecting litNodeClient to network...");
@@ -47,8 +47,8 @@ const PRIVATE_KEY = process.env.PRIVATE_KEY;
     console.log("litContractClient connected!");
 
     const tx = await litContractClient.pkpNftContractUtils.write.claimAndMint(
-      `0x${result.claims["yourUserId"].derivedKeyId}`,
-      result.claims["yourUserId"].signatures
+      `0x${keyClaimResult.claims["yourUserId"].derivedKeyId}`,
+      keyClaimResult.claims["yourUserId"].signatures
     );
     console.log("Claim and Mint Tx:", tx);
   } catch (error) {
