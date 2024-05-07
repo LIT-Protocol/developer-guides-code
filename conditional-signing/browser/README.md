@@ -84,13 +84,14 @@ After clicking the button a couple things will happen:
      "logs": ""
    }
    ```
-   If the address does not have 1 or more Wei, you should see an empty signature:
+   If the address does not have 1 or more Wei, you should see an empty signature with the custom error response set within the Lit Action:
    ```json
    litActionSignatures:
    {
      "success": true,
      "signedData": {},
      "decryptedData": {},
-     "claimData": {}
+     "claimData": {},
+     "response": "address does not have 1 or more Wei on Ethereum Mainnet"
    }
    ```

@@ -7,7 +7,10 @@ export const litActionCode = `
     chain,
   });
 
-  if (!testResult) return;
+  if (!testResult) {
+    LitActions.setResponse({ response: "address does not have 1 or more Wei on Ethereum Mainnet" });
+    return
+  }
 
   const sigShare = await LitActions.signEcdsa({
     toSign: dataToSign,

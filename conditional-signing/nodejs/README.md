@@ -69,7 +69,7 @@ In this directory, `conditional-signing/nodejs`, run `yarn start` to execute the
     logs: ''
    }
    ```
-   If the address does not have 1 or more Wei, you should see an empty signature:
+   If the address does not have 1 or more Wei, you should see an empty signature with the custom error response set within the Lit Action:
    ```json
    litActionSignatures
    {
@@ -77,7 +77,7 @@ In this directory, `conditional-signing/nodejs`, run `yarn start` to execute the
     signedData: {},
     decryptedData: {},
     claimData: {},
-    response: undefined,
+    response: "address does not have 1 or more Wei on Ethereum Mainnet",
     logs: undefined
    }
    ```
