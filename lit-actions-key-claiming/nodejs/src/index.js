@@ -8,11 +8,7 @@ import {
   LitPKPResource,
 } from "@lit-protocol/auth-helpers";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
-import {
-  providers as ethersProviders,
-  utils as ethersUtils,
-  Wallet,
-} from "ethers";
+import { providers as ethersProviders, Wallet } from "ethers";
 
 import { litActionCode } from "./litAction.js";
 
