@@ -1,6 +1,6 @@
 import "jsr:/@kitsonk/xhr";
-// @ts-expect-error Cannot find module 'https://cdnjs.cloudflare.com/ajax/libs/stellar-sdk/11.3.0/stellar-sdk.js' or its corresponding type declarations.
-import * as StellarSdk from "https://cdnjs.cloudflare.com/ajax/libs/stellar-sdk/11.3.0/stellar-sdk.js";
+// @ts-ignore
+import * as StellarSdk from "https://cdnjs.cloudflare.com/ajax/libs/stellar-sdk/12.0.0-rc.2/stellar-sdk.js";
 
 class FakeBuffer extends Uint8Array {
   toJSON() {

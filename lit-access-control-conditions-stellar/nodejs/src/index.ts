@@ -94,7 +94,7 @@ try {
   });
   const litActionSignatures = await litNodeClient.executeJs({
     sessionSigs,
-    ipfsId: "QmVn7SVjd9xEs3WgegCDbFdy5QUyG6JKwLQySBdPCwD2qp",
+    ipfsId: "QmVVBsBB5iQWKGXUkTpsJfpwBQg31ZjxWjZg8G113NjKtL",
     jsParams: {
       stellarPublicKey: stellarKeyPair.publicKey(),
       stellarAuthTxHash: stellarAuthTx.hash(),
