@@ -15,8 +15,8 @@
     "@lit-protocol/constants": "^6.0.0-beta.1",
     "@lit-protocol/contracts-sdk": "^6.0.0-beta.1",
     "@lit-protocol/lit-node-client-nodejs": "^6.0.0-beta.1",
-    "ethers": "5.7.2",
-    "stellar-base": "^11.1.0"
+    "@stellar/stellar-base": "^11.1.0",
+    "ethers": "5.7.2"
   },
   "devDependencies": {
     "ts-node": "^10.9.2",

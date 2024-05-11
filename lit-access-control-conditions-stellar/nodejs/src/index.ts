@@ -8,7 +8,7 @@ import {
   createSiweMessageWithRecaps,
   generateAuthSig,
 } from "@lit-protocol/auth-helpers";
-import * as StellarBase from "stellar-base";
+import * as StellarBase from "@stellar/stellar-base";
 
 const getEnv = (name: string): string => {
   const env = process.env[name];
@@ -79,6 +79,7 @@ try {
     stellarKeyPair.publicKey(),
     STELLAR_ACCOUNT_SEQUENCE_NUMBER
   );
+
   const stellarAuthTx = new StellarBase.TransactionBuilder(stellarAccount, {
     fee: StellarBase.BASE_FEE,
     networkPassphrase: StellarBase.Networks.TESTNET,
@@ -94,12 +95,13 @@ try {
   });
   const litActionSignatures = await litNodeClient.executeJs({
     sessionSigs,
-    ipfsId: "QmVVBsBB5iQWKGXUkTpsJfpwBQg31ZjxWjZg8G113NjKtL",
+    ipfsId: "QmbyhacLykPWYP7fDa5cdhJgSFnQuKnpK57NTqqcD3dd3R",
     jsParams: {
       stellarPublicKey: stellarKeyPair.publicKey(),
       stellarAuthTxHash: stellarAuthTx.hash(),
       stellarAuthTxSignature: authTxSignature.signature(),
-      stellarAccountSequenceNumber: STELLAR_ACCOUNT_SEQUENCE_NUMBER,
+      sourcePubkey: stellarKeyPair.publicKey(),
+      sourceSequence: "0",
     },
   });
   console.log("litActionSignatures: ", litActionSignatures);
