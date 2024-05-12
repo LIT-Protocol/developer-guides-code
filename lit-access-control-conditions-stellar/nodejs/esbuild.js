@@ -3,7 +3,7 @@ import { denoPlugins } from "jsr:@luca/esbuild-deno-loader@^0.10.3";
 
 esbuild.build({
   plugins: [...denoPlugins()],
-  entryPoints: ["src/litAction.ts"],
+  entryPoints: ["src/litAction.js"],
   outdir: "dist/",
   bundle: true,
   platform: "browser",

@@ -19,26 +19,42 @@ const getEnv = (name: string): string => {
   return env;
 };
 
-const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 const STELLAR_SECRET = getEnv("STELLAR_SECRET");
-// const LIT_PKP_PUBLIC_KEY = getEnv("LIT_PKP_PUBLIC_KEY");
 const STELLAR_ACCOUNT_SEQUENCE_NUMBER = getEnv(
   "STELLAR_ACCOUNT_SEQUENCE_NUMBER"
 );
+const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
+const LIT_ACTION_IPFS_CID = getEnv("LIT_ACTION_IPFS_CID");
+const LIT_PKP_PUBLIC_KEY = getEnv("LIT_PKP_PUBLIC_KEY");
 
 let litNodeClient: LitNodeClientNodeJs | undefined = undefined;
 
 try {
+  const stellarKeyPair = StellarBase.Keypair.fromSecret(STELLAR_SECRET);
+  const stellarAccount = new StellarBase.Account(
+    stellarKeyPair.publicKey(),
+    STELLAR_ACCOUNT_SEQUENCE_NUMBER
+  );
+
+  const stellarAuthTx = new StellarBase.TransactionBuilder(stellarAccount, {
+    fee: StellarBase.BASE_FEE,
+    networkPassphrase: StellarBase.Networks.TESTNET,
+  })
+    .setTimeout(60 * 60 * 24) // 24 hours
+    .build();
+  stellarAuthTx.sign(stellarKeyPair);
+
+  litNodeClient = new LitNodeClientNodeJs({
+    litNetwork: LitNetwork.Cayenne,
+  });
+  await litNodeClient.connect();
+
   const ethersWallet = new Ethers.Wallet(
     ETHEREUM_PRIVATE_KEY,
     new Ethers.providers.JsonRpcProvider(
       "https://chain-rpc.litprotocol.com/http"
     )
   );
-  litNodeClient = new LitNodeClientNodeJs({
-    litNetwork: LitNetwork.Cayenne,
-  });
-  await litNodeClient.connect();
   const sessionSigs = await litNodeClient.getSessionSigs({
     chain: "ethereum",
     expiration: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(), // 24 hours
@@ -74,37 +90,19 @@ try {
       });
     },
   });
-  const stellarKeyPair = StellarBase.Keypair.fromSecret(STELLAR_SECRET);
-  const stellarAccount = new StellarBase.Account(
-    stellarKeyPair.publicKey(),
-    STELLAR_ACCOUNT_SEQUENCE_NUMBER
-  );
 
-  const stellarAuthTx = new StellarBase.TransactionBuilder(stellarAccount, {
-    fee: StellarBase.BASE_FEE,
-    networkPassphrase: StellarBase.Networks.TESTNET,
-  })
-    .setTimeout(60 * 60 * 24) // 24 hours
-    .build();
-  stellarAuthTx.sign(stellarKeyPair);
-  const authTxSignature = stellarAuthTx.signatures[0];
-  console.log({
-    stellarPublicKey: stellarKeyPair.publicKey(),
-    stellarAuthTxHash: stellarAuthTx.hash(),
-    stellarAuthTxSignature: authTxSignature.signature(),
-  });
-  const litActionSignatures = await litNodeClient.executeJs({
+  const litPkpSignature = await litNodeClient.executeJs({
     sessionSigs,
-    ipfsId: "QmbyhacLykPWYP7fDa5cdhJgSFnQuKnpK57NTqqcD3dd3R",
+    ipfsId: LIT_ACTION_IPFS_CID,
     jsParams: {
       stellarPublicKey: stellarKeyPair.publicKey(),
       stellarAuthTxHash: stellarAuthTx.hash(),
-      stellarAuthTxSignature: authTxSignature.signature(),
-      sourcePubkey: stellarKeyPair.publicKey(),
-      sourceSequence: "0",
+      stellarAuthTxSignature: stellarAuthTx.signatures[0].signature(),
+      stellarAccountSequenceNumber: STELLAR_ACCOUNT_SEQUENCE_NUMBER,
+      litPkpPublicKey: LIT_PKP_PUBLIC_KEY,
     },
   });
-  console.log("litActionSignatures: ", litActionSignatures);
+  console.log("litPkpSignature: ", litPkpSignature);
 } catch (error) {
   console.error(error);
 } finally {
