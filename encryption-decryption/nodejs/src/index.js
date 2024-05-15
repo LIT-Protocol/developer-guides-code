@@ -1,6 +1,5 @@
 import { LitNodeClientNodeJs } from "@lit-protocol/lit-node-client-nodejs";
 import { LitNetwork } from "@lit-protocol/constants";
-import { providers as ethersProviders, Wallet } from "ethers";
 
 (async () => {
   let litNodeClient;
