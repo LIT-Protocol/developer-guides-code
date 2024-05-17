@@ -1,0 +1,22 @@
+{
+  "name": "nodejs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "start": "npx @dotenvx/dotenvx run -- node --loader ts-node/esm src/index.ts"
+  },
+  "dependencies": {
+    "@dotenvx/dotenvx": "^0.39.0",
+    "@lit-protocol/auth-helpers": "^6.0.0-beta.2",
+    "@lit-protocol/lit-node-client": "^6.0.0-beta.2",
+    "@lit-protocol/pkp-ethers": "^6.0.0-beta.2",
+    "ethers": "v5"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "tsc": "^2.0.4",
+    "typescript": "^5.4.5"
+  }
+}
