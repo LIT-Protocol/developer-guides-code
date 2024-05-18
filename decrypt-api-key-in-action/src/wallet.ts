@@ -1,7 +1,10 @@
-import { LitResourceAbilityRequest } from '@lit-protocol/auth-helpers';
+import { LitResourceAbilityRequest, createSiweMessageWithRecaps } from '@lit-protocol/auth-helpers';
 import { LitNodeClient } from '@lit-protocol/lit-node-client';
 import {ethers} from 'ethers';
-import { SiweMessage } from 'siwe';
+
+const ONE_WEEK_FROM_NOW = new Date(
+        Date.now() + 1000 * 60 * 60 * 24 * 7
+    ).toISOString();
 
 export const genProvider = () => {
     return new ethers.providers.JsonRpcProvider('https://chain-rpc.litprotocol.com/http');
@@ -16,24 +19,18 @@ export const genWallet = () => {
 export const genAuthSig = async (
     wallet: ethers.Wallet,
     client: LitNodeClient,
+    uri: string,
     resources: LitResourceAbilityRequest[]) => {
-    const ONE_WEEK_FROM_NOW = new Date(
-        Date.now() + 1000 * 60 * 60 * 24 * 7
-    ).toISOString();
+    
     let blockHash = await client.getLatestBlockhash();
-    let siweParams = {
-        domain: 'localhost',
-        address: wallet.address,
-        statement: 'This is a test statement.  You can put anything you want here.',
-        uri: 'https://localhost/login',
-        version: '1',
-        chainId: 1,
+    const message = await createSiweMessageWithRecaps({
+        walletAddress: wallet.address,
         nonce: blockHash,
-        expirationTime: ONE_WEEK_FROM_NOW,
-    };
-
-    let siweMessage = new SiweMessage(siweParams);
-    let message = siweMessage.prepareMessage();
+        litNodeClient: client,
+        resources,
+        expiration: ONE_WEEK_FROM_NOW,
+        uri
+    })
     // Sign the message and format the authSig
     const signature = await wallet.signMessage(message);
 

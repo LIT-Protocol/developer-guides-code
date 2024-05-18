@@ -14,7 +14,7 @@ await client.connect();
 
 const wallet = genWallet();
 
-const session = await genSession(wallet, client, []);
+
 
 const chain = 'ethereum';
 // lit action will allow anyone to decrypt this api key with a valid authSig
@@ -23,8 +23,6 @@ const accessControlConditions = [
         contractAddress: '',
         standardContractType: '',
         chain,
-        method: 'eth_getBalance',
-        parameters: [':userAddress', 'latest'],
         returnValueTest: {
             comparator: '>=',
             value: '0',
@@ -33,12 +31,19 @@ const accessControlConditions = [
 ];
 
 await client.connect();
+const session = await genSession(wallet, client, []);
+
+/*
+Here we are encypting our key for secure use within an action
+this code should be run once and the ciphertext and dataToEncryptHash stored for later sending
+to the Lit Action in 'jsParams'
+*/
 const { ciphertext, dataToEncryptHash } = await encryptString(
     {
         accessControlConditions,
         sessionSigs: session,
         chain,
-        dataToEncrypt: url,
+        dataToEncrypt: key,
     },
     client
 );
@@ -57,8 +62,12 @@ const sessionForDecryption = genSession(wallet, client, [
     }
 ]);
 
+/*
+Here we use the encrypted key by sending the
+ciphertext and dataTiEncryptHash to the action
+*/ 
 const res = await client.executeJs({
-    sessionSigs: session,
+    sessionSigs: sessionForDecryption,
     code: genActionSource(url),
     jsParams: {
         ciphertext,
