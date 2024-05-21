@@ -127,15 +127,15 @@ function getAuthNeededCallback(litNodeClient, ethersSigner) {
 function verifySignature(signature) {
   console.log("Verifying signature...");
   const dataSigned = `0x${signature.dataSigned}`;
-  const encodedSig = ethersUtils.joinSignature({
+  const encodedSig = ethers.utils.joinSignature({
     v: signature.recid,
     r: `0x${signature.r}`,
     s: `0x${signature.s}`,
   });
 
-  const recoveredPubkey = ethersUtils.recoverPublicKey(dataSigned, encodedSig);
+  const recoveredPubkey = ethers.utils.recoverPublicKey(dataSigned, encodedSig);
   console.log("Recovered uncompressed public key: ", recoveredPubkey);
 
-  const recoveredAddress = ethersUtils.recoverAddress(dataSigned, encodedSig);
+  const recoveredAddress = ethers.utils.recoverAddress(dataSigned, encodedSig);
   console.log("Recovered address from signature: ", recoveredAddress);
 }
