@@ -1,0 +1,19 @@
+{
+  "name": "custom-auth",
+  "version": "6.0.0",
+  "description": "Example of using custom authentication, auths that Lit doesn't support",
+  "main": "index.js",
+  "source": "src/index.ts",
+  "license": "MIT",
+  "scripts": {
+    "start": "parcel src/index.html",
+    "pub": "cd dist && vercel --prod"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.5"
+  },
+  "dependencies": {
+    "@lit-protocol/lit-node-client": "^6.0.0-beta.testing3",
+    "ipfs-helpers": "^0.0.5"
+  }
+}

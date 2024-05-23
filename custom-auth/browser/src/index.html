@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lit Protocol Custom Auth Guide</title>
+    <style>
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed; /* Ensures columns have fixed width */
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-overflow: ellipsis; /* Handles overflow content */
+        overflow: hidden; /* Hides overflowing content */
+        word-wrap: break-word; /* Allows content to wrap within the cell */
+      }
+      th {
+        background-color: #f2f2f2;
+        text-align: left;
+      }
+      th:nth-child(1),
+      td:nth-child(1) {
+        width: 2%; /* Fixed width for the Step column */
+      }
+      th:nth-child(2),
+      td:nth-child(2) {
+        width: 15%; /* Fixed width for the Execution column */
+      }
+      th:nth-child(3),
+      td:nth-child(3) {
+        width: 30%; /* Fixed width for the Description column */
+      }
+      th:nth-child(4),
+      td:nth-child(4) {
+        width: 20%; /* Fixed width for the Input column */
+      }
+      th:nth-child(5),
+      td:nth-child(5) {
+        width: 30%; /* Fixed width for the Output column */
+      }
+    </style>
+  </head>
+  <body>
+    <h1>This is a simple guide for Lit Protocol custom auth</h1>
+    <p>
+      This guide outlines the process of implementing custom authentication
+      using Lit Protocol, starting with minting programmable key pairs (PKP) and
+      managing custom authentication methods. It includes steps to create and
+      authorize custom auth methods, convert Lit Action codes to IPFS CIDs for
+      smart contract interactions, and utilize session signatures to pkpSign and
+      executeJs, methods provided in the litNodeClient.
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Step</th>
+          <th>Execution</th>
+          <th>Description</th>
+          <th>Input</th>
+          <th>Output</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- auto filled -->
+      </tbody>
+    </table>
+
+    <script src="./index.ts"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/styles/default.min.css"
+    />
+    <script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/highlight.min.js"></script>
+
+    <!-- and it's easy to individually load additional languages -->
+    <script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/languages/go.min.js"></script>
+  </body>
+</html>
