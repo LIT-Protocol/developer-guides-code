@@ -371,7 +371,7 @@ const stepsConfig: {
     buttonId: "connect-lit-node-client",
     buttonText: "Connect LitNodeClient",
     description:
-      "Establishes a connection with the LitNodeClient to enable subsequent blockchain interactions.",
+      "Establishes a connection with the LitNodeClient to interact with Lit Protocol nodes.",
     action: () => {
       connectLitNodeClientToCayenne(1);
     },
@@ -380,7 +380,8 @@ const stepsConfig: {
     step: 2,
     buttonId: "connect-contracts-sdk",
     buttonText: "Connect LitContracts",
-    description: "Sets up the LitContracts SDK for managing smart contracts.",
+    description:
+      "Sets up the LitContracts SDK to interact with Lit Protocol smart contracts.",
     action: () => {
       connectLitContractsToCayenne(2);
     },
