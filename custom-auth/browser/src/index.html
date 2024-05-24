@@ -8,15 +8,15 @@
       table {
         width: 100%;
         border-collapse: collapse;
-        table-layout: fixed; /* Ensures columns have fixed width */
+        table-layout: fixed;
       }
       th,
       td {
         border: 1px solid #ddd;
         padding: 8px;
-        text-overflow: ellipsis; /* Handles overflow content */
-        overflow: hidden; /* Hides overflowing content */
-        word-wrap: break-word; /* Allows content to wrap within the cell */
+        text-overflow: ellipsis;
+        overflow: hidden;
+        word-wrap: break-word;
       }
       th {
         background-color: #f2f2f2;
@@ -24,23 +24,51 @@
       }
       th:nth-child(1),
       td:nth-child(1) {
-        width: 2%; /* Fixed width for the Step column */
+        width: 2%;
       }
       th:nth-child(2),
       td:nth-child(2) {
-        width: 15%; /* Fixed width for the Execution column */
+        width: 15%;
       }
       th:nth-child(3),
       td:nth-child(3) {
-        width: 30%; /* Fixed width for the Description column */
+        width: 30%;
       }
       th:nth-child(4),
       td:nth-child(4) {
-        width: 20%; /* Fixed width for the Input column */
+        width: 20%;
       }
       th:nth-child(5),
       td:nth-child(5) {
-        width: 30%; /* Fixed width for the Output column */
+        width: 30%;
+      }
+
+      @media (max-width: 600px) {
+        th,
+        td {
+          display: block;
+          width: 100%;
+          box-sizing: border-box;
+        }
+        th {
+          text-align: center;
+        }
+        tr {
+          margin-bottom: 10px;
+          border: 3px solid grey;
+        }
+        th:nth-child(1),
+        td:nth-child(1),
+        th:nth-child(2),
+        td:nth-child(2),
+        th:nth-child(3),
+        td:nth-child(3),
+        th:nth-child(4),
+        td:nth-child(4),
+        th:nth-child(5),
+        td:nth-child(5) {
+          width: 100%;
+        }
       }
     </style>
   </head>
