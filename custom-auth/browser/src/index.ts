@@ -1,6 +1,6 @@
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import { LitNetwork } from "@lit-protocol/constants";
-import { addStepExecution, getOutputData } from "./utils/state-manager";
+import { logStep, getOutputData } from "./utils/state-manager";
 import { ethers } from "ethers";
 import { LIT_CHAIN_RPC_URL } from "@lit-protocol/constants";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
@@ -18,7 +18,7 @@ export const connectLitNodeClientToCayenne = async (step: number) => {
     debug: true,
   };
 
-  addStepExecution({
+  logStep({
     step,
     input: JSON.stringify(config, null, 2),
     inputType: "code",
@@ -28,7 +28,7 @@ export const connectLitNodeClientToCayenne = async (step: number) => {
   const client = new LitNodeClient(config);
   await client.connect();
 
-  addStepExecution({
+  logStep({
     step,
     output: "✅ litNodeClient is connected to Cayenne network.",
     outputData: { litNodeClient: client },
@@ -38,26 +38,24 @@ export const connectLitNodeClientToCayenne = async (step: number) => {
 };
 
 export const connectLitContractsToCayenne = async (step: number) => {
-  const config = {
+  logStep({
+    step,
+    input: `Configuring the signer using a EOA private key, connecting it to the provider at ${LIT_CHAIN_RPC_URL}, and setting the network to ${LitNetwork.Cayenne}.`,
+    output: "Loading...",
+  });
+
+  const litContracts = new LitContracts({
     signer: new ethers.Wallet(
       EOA_PRIVATE_KEY,
       new ethers.providers.JsonRpcProvider(LIT_CHAIN_RPC_URL)
     ),
     debug: false,
     network: LitNetwork.Cayenne,
-  };
-
-  addStepExecution({
-    step,
-    input: `Configuring the signer using the EOA private key, connecting it to the provider at ${LIT_CHAIN_RPC_URL}, and setting the network to ${LitNetwork.Cayenne}.`,
-    output: "Loading...",
   });
-
-  const litContracts = new LitContracts(config);
 
   await litContracts.connect();
 
-  addStepExecution({
+  logStep({
     step,
     output:
       "✅ litContracts is connected to Cayenne network. All contracts are loaded.",
@@ -74,7 +72,7 @@ export const mintPkpWithLitContracts = async (step: number) => {
     litContracts: LitContracts;
   } = getOutputData({ step: 2 });
 
-  addStepExecution({
+  logStep({
     step,
     input: "n/a",
     output: "Minting PKP...",
@@ -84,7 +82,7 @@ export const mintPkpWithLitContracts = async (step: number) => {
     await litContracts.pkpNftContractUtils.write.mint()
   ).pkp;
 
-  addStepExecution({
+  logStep({
     step,
     output: `${JSON.stringify(eoaWalletOwnedPkp, null, 2)}`,
     outputDataType: "code",
@@ -98,7 +96,7 @@ export const createCustomAuthMethod = async (step: number) => {
     authMethodId: "app-id-xxx:user-id-yyy",
   };
 
-  addStepExecution({
+  logStep({
     step,
     output: JSON.stringify(customAuthMethod, null, 2),
     outputDataType: "code",
@@ -134,7 +132,8 @@ export const addPermittedAuthMethodToPkp = async (step: number) => {
       authMethodId: string;
     };
   } = getOutputData({ step: 4 });
-  addStepExecution({
+
+  logStep({
     step,
     input: JSON.stringify(
       {
@@ -150,19 +149,19 @@ export const addPermittedAuthMethodToPkp = async (step: number) => {
   });
 
   try {
-    const receipt = await litContracts!.addPermittedAuthMethod({
+    const receipt = await litContracts.addPermittedAuthMethod({
       pkpTokenId: pkp.tokenId,
       authMethodType: customAuthMethod.authMethodType,
       authMethodId: customAuthMethod.authMethodId,
       authMethodScopes: [AuthMethodScope.SignAnything],
     });
 
-    addStepExecution({
+    logStep({
       step: 5,
       output: `✅ Permitted auth method added to PKP. Transaction hash: ${receipt.transactionHash}`,
     });
   } catch (e) {
-    addStepExecution({
+    logStep({
       step: 5,
       output: `❌ Error adding permitted auth method to PKP: ${e.message}`,
     });
@@ -183,7 +182,7 @@ export const createLitActionCode = async (step: number) => {
   LitActions.setResponse({ response: isPermitted ? "true" : "false" });
 })();`;
 
-  addStepExecution({
+  logStep({
     step,
     output: litActionCode,
     outputData: { litActionCode },
@@ -194,14 +193,15 @@ export const createLitActionCode = async (step: number) => {
 export const convertLitActionCodeToIpfsCid = async (step: number) => {
   const { litActionCode } = getOutputData({ step: 6 });
 
-  addStepExecution({
+  logStep({
     step,
     input: litActionCode,
     inputType: "code",
   });
+
   const ipfsHash = await ipfsHelpers.stringToCidV0(litActionCode);
 
-  addStepExecution({
+  logStep({
     step,
     output: `✅ ${ipfsHash}`,
     outputData: { ipfsHash },
@@ -217,7 +217,7 @@ export const permitLitActionToUsePkp = async (step: number) => {
 
   const { ipfsHash }: { ipfsHash: string } = getOutputData({ step: 7 });
 
-  addStepExecution({
+  logStep({
     step,
     input: JSON.stringify(
       {
@@ -233,18 +233,18 @@ export const permitLitActionToUsePkp = async (step: number) => {
   });
 
   try {
-    const receipt = await litContracts!.addPermittedAction({
-      ipfsId: ipfsHash!,
-      pkpTokenId: pkp!.tokenId,
+    const receipt = await litContracts.addPermittedAction({
+      ipfsId: ipfsHash,
+      pkpTokenId: pkp.tokenId,
       authMethodScopes: [AuthMethodScope.SignAnything],
     });
 
-    addStepExecution({
+    logStep({
       step,
       output: `✅ Permitted action added to PKP. Transaction hash: ${receipt.transactionHash}`,
     });
   } catch (e) {
-    addStepExecution({
+    logStep({
       step,
       output: `❌ Error adding permitted action to PKP: ${e.message}`,
     });
@@ -268,7 +268,7 @@ export const getSessionSigsUsingPkpPubKeyAndCustomAuth = async (
     step: 6,
   });
 
-  addStepExecution({
+  logStep({
     step,
     input: JSON.stringify(
       {
@@ -283,7 +283,7 @@ export const getSessionSigsUsingPkpPubKeyAndCustomAuth = async (
   });
 
   const litActionSessionSigs = await litNodeClient!.getLitActionSessionSigs({
-    pkpPublicKey: pkp!.publicKey,
+    pkpPublicKey: pkp.publicKey,
     resourceAbilityRequests: [
       { resource: new LitPKPResource("*"), ability: LitAbility.PKPSigning },
       {
@@ -293,7 +293,7 @@ export const getSessionSigsUsingPkpPubKeyAndCustomAuth = async (
     ],
     litActionCode: Buffer.from(litActionCode).toString("base64"),
     jsParams: {
-      pkpPublicKey: pkp!.publicKey,
+      pkpPublicKey: pkp.publicKey,
       customAuthMethod: {
         authMethodType: `0x${customAuthMethod.authMethodType.toString(16)}`,
         authMethodId: `0x${Buffer.from(
@@ -304,9 +304,9 @@ export const getSessionSigsUsingPkpPubKeyAndCustomAuth = async (
     },
   });
 
-  addStepExecution({
+  logStep({
     step,
-    output: `${JSON.stringify(litActionSessionSigs, null, 2)}`,
+    output: JSON.stringify(litActionSessionSigs, null, 2),
     outputDataType: "code",
     outputData: { litActionSessionSigs },
   });
@@ -325,7 +325,7 @@ export const pkpSignWithLitActionSessionSigs = async (step: number) => {
     }
   );
 
-  addStepExecution({
+  logStep({
     step,
     input: JSON.stringify(
       {
@@ -339,25 +339,33 @@ export const pkpSignWithLitActionSessionSigs = async (step: number) => {
     inputType: "code",
   });
   try {
-    const res = await litNodeClient!.pkpSign({
-      pubKey: pkp!.publicKey,
-      sessionSigs: litActionSessionSigs!,
+    const res = await litNodeClient.pkpSign({
+      pubKey: pkp.publicKey,
+      sessionSigs: litActionSessionSigs,
       toSign: ethers.utils.arrayify(ethers.utils.keccak256([1, 2, 3, 4, 5])),
     });
-    addStepExecution({
+    logStep({
       step,
       output: JSON.stringify(res, null, 2),
       outputDataType: "code",
     });
   } catch (e) {
-    addStepExecution({
+    logStep({
       step,
       output: `❌ Error signing with PKP: ${e.message}`,
     });
   }
 };
 
-const stepsConfig = [
+const stepsConfig: {
+  step: number;
+  buttonId: string;
+  buttonText: string;
+  description: string;
+  action: () => any;
+  referenceLink?: string;
+  referenceText?: string;
+}[] = [
   {
     step: 1,
     buttonId: "connect-lit-node-client",
@@ -381,6 +389,9 @@ const stepsConfig = [
     step: 3,
     buttonId: "mint-pkp",
     buttonText: "Mint a PKP",
+    referenceLink:
+      "https://github.com/LIT-Protocol/developer-guides-code/blob/66b26c0ec211ea4251ee38387f4720842a6f361e/custom-auth/browser/src/index.ts#L83-L85",
+
     description: "Alice mints a PKP using the LitContracts SDK.",
     action: () => {
       mintPkpWithLitContracts(3);
@@ -400,6 +411,9 @@ const stepsConfig = [
     step: 5,
     buttonId: "add-permitted-auth-method-to-pkp",
     buttonText: "Add Permitted Auth Method",
+    referenceLink:
+      "https://github.com/LIT-Protocol/developer-guides-code/blob/66b26c0ec211ea4251ee38387f4720842a6f361e/custom-auth/browser/src/index.ts#L153-L158",
+
     description:
       "Associates the custom auth method with Alice's PKP, enabling verification of permissions via Lit Action.",
     action: () => {
@@ -410,6 +424,9 @@ const stepsConfig = [
     step: 6,
     buttonId: "create-lit-action-code",
     buttonText: "Create a Lit Action code",
+    referenceLink:
+      "https://github.com/LIT-Protocol/developer-guides-code/blob/66b26c0ec211ea4251ee38387f4720842a6f361e/custom-auth/browser/src/index.ts#L173-L184",
+
     description:
       "Creates the custom Lit Action code that will be used to handle custom validation logic.",
     action: () => {
@@ -430,6 +447,9 @@ const stepsConfig = [
     step: 8,
     buttonId: "permit-lit-action-to-use-pkp",
     buttonText: "Permit Lit Action",
+    referenceLink:
+      "https://github.com/LIT-Protocol/developer-guides-code/blob/66b26c0ec211ea4251ee38387f4720842a6f361e/custom-auth/browser/src/index.ts#L236-L240",
+
     description:
       "Authorizes the Lit Action code to use the PKP for signing operations.",
     action: () => {
@@ -440,6 +460,9 @@ const stepsConfig = [
     step: 9,
     buttonId: "get-session-sigs-using-pkp-pub-key-and-custom-auth",
     buttonText: "Get Session Sigs",
+    referenceLink:
+      "https://github.com/LIT-Protocol/developer-guides-code/blob/66b26c0ec211ea4251ee38387f4720842a6f361e/custom-auth/browser/src/index.ts#L285-L305",
+
     description:
       "Retrieves session signatures using the PKP's public key combined with the custom auth method, which will be validated by the custom Lit Action code that handles the validation logic.",
     action: () => {
@@ -450,6 +473,9 @@ const stepsConfig = [
     step: 10,
     buttonId: "pkp-sign-with-lit-action-session-sigs",
     buttonText: "PKP Sign",
+    referenceLink:
+      "https://github.com/LIT-Protocol/developer-guides-code/blob/66b26c0ec211ea4251ee38387f4720842a6f361e/custom-auth/browser/src/index.ts#L342-L346",
+
     description:
       "Utilizes the session signatures to sign with the PKP, demonstrating the successful execution of the custom Lit Action code, which validates the permissions and authorizes the signing operation.",
     action: () => {
@@ -462,9 +488,18 @@ const stepsConfig = [
 document.addEventListener("DOMContentLoaded", () => {
   const tbody = document.querySelector("table tbody");
 
-  stepsConfig.forEach(({ step, buttonId, buttonText, description, action }) => {
-    const row = document.createElement("tr");
-    row.innerHTML = `
+  stepsConfig.forEach(
+    ({
+      step,
+      buttonId,
+      buttonText,
+      description,
+      action,
+      referenceLink,
+      referenceText,
+    }) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
   <td>${step}</td>
   <td><button id="${buttonId}">${buttonText}</button></td>
   <td>${description}</td>
@@ -472,10 +507,24 @@ document.addEventListener("DOMContentLoaded", () => {
   <td></td>
 `;
 
-    tbody.appendChild(row);
+      if (referenceLink) {
+        // Create a new paragraph element
+        const referenceParagraph = document.createElement("p");
 
-    document.getElementById(buttonId).addEventListener("click", async () => {
-      await action();
-    });
-  });
+        // Create an <a> tag with target="_blank" to open in a new tab
+        referenceParagraph.innerHTML = `<a href="${referenceLink}" target="_blank">${
+          referenceText || "See reference code..."
+        }</a>`;
+
+        // Append the new paragraph underneath the description
+        row.cells[2].appendChild(referenceParagraph);
+      }
+
+      tbody.appendChild(row);
+
+      document.getElementById(buttonId).addEventListener("click", async () => {
+        await action();
+      });
+    }
+  );
 });

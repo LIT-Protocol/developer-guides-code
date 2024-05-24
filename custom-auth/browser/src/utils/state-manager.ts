@@ -15,7 +15,7 @@ const state: State = {
   steps: [],
 };
 
-export const addStepExecution = (stepExecution: StepExecution) => {
+export const logStep = (stepExecution: StepExecution) => {
   const existingStepIndex = state.steps.findIndex(
     (execution) => execution.step === stepExecution.step
   );
@@ -40,7 +40,7 @@ export const getOutputData = ({ step }) => {
   const data = state.steps.find((state) => state.step === step)?.outputData;
 
   if (!data) {
-    addStepExecution({
+    logStep({
       step,
       output: `❌ Error: No output data found for step ${step}`,
     });
