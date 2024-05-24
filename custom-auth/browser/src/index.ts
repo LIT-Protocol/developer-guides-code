@@ -390,7 +390,7 @@ const stepsConfig: {
     buttonId: "mint-pkp",
     buttonText: "Mint a PKP",
     referenceLink:
-      "https://github.com/LIT-Protocol/developer-guides-code/blob/66b26c0ec211ea4251ee38387f4720842a6f361e/custom-auth/browser/src/index.ts#L83-L85",
+      "https://github.com/LIT-Protocol/developer-guides-code/blob/cdd0efe7c503d438691157dfb7c754ada095bb89/custom-auth/browser/src/index.ts#L81-L83",
 
     description: "Alice mints a PKP using the LitContracts SDK.",
     action: () => {
@@ -412,7 +412,7 @@ const stepsConfig: {
     buttonId: "add-permitted-auth-method-to-pkp",
     buttonText: "Add Permitted Auth Method",
     referenceLink:
-      "https://github.com/LIT-Protocol/developer-guides-code/blob/66b26c0ec211ea4251ee38387f4720842a6f361e/custom-auth/browser/src/index.ts#L153-L158",
+      "https://github.com/LIT-Protocol/developer-guides-code/blob/cdd0efe7c503d438691157dfb7c754ada095bb89/custom-auth/browser/src/index.ts#L152-L157",
 
     description:
       "Associates the custom auth method with Alice's PKP, enabling verification of permissions via Lit Action.",
@@ -425,7 +425,7 @@ const stepsConfig: {
     buttonId: "create-lit-action-code",
     buttonText: "Create a Lit Action code",
     referenceLink:
-      "https://github.com/LIT-Protocol/developer-guides-code/blob/66b26c0ec211ea4251ee38387f4720842a6f361e/custom-auth/browser/src/index.ts#L173-L184",
+      "https://github.com/LIT-Protocol/developer-guides-code/blob/cdd0efe7c503d438691157dfb7c754ada095bb89/custom-auth/browser/src/index.ts#L171-L183",
 
     description:
       "Creates the custom Lit Action code that will be used to handle custom validation logic.",
@@ -448,7 +448,7 @@ const stepsConfig: {
     buttonId: "permit-lit-action-to-use-pkp",
     buttonText: "Permit Lit Action",
     referenceLink:
-      "https://github.com/LIT-Protocol/developer-guides-code/blob/66b26c0ec211ea4251ee38387f4720842a6f361e/custom-auth/browser/src/index.ts#L236-L240",
+      "https://github.com/LIT-Protocol/developer-guides-code/blob/cdd0efe7c503d438691157dfb7c754ada095bb89/custom-auth/browser/src/index.ts#L236-L240",
 
     description:
       "Authorizes the Lit Action code to use the PKP for signing operations.",
@@ -461,7 +461,7 @@ const stepsConfig: {
     buttonId: "get-session-sigs-using-pkp-pub-key-and-custom-auth",
     buttonText: "Get Session Sigs",
     referenceLink:
-      "https://github.com/LIT-Protocol/developer-guides-code/blob/66b26c0ec211ea4251ee38387f4720842a6f361e/custom-auth/browser/src/index.ts#L285-L305",
+      "https://github.com/LIT-Protocol/developer-guides-code/blob/cdd0efe7c503d438691157dfb7c754ada095bb89/custom-auth/browser/src/index.ts#L285-L305",
 
     description:
       "Retrieves session signatures using the PKP's public key combined with the custom auth method, which will be validated by the custom Lit Action code that handles the validation logic.",
@@ -474,7 +474,7 @@ const stepsConfig: {
     buttonId: "pkp-sign-with-lit-action-session-sigs",
     buttonText: "PKP Sign",
     referenceLink:
-      "https://github.com/LIT-Protocol/developer-guides-code/blob/66b26c0ec211ea4251ee38387f4720842a6f361e/custom-auth/browser/src/index.ts#L342-L346",
+      "https://github.com/LIT-Protocol/developer-guides-code/blob/cdd0efe7c503d438691157dfb7c754ada095bb89/custom-auth/browser/src/index.ts#L342-L346",
 
     description:
       "Utilizes the session signatures to sign with the PKP, demonstrating the successful execution of the custom Lit Action code, which validates the permissions and authorizes the signing operation.",
