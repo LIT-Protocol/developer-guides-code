@@ -10,16 +10,19 @@ const key = '<your api key>';
 const genActionSource = (url: string) => {
     return `(async () => {
         const apiKey = await Lit.Actions.decryptAndCombine({
-        accessControlConditions,
-        ciphertext,
-        dataToEncryptHash,
-        authSig: null,
-        chain: 'ethereum',
+            accessControlConditions,
+            ciphertext,
+            dataToEncryptHash,
+            authSig: null,
+            chain: 'ethereum',
         });
+        // Note: uncomment this functionality to use your api key that is for the provided url
+        /*
         const resp = await fetch("${url}", {
-            'Authorization': apiKey
+            'Authorization': "Bearer " + apiKey
         });
         let data = await resp.json();
+        */
         Lit.Actions.setResponse({ response: apiKey });
     })();`;
 }
@@ -29,7 +32,7 @@ const ONE_WEEK_FROM_NOW = new Date(
 ).toISOString();
 
 const genProvider = () => {
-    return new ethers.providers.JsonRpcProvider('https://chain-rpc.litprotocol.com/http');
+    return new ethers.providers.JsonRpcProvider('https://lit-protocol.calderachain.xyz/replica-http');
 }
 
 const genWallet = () => {
@@ -165,6 +168,7 @@ const main = async () => {
     });
 
     console.log("result from action execution:", res);
+    client.disconnect();
 }
 
 await main();
