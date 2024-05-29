@@ -9,6 +9,15 @@ import { LitNetwork } from "@lit-protocol/constants";
 import { LitNodeClient, encryptString } from "@lit-protocol/lit-node-client";
 import * as ethers from "ethers";
 import { AccessControlConditions } from "@lit-protocol/types";
+import { readFileSync } from "fs";
+import {
+  Connection,
+  Keypair,
+  LAMPORTS_PER_SOL,
+  TransactionConfirmationStrategy,
+  clusterApiUrl,
+} from "@solana/web3.js";
+import bs58 from "bs58";
 
 const getEnv = (name: string): string => {
   const env = process.env[name];
@@ -20,7 +29,13 @@ const getEnv = (name: string): string => {
 };
 
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
+const ETHERS_WALLET = new ethers.Wallet(ETHEREUM_PRIVATE_KEY);
 const SOLANA_PRIVATE_KEY = getEnv("SOLANA_PRIVATE_KEY");
+const LIT_ACTION_CODE = readFileSync("./dist/bundle.js", "utf-8");
+const SOLANA_TRANSACTION_RECIPIENT = Keypair.fromSecretKey(
+  bs58.decode(SOLANA_PRIVATE_KEY)
+).publicKey.toString();
+const SOLANA_TRANSACTION_AMOUNT = LAMPORTS_PER_SOL / 100;
 
 (async () => {
   let litNodeClient: LitNodeClient;
@@ -32,7 +47,27 @@ const SOLANA_PRIVATE_KEY = getEnv("SOLANA_PRIVATE_KEY");
     });
     await litNodeClient.connect();
 
-    const ethersWallet = new ethers.Wallet(ETHEREUM_PRIVATE_KEY);
+    const decryptionAccessControlConditions: AccessControlConditions = [
+      {
+        contractAddress: "",
+        standardContractType: "",
+        chain: "ethereum",
+        method: "",
+        parameters: [":userAddress", "latest"],
+        returnValueTest: {
+          comparator: "=",
+          value: await ETHERS_WALLET.getAddress(),
+        },
+      },
+    ];
+    console.log("Encrypting Solana private key...");
+    const { ciphertext, dataToEncryptHash } = await encryptString(
+      {
+        accessControlConditions: decryptionAccessControlConditions,
+        dataToEncrypt: SOLANA_PRIVATE_KEY,
+      },
+      litNodeClient
+    );
 
     console.log("Getting Lit session signatures...");
     const sessionSigs = await litNodeClient.getSessionSigs({
@@ -56,51 +91,55 @@ const SOLANA_PRIVATE_KEY = getEnv("SOLANA_PRIVATE_KEY");
           uri: uri!,
           expiration: expiration!,
           resources: resourceAbilityRequests!,
-          walletAddress: await ethersWallet.getAddress(),
+          walletAddress: await ETHERS_WALLET.getAddress(),
           nonce: await litNodeClient!.getLatestBlockhash(),
           litNodeClient,
         });
         return await generateAuthSig({
-          signer: ethersWallet,
+          signer: ETHERS_WALLET,
           toSign,
         });
       },
     });
 
-    const decryptionAccessControlConditions: AccessControlConditions = [
-      {
-        contractAddress: "",
-        standardContractType: "",
-        chain: "ethereum",
-        method: "",
-        parameters: [":userAddress", "latest"],
-        returnValueTest: {
-          comparator: "=",
-          value: await ethersWallet.getAddress(),
-        },
-      },
-    ];
-    console.log("Encrypting Solana private key...");
-    const { ciphertext, dataToEncryptHash } = await encryptString(
-      {
-        accessControlConditions: decryptionAccessControlConditions,
-        dataToEncrypt: SOLANA_PRIVATE_KEY,
-      },
-      litNodeClient
-    );
-
     console.log("Decrypting Solana private key via Lit Action...");
-    const solanaPrivateKey = await litNodeClient.executeJs({
+    const litActionResult = await litNodeClient.executeJs({
       sessionSigs,
-      ipfsId: "QmW6fDzgtDYSXVvz1FZ8f5Lsw7KWZgo1AwPuMedLWxCPYi",
+      code: LIT_ACTION_CODE,
       jsParams: {
         accessControlConditions: decryptionAccessControlConditions,
         ciphertext,
         dataToEncryptHash,
         sessionSigs,
+        transactionRecipient: SOLANA_TRANSACTION_RECIPIENT,
+        transactionAmount: SOLANA_TRANSACTION_AMOUNT,
       },
     });
-    console.log("solanaPrivateKey", solanaPrivateKey);
+    const solanaTransactionSignature = litActionResult.response as string;
+
+    const solanaConnection = new Connection(
+      clusterApiUrl("devnet"),
+      "confirmed"
+    );
+    const confirmationStrategy: TransactionConfirmationStrategy = {
+      signature: solanaTransactionSignature,
+      blockhash: (await solanaConnection.getLatestBlockhash()).blockhash,
+      lastValidBlockHeight: (await solanaConnection.getLatestBlockhash())
+        .lastValidBlockHeight,
+    };
+    const confirmation = await solanaConnection.confirmTransaction(
+      confirmationStrategy,
+      "confirmed"
+    );
+    console.log("Transaction confirmed:", confirmation);
+
+    const transactionReceipt = await solanaConnection.getTransaction(
+      solanaTransactionSignature,
+      {
+        maxSupportedTransactionVersion: 0,
+      }
+    );
+    console.log("Transaction receipt:", transactionReceipt);
   } catch (error) {
     console.error(error);
   } finally {
