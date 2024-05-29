@@ -8,8 +8,6 @@ const go = async () => {
     sourcemap: false,
     outfile: "./dist/bundle.js",
     inject: ["./buffer-shim.js"],
-    // sourceRoot: "./",
-    // metafile: true,
   });
 };
 
