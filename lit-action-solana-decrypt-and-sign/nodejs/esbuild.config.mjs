@@ -1,14 +1,11 @@
-import { build, analyzeMetafile } from "esbuild";
+import { build, stop } from "esbuild";
 
-const go = async () => {
-  await build({
-    entryPoints: ["./src/litAction.js"],
-    bundle: true,
-    minify: false,
-    sourcemap: false,
-    outfile: "./dist/bundle.js",
-    inject: ["./buffer-shim.js"],
-  });
-};
-
-go();
+build({
+  entryPoints: ["./src/litAction.js"],
+  bundle: true,
+  minify: false,
+  sourcemap: false,
+  outfile: "./dist/bundle.js",
+  inject: ["./buffer-shim.js"],
+});
+await stop();
