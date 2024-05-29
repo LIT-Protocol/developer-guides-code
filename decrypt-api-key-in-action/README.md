@@ -4,6 +4,7 @@ This example shows how you can encrypt an api key on the client with specific de
 
 Before running, there are two variables to configure within `index.ts`:
 
+**Note: ts-node-esm requires NodeJS version 19**
 ```js
 const url = `<your http endpoint for api-key usage>`;
 const key = '<your api key>';
