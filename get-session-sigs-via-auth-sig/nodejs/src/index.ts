@@ -7,6 +7,7 @@ import {
 import { LitNetwork } from "@lit-protocol/constants";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import * as ethers from "ethers";
+import { LocalStorage } from "node-localstorage";
 
 const getEnv = (name: string): string => {
   const env = process.env[name];
@@ -23,17 +24,20 @@ export const getSessionSigsViaAuthSig = async () => {
   let litNodeClient: LitNodeClient;
 
   try {
-    litNodeClient = new LitNodeClient({
-      litNetwork: LitNetwork.Cayenne,
-    });
-    await litNodeClient.connect();
-
     const ethersSigner = new ethers.Wallet(
       ETHEREUM_PRIVATE_KEY,
       new ethers.providers.JsonRpcProvider(
         "https://chain-rpc.litprotocol.com/http"
       )
     );
+
+    litNodeClient = new LitNodeClient({
+      litNetwork: LitNetwork.Cayenne,
+      storageProvider: {
+        provider: new LocalStorage("./lit_storage.db"),
+      },
+    });
+    await litNodeClient.connect();
 
     return await litNodeClient.getSessionSigs({
       chain: "ethereum",
