@@ -1,0 +1,13 @@
+{
+  "name": "template-browser",
+  "version": "0.1.0",
+  "description": "This is a template for Lit code examples executed within the browser",
+  "main": "src/index.html",
+  "license": "MIT",
+  "scripts": {
+    "start": "parcel ./src/index.html"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.5"
+  }
+}

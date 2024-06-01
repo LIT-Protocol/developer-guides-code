@@ -1,0 +1,14 @@
+{
+  "name": "template-nodejs",
+  "version": "0.1.0",
+  "description": "This is a template for Lit code examples executed via Node.js",
+  "main": "src/index.js",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "start": "npx @dotenvx/dotenvx run -- node index.js"
+  },
+  "dependencies": {
+    "@dotenvx/dotenvx": "^0.37.1"
+  }
+}
