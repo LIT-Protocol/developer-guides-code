@@ -16,6 +16,6 @@
     "siwe": "^2.0.0"
   },
   "scripts": {
-    "start": "ts-node-esm src/index.ts"
+    "start": "node --loader ts-node/esm src/index.ts"
   }
 }

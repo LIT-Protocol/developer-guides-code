@@ -4,10 +4,11 @@ This example shows how you can encrypt an api key on the client with specific de
 
 Before running, there are two variables to configure within `index.ts`:
 
-**Note: ts-node-esm requires NodeJS version 19**
+**Note: ts-node-esm requires NodeJS version 20**
+
 ```js
 const url = `<your http endpoint for api-key usage>`;
-const key = '<your api key>';
+const key = "<your api key>";
 ```
 
 ## Restricting your api key to only be used by a single Lit Action
@@ -16,17 +17,17 @@ Within the code you will see the below ACC condition:
 
 ```js
 const accessControlConditions = [
-    {
-        contractAddress: '',
-        standardContractType: '',
-        chain,
-        method: 'eth_getBalance',
-        parameters: [':userAddress', 'latest'],
-        returnValueTest: {
-            comparator: '>=',
-            value: '0',
-        },
+  {
+    contractAddress: "",
+    standardContractType: "",
+    chain,
+    method: "eth_getBalance",
+    parameters: [":userAddress", "latest"],
+    returnValueTest: {
+      comparator: ">=",
+      value: "0",
     },
+  },
 ];
 ```
 
@@ -34,17 +35,18 @@ You can change the above to the below to use the parameter: `:currentActionId` w
 
 ```js
 const accessControlConditions = [
-    {
-        contractAddress: '',
-        standardContractType: '',
-        chain,
-        method: 'eth_getBalance',
-        parameters: [':currentActionId', 'latest'],
-        returnValueTest: {
-            comparator: '==',
-            value: '<your ipfs id>',
-        },
+  {
+    contractAddress: "",
+    standardContractType: "",
+    chain,
+    method: "eth_getBalance",
+    parameters: [":currentActionId", "latest"],
+    returnValueTest: {
+      comparator: "==",
+      value: "<your ipfs id>",
     },
+  },
 ];
 ```
+
 For easy upload of your Lit Action source code you can use the explorer [here](https://explorer.litprotocol.com/create-action)
