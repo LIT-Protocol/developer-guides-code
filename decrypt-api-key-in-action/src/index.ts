@@ -132,6 +132,7 @@ const main = async () => {
     const { ciphertext, dataToEncryptHash } = await encryptString(
         {
             accessControlConditions,
+            chain,
             dataToEncrypt: key,
         },
         client
