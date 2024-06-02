@@ -91,7 +91,7 @@ const genSession = async (
 
           // generate the authSig for the inner signature of the session
           // we need capabilities to assure that only one api key may be decrypted
-          const authSig = genAuthSig(wallet, client, params.uri, params.resourceAbilityRequests ?? []);
+          const authSig = genAuthSig(wallet, client, params.uri, resources ?? []);
           return authSig;
         }
     });
