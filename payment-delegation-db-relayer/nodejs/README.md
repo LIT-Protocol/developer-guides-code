@@ -27,7 +27,7 @@ This directory contains an example usage of the Payment Delegation Database to r
      ```
      - The `LIT_NETWORK` and `LIT_RELAYER_API_KEY` variables are required in order for this test to run successfully and generate a Payer wallet secret ket
      - Running this test will log the following to the console:
-       ```json
+       ```
        Registered a new payer wallet:  {
            payerWalletAddress: '0x6133D5Ad3018981B90EC7849d4025e46aa976174',
            payerSecretKey: '/tYbYhv8zy67SKYP51Vx7k4nVV=+41VhuofPDj63vM5QgUZkUfAbhdPVCV3ByZnCIxRT6hWo9fVuVVktQaDHfOQ=='
