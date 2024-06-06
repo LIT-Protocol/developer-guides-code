@@ -1,8 +1,6 @@
 # Payment Delegation Database
 
-<!-- TODO Add link to docs once it's published -->
-
-This directory contains an example usage of the Payment Delegation Database to register a new payer wallet, and add users as payees. There is a corresponding Lit docs page that covers the code in this example which is available here.
+This directory contains an example usage of the Payment Delegation Database to register a new payer wallet, and add users as payees. There is a corresponding Lit docs page that covers the code in this example which is available [here](https://developer.litprotocol.com/sdk/paying-for-lit/payment-delegation-db).
 
 ## Getting Started
 
@@ -19,8 +17,7 @@ This directory contains an example usage of the Payment Delegation Database to r
    - For the `LIT_NETWORK` variable, the following options are available:
      - `habanero`
      - `manzano`
-     <!-- Add link to form -->
-   - For the `LIT_RELAYER_API_KEY` variable, if you don't already have a Relayer API key, you can fill out this form to request one.
+   - For the `LIT_RELAYER_API_KEY` variable, if you don't already have a Relayer API key, you can fill out [this form](https://docs.google.com/forms/d/e/1FAIpQLSeVraHsp1evK_9j-8LpUBiEJWFn4G5VKjOWBmHFjxFRJZJdrg/viewform) to request one.
    - You may not already have a Payer wallet secret key to use for the `LIT_PAYER_SECRET_KEY` variable. In this case, you can run the [registerPayer.spec.ts](./test/registerPayer.spec.ts) test file to generate one:
      ```ts
      npx @dotenvx/dotenvx run -- mocha test/registerPayer.spec.ts
