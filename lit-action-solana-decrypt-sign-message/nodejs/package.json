@@ -1,0 +1,31 @@
+{
+  "name": "lit-action-solana-decrypt-sign-message",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "bundle": "node ./esbuild.config.mjs",
+    "test": "yarn bundle && npx @dotenvx/dotenvx run -- mocha test/**/*.spec.ts"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.3.16",
+    "@types/mocha": "^10.0.6",
+    "chai": "^5.1.1",
+    "mocha": "^10.4.0",
+    "tsc": "^2.0.4",
+    "tsx": "^4.11.2",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "@dotenvx/dotenvx": "^0.44.1",
+    "@lit-protocol/auth-helpers": "^6.0.1",
+    "@lit-protocol/constants": "^6.0.1",
+    "@lit-protocol/lit-node-client": "^6.0.1",
+    "@solana/web3.js": "^1.92.2",
+    "bs58": "^5.0.0",
+    "buffer": "^6.0.3",
+    "ethers": "v5",
+    "tweetnacl": "^1.0.3"
+  }
+}
