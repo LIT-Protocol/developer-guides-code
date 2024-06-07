@@ -4,7 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "test": "npx @dotenvx/dotenvx run -- mocha test/**/*.spec.ts"
+    "test:export": "npx @dotenvx/dotenvx run -- mocha test/**/exportPkpPrivateKey.spec.ts",
+    "test:import": "npx @dotenvx/dotenvx run -- mocha test/**/importKeyAndGetPkpAddress.spec.ts",
+    "test:sign": "npx @dotenvx/dotenvx run -- mocha test/**/signWithEncryptedKeyUsingPkp.spec.ts"
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^0.44.1",
