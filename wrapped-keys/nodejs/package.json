@@ -15,12 +15,12 @@
     "@lit-protocol/lit-auth-client": "^6.0.1-wrapped-keys.beta.1",
     "@lit-protocol/lit-node-client": "^6.0.1-wrapped-keys.beta.1",
     "@lit-protocol/wrapped-keys": "^6.0.1-wrapped-keys.beta.1",
+    "@types/mocha": "^10.0.6",
     "ethers": "v5"
   },
   "devDependencies": {
     "@types/chai": "^4.3.16",
     "@types/chai-json-schema": "^1.4.10",
-    "@types/mocha": "^10.0.6",
     "chai": "^5.1.1",
     "chai-json-schema": "^1.5.1",
     "mocha": "^10.4.0",
