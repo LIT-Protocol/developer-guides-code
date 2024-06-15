@@ -58,7 +58,7 @@ export const signAndCombineAndSendTx = async () => {
       to: "0x91fe35583603303EC3C2FF7CFBb81929A5C1bC89",
       value: 1,
       gasLimit: 21_000,
-      gasPrice: await ethersProvider.getGasPrice(),
+      gasPrice: (await ethersProvider.getGasPrice()).toHexString(),
       nonce: await ethersProvider.getTransactionCount(
         LIT_PKP_ETH_ADDRESS ?? mintedPkp!.ethAddress
       ),
@@ -109,9 +109,10 @@ export const signAndCombineAndSendTx = async () => {
         publicKey: LIT_PKP_PUBLIC_KEY ?? mintedPkp!.publicKey,
         sigName: "signedTransaction",
         chain: "sepolia",
+        unsignedTx,
       },
     });
-    console.log(result);
+    console.log("result", result);
   } catch (error) {
     console.error(error);
   } finally {

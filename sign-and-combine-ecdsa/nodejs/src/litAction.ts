@@ -5,6 +5,11 @@ export const litActionCode = `
         publicKey,
         sigName,
     });
+    let jsonSig = JSON.parse(signature);
+    jsonSig.r = "0x" + jsonSig.r.substring(2);
+    jsonSig.s = "0x" + jsonSig.s;
+    const hexSig = ethers.utils.joinSignature(jsonSig);
+    const signedTx = ethers.utils.serializeTransaction(unsignedTx, hexSig);
 
     try {
         const rpcUrl = await Lit.Actions.getRpcUrl({ chain });
