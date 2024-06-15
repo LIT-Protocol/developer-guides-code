@@ -66,9 +66,7 @@ export const signAndCombineAndSendTx = async () => {
     };
 
     const unsignedTransactionHash = ethers.utils.keccak256(
-      ethers.utils.toUtf8Bytes(
-        ethers.utils.serializeTransaction(unsignedTransaction)
-      )
+      ethers.utils.serializeTransaction(unsignedTransaction)
     );
 
     const result = await litNodeClient.executeJs({
