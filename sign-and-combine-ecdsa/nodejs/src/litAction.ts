@@ -11,6 +11,9 @@ export const litActionCode = `
     const hexSig = ethers.utils.joinSignature(jsonSig);
     const signedTx = ethers.utils.serializeTransaction(unsignedTx, hexSig);
 
+    Lit.Actions.setResponse({response: hexSig});
+    return;
+
     try {
         const rpcUrl = await Lit.Actions.getRpcUrl({ chain });
         const provider = new ethers.providers.JsonRpcProvider(rpcUrl);

@@ -113,6 +113,11 @@ export const signAndCombineAndSendTx = async () => {
       },
     });
     console.log("result", result);
+    const sig = result.response;
+    // @ts-ignore
+    const recovered = ethers.utils.recoverAddress(unsignedTxHash, sig);
+    console.log("recovered", recovered);
+    console.log("pkp address: ", LIT_PKP_ETH_ADDRESS ?? mintedPkp!.ethAddress);
   } catch (error) {
     console.error(error);
   } finally {
