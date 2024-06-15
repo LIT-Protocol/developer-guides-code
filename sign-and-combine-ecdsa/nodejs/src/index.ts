@@ -54,7 +54,7 @@ export const signAndCombineAndSendTx = async () => {
     const ethersProvider = new ethers.providers.JsonRpcProvider(
       SEPOLIA_RPC_URL
     );
-    const unsignedTx = {
+    const unsignedTransaction = {
       to: "0x91fe35583603303EC3C2FF7CFBb81929A5C1bC89",
       value: 1,
       gasLimit: 21_000,
@@ -65,8 +65,10 @@ export const signAndCombineAndSendTx = async () => {
       chainId: 11155111,
     };
 
-    const unsignedTxHash = ethers.utils.keccak256(
-      ethers.utils.toUtf8Bytes(ethers.utils.serializeTransaction(unsignedTx))
+    const unsignedTransactionHash = ethers.utils.keccak256(
+      ethers.utils.toUtf8Bytes(
+        ethers.utils.serializeTransaction(unsignedTransaction)
+      )
     );
 
     const result = await litNodeClient.executeJs({
@@ -105,11 +107,11 @@ export const signAndCombineAndSendTx = async () => {
       }),
       code: litActionCode,
       jsParams: {
-        toSign: ethers.utils.arrayify(unsignedTxHash),
+        toSign: ethers.utils.arrayify(unsignedTransactionHash),
         publicKey: LIT_PKP_PUBLIC_KEY ?? mintedPkp!.publicKey,
         sigName: "signedTransaction",
         chain: "sepolia",
-        unsignedTx,
+        unsignedTransaction,
       },
     });
     console.log("result", result);
