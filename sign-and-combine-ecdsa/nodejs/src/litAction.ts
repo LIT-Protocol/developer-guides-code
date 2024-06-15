@@ -1,26 +1,36 @@
-export const litActionCode = `
-(async () => {
-    const signature = await Lit.Actions.signAndCombineEcdsa({
-        toSign,
-        publicKey,
-        sigName,
-    });
-    let jsonSig = JSON.parse(signature);
-    jsonSig.r = "0x" + jsonSig.r.substring(2);
-    jsonSig.s = "0x" + jsonSig.s;
-    const hexSig = ethers.utils.joinSignature(jsonSig);
-    const signedTx = ethers.utils.serializeTransaction(unsignedTx, hexSig);
+// @ts-nocheck
 
-    try {
-        const rpcUrl = await Lit.Actions.getRpcUrl({ chain });
-        const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
-        const transactionResponse = await provider.sendTransaction(signedTx);
-        const receipt = await transactionResponse.wait();
+const _litActionCode = async () => {
+  const signature = await Lit.Actions.signAndCombineEcdsa({
+    toSign,
+    publicKey,
+    sigName,
+  });
 
-        Lit.Actions.setResponse({ response: transactionResponse.hash });
-    } catch (error) {
-        const errorMessage = 'Error when sending transaction: ' + error.message;
-        Lit.Actions.setResponse({ response: errorMessage });
-    }
-})();
-`;
+  const jsonSignature = JSON.parse(signature);
+  jsonSignature.r = "0x" + jsonSignature.r.substring(2);
+  jsonSignature.s = "0x" + jsonSignature.s;
+  const hexSignature = ethers.utils.joinSignature(jsonSignature);
+
+  const signedTx = ethers.utils.serializeTransaction(
+    unsignedTransaction,
+    hexSignature
+  );
+
+  const recoveredAddress = ethers.utils.verifyMessage(toSign, hexSignature);
+  console.log("Recovered Address:", recoveredAddress);
+
+  //   try {
+  //     const rpcUrl = await Lit.Actions.getRpcUrl({ chain });
+  //     const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
+  //     const transactionResponse = await provider.sendTransaction(signedTx);
+  //     const receipt = await transactionResponse.wait();
+
+  //     Lit.Actions.setResponse({ response: JSON.stringify(receipt) });
+  //   } catch (error) {
+  //     const errorMessage = "Error: When sending transaction: " + error.message;
+  //     Lit.Actions.setResponse({ response: errorMessage });
+  //   }
+};
+
+export const litActionCode = `(${_litActionCode.toString()})();`;
