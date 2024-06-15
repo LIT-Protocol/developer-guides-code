@@ -17,7 +17,7 @@ const _litActionCode = async () => {
     hexSignature
   );
 
-  const recoveredAddress = ethers.utils.verifyMessage(toSign, hexSignature);
+  const recoveredAddress = ethers.utils.recoverAddress(toSign, hexSignature);
   console.log("Recovered Address:", recoveredAddress);
 
   //   try {
