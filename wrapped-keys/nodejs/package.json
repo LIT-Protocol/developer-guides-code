@@ -7,7 +7,8 @@
     "test:export": "npx @dotenvx/dotenvx run -- mocha test/**/exportPkpPrivateKey.spec.ts",
     "test:import": "npx @dotenvx/dotenvx run -- mocha test/**/importKeyAndGetPkpAddress.spec.ts",
     "test:sign": "npx @dotenvx/dotenvx run -- mocha test/**/signWithEncryptedKeyUsingPkp.spec.ts",
-    "test:message": "npx @dotenvx/dotenvx run -- mocha test/**/signMessageWithEncryptedKeyUsingPkp.spec.ts"
+    "test:message": "npx @dotenvx/dotenvx run -- mocha test/**/signMessageWithEncryptedKeyUsingPkp.spec.ts",
+    "test:generate": "npx @dotenvx/dotenvx run -- mocha test/**/generateKey.spec.ts"
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^0.44.1",
