@@ -9,8 +9,8 @@ import {
 } from "@lit-protocol/auth-helpers";
 import {
   EthereumLitTransaction,
-  signWithEncryptedKey,
-  signWithEthereumEncryptedKeyLitAction,
+  NETWORK_EVM,
+  signTransactionWithEncryptedKey,
 } from "@lit-protocol/wrapped-keys";
 
 const getEnv = (name: string): string => {
@@ -71,17 +71,17 @@ export const signWithEncryptedKeyUsingPkp = async (pkpPublicKey: string) => {
       toAddress: await ethersSigner.getAddress(),
       value: "0.000000000000000001", // 1 wei (Lit tokens)
       chainId: 175177, // Chronicle
-      gasPrice: "0.001",
-      gasLimit: 21000,
+      // gasPrice: "0.001",
+      // gasLimit: 21000,
       dataHex: ethers.utils.hexlify(
-        ethers.utils.toUtf8Bytes("Test transaction from Alice to Alice")
+        ethers.utils.toUtf8Bytes("Test transaction from Alice to Bob")
       ),
       chain: "chronicleTestnet",
     };
 
-    return signWithEncryptedKey({
+    return signTransactionWithEncryptedKey({
       pkpSessionSigs,
-      litActionCode: signWithEthereumEncryptedKeyLitAction,
+      network: NETWORK_EVM,
       unsignedTransaction,
       broadcast: true,
       litNodeClient,

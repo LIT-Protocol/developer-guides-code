@@ -6,17 +6,18 @@
   "scripts": {
     "test:export": "npx @dotenvx/dotenvx run -- mocha test/**/exportPkpPrivateKey.spec.ts",
     "test:import": "npx @dotenvx/dotenvx run -- mocha test/**/importKeyAndGetPkpAddress.spec.ts",
-    "test:sign": "npx @dotenvx/dotenvx run -- mocha test/**/signWithEncryptedKeyUsingPkp.spec.ts"
+    "test:sign": "npx @dotenvx/dotenvx run -- mocha test/**/signWithEncryptedKeyUsingPkp.spec.ts",
+    "test:message": "npx @dotenvx/dotenvx run -- mocha test/**/signMessageWithEncryptedKeyUsingPkp.spec.ts"
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^0.44.1",
-    "@lit-protocol/auth-browser": "^6.0.1-wrapped-keys.beta.1",
-    "@lit-protocol/auth-helpers": "^6.0.1-wrapped-keys.beta.1",
-    "@lit-protocol/constants": "^6.0.1-wrapped-keys.beta.1",
-    "@lit-protocol/contracts-sdk": "^6.0.1-wrapped-keys.beta.1",
-    "@lit-protocol/lit-auth-client": "^6.0.1-wrapped-keys.beta.1",
-    "@lit-protocol/lit-node-client": "^6.0.1-wrapped-keys.beta.1",
-    "@lit-protocol/wrapped-keys": "^6.0.1-wrapped-keys.beta.1",
+    "@lit-protocol/auth-browser": "6.0.3-wrapped-keys.beta.2",
+    "@lit-protocol/auth-helpers": "6.0.3-wrapped-keys.beta.2",
+    "@lit-protocol/constants": "6.0.3-wrapped-keys.beta.2",
+    "@lit-protocol/contracts-sdk": "6.0.3-wrapped-keys.beta.2",
+    "@lit-protocol/lit-auth-client": "6.0.3-wrapped-keys.beta.2",
+    "@lit-protocol/lit-node-client": "6.0.3-wrapped-keys.beta.2",
+    "@lit-protocol/wrapped-keys": "6.0.3-wrapped-keys.beta.2",
     "@types/mocha": "^10.0.6",
     "ethers": "v5"
   },

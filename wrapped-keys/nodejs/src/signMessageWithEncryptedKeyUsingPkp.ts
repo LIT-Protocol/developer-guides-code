@@ -1,5 +1,4 @@
 import { LitNetwork } from "@lit-protocol/constants";
-import { LitContracts } from "@lit-protocol/contracts-sdk";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import * as ethers from "ethers";
 import { EthWalletProvider } from "@lit-protocol/lit-auth-client";
@@ -8,7 +7,10 @@ import {
   LitActionResource,
   LitPKPResource,
 } from "@lit-protocol/auth-helpers";
-import { importPrivateKey } from "@lit-protocol/wrapped-keys";
+import {
+  NETWORK_EVM,
+  signMessageWithEncryptedKey,
+} from "@lit-protocol/wrapped-keys";
 
 const getEnv = (name: string): string => {
   const env = process.env[name];
@@ -21,26 +23,7 @@ const getEnv = (name: string): string => {
 
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 
-export const mintPkp = async (ethersSigner: ethers.Wallet) => {
-  try {
-    console.log("Minting new PKP...");
-    const litContracts = new LitContracts({
-      signer: ethersSigner,
-      network: LitNetwork.Cayenne,
-    });
-    await litContracts.connect();
-
-    const pkp = (await litContracts.pkpNftContractUtils.write.mint()).pkp;
-    console.log(
-      `Minted new PKP with public key: ${pkp.publicKey} and ETH address: ${pkp.ethAddress}`
-    );
-    return pkp;
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-export const importKeyAndGetPkpAddress = async (pkpPublicKey: string) => {
+export const signMessageWithEncryptedKeyUsingPkp = async (pkpPublicKey: string) => {
   let litNodeClient;
 
   try {
@@ -83,17 +66,14 @@ export const importKeyAndGetPkpAddress = async (pkpPublicKey: string) => {
     });
     console.log("Got PKP Session Sigs");
 
-    const wrappedKeysWallet = ethers.Wallet.createRandom();
-    const wrappedKeysWalletPrivateKey = wrappedKeysWallet.privateKey;
+    const messageToSign = 'This is a test message using Wrapped Keys';
 
-    console.log("Importing private key...");
-    const pkpAddress = await importPrivateKey({
+    return signMessageWithEncryptedKey({
       pkpSessionSigs,
-      privateKey: wrappedKeysWalletPrivateKey,
+      network: NETWORK_EVM,
+      messageToSign,
       litNodeClient,
     });
-    console.log(`Imported private key, got PKP Address: ${pkpAddress}`);
-    return pkpAddress;
   } catch (error) {
     console.error(error);
   } finally {
