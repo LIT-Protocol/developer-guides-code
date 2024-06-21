@@ -27,7 +27,7 @@ export const exportWrappedKey = async (pkpPublicKey: string) => {
     console.log("Connecting to Lit network...");
     litNodeClient = new LitNodeClient({
       litNetwork: LitNetwork.Cayenne,
-      debug: true,
+      debug: false,
     });
     await litNodeClient.connect();
     console.log("Connected to Lit network");

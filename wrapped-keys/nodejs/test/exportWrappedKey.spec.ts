@@ -17,7 +17,7 @@ use(chaiJsonSchema);
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 const SOLANA_PRIVATE_KEY = getEnv("SOLANA_PRIVATE_KEY");
 
-xdescribe("Exporting a wrapped Ethereum key using exportPrivateKey", () => {
+describe("Exporting a wrapped Ethereum key using exportPrivateKey", () => {
   let mintedPkp;
 
   before(async function () {
@@ -45,7 +45,7 @@ xdescribe("Exporting a wrapped Ethereum key using exportPrivateKey", () => {
   }).timeout(120_000);
 });
 
-xdescribe("Exporting a wrapped Solana key using exportPrivateKey", () => {
+describe("Exporting a wrapped Solana key using exportPrivateKey", () => {
   let mintedPkp;
 
   before(async function () {
@@ -73,7 +73,8 @@ xdescribe("Exporting a wrapped Solana key using exportPrivateKey", () => {
   }).timeout(120_000);
 });
 
-describe("Exporting a generated wrapped Solana key using generatePrivateKey and exportPrivateKey", () => {
+// TODO Test fails with a known issue: https://linear.app/litprotocol/issue/LIT-3482/[slack][genius]-error-decrypting-wrapped-solana-key
+describe.skip("Exporting a generated wrapped Solana key using generatePrivateKey and exportPrivateKey", () => {
   let mintedPkp;
   let generateWrappedKeyResponse;
   let expectedSolanaAddress: string;
