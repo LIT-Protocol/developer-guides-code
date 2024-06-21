@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "test:export": "npx @dotenvx/dotenvx run -- mocha test/**/exportWrappedKey.spec.ts",
-    "test:import": "npx @dotenvx/dotenvx run -- mocha test/**/importKey.spec.ts"
+    "test:import": "npx @dotenvx/dotenvx run -- mocha test/**/importKey.spec.ts",
+    "test:generate": "npx @dotenvx/dotenvx run -- mocha test/**/generateWrappedKey.spec.ts"
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^0.44.1",
