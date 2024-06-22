@@ -51,10 +51,6 @@ export const generateWrappedKey = async (
       ],
       resourceAbilityRequests: [
         {
-          resource: new LitPKPResource("*"),
-          ability: LitAbility.PKPSigning,
-        },
-        {
           resource: new LitActionResource("*"),
           ability: LitAbility.LitActionExecution,
         },

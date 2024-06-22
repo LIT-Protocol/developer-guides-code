@@ -44,10 +44,6 @@ export const importKey = async (pkpPublicKey: string, privateKey: string) => {
       ],
       resourceAbilityRequests: [
         {
-          resource: new LitPKPResource("*"),
-          ability: LitAbility.PKPSigning,
-        },
-        {
           resource: new LitActionResource("*"),
           ability: LitAbility.LitActionExecution,
         },
