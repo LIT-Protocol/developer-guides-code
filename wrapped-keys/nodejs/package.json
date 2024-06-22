@@ -7,7 +7,8 @@
     "test:export": "npx @dotenvx/dotenvx run -- mocha test/**/exportWrappedKey.spec.ts",
     "test:import": "npx @dotenvx/dotenvx run -- mocha test/**/importKey.spec.ts",
     "test:generate": "npx @dotenvx/dotenvx run -- mocha test/**/generateWrappedKey.spec.ts",
-    "test:sign:tx": "npx @dotenvx/dotenvx run -- mocha test/**/signTransactionWithWrappedKey.spec.ts"
+    "test:sign:tx": "npx @dotenvx/dotenvx run -- mocha test/**/signTransactionWithWrappedKey.spec.ts",
+    "test:sign:msg": "npx @dotenvx/dotenvx run -- mocha test/**/signMessageWithWrappedKey.spec.ts"
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^0.44.1",
@@ -25,11 +26,13 @@
     "@types/chai": "^4.3.16",
     "@types/chai-json-schema": "^1.4.10",
     "@types/mocha": "^10.0.6",
+    "bs58": "^5.0.0",
     "chai": "^5.1.1",
     "chai-json-schema": "^1.5.1",
     "mocha": "^10.4.0",
     "tsc": "^2.0.4",
     "tsx": "^4.12.0",
+    "tweetnacl": "^1.0.3",
     "typescript": "^5.4.5"
   }
 }
