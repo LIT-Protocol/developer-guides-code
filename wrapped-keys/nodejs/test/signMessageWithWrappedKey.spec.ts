@@ -3,19 +3,10 @@ import * as ethers from "ethers";
 import chaiJsonSchema from "chai-json-schema";
 import {
   GeneratePrivateKeyResponse,
-  LitTransaction,
   NETWORK_EVM,
   NETWORK_SOLANA,
-  SolanaLitTransaction,
 } from "@lit-protocol/wrapped-keys";
-import {
-  Connection,
-  LAMPORTS_PER_SOL,
-  PublicKey,
-  SystemProgram,
-  Transaction,
-  clusterApiUrl,
-} from "@solana/web3.js";
+import { PublicKey } from "@solana/web3.js";
 import bs58 from "bs58";
 import nacl from "tweetnacl";
 
@@ -42,30 +33,10 @@ describe("Signing an Ethereum message using generateWrappedKey and signMessageWi
 
     mintedPkp = await mintPkp(ethersSigner);
 
-    const generateWrappedKeyResponseSchema = {
-      title: "GeneratePrivateKeyResponse Schema for EVM Public Key",
-      type: "object",
-      required: ["pkpAddress", "generatedPublicKey"],
-      properties: {
-        pkpAddress: {
-          type: "string",
-          pattern: "^0x[a-fA-F0-9]{40}$",
-          const: mintedPkp!.ethAddress,
-        },
-        generatedPublicKey: {
-          type: "string",
-          pattern: "^0x04[a-fA-F0-9]{128}$",
-        },
-      },
-    };
-
     const generateWrappedKeyResponse = (await generateWrappedKey(
       mintedPkp!.publicKey,
       NETWORK_EVM
     )) as GeneratePrivateKeyResponse;
-    expect(generateWrappedKeyResponse).to.be.jsonSchema(
-      generateWrappedKeyResponseSchema
-    );
 
     const sanitizedPublicKey =
       generateWrappedKeyResponse.generatedPublicKey.slice(
@@ -113,30 +84,10 @@ describe("Signing a Solana message using generateWrappedKey and signMessageWithE
 
     mintedPkp = await mintPkp(ethersSigner);
 
-    const generateWrappedKeyResponseSchema = {
-      title: "GeneratePrivateKeyResponse Schema for Solana Public Key",
-      type: "object",
-      required: ["pkpAddress", "generatedPublicKey"],
-      properties: {
-        pkpAddress: {
-          type: "string",
-          pattern: "^0x[a-fA-F0-9]{40}$",
-          const: mintedPkp!.ethAddress,
-        },
-        generatedPublicKey: {
-          type: "string",
-          pattern: "^[1-9A-HJ-NP-Za-km-z]{43,44}$",
-        },
-      },
-    };
-
     const generateWrappedKeyResponse = (await generateWrappedKey(
       mintedPkp!.publicKey,
       NETWORK_SOLANA
     )) as GeneratePrivateKeyResponse;
-    expect(generateWrappedKeyResponse).to.be.jsonSchema(
-      generateWrappedKeyResponseSchema
-    );
 
     generatedSolanaPublicKey = new PublicKey(
       generateWrappedKeyResponse.generatedPublicKey

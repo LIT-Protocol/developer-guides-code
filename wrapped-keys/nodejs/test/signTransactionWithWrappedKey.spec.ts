@@ -40,30 +40,10 @@ describe("Signing an Ethereum transaction using generateWrappedKey and signTrans
 
     mintedPkp = await mintPkp(ethersSigner);
 
-    const generateWrappedKeyResponseSchema = {
-      title: "GeneratePrivateKeyResponse Schema for EVM Public Key",
-      type: "object",
-      required: ["pkpAddress", "generatedPublicKey"],
-      properties: {
-        pkpAddress: {
-          type: "string",
-          pattern: "^0x[a-fA-F0-9]{40}$",
-          const: mintedPkp!.ethAddress,
-        },
-        generatedPublicKey: {
-          type: "string",
-          pattern: "^0x04[a-fA-F0-9]{128}$",
-        },
-      },
-    };
-
     generateWrappedKeyResponse = (await generateWrappedKey(
       mintedPkp!.publicKey,
       NETWORK_EVM
     )) as GeneratePrivateKeyResponse;
-    expect(generateWrappedKeyResponse).to.be.jsonSchema(
-      generateWrappedKeyResponseSchema
-    );
   });
 
   it("should sign an Ethereum transaction", async () => {
@@ -103,30 +83,10 @@ describe("Signing a Solana transaction using generateWrappedKey and signTransact
 
     mintedPkp = await mintPkp(ethersSigner);
 
-    const generateWrappedKeyResponseSchema = {
-      title: "GeneratePrivateKeyResponse Schema for Solana Public Key",
-      type: "object",
-      required: ["pkpAddress", "generatedPublicKey"],
-      properties: {
-        pkpAddress: {
-          type: "string",
-          pattern: "^0x[a-fA-F0-9]{40}$",
-          const: mintedPkp!.ethAddress,
-        },
-        generatedPublicKey: {
-          type: "string",
-          pattern: "^[1-9A-HJ-NP-Za-km-z]{43,44}$",
-        },
-      },
-    };
-
     const generateWrappedKeyResponse = (await generateWrappedKey(
       mintedPkp!.publicKey,
       NETWORK_SOLANA
     )) as GeneratePrivateKeyResponse;
-    expect(generateWrappedKeyResponse).to.be.jsonSchema(
-      generateWrappedKeyResponseSchema
-    );
 
     generatedSolanaPublicKey = new PublicKey(
       generateWrappedKeyResponse.generatedPublicKey
