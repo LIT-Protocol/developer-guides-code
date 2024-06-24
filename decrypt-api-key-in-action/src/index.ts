@@ -1,6 +1,6 @@
 //@ts-nocheck
 import { LitNodeClient, encryptString } from "@lit-protocol/lit-node-client";
-import { AuthCallbackParams } from "@lit-protocol/types"
+import { type AuthCallbackParams, type LitResourceAbilityRequest, type AccessControlConditions } from "@lit-protocol/types"
 import { LitAbility, LitAccessControlConditionResource, LitActionResource, createSiweMessageWithRecaps, generateAuthSig } from "@lit-protocol/auth-helpers";
 import {ethers} from 'ethers';
 
@@ -19,7 +19,7 @@ const genActionSource = (url: string) => {
         // Note: uncomment this functionality to use your api key that is for the provided url
         /*
         const resp = await fetch("${url}", {
-            'Authorization': "Bearer " + apiKey
+            'Authorization': "Bearer " + "${key}"
         });
         let data = await resp.json();
         */
@@ -48,7 +48,7 @@ const genAuthSig = async (
     resources: LitResourceAbilityRequest[]
 ) => {
 
-    let blockHash = await client.getLatestBlockhash();
+    const blockHash = await client.getLatestBlockhash();
     const message = await createSiweMessageWithRecaps({
         walletAddress: wallet.address,
         nonce: blockHash,
@@ -71,7 +71,7 @@ const genSession = async (
     wallet: ethers.Wallet,
     client: LitNodeClient,
     resources: LitResourceAbilityRequest[]) => {
-    let sessionSigs = await client.getSessionSigs({
+    const sessionSigs = await client.getSessionSigs({
         chain: "ethereum",
         resourceAbilityRequests: resources,
         authNeededCallback: async (params: AuthCallbackParams) => {
@@ -94,13 +94,13 @@ const genSession = async (
           const authSig = genAuthSig(wallet, client, params.uri, params.resourceAbilityRequests ?? []);
           return authSig;
         }
-    });
+    })
 
     return sessionSigs;
 }
 
 const main = async () => {
-    let client = new LitNodeClient({
+    const client = new LitNodeClient({
         litNetwork: 'cayenne',
         debug: true
     });
@@ -139,7 +139,7 @@ const main = async () => {
 
     console.log("cipher text:", ciphertext, "hash:", dataToEncryptHash);
     const accsResourceString = 
-        await LitAccessControlConditionResource.generateResourceString(accessControlConditions as any, dataToEncryptHash);
+        await LitAccessControlConditionResource.generateResourceString(accessControlConditions as AccessControlConditions, dataToEncryptHash);
     const sessionForDecryption = await genSession(wallet, client, [
         {
             resource: new LitActionResource('*'),
@@ -168,7 +168,7 @@ const main = async () => {
     });
 
     console.log("result from action execution:", res);
-    client.disconnect();
+    await client.disconnect();
 }
 
 await main();
