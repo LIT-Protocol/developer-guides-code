@@ -24,6 +24,7 @@
     "@lit-protocol/contracts-sdk": "^6.0.3",
     "@lit-protocol/lit-auth-client": "^6.0.3",
     "@lit-protocol/lit-node-client": "^6.0.3",
+    "@lit-protocol/pkp-ethers": "^6.0.3",
     "ethers": "v5"
   }
 }

@@ -9,7 +9,7 @@
       parameters: [":userAddress"],
       returnValueTest: {
         comparator: "=",
-        value: "0xA89543a7145C68E52a4D584f1ceb123605131211",
+        value: "0x600DC16993EA1AbdA674A20d432F93041cDa2ef4",
       },
     },
   ];

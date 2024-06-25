@@ -6,14 +6,14 @@ import { LitNetwork } from "@lit-protocol/constants";
 import { getEnv } from "../src/utils";
 import { doTheThing } from "../src";
 
-const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
+const ETHEREUM_PRIVATE_KEY_A = getEnv("ETHEREUM_PRIVATE_KEY_A");
 
 describe("Foo", () => {
   let litContracts: LitContracts;
 
   before(async function () {
     const ethersSigner = new ethers.Wallet(
-      ETHEREUM_PRIVATE_KEY,
+      ETHEREUM_PRIVATE_KEY_A,
       new ethers.providers.JsonRpcProvider(
         "https://chain-rpc.litprotocol.com/http"
       )
