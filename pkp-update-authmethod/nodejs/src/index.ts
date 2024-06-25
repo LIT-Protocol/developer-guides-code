@@ -10,8 +10,10 @@ import {
   generateAuthSig,
 } from "@lit-protocol/auth-helpers";
 import { PKPEthersWallet, ethRequestHandler } from "@lit-protocol/pkp-ethers";
+import bs58 from "bs58";
 
 import { getEnv } from "./utils";
+import { getBytes32FromMultihash } from "@lit-protocol/contracts-sdk/src/lib/helpers/getBytes32FromMultihash";
 
 const ETHEREUM_PRIVATE_KEY_A = getEnv("ETHEREUM_PRIVATE_KEY_A");
 const ETHEREUM_PRIVATE_KEY_B = getEnv("ETHEREUM_PRIVATE_KEY_B");
@@ -134,7 +136,7 @@ export const doTheThing = async () => {
     const fundPkpTxReceipt = await (
       await ethersSignerA.sendTransaction({
         to: mintedPkp.ethAddress,
-        value: ethers.utils.parseEther("0.000001"),
+        value: ethers.utils.parseEther("0.0001"),
       })
     ).wait();
     console.log(
@@ -148,33 +150,37 @@ export const doTheThing = async () => {
     });
     await pkpEthersWalletA.init();
 
-    console.log("🔄 Adding Lit Action Auth Method B to PKP...");
-    const addAuthMethodTxData =
-      PKP_PERMISSIONS_ETHERS_CONTRACT.interface.encodeFunctionData(
-        "addPermittedAction",
-        [
-          mintedPkp.tokenId,
-          ethers.utils.toUtf8Bytes(LIT_ACTION_CHECK_ADDRESS_B),
-          [AuthMethodScope.SignAnything],
-        ]
-      );
-
-    const addAuthMethodTx = {
-      from: mintedPkp.ethAddress,
-      to: PKP_PERMISSIONS_CONTRACT_ADDRESS,
-      data: addAuthMethodTxData,
-      value: 0,
-      gasLimit: 50_000,
-    };
-
-    await ethRequestHandler({
+    console.log(
+      "🔄 Connecting litContracts client with PKP signer to network..."
+    );
+    const litContractsPkpSigner = new LitContracts({
       signer: pkpEthersWalletA,
-      payload: {
-        method: "eth_sendTransaction",
-        params: [addAuthMethodTx],
-      },
+      network: LitNetwork.Cayenne,
+      debug: true,
     });
-    console.log(`✅ Added Lit Action Auth Method B to PKP`);
+    await litContractsPkpSigner.connect();
+    console.log("✅ Connected litContracts client with PKP signer to network");
+
+    console.log("🔄 Adding Lit Action Auth Method B to PKP...");
+    const base58DecodedIpfsCid = bs58.decode(LIT_ACTION_CHECK_ADDRESS_B);
+    const ipfsCidBytes = `0x${Buffer.from(base58DecodedIpfsCid).toString(
+      "hex"
+    )}`;
+
+    const addAuthMethodBReceipt = await (
+      await litContractsPkpSigner.pkpPermissionsContract.write.addPermittedAction(
+        mintedPkp.tokenId,
+        ipfsCidBytes,
+        [AuthMethodScope.SignAnything],
+        {
+          gasPrice: await ethersSignerA.provider.getGasPrice(),
+          gasLimit: 1_000_000,
+        }
+      )
+    ).wait();
+    console.log(
+      `✅ Added Lit Action Auth Method B to PKP. Transaction hash: ${addAuthMethodBReceipt.transactionHash}`
+    );
 
     console.log(
       "🔄 Getting PKP Session Sigs using Lit Action Auth Method B..."
