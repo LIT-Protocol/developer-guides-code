@@ -43,13 +43,11 @@ export const doTheThing = async () => {
       `✅ Minted new PKP with public key: ${mintedPkp.publicKey} and ETH address: ${mintedPkp.ethAddress}`
     );
 
-    console.log("🔄 Adding Address Auth Method to PKP...");
+    console.log("🔄 Adding Lit Action Auth Method to PKP...");
     const addAuthMethodReceipt = await litContracts.addPermittedAuthMethod({
       pkpTokenId: mintedPkp.tokenId,
-      authMethodType: AuthMethodType.EthWallet,
-      authMethodId: ethers.utils.keccak256(
-        ethers.utils.toUtf8Bytes(`${ethersSigner.address}:lit`)
-      ),
+      authMethodType: AuthMethodType.LitAction,
+      authMethodId: "QmeQv4DqSbkrWdnMwNLu5rvZgNst8NGFsbKJ9Z58qxhr2q",
       authMethodScopes: [AuthMethodScope.SignAnything],
     });
     console.log(
@@ -79,7 +77,7 @@ export const doTheThing = async () => {
     await litNodeClient.connect();
     console.log("✅ Connected LitNodeClient to Lit network");
 
-    console.log("🔄 Getting PKP Session Sigs using Address Auth Method...");
+    console.log("🔄 Getting PKP Session Sigs using Lit Action Auth Method...");
     const pkpSessionSigs = await litNodeClient.getPkpSessionSigs({
       pkpPublicKey: mintedPkp.publicKey,
       authMethods: [
@@ -100,7 +98,7 @@ export const doTheThing = async () => {
       ],
       expiration: new Date(Date.now() + 1000 * 60 * 10).toISOString(), // 10 minutes
     });
-    console.log("✅ Got PKP Session Sigs using Address Auth Method");
+    console.log("✅ Got PKP Session Sigs using Lit Action Auth Method");
 
     return mintedPkp;
   } catch (error) {
