@@ -68,7 +68,7 @@ export const doTheThing = async () => {
     );
 
     console.log("🔄 Checking Lit Action Auth Method A permitted for PKP...");
-    const isPermittedA =
+    let isPermittedA =
       await litContracts.pkpPermissionsContract.read.isPermittedAction(
         mintedPkp.tokenId,
         LIT_ACTION_A_IPFS_CID_BYTES
@@ -136,7 +136,9 @@ export const doTheThing = async () => {
     });
     console.log("✅ Got PKP Session Sigs using Lit Action Auth Method A");
 
-    console.log("🔄 Funding PKP ETH Address...");
+    console.log(
+      "🔄 Funding PKP ETH Address to be able to add and remove Lit Actions as permitted Auth Methods for PKP..."
+    );
     const fundPkpTxReceipt = await (
       await ethersSignerA.sendTransaction({
         to: mintedPkp.ethAddress,
@@ -264,7 +266,21 @@ export const doTheThing = async () => {
       `✅ Removed Lit Action Auth Method B from PKP. Transaction hash: ${removeAuthMethodAReceipt.transactionHash}`
     );
 
-    return mintedPkp;
+    console.log(
+      "🔄 Checking Lit Action Auth Method A is no longer permitted for PKP..."
+    );
+    isPermittedA =
+      await litContracts.pkpPermissionsContract.read.isPermittedAction(
+        mintedPkp.tokenId,
+        LIT_ACTION_A_IPFS_CID_BYTES
+      );
+    if (isPermittedA)
+      throw new Error(
+        "Lit Action Auth Method A is still permitted for the PKP when it's supposed to have been removed"
+      );
+    console.log("✅ Lit Action Auth Method A is permitted for PKP");
+
+    return true;
   } catch (error) {
     console.error(error);
   } finally {
