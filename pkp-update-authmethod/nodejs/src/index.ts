@@ -9,27 +9,15 @@ import {
   createSiweMessageWithRecaps,
   generateAuthSig,
 } from "@lit-protocol/auth-helpers";
-import { PKPEthersWallet, ethRequestHandler } from "@lit-protocol/pkp-ethers";
+import { PKPEthersWallet } from "@lit-protocol/pkp-ethers";
 import bs58 from "bs58";
 
 import { getEnv } from "./utils";
-import { getBytes32FromMultihash } from "@lit-protocol/contracts-sdk/src/lib/helpers/getBytes32FromMultihash";
 
 const ETHEREUM_PRIVATE_KEY_A = getEnv("ETHEREUM_PRIVATE_KEY_A");
 const ETHEREUM_PRIVATE_KEY_B = getEnv("ETHEREUM_PRIVATE_KEY_B");
 const LIT_ACTION_CHECK_ADDRESS_A = getEnv("LIT_ACTION_CHECK_ADDRESS_A");
 const LIT_ACTION_CHECK_ADDRESS_B = getEnv("LIT_ACTION_CHECK_ADDRESS_B");
-const PKP_PERMISSIONS_CONTRACT_ADDRESS =
-  "0xD01c9C30f8F6fa443721629775e1CC7DD9c9e209";
-const PKP_PERMISSIONS_CONTRACT_ABI = [
-  "function addPermittedAction(uint256 tokenId, bytes ipfsCID, uint256[] scopes)",
-  "function removePermittedAction(uint256 tokenId, bytes ipfsCID)",
-];
-const PKP_PERMISSIONS_ETHERS_CONTRACT = new ethers.Contract(
-  PKP_PERMISSIONS_CONTRACT_ADDRESS,
-  PKP_PERMISSIONS_CONTRACT_ABI,
-  new ethers.providers.JsonRpcProvider("https://chain-rpc.litprotocol.com/http")
-);
 
 export const doTheThing = async () => {
   let litNodeClient: LitNodeClient;
@@ -151,26 +139,28 @@ export const doTheThing = async () => {
     await pkpEthersWalletA.init();
 
     console.log(
-      "🔄 Connecting litContracts client with PKP signer to network..."
+      "🔄 Connecting litContracts client with pkpEthersWalletA to network..."
     );
-    const litContractsPkpSigner = new LitContracts({
+    const litContractsPkpSignerA = new LitContracts({
       signer: pkpEthersWalletA,
       network: LitNetwork.Cayenne,
       debug: true,
     });
-    await litContractsPkpSigner.connect();
-    console.log("✅ Connected litContracts client with PKP signer to network");
+    await litContractsPkpSignerA.connect();
+    console.log(
+      "✅ Connected litContracts client with pkpEthersWalletA to network"
+    );
 
     console.log("🔄 Adding Lit Action Auth Method B to PKP...");
-    const base58DecodedIpfsCid = bs58.decode(LIT_ACTION_CHECK_ADDRESS_B);
-    const ipfsCidBytes = `0x${Buffer.from(base58DecodedIpfsCid).toString(
+    const base58DecodedIpfsCidB = bs58.decode(LIT_ACTION_CHECK_ADDRESS_B);
+    const ipfsCidBytesB = `0x${Buffer.from(base58DecodedIpfsCidB).toString(
       "hex"
     )}`;
 
     const addAuthMethodBReceipt = await (
-      await litContractsPkpSigner.pkpPermissionsContract.write.addPermittedAction(
+      await litContractsPkpSignerA.pkpPermissionsContract.write.addPermittedAction(
         mintedPkp.tokenId,
-        ipfsCidBytes,
+        ipfsCidBytesB,
         [AuthMethodScope.SignAnything],
         {
           gasPrice: await ethersSignerA.provider.getGasPrice(),
@@ -225,31 +215,33 @@ export const doTheThing = async () => {
     });
     await pkpEthersWalletB.init();
 
-    console.log("🔄 Removing Lit Action Auth Method A from PKP...");
-    const removeAuthMethodTxData =
-      PKP_PERMISSIONS_ETHERS_CONTRACT.interface.encodeFunctionData(
-        "removePermittedAction",
-        [
-          mintedPkp.tokenId,
-          ethers.utils.toUtf8Bytes(LIT_ACTION_CHECK_ADDRESS_A),
-        ]
-      );
-
-    const removeAuthMethodTx = {
-      from: mintedPkp.ethAddress,
-      to: PKP_PERMISSIONS_CONTRACT_ADDRESS,
-      data: removeAuthMethodTxData,
-      value: 0,
-      gasLimit: 50_000,
-    };
-
-    await ethRequestHandler({
+    console.log(
+      "🔄 Connecting litContracts client with pkpEthersWalletB to network..."
+    );
+    const litContractsPkpSignerB = new LitContracts({
       signer: pkpEthersWalletB,
-      payload: {
-        method: "eth_sendTransaction",
-        params: [removeAuthMethodTx],
-      },
+      network: LitNetwork.Cayenne,
+      debug: true,
     });
+    await litContractsPkpSignerB.connect();
+    console.log(
+      "✅ Connected litContracts client with pkpEthersWalletB to network"
+    );
+
+    console.log("🔄 Removing Lit Action Auth Method A from PKP...");
+    const base58DecodedIpfsCidA = bs58.decode(LIT_ACTION_CHECK_ADDRESS_A);
+    const ipfsCidBytesA = `0x${Buffer.from(base58DecodedIpfsCidA).toString(
+      "hex"
+    )}`;
+
+    litContractsPkpSignerB.pkpPermissionsContract.write.removePermittedAction(
+      mintedPkp.tokenId,
+      ipfsCidBytesA,
+      {
+        gasPrice: await ethersSignerA.provider.getGasPrice(),
+        gasLimit: 1_000_000,
+      }
+    );
     console.log(`✅ Removed Lit Action Auth Method B from PKP`);
 
     return mintedPkp;
