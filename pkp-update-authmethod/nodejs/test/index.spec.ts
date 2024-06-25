@@ -29,6 +29,6 @@ describe("Foo", () => {
 
   it("should", async () => {
     const mintedPkp = await doTheThing();
-    console.log(mintedPkp);
+    console.log(`Minted PKP info: ${mintedPkp}`);
   }).timeout(60_000);
 });

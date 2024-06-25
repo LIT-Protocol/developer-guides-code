@@ -18,6 +18,12 @@ const ETHEREUM_PRIVATE_KEY_A = getEnv("ETHEREUM_PRIVATE_KEY_A");
 const ETHEREUM_PRIVATE_KEY_B = getEnv("ETHEREUM_PRIVATE_KEY_B");
 const LIT_ACTION_CHECK_ADDRESS_A = getEnv("LIT_ACTION_CHECK_ADDRESS_A");
 const LIT_ACTION_CHECK_ADDRESS_B = getEnv("LIT_ACTION_CHECK_ADDRESS_B");
+const LIT_ACTION_A_IPFS_CID_BYTES = `0x${Buffer.from(
+  bs58.decode(LIT_ACTION_CHECK_ADDRESS_A)
+).toString("hex")}`;
+const LIT_ACTION_B_IPFS_CID_BYTES = `0x${Buffer.from(
+  bs58.decode(LIT_ACTION_CHECK_ADDRESS_B)
+).toString("hex")}`;
 
 export const doTheThing = async () => {
   let litNodeClient: LitNodeClient;
@@ -60,6 +66,16 @@ export const doTheThing = async () => {
     console.log(
       `✅ Added Lit Action Auth Method A to PKP. Transaction hash: ${addAuthMethodAReceipt.transactionHash}`
     );
+
+    console.log("🔄 Checking Lit Action Auth Method A permitted for PKP...");
+    const isPermittedA =
+      await litContracts.pkpPermissionsContract.read.isPermittedAction(
+        mintedPkp.tokenId,
+        LIT_ACTION_A_IPFS_CID_BYTES
+      );
+    if (!isPermittedA)
+      throw new Error("Lit Action Auth Method A is not permitted for the PKP");
+    console.log("✅ Lit Action Auth Method A is permitted for PKP");
 
     console.log("🔄 Transferring ownership of PKP to itself...");
     const transferPkpOwnershipReceipt = await (
@@ -152,15 +168,10 @@ export const doTheThing = async () => {
     );
 
     console.log("🔄 Adding Lit Action Auth Method B to PKP...");
-    const base58DecodedIpfsCidB = bs58.decode(LIT_ACTION_CHECK_ADDRESS_B);
-    const ipfsCidBytesB = `0x${Buffer.from(base58DecodedIpfsCidB).toString(
-      "hex"
-    )}`;
-
     const addAuthMethodBReceipt = await (
       await litContractsPkpSignerA.pkpPermissionsContract.write.addPermittedAction(
         mintedPkp.tokenId,
-        ipfsCidBytesB,
+        LIT_ACTION_B_IPFS_CID_BYTES,
         [AuthMethodScope.SignAnything],
         {
           gasPrice: await ethersSignerA.provider.getGasPrice(),
@@ -171,6 +182,16 @@ export const doTheThing = async () => {
     console.log(
       `✅ Added Lit Action Auth Method B to PKP. Transaction hash: ${addAuthMethodBReceipt.transactionHash}`
     );
+
+    console.log("🔄 Checking Lit Action Auth Method B permitted for PKP...");
+    const isPermittedB =
+      await litContracts.pkpPermissionsContract.read.isPermittedAction(
+        mintedPkp.tokenId,
+        LIT_ACTION_B_IPFS_CID_BYTES
+      );
+    if (!isPermittedB)
+      throw new Error("Lit Action Auth Method B is not permitted for the PKP");
+    console.log("✅ Lit Action Auth Method B is permitted for PKP");
 
     console.log(
       "🔄 Getting PKP Session Sigs using Lit Action Auth Method B..."
@@ -229,15 +250,10 @@ export const doTheThing = async () => {
     );
 
     console.log("🔄 Removing Lit Action Auth Method A from PKP...");
-    const base58DecodedIpfsCidA = bs58.decode(LIT_ACTION_CHECK_ADDRESS_A);
-    const ipfsCidBytesA = `0x${Buffer.from(base58DecodedIpfsCidA).toString(
-      "hex"
-    )}`;
-
     const removeAuthMethodAReceipt = await (
       await litContractsPkpSignerB.pkpPermissionsContract.write.removePermittedAction(
         mintedPkp.tokenId,
-        ipfsCidBytesA,
+        LIT_ACTION_A_IPFS_CID_BYTES,
         {
           gasPrice: await ethersSignerA.provider.getGasPrice(),
           gasLimit: 100_000,
