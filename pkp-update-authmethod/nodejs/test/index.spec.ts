@@ -8,7 +8,7 @@ import { doTheThing } from "../src";
 
 const ETHEREUM_PRIVATE_KEY_A = getEnv("ETHEREUM_PRIVATE_KEY_A");
 
-describe("Foo", () => {
+describe("Run the example", () => {
   let litContracts: LitContracts;
 
   before(async function () {
@@ -27,7 +27,7 @@ describe("Foo", () => {
     await litContracts.connect();
   });
 
-  it("should", async () => {
+  it("should return true if the example ran without error", async () => {
     const didTheThing = await doTheThing();
     expect(didTheThing).to.be.true;
   }).timeout(60_000);
