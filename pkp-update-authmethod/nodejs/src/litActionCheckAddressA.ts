@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-export const litActionCheckAddressA = (async () => {
+(async () => {
   const accessControlConditions = [
     {
       contractAddress: "",
@@ -17,7 +17,7 @@ export const litActionCheckAddressA = (async () => {
 
   const testResult = await Lit.Actions.checkConditions({
     conditions: accessControlConditions,
-    authSig,
+    authSig: JSON.parse(authSig),
     chain: "ethereum",
   });
 

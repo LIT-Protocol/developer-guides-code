@@ -11,6 +11,8 @@ import {
   LitAbility,
   LitActionResource,
   LitPKPResource,
+  createSiweMessageWithRecaps,
+  generateAuthSig,
 } from "@lit-protocol/auth-helpers";
 
 import { getEnv } from "./utils";
@@ -28,11 +30,13 @@ export const doTheThing = async () => {
       )
     );
 
+    console.log(ethersSigner.address);
+
     console.log("🔄 Connecting LitContracts client to network...");
     const litContracts = new LitContracts({
       signer: ethersSigner,
       network: LitNetwork.Cayenne,
-      debug: false,
+      debug: true,
     });
     await litContracts.connect();
     console.log("✅ Connected LitContracts client to network");
@@ -44,14 +48,13 @@ export const doTheThing = async () => {
     );
 
     console.log("🔄 Adding Lit Action Auth Method to PKP...");
-    const addAuthMethodReceipt = await litContracts.addPermittedAuthMethod({
+    const addAuthMethodReceipt = await litContracts.addPermittedAction({
       pkpTokenId: mintedPkp.tokenId,
-      authMethodType: AuthMethodType.LitAction,
-      authMethodId: "QmeQv4DqSbkrWdnMwNLu5rvZgNst8NGFsbKJ9Z58qxhr2q",
+      ipfsId: "QmYHJkmnVXB2hCd53uThfwsTkLEB2Ak4J9cu5wL5SBezVv",
       authMethodScopes: [AuthMethodScope.SignAnything],
     });
     console.log(
-      `✅ Added Address Auth Method to PKP. Transaction hash: ${addAuthMethodReceipt.transactionHash}`
+      `✅ Added Lit Action Auth Method to PKP. Transaction hash: ${addAuthMethodReceipt.transactionHash}`
     );
 
     console.log("🔄 Transferring ownership of PKP to itself...");
@@ -72,20 +75,23 @@ export const doTheThing = async () => {
     console.log("🔄 Connecting LitNodeClient to Lit network...");
     litNodeClient = new LitNodeClient({
       litNetwork: LitNetwork.Cayenne,
-      debug: false,
+      debug: true,
     });
     await litNodeClient.connect();
     console.log("✅ Connected LitNodeClient to Lit network");
 
+    // @ts-ignore
+    const toSign = await createSiweMessageWithRecaps({
+      uri: "http://localhost",
+      expiration: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(), // 24 hours
+      walletAddress: ethersSigner.address,
+      nonce: await litNodeClient.getLatestBlockhash(),
+      litNodeClient,
+    });
+
     console.log("🔄 Getting PKP Session Sigs using Lit Action Auth Method...");
-    const pkpSessionSigs = await litNodeClient.getPkpSessionSigs({
+    const sessionSigs = await litNodeClient.getLitActionSessionSigs({
       pkpPublicKey: mintedPkp.publicKey,
-      authMethods: [
-        await EthWalletProvider.authenticate({
-          signer: ethersSigner,
-          litNodeClient,
-        }),
-      ],
       resourceAbilityRequests: [
         {
           resource: new LitPKPResource("*"),
@@ -96,7 +102,15 @@ export const doTheThing = async () => {
           ability: LitAbility.LitActionExecution,
         },
       ],
-      expiration: new Date(Date.now() + 1000 * 60 * 10).toISOString(), // 10 minutes
+      litActionIpfsId: "QmYHJkmnVXB2hCd53uThfwsTkLEB2Ak4J9cu5wL5SBezVv",
+      jsParams: {
+        authSig: JSON.stringify(
+          await generateAuthSig({
+            signer: ethersSigner,
+            toSign,
+          })
+        ),
+      },
     });
     console.log("✅ Got PKP Session Sigs using Lit Action Auth Method");
 
