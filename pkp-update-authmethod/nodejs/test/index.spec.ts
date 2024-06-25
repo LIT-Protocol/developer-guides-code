@@ -30,10 +30,5 @@ describe("Foo", () => {
   it("should", async () => {
     const mintedPkp = await doTheThing();
     console.log(mintedPkp);
-
-    const result = await litContracts.pkpNftContract.read.ownerOf(
-      mintedPkp?.tokenId
-    );
-    console.log(result);
   }).timeout(60_000);
 });

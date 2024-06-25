@@ -40,7 +40,7 @@ export const doTheThing = async () => {
     const litContracts = new LitContracts({
       signer: ethersSignerA,
       network: LitNetwork.Cayenne,
-      debug: true,
+      debug: false,
     });
     await litContracts.connect();
     console.log("✅ Connected LitContracts client to network");
@@ -68,7 +68,7 @@ export const doTheThing = async () => {
         mintedPkp.ethAddress,
         mintedPkp.tokenId,
         {
-          gasLimit: 1_000_000,
+          gasLimit: 125_000,
         }
       )
     ).wait();
@@ -79,7 +79,7 @@ export const doTheThing = async () => {
     console.log("🔄 Connecting LitNodeClient to Lit network...");
     litNodeClient = new LitNodeClient({
       litNetwork: LitNetwork.Cayenne,
-      debug: true,
+      debug: false,
     });
     await litNodeClient.connect();
     console.log("✅ Connected LitNodeClient to Lit network");
@@ -144,7 +144,7 @@ export const doTheThing = async () => {
     const litContractsPkpSignerA = new LitContracts({
       signer: pkpEthersWalletA,
       network: LitNetwork.Cayenne,
-      debug: true,
+      debug: false,
     });
     await litContractsPkpSignerA.connect();
     console.log(
@@ -164,7 +164,7 @@ export const doTheThing = async () => {
         [AuthMethodScope.SignAnything],
         {
           gasPrice: await ethersSignerA.provider.getGasPrice(),
-          gasLimit: 1_000_000,
+          gasLimit: 250_000,
         }
       )
     ).wait();
@@ -221,7 +221,7 @@ export const doTheThing = async () => {
     const litContractsPkpSignerB = new LitContracts({
       signer: pkpEthersWalletB,
       network: LitNetwork.Cayenne,
-      debug: true,
+      debug: false,
     });
     await litContractsPkpSignerB.connect();
     console.log(
@@ -234,15 +234,19 @@ export const doTheThing = async () => {
       "hex"
     )}`;
 
-    litContractsPkpSignerB.pkpPermissionsContract.write.removePermittedAction(
-      mintedPkp.tokenId,
-      ipfsCidBytesA,
-      {
-        gasPrice: await ethersSignerA.provider.getGasPrice(),
-        gasLimit: 1_000_000,
-      }
+    const removeAuthMethodAReceipt = await (
+      await litContractsPkpSignerB.pkpPermissionsContract.write.removePermittedAction(
+        mintedPkp.tokenId,
+        ipfsCidBytesA,
+        {
+          gasPrice: await ethersSignerA.provider.getGasPrice(),
+          gasLimit: 100_000,
+        }
+      )
+    ).wait();
+    console.log(
+      `✅ Removed Lit Action Auth Method B from PKP. Transaction hash: ${removeAuthMethodAReceipt.transactionHash}`
     );
-    console.log(`✅ Removed Lit Action Auth Method B from PKP`);
 
     return mintedPkp;
   } catch (error) {
