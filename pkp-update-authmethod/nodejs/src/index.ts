@@ -278,7 +278,7 @@ export const doTheThing = async () => {
       throw new Error(
         "Lit Action Auth Method A is still permitted for the PKP when it's supposed to have been removed"
       );
-    console.log("✅ Lit Action Auth Method A is permitted for PKP");
+    console.log("✅ Lit Action Auth Method A is no longer permitted for PKP");
 
     return true;
   } catch (error) {
