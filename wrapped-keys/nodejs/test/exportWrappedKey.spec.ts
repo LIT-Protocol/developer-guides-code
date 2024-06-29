@@ -13,10 +13,10 @@ import { GeneratePrivateKeyResult } from "@lit-protocol/wrapped-keys";
 use(chaiJsonSchema);
 
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
-const NEW_ETHEREUM_PRIVATE_KEY = ethers.Wallet.createRandom().privateKey;
+const NEW_ETHEREUM_KEYPAIR_WALLET = ethers.Wallet.createRandom();
 const NEW_SOLANA_PRIVATE_KEY = Keypair.generate().secretKey;
 
-xdescribe("Exporting a wrapped Ethereum key using exportPrivateKey", () => {
+describe("Exporting a wrapped Ethereum key using exportPrivateKey", () => {
   let mintedPkp;
 
   before(async function () {
@@ -32,8 +32,8 @@ xdescribe("Exporting a wrapped Ethereum key using exportPrivateKey", () => {
 
     const pkpAddressKeyWasAttachedTo = await importKey(
       mintedPkp!.publicKey,
-      NEW_ETHEREUM_PRIVATE_KEY,
-      ethersSigner.publicKey,
+      NEW_ETHEREUM_KEYPAIR_WALLET.privateKey,
+      NEW_ETHEREUM_KEYPAIR_WALLET.publicKey,
       "K256"
     );
 
@@ -45,7 +45,7 @@ xdescribe("Exporting a wrapped Ethereum key using exportPrivateKey", () => {
       mintedPkp!.publicKey
     );
     expect(exportedPrivateKeyResult!.decryptedPrivateKey).to.equal(
-      NEW_ETHEREUM_PRIVATE_KEY
+      NEW_ETHEREUM_KEYPAIR_WALLET.privateKey
     );
   }).timeout(120_000);
 });

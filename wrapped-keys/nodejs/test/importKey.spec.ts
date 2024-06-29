@@ -5,6 +5,7 @@ import { getEnv, mintPkp } from "../src/utils";
 import { importKey } from "../src/importKey";
 
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
+const NEW_ETHEREUM_KEYPAIR_WALLET = ethers.Wallet.createRandom();
 
 describe("Importing an Ethereum key using importPrivateKey", () => {
   let ethersSigner: ethers.Wallet;
@@ -25,8 +26,8 @@ describe("Importing an Ethereum key using importPrivateKey", () => {
   it("should import an Ethereum key and attach it to a new PKP", async () => {
     const pkpAddressKeyWasAttachedTo = await importKey(
       mintedPkp!.publicKey,
-      ETHEREUM_PRIVATE_KEY,
-      ethersSigner.publicKey,
+      NEW_ETHEREUM_KEYPAIR_WALLET.privateKey,
+      NEW_ETHEREUM_KEYPAIR_WALLET.publicKey,
       "K256"
     );
 
