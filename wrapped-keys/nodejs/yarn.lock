@@ -1331,7 +1331,7 @@
   dependencies:
     buffer "~6.0.3"
 
-"@solana/web3.js@^1.93.0":
+"@solana/web3.js@^1.93.4":
   version "1.93.4"
   resolved "https://registry.yarnpkg.com/@solana/web3.js/-/web3.js-1.93.4.tgz#f16c9f8584e3bd518186e95c4a6347e269dede4f"
   integrity sha512-6hHtSYmkUPwcm3eGeqBanMT3pDAhTprrm2IUoboSjNN4gKCBEkY9uIeS2TZKLpsGY+R6fDub5pRi+e4xFVv55w==
@@ -4354,9 +4354,9 @@ tslib@^2.3.0, tslib@^2.3.1, tslib@^2.4.0:
   integrity sha512-xNvxJEOUiWPGhUuUdQgAJPKOOJfGnIyKySOc09XkKsgdUV/3E2zvwZYdejjmRgPCgcym1juLH3226yA7sEFJKQ==
 
 tsx@^4.12.0:
-  version "4.15.8"
-  resolved "https://registry.yarnpkg.com/tsx/-/tsx-4.15.8.tgz#e4ef4c31864c7db9abb3d42c21e8f92858dc22be"
-  integrity sha512-B8dMlbbkZPW0GQ7wafyy2TGXyoGYW0IURfWkM1h/WzgG5lxxRoeDU2VbMURmmjwGaCsoKROVTLmQQPe/s2TnLw==
+  version "4.15.9"
+  resolved "https://registry.yarnpkg.com/tsx/-/tsx-4.15.9.tgz#9c8cf4e78b87a9f0e295b8b72cee5c57ad5cbfca"
+  integrity sha512-OEw8VSS5Ug88pj3YhOic1Zmg+mKOuJOcBdpxl402C0D4TjRxu/LTIrr+slbc8nKQA+b7YC9SoHTZAEeQQPBwFw==
   dependencies:
     esbuild "~0.21.4"
     get-tsconfig "^4.7.5"

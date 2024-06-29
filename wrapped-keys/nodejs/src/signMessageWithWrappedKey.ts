@@ -2,11 +2,7 @@ import * as ethers from "ethers";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import { LitNetwork } from "@lit-protocol/constants";
 import { EthWalletProvider } from "@lit-protocol/lit-auth-client";
-import {
-  LitAbility,
-  LitActionResource,
-  LitPKPResource,
-} from "@lit-protocol/auth-helpers";
+import { LitAbility, LitActionResource } from "@lit-protocol/auth-helpers";
 import { api } from "@lit-protocol/wrapped-keys";
 
 const { signMessageWithEncryptedKey } = api;

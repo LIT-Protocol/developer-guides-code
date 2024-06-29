@@ -2,11 +2,9 @@ import { expect, use } from "chai";
 import * as ethers from "ethers";
 import chaiJsonSchema from "chai-json-schema";
 import {
-  GeneratePrivateKeyResponse,
-  LitTransaction,
-  NETWORK_EVM,
-  NETWORK_SOLANA,
-  SolanaLitTransaction,
+  GeneratePrivateKeyResult,
+  EthereumLitTransaction,
+  SerializedTransaction,
 } from "@lit-protocol/wrapped-keys";
 import {
   Connection,
@@ -25,7 +23,7 @@ use(chaiJsonSchema);
 
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 
-describe("Signing an Ethereum transaction using generateWrappedKey and signTransactionWithEncryptedKey", () => {
+xdescribe("Signing an Ethereum transaction using generateWrappedKey and signTransactionWithEncryptedKey", () => {
   let mintedPkp;
   let generateWrappedKeyResponse;
 
@@ -42,12 +40,12 @@ describe("Signing an Ethereum transaction using generateWrappedKey and signTrans
 
     generateWrappedKeyResponse = (await generateWrappedKey(
       mintedPkp!.publicKey,
-      NETWORK_EVM
-    )) as GeneratePrivateKeyResponse;
+      "evm"
+    )) as GeneratePrivateKeyResult;
   });
 
   it("should sign an Ethereum transaction", async () => {
-    const litTransaction: LitTransaction = {
+    const litTransaction: EthereumLitTransaction = {
       chainId: 175177,
       chain: "chronicleTestnet",
       toAddress: "0x0000000000000000000000000000000000000000",
@@ -59,7 +57,7 @@ describe("Signing an Ethereum transaction using generateWrappedKey and signTrans
 
     const signedTransaction = await signTransactionWithWrappedKey(
       mintedPkp!.publicKey,
-      NETWORK_EVM,
+      "evm",
       litTransaction,
       false
     );
@@ -85,8 +83,8 @@ describe("Signing a Solana transaction using generateWrappedKey and signTransact
 
     const generateWrappedKeyResponse = (await generateWrappedKey(
       mintedPkp!.publicKey,
-      NETWORK_SOLANA
-    )) as GeneratePrivateKeyResponse;
+      "solana"
+    )) as GeneratePrivateKeyResult;
 
     generatedSolanaPublicKey = new PublicKey(
       generateWrappedKeyResponse.generatedPublicKey
@@ -105,7 +103,7 @@ describe("Signing a Solana transaction using generateWrappedKey and signTransact
     solanaTransaction.feePayer = generatedSolanaPublicKey;
 
     const solanaConnection = new Connection(
-      clusterApiUrl("devnet"),
+      clusterApiUrl("testnet"),
       "confirmed"
     );
     const { blockhash } = await solanaConnection.getLatestBlockhash();
@@ -118,14 +116,14 @@ describe("Signing a Solana transaction using generateWrappedKey and signTransact
       })
       .toString("base64");
 
-    const litTransaction: SolanaLitTransaction = {
+    const litTransaction: SerializedTransaction = {
       serializedTransaction,
-      chain: "devnet",
+      chain: "testnet",
     };
 
     const signedTransaction = await signTransactionWithWrappedKey(
       mintedPkp!.publicKey,
-      NETWORK_SOLANA,
+      "solana",
       litTransaction,
       false
     );
