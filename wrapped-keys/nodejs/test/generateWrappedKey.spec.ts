@@ -4,11 +4,7 @@ import chaiJsonSchema from "chai-json-schema";
 
 import { getEnv, mintPkp } from "../src/utils";
 import { generateWrappedKey } from "../src/generateWrappedKey";
-import {
-  GeneratePrivateKeyResponse,
-  NETWORK_EVM,
-  NETWORK_SOLANA,
-} from "@lit-protocol/wrapped-keys";
+import { GeneratePrivateKeyResult } from "@lit-protocol/wrapped-keys";
 
 use(chaiJsonSchema);
 
@@ -49,8 +45,8 @@ describe("Generating an Ethereum Wrapped Key using generatePrivateKey", () => {
 
     const response = (await generateWrappedKey(
       mintedPkp!.publicKey,
-      NETWORK_EVM
-    )) as GeneratePrivateKeyResponse;
+      "evm"
+    )) as GeneratePrivateKeyResult;
     expect(response).to.be.jsonSchema(responseSchema);
   }).timeout(120_000);
 });
@@ -90,8 +86,8 @@ describe("Generating a Solana Wrapped Key using generatePrivateKey", () => {
 
     const response = (await generateWrappedKey(
       mintedPkp!.publicKey,
-      NETWORK_SOLANA
-    )) as GeneratePrivateKeyResponse;
+      "solana"
+    )) as GeneratePrivateKeyResult;
     expect(response).to.be.jsonSchema(responseSchema);
   }).timeout(120_000);
 });

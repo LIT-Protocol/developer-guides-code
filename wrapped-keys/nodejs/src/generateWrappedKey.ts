@@ -1,17 +1,11 @@
 import * as ethers from "ethers";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import { LitNetwork } from "@lit-protocol/constants";
-import {
-  LitAbility,
-  LitActionResource,
-  LitPKPResource,
-} from "@lit-protocol/auth-helpers";
+import { LitAbility, LitActionResource } from "@lit-protocol/auth-helpers";
 import { EthWalletProvider } from "@lit-protocol/lit-auth-client";
-import {
-  generatePrivateKey,
-  NETWORK_EVM,
-  NETWORK_SOLANA,
-} from "@lit-protocol/wrapped-keys";
+import { api } from "@lit-protocol/wrapped-keys";
+
+const { generatePrivateKey } = api;
 
 import { getEnv } from "./utils";
 
@@ -31,15 +25,15 @@ export const generateWrappedKey = async (
       )
     );
 
-    console.log("Connecting to Lit network...");
+    console.log("🔄 Connecting to Lit network...");
     litNodeClient = new LitNodeClient({
       litNetwork: LitNetwork.Cayenne,
       debug: false,
     });
     await litNodeClient.connect();
-    console.log("Connected to Lit network");
+    console.log("✅ Connected to Lit network");
 
-    console.log("Getting PKP Session Sigs...");
+    console.log("🔄 Getting PKP Session Sigs...");
     const pkpSessionSigs = await litNodeClient.getPkpSessionSigs({
       pkpPublicKey,
       authMethods: [
@@ -57,15 +51,15 @@ export const generateWrappedKey = async (
       ],
       expiration: new Date(Date.now() + 1000 * 60 * 10).toISOString(), // 10 minutes
     });
-    console.log("Got PKP Session Sigs");
+    console.log("✅ Got PKP Session Sigs");
 
-    console.log("Generating wrapped key...");
+    console.log("🔄 Generating wrapped key...");
     const { pkpAddress, generatedPublicKey } = await generatePrivateKey({
       pkpSessionSigs,
-      network: evmOrSolana === NETWORK_EVM ? NETWORK_EVM : NETWORK_SOLANA,
+      network: evmOrSolana,
       litNodeClient,
     });
-    console.log("Generated wrapped key");
+    console.log("✅ Generated wrapped key");
     return { pkpAddress, generatedPublicKey };
   } catch (error) {
     console.error;
