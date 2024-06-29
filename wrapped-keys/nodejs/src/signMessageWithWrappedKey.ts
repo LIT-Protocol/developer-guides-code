@@ -7,11 +7,9 @@ import {
   LitActionResource,
   LitPKPResource,
 } from "@lit-protocol/auth-helpers";
-import {
-  NETWORK_EVM,
-  NETWORK_SOLANA,
-  signMessageWithEncryptedKey,
-} from "@lit-protocol/wrapped-keys";
+import { api } from "@lit-protocol/wrapped-keys";
+
+const { signMessageWithEncryptedKey } = api;
 
 import { getEnv } from "./utils";
 
@@ -32,15 +30,15 @@ export const signMessageWithWrappedKey = async (
       )
     );
 
-    console.log("Connecting to Lit network...");
+    console.log("🔄 Connecting to Lit network...");
     litNodeClient = new LitNodeClient({
       litNetwork: LitNetwork.Cayenne,
       debug: false,
     });
     await litNodeClient.connect();
-    console.log("Connected to Lit network");
+    console.log("✅ Connected to Lit network");
 
-    console.log("Getting PKP Session Sigs...");
+    console.log("🔄 Getting PKP Session Sigs...");
     const pkpSessionSigs = await litNodeClient.getPkpSessionSigs({
       pkpPublicKey,
       authMethods: [
@@ -58,16 +56,16 @@ export const signMessageWithWrappedKey = async (
       ],
       expiration: new Date(Date.now() + 1000 * 60 * 10).toISOString(), // 10 minutes
     });
-    console.log("Got PKP Session Sigs");
+    console.log("✅ Got PKP Session Sigs");
 
-    console.log("Signing message with Wrapped Key...");
+    console.log("🔄 Signing message with Wrapped Key...");
     const signedMessage = await signMessageWithEncryptedKey({
       pkpSessionSigs,
-      network: evmOrSolana === NETWORK_EVM ? NETWORK_EVM : NETWORK_SOLANA,
+      network: evmOrSolana,
       messageToSign,
       litNodeClient,
     });
-    console.log("Signed message");
+    console.log("✅ Signed message");
     return signedMessage;
   } catch (error) {
     console.error(error);

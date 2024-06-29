@@ -1,11 +1,7 @@
 import { expect, use } from "chai";
 import * as ethers from "ethers";
 import chaiJsonSchema from "chai-json-schema";
-import {
-  GeneratePrivateKeyResponse,
-  NETWORK_EVM,
-  NETWORK_SOLANA,
-} from "@lit-protocol/wrapped-keys";
+import { GeneratePrivateKeyResult } from "@lit-protocol/wrapped-keys";
 import { PublicKey } from "@solana/web3.js";
 import bs58 from "bs58";
 import nacl from "tweetnacl";
@@ -35,8 +31,8 @@ describe("Signing an Ethereum message using generateWrappedKey and signMessageWi
 
     const generateWrappedKeyResponse = (await generateWrappedKey(
       mintedPkp!.publicKey,
-      NETWORK_EVM
-    )) as GeneratePrivateKeyResponse;
+      "evm"
+    )) as GeneratePrivateKeyResult;
 
     const sanitizedPublicKey =
       generateWrappedKeyResponse.generatedPublicKey.slice(
@@ -55,7 +51,7 @@ describe("Signing an Ethereum message using generateWrappedKey and signMessageWi
 
     const signedMessage = (await signMessageWithWrappedKey(
       mintedPkp!.publicKey,
-      NETWORK_EVM,
+      "evm",
       messageToSign
     )) as string;
 
@@ -86,8 +82,8 @@ describe("Signing a Solana message using generateWrappedKey and signMessageWithE
 
     const generateWrappedKeyResponse = (await generateWrappedKey(
       mintedPkp!.publicKey,
-      NETWORK_SOLANA
-    )) as GeneratePrivateKeyResponse;
+      "solana"
+    )) as GeneratePrivateKeyResult;
 
     generatedSolanaPublicKey = new PublicKey(
       generateWrappedKeyResponse.generatedPublicKey
@@ -99,7 +95,7 @@ describe("Signing a Solana message using generateWrappedKey and signMessageWithE
 
     const signedMessage = (await signMessageWithWrappedKey(
       mintedPkp!.publicKey,
-      NETWORK_SOLANA,
+      "solana",
       messageToSign
     )) as string;
 
