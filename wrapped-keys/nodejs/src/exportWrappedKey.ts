@@ -2,12 +2,10 @@ import * as ethers from "ethers";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import { LitNetwork } from "@lit-protocol/constants";
 import { EthWalletProvider } from "@lit-protocol/lit-auth-client";
-import {
-  LitAbility,
-  LitActionResource,
-  LitPKPResource,
-} from "@lit-protocol/auth-helpers";
-import { exportPrivateKey } from "@lit-protocol/wrapped-keys";
+import { LitAbility, LitActionResource } from "@lit-protocol/auth-helpers";
+import { api } from "@lit-protocol/wrapped-keys";
+
+const { exportPrivateKey } = api;
 
 import { getEnv } from "./utils";
 
@@ -24,15 +22,15 @@ export const exportWrappedKey = async (pkpPublicKey: string) => {
       )
     );
 
-    console.log("Connecting to Lit network...");
+    console.log("🔄 Connecting to Lit network...");
     litNodeClient = new LitNodeClient({
       litNetwork: LitNetwork.Cayenne,
       debug: false,
     });
     await litNodeClient.connect();
-    console.log("Connected to Lit network");
+    console.log("✅ Connected to Lit network");
 
-    console.log("Getting PKP Session Sigs...");
+    console.log("🔄 Getting PKP Session Sigs...");
     const pkpSessionSigs = await litNodeClient.getPkpSessionSigs({
       pkpPublicKey,
       authMethods: [
@@ -50,13 +48,15 @@ export const exportWrappedKey = async (pkpPublicKey: string) => {
       ],
       expiration: new Date(Date.now() + 1000 * 60 * 10).toISOString(), // 10 minutes
     });
-    console.log("Got PKP Session Sigs");
+    console.log("✅ Got PKP Session Sigs");
 
-    console.log("Exporting private key...");
-    return exportPrivateKey({
+    console.log("🔄 Exporting private key...");
+    const exportedPrivateKey = await exportPrivateKey({
       pkpSessionSigs,
       litNodeClient,
     });
+    console.log("✅ Exported private key");
+    return exportedPrivateKey;
   } catch (error) {
     console.error(error);
   } finally {
