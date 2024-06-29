@@ -5,10 +5,11 @@
   "license": "MIT",
   "scripts": {
     "test": "npx @dotenvx/dotenvx run -- mocha test/**/*.spec.ts",
+    "test:import": "npx @dotenvx/dotenvx run -- mocha test/**/importKey.spec.ts",
     "test:export": "npx @dotenvx/dotenvx run -- mocha test/**/exportWrappedKey.spec.ts",
     "test:generate": "npx @dotenvx/dotenvx run -- mocha test/**/generateWrappedKey.spec.ts",
     "test:getMetadata": "npx @dotenvx/dotenvx run -- mocha test/**/getWrappedKeyMetadata.spec.ts",
-    "test:import": "npx @dotenvx/dotenvx run -- mocha test/**/importKey.spec.ts",
+    "test:storeMetadata": "npx @dotenvx/dotenvx run -- mocha test/**/storeWrappedKeyMetadata.spec.ts",
     "test:sign:tx": "npx @dotenvx/dotenvx run -- mocha test/**/signTransactionWithWrappedKey.spec.ts",
     "test:sign:msg": "npx @dotenvx/dotenvx run -- mocha test/**/signMessageWithWrappedKey.spec.ts"
   },

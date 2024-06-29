@@ -1,0 +1,97 @@
+import * as ethers from "ethers";
+import { LitNodeClient, encryptString } from "@lit-protocol/lit-node-client";
+import { LitNetwork } from "@lit-protocol/constants";
+import { LitAbility, LitActionResource } from "@lit-protocol/auth-helpers";
+import { EthWalletProvider } from "@lit-protocol/lit-auth-client";
+import { api } from "@lit-protocol/wrapped-keys";
+
+const { storeEncryptedKeyMetadata } = api;
+
+import { getEnv } from "./utils";
+
+const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
+
+export const storeWrappedKeyMetadata = async (
+  pkpPublicKey: string,
+  pkpEthAddress: string,
+  privateKey: string,
+  publicKey: string,
+  keyType: "K256" | "ed25519"
+) => {
+  let litNodeClient: LitNodeClient;
+
+  try {
+    const ethersSigner = new ethers.Wallet(
+      ETHEREUM_PRIVATE_KEY,
+      new ethers.providers.JsonRpcProvider(
+        "https://chain-rpc.litprotocol.com/http"
+      )
+    );
+
+    console.log("🔄 Connecting to Lit network...");
+    litNodeClient = new LitNodeClient({
+      litNetwork: LitNetwork.Cayenne,
+      debug: false,
+    });
+    await litNodeClient.connect();
+    console.log("✅ Connected to Lit network");
+
+    console.log("🔄 Getting PKP Session Sigs...");
+    const pkpSessionSigs = await litNodeClient.getPkpSessionSigs({
+      pkpPublicKey,
+      authMethods: [
+        await EthWalletProvider.authenticate({
+          signer: ethersSigner,
+          litNodeClient,
+          expiration: new Date(Date.now() + 1000 * 60 * 10).toISOString(), // 10 minutes
+        }),
+      ],
+      resourceAbilityRequests: [
+        {
+          resource: new LitActionResource("*"),
+          ability: LitAbility.LitActionExecution,
+        },
+      ],
+      expiration: new Date(Date.now() + 1000 * 60 * 10).toISOString(), // 10 minutes
+    });
+    console.log("✅ Got PKP Session Sigs");
+
+    console.log("🔄 Encrypting private key...");
+    const { ciphertext, dataToEncryptHash } = await encryptString(
+      {
+        accessControlConditions: [
+          {
+            contractAddress: "",
+            standardContractType: "",
+            chain: "ethereum",
+            method: "",
+            parameters: [":userAddress"],
+            returnValueTest: {
+              comparator: "=",
+              value: pkpEthAddress,
+            },
+          },
+        ],
+        dataToEncrypt: privateKey,
+      },
+      litNodeClient
+    );
+    console.log("✅ Encrypted private key");
+
+    console.log("🔄 Storing Wrapped Key metadata...");
+    const success = await storeEncryptedKeyMetadata({
+      pkpSessionSigs,
+      litNodeClient,
+      ciphertext,
+      dataToEncryptHash,
+      publicKey,
+      keyType,
+    });
+    console.log(`✅ Stored Wrapped Key metadata`);
+    return success;
+  } catch (error) {
+    console.error(error);
+  } finally {
+    litNodeClient!.disconnect();
+  }
+};
