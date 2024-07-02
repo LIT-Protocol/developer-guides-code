@@ -15,13 +15,13 @@
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^0.44.1",
-    "@lit-protocol/auth-browser": "6.0.3-wrapped-keys.beta.4",
-    "@lit-protocol/auth-helpers": "6.0.3-wrapped-keys.beta.4",
-    "@lit-protocol/constants": "6.0.3-wrapped-keys.beta.4",
-    "@lit-protocol/contracts-sdk": "6.0.3-wrapped-keys.beta.4",
-    "@lit-protocol/lit-auth-client": "6.0.3-wrapped-keys.beta.4",
-    "@lit-protocol/lit-node-client": "6.0.3-wrapped-keys.beta.4",
-    "@lit-protocol/wrapped-keys": "6.0.3-wrapped-keys.beta.4",
+    "@lit-protocol/auth-browser": "6.0.3-wrapped-keys.beta.5",
+    "@lit-protocol/auth-helpers": "6.0.3-wrapped-keys.beta.5",
+    "@lit-protocol/constants": "6.0.3-wrapped-keys.beta.5",
+    "@lit-protocol/contracts-sdk": "6.0.3-wrapped-keys.beta.5",
+    "@lit-protocol/lit-auth-client": "6.0.3-wrapped-keys.beta.5",
+    "@lit-protocol/lit-node-client": "6.0.3-wrapped-keys.beta.5",
+    "@lit-protocol/wrapped-keys": "6.0.3-wrapped-keys.beta.5",
     "ethers": "v5"
   },
   "devDependencies": {
