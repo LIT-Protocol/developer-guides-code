@@ -9,12 +9,12 @@
 // }
 
 import * as ethers from "ethers";
-import { LitNodeClient } from "@lit-protocol/lit-node-client";
+import { LitNodeClient, disconnectWeb3 } from "@lit-protocol/lit-node-client";
 import { LitNetwork } from "@lit-protocol/constants";
 import {
   LitAbility,
-  LitAccessControlConditionResource,
   LitActionResource,
+  LitPKPResource,
 } from "@lit-protocol/auth-helpers";
 import { EthWalletProvider } from "@lit-protocol/lit-auth-client";
 import { GeneratePrivateKeyResult, api } from "@lit-protocol/wrapped-keys";
@@ -52,16 +52,12 @@ export const generateWrappedKey = async (
       ],
       resourceAbilityRequests: [
         {
+          resource: new LitPKPResource("*"),
+          ability: LitAbility.PKPSigning,
+        },
+        {
           resource: new LitActionResource("*"),
           ability: LitAbility.LitActionExecution,
-        },
-        {
-          resource: new LitAccessControlConditionResource("*"),
-          ability: LitAbility.AccessControlConditionDecryption,
-        },
-        {
-          resource: new LitAccessControlConditionResource("*"),
-          ability: LitAbility.AccessControlConditionSigning,
         },
       ],
       expiration: new Date(Date.now() + 1000 * 60 * 10).toISOString(), // 10 minutes
@@ -84,6 +80,8 @@ export const generateWrappedKey = async (
 };
 
 export const runTheExample = async () => {
+  disconnectWeb3();
+
   const ethersSigner = new ethers.Wallet(
     ETHEREUM_PRIVATE_KEY,
     new ethers.providers.JsonRpcProvider(
