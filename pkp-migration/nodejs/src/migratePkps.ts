@@ -175,7 +175,6 @@ export const migratePkps = async (
           newPkpTokenId
         );
 
-      // console.log(`receipt: ${JSON.stringify(receipt, null, 2)}`);
       newPkps[pkp] = {
         newPkp,
         txHash: receipt.transactionHash,
