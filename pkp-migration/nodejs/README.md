@@ -4,7 +4,7 @@ Because each Lit network starts with a new round of Distributed Key Generation (
 
 This migration tools aims to alleviate some of the friction around migrating PKPs between Lit networks. It simply takes an array of existing PKP public keys on the source Lit network, loops over them to fetch their configured Auth Methods and Scopes, then mints new PKPs on the target Lit network with the same Auth Methods and Scopes.
 
-It's important to not though that the new PKPs on the target Lit network will have new Ethereum addresses. Whatever is tied to the existing PKP Ethereum addresses, such as assets or account abstraction wallets that have the address as an authorized signer, will need to be manually migrated to the new PKP Ethereum address.
+It's important to note that the new PKPs on the target Lit network will have new Ethereum addresses. Whatever is tied to the existing PKP Ethereum addresses, such as assets or account abstraction wallets that have the address as an authorized signer, will need to be manually migrated to the new PKP Ethereum address.
 
 ## How to Use this Script
 
