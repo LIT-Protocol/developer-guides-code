@@ -123,8 +123,8 @@ export const doTheThing = async () => {
     console.log("🔄 Signing and sending a transaction with Wrapped Key...");
     const transferAmount = "0.0000000001";
     const unsignedTransaction: EthereumLitTransaction = {
-      chainId: 175177,
-      chain: "chronicleTestnet",
+      chainId: 2311,
+      chain: "datilDevnet",
       toAddress: fundingEthersSigner.address,
       value: transferAmount,
       gasLimit: 21_000,
