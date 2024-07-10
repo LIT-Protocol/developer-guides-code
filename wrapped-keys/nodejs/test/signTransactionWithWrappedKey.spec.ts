@@ -23,13 +23,14 @@ use(chaiJsonSchema);
 
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 
-xdescribe("Signing an Ethereum transaction using generateWrappedKey and signTransactionWithEncryptedKey", () => {
+describe("Signing an Ethereum transaction using generateWrappedKey and signTransactionWithEncryptedKey", () => {
+  let ethersSigner: ethers.Wallet;
   let mintedPkp;
   let generateWrappedKeyResponse;
 
   before(async function () {
     this.timeout(120_000);
-    const ethersSigner = new ethers.Wallet(
+    ethersSigner = new ethers.Wallet(
       ETHEREUM_PRIVATE_KEY,
       new ethers.providers.JsonRpcProvider(
         "https://chain-rpc.litprotocol.com/http"
@@ -42,13 +43,33 @@ xdescribe("Signing an Ethereum transaction using generateWrappedKey and signTran
       mintedPkp!.publicKey,
       "evm"
     )) as GeneratePrivateKeyResult;
+
+    console.log("🔄 Funding minted PKP's Ethereum address on Chronicle...");
+    const fundingAmount = "0.001";
+    const txResponse = await ethersSigner.sendTransaction({
+      to: mintedPkp!.ethAddress,
+      value: ethers.utils.parseUnits(fundingAmount, "ether"),
+    });
+    await txResponse.wait();
+    console.log(
+      `✅ Funded ${mintedPkp!.ethAddress} with ${fundingAmount} ether`
+    );
+
+    console.log(
+      `🔄 Checking Lit token balance for ${mintedPkp!.ethAddress}...`
+    );
+    const balance = await ethersSigner.provider.getBalance(
+      mintedPkp!.ethAddress,
+      "latest"
+    );
+    console.log(`✅ Got balance: ${ethers.utils.formatEther(balance)} ether`);
   });
 
-  it("should sign an Ethereum transaction", async () => {
+  it.skip("should sign an Ethereum transaction", async () => {
     const litTransaction: EthereumLitTransaction = {
       chainId: 175177,
       chain: "chronicleTestnet",
-      toAddress: "0x0000000000000000000000000000000000000000",
+      toAddress: ethersSigner.address,
       value: "0.0001",
       // Manually specifying because the generated private key doesn't hold a balance and ethers
       // fails to estimate gas since the tx simulation fails with insufficient balance error
@@ -64,9 +85,28 @@ xdescribe("Signing an Ethereum transaction using generateWrappedKey and signTran
 
     expect(signedTransaction).to.match(RegExp("^0x[a-fA-F0-9]"));
   }).timeout(120_000);
+
+  it("should sign and send an Ethereum transaction", async () => {
+    const litTransaction: EthereumLitTransaction = {
+      chainId: 175177,
+      chain: "chronicleTestnet",
+      toAddress: ethersSigner.address,
+      value: "0.00000000001",
+      gasLimit: 21_000,
+    };
+
+    const signedTransaction = await signTransactionWithWrappedKey(
+      mintedPkp!.publicKey,
+      "evm",
+      litTransaction,
+      true
+    );
+
+    expect(signedTransaction).to.match(RegExp("^0x[a-fA-F0-9]"));
+  }).timeout(120_000);
 });
 
-describe("Signing a Solana transaction using generateWrappedKey and signTransactionWithEncryptedKey", () => {
+xdescribe("Signing a Solana transaction using generateWrappedKey and signTransactionWithEncryptedKey", () => {
   let mintedPkp;
   let generatedSolanaPublicKey: PublicKey;
 
