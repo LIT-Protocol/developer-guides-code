@@ -34,7 +34,7 @@ export const doTheThing = async () => {
 
     console.log("🔄 Connecting to Lit network...");
     litNodeClient = new LitNodeClient({
-      litNetwork: LitNetwork.DatilDev,
+      litNetwork: LitNetwork.Cayenne,
       debug: true,
     });
     await litNodeClient.connect();
@@ -122,7 +122,7 @@ export const doTheThing = async () => {
     await txResponse.wait();
     console.log(`✅ Funded ${pkpAddress} with ${fundingAmount} ether`);
 
-    const sleepTime = 30_000;
+    const sleepTime = 10_000;
     console.log(`🔄 Sleeping for ${sleepTime / 1000} seconds...`);
     await sleep(sleepTime);
     console.log("✅ Slept");
@@ -135,12 +135,13 @@ export const doTheThing = async () => {
     console.log(`✅ Got balance: ${ethers.utils.formatEther(balance)} ether`);
 
     console.log("🔄 Signing and sending a transaction with Wrapped Key...");
-    const transferAmount = "0.0001";
+    const transferAmount = "0.00000000001";
     const unsignedTransaction: EthereumLitTransaction = {
       chainId: 175177,
       chain: "chronicleTestnet",
       toAddress: fundingEthersSigner.address,
       value: transferAmount,
+      gasPrice: "1",
       gasLimit: 21_000,
     };
 
