@@ -27,7 +27,7 @@ export const doTheThing = async () => {
     let userEthersSigner = ethers.Wallet.createRandom();
     userEthersSigner = userEthersSigner.connect(
       new ethers.providers.JsonRpcProvider(
-        "https://chain-rpc.litprotocol.com/http"
+        "https://lit-protocol.calderachain.xyz/replica-http"
       )
     );
     console.log(`✅ Created the Ethereum wallet: ${userEthersSigner.address}`);
@@ -46,7 +46,7 @@ export const doTheThing = async () => {
         relayApiKey: LIT_RELAYER_API_KEY,
         // relayUrl: "https://cayenne-relayer.getlit.dev",
       },
-      rpcUrl: "https://chain-rpc.litprotocol.com/http",
+      rpcUrl: "https://lit-protocol.calderachain.xyz/replica-http",
       litNodeClient,
     });
     console.log("✅ Initialized a Lit Auth client");
@@ -112,7 +112,7 @@ export const doTheThing = async () => {
     const fundingEthersSigner = new ethers.Wallet(
       FUNDING_WALLET_PRIVATE_KEY,
       new ethers.providers.JsonRpcProvider(
-        "https://chain-rpc.litprotocol.com/http"
+        "https://lit-protocol.calderachain.xyz/replica-http"
       )
     );
     const txResponse = await fundingEthersSigner.sendTransaction({
