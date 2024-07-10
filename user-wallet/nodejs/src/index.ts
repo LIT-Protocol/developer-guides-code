@@ -35,7 +35,7 @@ export const doTheThing = async () => {
     console.log("🔄 Connecting to Lit network...");
     litNodeClient = new LitNodeClient({
       litNetwork: LitNetwork.DatilDev,
-      debug: false,
+      debug: true,
     });
     await litNodeClient.connect();
     console.log("✅ Connected to Lit network");
@@ -44,7 +44,9 @@ export const doTheThing = async () => {
     const litAuthClient = new LitAuthClient({
       litRelayConfig: {
         relayApiKey: LIT_RELAYER_API_KEY,
+        // relayUrl: "https://cayenne-relayer.getlit.dev",
       },
+      rpcUrl: "https://chain-rpc.litprotocol.com/http",
       litNodeClient,
     });
     console.log("✅ Initialized a Lit Auth client");
@@ -106,7 +108,7 @@ export const doTheThing = async () => {
     );
 
     console.log("🔄 Funding user's Ethereum address on Chronicle...");
-    const fundingAmount = "0.0000001";
+    const fundingAmount = "0.001";
     const fundingEthersSigner = new ethers.Wallet(
       FUNDING_WALLET_PRIVATE_KEY,
       new ethers.providers.JsonRpcProvider(
@@ -120,11 +122,23 @@ export const doTheThing = async () => {
     await txResponse.wait();
     console.log(`✅ Funded ${pkpAddress} with ${fundingAmount} ether`);
 
+    const sleepTime = 30_000;
+    console.log(`🔄 Sleeping for ${sleepTime / 1000} seconds...`);
+    await sleep(sleepTime);
+    console.log("✅ Slept");
+
+    console.log(`🔄 Check Lit token balance for ${pkps[0].ethAddress}...`);
+    const balance = await fundingEthersSigner.provider.getBalance(
+      pkpAddress,
+      "latest"
+    );
+    console.log(`✅ Got balance: ${ethers.utils.formatEther(balance)} ether`);
+
     console.log("🔄 Signing and sending a transaction with Wrapped Key...");
-    const transferAmount = "0.0000000001";
+    const transferAmount = "0.0001";
     const unsignedTransaction: EthereumLitTransaction = {
-      chainId: 2311,
-      chain: "datilDevnet",
+      chainId: 175177,
+      chain: "chronicleTestnet",
       toAddress: fundingEthersSigner.address,
       value: transferAmount,
       gasLimit: 21_000,
@@ -146,5 +160,9 @@ export const doTheThing = async () => {
     litNodeClient!.disconnect();
   }
 };
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 await doTheThing();
