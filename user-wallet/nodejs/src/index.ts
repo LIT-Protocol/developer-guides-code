@@ -10,11 +10,11 @@ import {
   LitAuthClient,
 } from "@lit-protocol/lit-auth-client";
 import { api, EthereumLitTransaction } from "@lit-protocol/wrapped-keys";
+import { LitAbility, LitActionResource } from "@lit-protocol/auth-helpers";
 
 const { importPrivateKey, signTransactionWithEncryptedKey } = api;
 
 import { getEnv } from "./utils";
-import { LitAbility, LitActionResource } from "@lit-protocol/auth-helpers";
 
 const LIT_RELAYER_API_KEY = getEnv("LIT_RELAYER_API_KEY");
 const FUNDING_WALLET_PRIVATE_KEY = getEnv("FUNDING_WALLET_PRIVATE_KEY");
@@ -35,7 +35,7 @@ export const doTheThing = async () => {
     console.log("🔄 Connecting to Lit network...");
     litNodeClient = new LitNodeClient({
       litNetwork: LitNetwork.Cayenne,
-      debug: true,
+      debug: false,
     });
     await litNodeClient.connect();
     console.log("✅ Connected to Lit network");
@@ -44,7 +44,6 @@ export const doTheThing = async () => {
     const litAuthClient = new LitAuthClient({
       litRelayConfig: {
         relayApiKey: LIT_RELAYER_API_KEY,
-        // relayUrl: "https://cayenne-relayer.getlit.dev",
       },
       rpcUrl: "https://lit-protocol.calderachain.xyz/replica-http",
       litNodeClient,
@@ -108,7 +107,7 @@ export const doTheThing = async () => {
     );
 
     console.log("🔄 Funding user's Ethereum address on Chronicle...");
-    const fundingAmount = "0.001";
+    const fundingAmount = "0.00001";
     const fundingEthersSigner = new ethers.Wallet(
       FUNDING_WALLET_PRIVATE_KEY,
       new ethers.providers.JsonRpcProvider(
@@ -116,20 +115,19 @@ export const doTheThing = async () => {
       )
     );
     const txResponse = await fundingEthersSigner.sendTransaction({
-      to: pkpAddress,
+      to: userEthersSigner.address,
       value: ethers.utils.parseUnits(fundingAmount, "ether"),
     });
     await txResponse.wait();
-    console.log(`✅ Funded ${pkpAddress} with ${fundingAmount} ether`);
+    console.log(
+      `✅ Funded ${userEthersSigner.address} with ${fundingAmount} ether`
+    );
 
-    const sleepTime = 10_000;
-    console.log(`🔄 Sleeping for ${sleepTime / 1000} seconds...`);
-    await sleep(sleepTime);
-    console.log("✅ Slept");
-
-    console.log(`🔄 Check Lit token balance for ${pkps[0].ethAddress}...`);
+    console.log(
+      `🔄 Check Lit token balance for ${userEthersSigner.address}...`
+    );
     const balance = await fundingEthersSigner.provider.getBalance(
-      pkpAddress,
+      userEthersSigner.address,
       "latest"
     );
     console.log(`✅ Got balance: ${ethers.utils.formatEther(balance)} ether`);
@@ -141,8 +139,6 @@ export const doTheThing = async () => {
       chain: "chronicleTestnet",
       toAddress: fundingEthersSigner.address,
       value: transferAmount,
-      gasPrice: "1",
-      gasLimit: 21_000,
     };
 
     const signedTransactionHash = await signTransactionWithEncryptedKey({
@@ -161,9 +157,5 @@ export const doTheThing = async () => {
     litNodeClient!.disconnect();
   }
 };
-
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
 
 await doTheThing();
