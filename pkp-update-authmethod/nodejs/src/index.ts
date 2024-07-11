@@ -25,27 +25,27 @@ const LIT_ACTION_B_IPFS_CID_BYTES = `0x${Buffer.from(
   bs58.decode(LIT_ACTION_CHECK_ADDRESS_B)
 ).toString("hex")}`;
 
-export const doTheThing = async () => {
+export const runTheExample = async () => {
   let litNodeClient: LitNodeClient;
 
   try {
     const ethersSignerA = new ethers.Wallet(
       ETHEREUM_PRIVATE_KEY_A,
       new ethers.providers.JsonRpcProvider(
-        "https://chain-rpc.litprotocol.com/http"
+        "https://vesuvius-rpc.litprotocol.com/"
       )
     );
     const ethersSignerB = new ethers.Wallet(
       ETHEREUM_PRIVATE_KEY_B,
       new ethers.providers.JsonRpcProvider(
-        "https://chain-rpc.litprotocol.com/http"
+        "https://vesuvius-rpc.litprotocol.com/"
       )
     );
 
     console.log("🔄 Connecting LitContracts client to network...");
     const litContracts = new LitContracts({
       signer: ethersSignerA,
-      network: LitNetwork.Cayenne,
+      network: LitNetwork.DatilDev,
       debug: false,
     });
     await litContracts.connect();
@@ -94,8 +94,9 @@ export const doTheThing = async () => {
 
     console.log("🔄 Connecting LitNodeClient to Lit network...");
     litNodeClient = new LitNodeClient({
-      litNetwork: LitNetwork.Cayenne,
+      litNetwork: LitNetwork.DatilDev,
       debug: false,
+      rpcUrl: "https://vesuvius-rpc.litprotocol.com/",
     });
     await litNodeClient.connect();
     console.log("✅ Connected LitNodeClient to Lit network");
@@ -142,12 +143,21 @@ export const doTheThing = async () => {
     const fundPkpTxReceipt = await (
       await ethersSignerA.sendTransaction({
         to: mintedPkp.ethAddress,
-        value: ethers.utils.parseEther("0.0001"),
+        value: ethers.utils.parseEther("0.001"),
       })
     ).wait();
     console.log(
       `✅ Funded PKP ETH Address. Transaction hash: ${fundPkpTxReceipt.transactionHash}`
     );
+
+    console.log(
+      `🔄 Checking Lit token balance for PKP ${mintedPkp.ethAddress}...`
+    );
+    const balance = await ethersSignerA.provider.getBalance(
+      mintedPkp.ethAddress,
+      "latest"
+    );
+    console.log(`✅ Got balance: ${ethers.utils.formatEther(balance)} ether`);
 
     const pkpEthersWalletA = new PKPEthersWallet({
       litNodeClient,
@@ -161,7 +171,7 @@ export const doTheThing = async () => {
     );
     const litContractsPkpSignerA = new LitContracts({
       signer: pkpEthersWalletA,
-      network: LitNetwork.Cayenne,
+      network: LitNetwork.DatilDev,
       debug: false,
     });
     await litContractsPkpSignerA.connect();
@@ -176,7 +186,7 @@ export const doTheThing = async () => {
         LIT_ACTION_B_IPFS_CID_BYTES,
         [AuthMethodScope.SignAnything],
         {
-          gasPrice: await ethersSignerA.provider.getGasPrice(),
+          gasPrice: "1",
           gasLimit: 250_000,
         }
       )
@@ -243,7 +253,7 @@ export const doTheThing = async () => {
     );
     const litContractsPkpSignerB = new LitContracts({
       signer: pkpEthersWalletB,
-      network: LitNetwork.Cayenne,
+      network: LitNetwork.DatilDev,
       debug: false,
     });
     await litContractsPkpSignerB.connect();
