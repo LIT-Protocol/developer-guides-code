@@ -27,14 +27,14 @@ export const doTheThing = async () => {
     let userEthersSigner = ethers.Wallet.createRandom();
     userEthersSigner = userEthersSigner.connect(
       new ethers.providers.JsonRpcProvider(
-        "https://lit-protocol.calderachain.xyz/replica-http"
+        "https://rpc-vesuvius-as793xpg5g.t.conduit.xyz"
       )
     );
     console.log(`✅ Created the Ethereum wallet: ${userEthersSigner.address}`);
 
     console.log("🔄 Connecting to Lit network...");
     litNodeClient = new LitNodeClient({
-      litNetwork: LitNetwork.Cayenne,
+      litNetwork: LitNetwork.DatilDev,
       debug: false,
     });
     await litNodeClient.connect();
@@ -45,7 +45,7 @@ export const doTheThing = async () => {
       litRelayConfig: {
         relayApiKey: LIT_RELAYER_API_KEY,
       },
-      rpcUrl: "https://lit-protocol.calderachain.xyz/replica-http",
+      rpcUrl: "https://rpc-vesuvius-as793xpg5g.t.conduit.xyz",
       litNodeClient,
     });
     console.log("✅ Initialized a Lit Auth client");
@@ -111,7 +111,7 @@ export const doTheThing = async () => {
     const fundingEthersSigner = new ethers.Wallet(
       FUNDING_WALLET_PRIVATE_KEY,
       new ethers.providers.JsonRpcProvider(
-        "https://lit-protocol.calderachain.xyz/replica-http"
+        "https://rpc-vesuvius-as793xpg5g.t.conduit.xyz"
       )
     );
     const txResponse = await fundingEthersSigner.sendTransaction({
@@ -135,8 +135,8 @@ export const doTheThing = async () => {
     console.log("🔄 Signing and sending a transaction with Wrapped Key...");
     const transferAmount = "0.00000000001";
     const unsignedTransaction: EthereumLitTransaction = {
-      chainId: 175177,
-      chain: "chronicleTestnet",
+      chainId: 2311,
+      chain: "vesuvius",
       toAddress: fundingEthersSigner.address,
       value: transferAmount,
     };
