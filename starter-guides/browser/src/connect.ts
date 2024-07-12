@@ -1,10 +1,11 @@
 import { LitNodeClient } from '@lit-protocol/lit-node-client';
+import { LitNetwork } from '@lit-protocol/constants';
 
 export const connectToLit = async () => {
     try {
       // More information about the available Lit Networks: https://developer.litprotocol.com/category/networks
       const litNodeClient = new LitNodeClient({
-        litNetwork: 'datil-dev',
+        litNetwork: LitNetwork.DatilDev,
         debug: false
       });
 

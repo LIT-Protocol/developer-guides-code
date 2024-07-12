@@ -1,5 +1,5 @@
 import { LitNodeClientNodeJs } from "@lit-protocol/lit-node-client-nodejs";
-import { LitNetwork } from "@lit-protocol/constants";
+import { LitNetwork, LIT_RPC } from "@lit-protocol/constants";
 import {
   createSiweMessageWithRecaps,
   generateAuthSig,
@@ -69,7 +69,7 @@ function getWallet(privateKey) {
     return new Wallet(
       privateKey,
       new ethersProviders.JsonRpcProvider(
-        'https://vesuvius-rpc.litprotocol.com'
+        LIT_RPC.VESUVIUS
       )
     );
 
@@ -79,7 +79,7 @@ function getWallet(privateKey) {
   return new Wallet(
     process.env.PRIVATE_KEY,
     new ethersProviders.JsonRpcProvider(
-      'https://vesuvius-rpc.litprotocol.com'
+      LIT_RPC.VESUVIUS
     )
   );
 }

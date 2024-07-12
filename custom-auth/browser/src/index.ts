@@ -3,7 +3,7 @@ import { LitNetwork } from "@lit-protocol/constants";
 import { logStep, getOutputData } from "./utils/state-manager";
 import { ethers } from "ethers";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
-import { AuthMethodScope } from "@lit-protocol/constants";
+import { AuthMethodScope, LIT_RPC } from "@lit-protocol/constants";
 import { LitPKPResource, LitActionResource } from "@lit-protocol/auth-helpers";
 import { LitAbility } from "@lit-protocol/types";
 import { ipfsHelpers } from "ipfs-helpers";
@@ -39,14 +39,14 @@ export const connectLitNodeClientToDatilDev = async (step: number) => {
 export const connectLitContractsToDatilDev = async (step: number) => {
   logStep({
     step,
-    input: `Configuring the signer using a EOA private key, connecting it to the provider at 'https://vesuvius-rpc.litprotocol.com', and setting the network to ${LitNetwork.DatilDev}.`,
+    input: `Configuring the signer using a EOA private key, connecting it to the provider at ${LIT_RPC.VESUVIUS}, and setting the network to ${LitNetwork.DatilDev}.`,
     output: "Loading...",
   });
 
   const litContracts = new LitContracts({
     signer: new ethers.Wallet(
       EOA_PRIVATE_KEY,
-      new ethers.providers.JsonRpcProvider('https://vesuvius-rpc.litprotocol.com')
+      new ethers.providers.JsonRpcProvider(LIT_RPC.VESUVIUS)
     ),
     debug: false,
     network: LitNetwork.DatilDev,

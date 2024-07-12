@@ -1,6 +1,7 @@
 //@ts-nocheck
 import { LitNodeClient, encryptString } from "@lit-protocol/lit-node-client";
-import { AuthCallbackParams } from "@lit-protocol/types"
+import { AuthCallbackParams } from "@lit-protocol/types";
+import { LIT_RPC } from "@lit-protocol/constants";
 import { LitAbility, LitAccessControlConditionResource, LitActionResource, createSiweMessageWithRecaps, generateAuthSig } from "@lit-protocol/auth-helpers";
 import {ethers} from 'ethers';
 
@@ -32,7 +33,7 @@ const ONE_WEEK_FROM_NOW = new Date(
 ).toISOString();
 
 const genProvider = () => {
-    return new ethers.providers.JsonRpcProvider('https://vesuvius-rpc.litprotocol.com');
+    return new ethers.providers.JsonRpcProvider(LIT_RPC.VESUVIUS);
 }
 
 const genWallet = () => {
