@@ -17,9 +17,11 @@ const { importPrivateKey, signTransactionWithEncryptedKey } = api;
 import { getEnv } from "./utils";
 
 const LIT_RELAYER_API_KEY = getEnv("LIT_RELAYER_API_KEY");
-const FUNDING_WALLET_PRIVATE_KEY = getEnv("FUNDING_WALLET_PRIVATE_KEY");
+const FUNDING_ETHERUEM_WALLET_PRIVATE_KEY = getEnv(
+  "FUNDING_ETHERUEM_WALLET_PRIVATE_KEY"
+);
 
-export const doTheThing = async () => {
+export const runTheExample = async () => {
   let litNodeClient: LitNodeClient;
 
   try {
@@ -109,7 +111,7 @@ export const doTheThing = async () => {
     console.log("🔄 Funding user's Ethereum address on Chronicle...");
     const fundingAmount = "0.00001";
     const fundingEthersSigner = new ethers.Wallet(
-      FUNDING_WALLET_PRIVATE_KEY,
+      FUNDING_ETHERUEM_WALLET_PRIVATE_KEY,
       new ethers.providers.JsonRpcProvider(
         "https://rpc-vesuvius-as793xpg5g.t.conduit.xyz"
       )
@@ -158,4 +160,4 @@ export const doTheThing = async () => {
   }
 };
 
-await doTheThing();
+await runTheExample();
