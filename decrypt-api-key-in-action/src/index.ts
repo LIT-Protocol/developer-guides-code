@@ -32,7 +32,7 @@ const ONE_WEEK_FROM_NOW = new Date(
 ).toISOString();
 
 const genProvider = () => {
-    return new ethers.providers.JsonRpcProvider('https://lit-protocol.calderachain.xyz/replica-http');
+    return new ethers.providers.JsonRpcProvider('https://vesuvius-rpc.litprotocol.com');
 }
 
 const genWallet = () => {
@@ -101,7 +101,7 @@ const genSession = async (
 
 const main = async () => {
     let client = new LitNodeClient({
-        litNetwork: 'cayenne',
+        litNetwork: LitNetwork.DatilDev,
         debug: true
     });
 
