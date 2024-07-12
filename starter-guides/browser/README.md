@@ -1,6 +1,6 @@
 # Getting Started with a Lit SDK Browser Implementation
 
-This is a very simple example repository for getting started with a browser implementation of the Lit SDK. All it will do is connect an instance of the `LitNodeClient` to the Lit Network. If you are searching for more developed uses of Lit, the [Developer Guides Code](https://github.com/LIT-Protocol/developer-guides-code) repository is for you. 
+This is a very simple example repository for getting started with a browser implementation of the Lit SDK. All it will do is connect an instance of the `LitNodeClient` to the Lit Network. If you are searching for more developed uses of Lit, check out the other guides in this repository. 
 
 ## Using This Repository
 
