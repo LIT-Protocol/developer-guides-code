@@ -56,9 +56,12 @@ export const decryptString = async (
     await litNodeClient.connect();
     console.log("✅ Connected to Lit network");
 
-    let _capacityCreditTokenId = capacityCreditTokenId;
+    let _capacityCreditTokenId: string | undefined = capacityCreditTokenId;
     if (capacityCreditTokenId === undefined) {
       _capacityCreditTokenId = await mintCapacityCredit(ethersSigner);
+
+      if (_capacityCreditTokenId === undefined)
+        throw new Error("❌ Failed to mint new Capacity Credit");
     }
 
     console.log("🔄 Getting Capacity Credit delegation auth sig...");
