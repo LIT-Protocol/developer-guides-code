@@ -46,16 +46,6 @@ export const runTheExample = async () => {
       `✅ Minted new PKP with public key: ${mintedPkp.publicKey} and ETH address: ${mintedPkp.ethAddress}`
     );
 
-    console.log("🔄 Adding Lit Action Auth Method to PKP...");
-    const addAuthMethodAReceipt = await litContracts.addPermittedAction({
-      pkpTokenId: mintedPkp.tokenId,
-      ipfsId: LIT_ACTION_CHECK_ADDRESS,
-      authMethodScopes: [AuthMethodScope.SignAnything],
-    });
-    console.log(
-      `✅ Added Lit Action Auth Method to PKP. Transaction hash: ${addAuthMethodAReceipt.transactionHash}`
-    );
-
     console.log("🔄 Connecting LitNodeClient to Lit network...");
     litNodeClient = new LitNodeClient({
       litNetwork: LitNetwork.Cayenne,
@@ -68,12 +58,30 @@ export const runTheExample = async () => {
       signer: ethersSigner,
       litNodeClient,
     });
+    const authMethodId = await LitAuthClient.getAuthIdByAuthMethod(authMethod);
+
+    console.log("🔄 Adding Lit Action Auth Method to PKP...");
+    // const addAuthMethodReceipt = await litContracts.addPermittedAction({
+    //   pkpTokenId: mintedPkp.tokenId,
+    //   ipfsId: LIT_ACTION_CHECK_ADDRESS,
+    //   authMethodScopes: [AuthMethodScope.SignAnything],
+    // });
+
+    const addAuthMethodReceipt = await litContracts.addPermittedAuthMethod({
+      pkpTokenId: mintedPkp.tokenId,
+      authMethodType: AuthMethodType.EthWallet,
+      authMethodId,
+      authMethodScopes: [AuthMethodScope.SignAnything],
+    });
+    console.log(
+      `✅ Added Lit Action Auth Method to PKP. Transaction hash: ${addAuthMethodReceipt.transactionHash}`
+    );
 
     console.log("🔄 Getting PKP token IDs for Auth Method...");
     const pkpIds =
       await litContracts.pkpPermissionsContract.read.getTokenIdsForAuthMethod(
         AuthMethodType.EthWallet,
-        await LitAuthClient.getAuthIdByAuthMethod(authMethod)
+        authMethodId
       );
     console.log(`✅ Got PKP token IDs for Auth Method: ${pkpIds}`);
 
