@@ -11,11 +11,11 @@
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^0.45.0",
-    "@lit-protocol/auth-helpers": "^6.0.3",
-    "@lit-protocol/constants": "^6.0.3",
-    "@lit-protocol/contracts-sdk": "^6.0.3",
-    "@lit-protocol/lit-node-client": "^6.0.3",
-    "@lit-protocol/types": "^6.0.3"
+    "@lit-protocol/auth-helpers": "^6.2.0",
+    "@lit-protocol/constants": "^6.2.0",
+    "@lit-protocol/contracts-sdk": "^6.2.0",
+    "@lit-protocol/lit-node-client": "^6.2.0",
+    "@lit-protocol/types": "^6.2.0"
   },
   "devDependencies": {
     "@types/chai-json-schema": "^1.4.10",
