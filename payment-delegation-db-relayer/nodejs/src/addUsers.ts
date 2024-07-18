@@ -25,6 +25,7 @@ export const addUsers = async (users: string[]) => {
   };
 
   try {
+    console.log(`🔄 Adding ${users.length} users as delegatees...`);
     const response = await fetch(LIT_RELAYER_URL, {
       method: "POST",
       headers: headers,
@@ -39,6 +40,7 @@ export const addUsers = async (users: string[]) => {
     if (data.success !== true) {
       throw new Error(`Error: ${data.error}`);
     }
+    console.log("✅ Added users as delegatees");
 
     return true;
   } catch (error) {
