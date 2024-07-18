@@ -48,7 +48,7 @@ describe("Decrypting a file with EVM contract conditions", () => {
         type: "function",
       },
       returnValueTest: {
-        key: "0",
+        key: "",
         comparator: "=",
         value: "true",
       },
