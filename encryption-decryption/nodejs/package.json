@@ -5,6 +5,8 @@
   "license": "MIT",
   "scripts": {
     "test:cayenne:encrypt": "npx @dotenvx/dotenvx run -- mocha test/cayenne/encryptString.spec.ts",
+    "test:datil-dev:encrypt": "npx @dotenvx/dotenvx run -- mocha test/datil-dev/encryptFileWithContractConditions.spec.ts",
+    "test:datil-dev:decrypt": "npx @dotenvx/dotenvx run -- mocha test/datil-dev/decryptFileWithContractConditions.spec.ts",
     "test:habanero:encrypt": "npx @dotenvx/dotenvx run -- mocha test/habanero/encryptString.spec.ts",
     "test:cayenne:decrypt": "npx @dotenvx/dotenvx run -- mocha test/cayenne/decryptString.spec.ts",
     "test:habanero:decrypt": "npx @dotenvx/dotenvx run -- mocha test/habanero/decryptString.spec.ts"
@@ -14,6 +16,7 @@
     "@lit-protocol/auth-helpers": "^6.2.0",
     "@lit-protocol/constants": "^6.2.0",
     "@lit-protocol/contracts-sdk": "^6.2.0",
+    "@lit-protocol/encryption": "^6.2.0",
     "@lit-protocol/lit-node-client": "^6.2.0",
     "@lit-protocol/types": "^6.2.0"
   },

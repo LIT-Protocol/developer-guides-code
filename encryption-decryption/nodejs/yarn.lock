@@ -811,7 +811,7 @@
     tslib "1.14.1"
     util "0.12.5"
 
-"@lit-protocol/encryption@6.2.0":
+"@lit-protocol/encryption@6.2.0", "@lit-protocol/encryption@^6.2.0":
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/@lit-protocol/encryption/-/encryption-6.2.0.tgz#1efd222d5bc8255c5d4ee41fcce95843455e3a89"
   integrity sha512-ttH+Dd/rapsfMk0GclX03ddtTLu1eKXx0YMI2+sotz9UoY2LEBgYhnx6h1Bc2vsfAbPIJb9/s3y17LpJz1XVxQ==
