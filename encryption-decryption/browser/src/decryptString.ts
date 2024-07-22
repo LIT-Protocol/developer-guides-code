@@ -28,7 +28,7 @@ const DEFAULT_ACCESS_CONTROL_CONDITIONS = [
 const DEFAULT_CAPACITY_CREDIT_TOKEN_ID = "";
 
 export const decryptString = async (
-  ciphertext: string = "pH8Md9t+QIrxsx0rxCoO0zWi1gNAII2aZOSy1FFXlstdRqxDj044P+KPK6f0+ggEpQIb/w4zhxw3rmCfpFN2hfXxW0KXhT9JJrtrOt9wAi8iEXsxz8qCumu3+nOSALmroQ033frZMl4YwLZxkvQoCIZ34wM=",
+  ciphertext: string = "rGAjRrv1xJgMclM4etouk7z0tU+a1J4BrFsA7c3jkn1Pyw34y2OjRKSqozBKqal4mkUk9m4oHeG6FLQrRmgUDuIiebHYtWV0vD6c14FsJ9Ui1gb7ToVowepOoR7FkOcDrG/44f6nU3o4HEyh3VOYE/4m9gM=",
   dataToEncryptHash: string = "bc0b1d383f84b1b32d29f904597559d1d111f242403dfa4d025c51d186bcd784",
   accessControlConditions: AccessControlConditions = DEFAULT_ACCESS_CONTROL_CONDITIONS,
   capacityCreditTokenId: string | undefined = DEFAULT_CAPACITY_CREDIT_TOKEN_ID
