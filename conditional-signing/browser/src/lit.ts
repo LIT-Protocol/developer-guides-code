@@ -55,7 +55,7 @@ export const runExample = async (
 
     console.log("🔄 Connecting to Lit network...");
     litNodeClient = new LitNodeClient({
-      litNetwork: LitNetwork.DatilTest,
+      litNetwork: LitNetwork.DatilDev,
       debug: false,
     });
     await litNodeClient.connect();
@@ -66,7 +66,7 @@ export const runExample = async (
       console.log("🔄 No PKP provided, minting a new one...");
       const litContracts = new LitContracts({
         signer: ethersSigner,
-        network: LitNetwork.DatilTest,
+        network: LitNetwork.DatilDev,
       });
 
       await litContracts.connect();
