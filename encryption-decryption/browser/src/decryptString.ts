@@ -25,10 +25,10 @@ const DEFAULT_ACCESS_CONTROL_CONDITIONS = [
     },
   },
 ];
-const DEFAULT_CAPACITY_CREDIT_TOKEN_ID = "1783";
+const DEFAULT_CAPACITY_CREDIT_TOKEN_ID = "";
 
 export const decryptString = async (
-  ciphertext: string = "guUa4qoGu7smAEnIhPYnym015upeM1+YwWq9aMCk1edShcfrVIvn3J1G2pClJxKaTvud1yQ9a381sVRtMiYF5JAB3+kWyqtxOMm8sgyeIFQiHEPsW03QfCAuYvDaYBog07j2AlfUXwoN9a4bq/SzreuDcwM=",
+  ciphertext: string = "pH8Md9t+QIrxsx0rxCoO0zWi1gNAII2aZOSy1FFXlstdRqxDj044P+KPK6f0+ggEpQIb/w4zhxw3rmCfpFN2hfXxW0KXhT9JJrtrOt9wAi8iEXsxz8qCumu3+nOSALmroQ033frZMl4YwLZxkvQoCIZ34wM=",
   dataToEncryptHash: string = "bc0b1d383f84b1b32d29f904597559d1d111f242403dfa4d025c51d186bcd784",
   accessControlConditions: AccessControlConditions = DEFAULT_ACCESS_CONTROL_CONDITIONS,
   capacityCreditTokenId: string | undefined = DEFAULT_CAPACITY_CREDIT_TOKEN_ID
@@ -50,14 +50,14 @@ export const decryptString = async (
 
     console.log("🔄 Connecting to Lit network...");
     litNodeClient = new LitNodeClient({
-      litNetwork: LitNetwork.Habanero,
+      litNetwork: LitNetwork.DatilTest,
       debug: false,
     });
     await litNodeClient.connect();
     console.log("✅ Connected to Lit network");
 
     let _capacityCreditTokenId: string | undefined = capacityCreditTokenId;
-    if (capacityCreditTokenId === undefined) {
+    if (capacityCreditTokenId === undefined || capacityCreditTokenId === "") {
       _capacityCreditTokenId = await mintCapacityCredit(ethersSigner);
 
       if (_capacityCreditTokenId === undefined)

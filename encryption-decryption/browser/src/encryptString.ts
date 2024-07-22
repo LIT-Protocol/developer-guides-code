@@ -13,7 +13,7 @@ export const encryptString = async (
   try {
     console.log("🔄 Connecting to Lit network...");
     litNodeClient = new LitNodeClient({
-      litNetwork: LitNetwork.Habanero,
+      litNetwork: LitNetwork.DatilTest,
       debug: false,
     });
     await litNodeClient.connect();
