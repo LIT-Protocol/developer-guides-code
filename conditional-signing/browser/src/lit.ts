@@ -10,8 +10,7 @@ import {
 } from "@lit-protocol/auth-helpers";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
 
-const DEFAULT_PKP_PUBLIC_KEY =
-  "043f21d4c0d2041d3952428fe6d6d7858df40b234cb235ea7a31394beb9062d5ea7be4a622b35a67063a1e5ff51770da5fc10e47793dedc8bd7534822680791c8b";
+const DEFAULT_PKP_PUBLIC_KEY = "";
 
 const litActionCode = `
 (async () => {
@@ -63,11 +62,11 @@ export const runExample = async (
     console.log("✅ Connected to Lit network");
 
     let _pkpPublicKey = pkpPublicKey;
-    if (pkpPublicKey === undefined) {
+    if (pkpPublicKey === undefined || pkpPublicKey === "") {
       console.log("🔄 No PKP provided, minting a new one...");
       const litContracts = new LitContracts({
         signer: ethersSigner,
-        network: LitNetwork.DatilDev,
+        network: LitNetwork.DatilTest,
       });
 
       await litContracts.connect();
@@ -76,6 +75,8 @@ export const runExample = async (
         await litContracts.pkpNftContractUtils.write.mint()
       ).pkp.publicKey;
       console.log(`✅ Minted new PKP: ${_pkpPublicKey}`);
+    } else {
+      console.log(`⚠️ Using provided PKP: ${_pkpPublicKey}`);
     }
 
     console.log("🔄 Getting Auth Sig...");
