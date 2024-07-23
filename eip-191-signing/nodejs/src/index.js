@@ -55,7 +55,7 @@ function getWallet(privateKey) {
     return new Wallet(
       privateKey,
       new ethersProviders.JsonRpcProvider(
-        LIT_RPC.VESUVIUS
+        LIT_RPC.CHRONICLE_YELLOWSTONE
       )
     );
 
@@ -65,7 +65,7 @@ function getWallet(privateKey) {
   return new Wallet(
     PRIVATE_KEY,
     new ethersProviders.JsonRpcProvider(
-      LIT_RPC.VESUVIUS
+      LIT_RPC.CHRONICLE_YELLOWSTONE
     )
   );
 }

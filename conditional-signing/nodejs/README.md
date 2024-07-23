@@ -42,7 +42,7 @@ In this directory, `conditional-signing/nodejs`, run `yarn start` to execute the
 3. Your provided private key will be used to sign another SIWE message. This message is is what the Lit Action will derive an address from to use for the conditional check of whether or not to sign a message with your PKP. The Lit Action will **only** sign a message with your PKP if the derived address as 1 or more Wei on Ethereum Mainnet
 4. Next, depending on whether or not you specified a PKP Public Key in the `.env` file:
    a. If you did, you'll be on the next step
-   b. If you didn't, your provided private key will be used to sign a transaction to mint a new PKP on the Lit Chronicle rollup. This transaction will cost `testLPX` (which is only a testnet token with **no** real-world value). Your PKP will be `console.log`ed, you can search the console output for: `Minted PKP!` and you should see something similar to:
+   b. If you didn't, your provided private key will be used to sign a transaction to mint a new PKP on the Lit Chronicle Yellowstone rollup. This transaction will cost `testLPX` (which is only a testnet token with **no** real-world value). Your PKP will be `console.log`ed, you can search the console output for: `Minted PKP!` and you should see something similar to:
    ```json
    {
      "tokenId": "0x8b141c700d43ada89a851aa75d5d7ec2d24fbb8e5f371d6fe51226e23889971b",
