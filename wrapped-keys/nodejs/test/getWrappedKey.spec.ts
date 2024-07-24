@@ -80,6 +80,7 @@ describe("Getting Wrapped Key metadata for Ethereum Wrapped Key using getEncrypt
           const: "datil-dev",
         },
       },
+      additionalProperties: false,
     };
 
     const wrappedKeyMetadata = await getWrappedKey(
@@ -162,6 +163,7 @@ describe("Getting Wrapped Key metadata for Solana Wrapped Key using getEncrypted
           const: "datil-dev",
         },
       },
+      additionalProperties: false,
     };
 
     const wrappedKeyMetadata = await getWrappedKey(

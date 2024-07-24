@@ -28,7 +28,7 @@ describe("Generating an Ethereum Wrapped Key using generatePrivateKey", () => {
     const responseSchema = {
       title: "GeneratePrivateKeyResponse Schema for EVM Public Key",
       type: "object",
-      required: ["pkpAddress", "generatedPublicKey"],
+      required: ["pkpAddress", "generatedPublicKey", "id"],
       properties: {
         pkpAddress: {
           type: "string",
@@ -39,7 +39,13 @@ describe("Generating an Ethereum Wrapped Key using generatePrivateKey", () => {
           type: "string",
           pattern: "^0x04[a-fA-F0-9]{128}$",
         },
+        id: {
+          type: "string",
+          pattern:
+            "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+        },
       },
+      additionalProperties: false,
     };
 
     const response = (await generateWrappedKey(
@@ -68,7 +74,7 @@ describe("Generating a Solana Wrapped Key using generatePrivateKey", () => {
     const responseSchema = {
       title: "GeneratePrivateKeyResponse Schema for Solana Public Key",
       type: "object",
-      required: ["pkpAddress", "generatedPublicKey"],
+      required: ["pkpAddress", "generatedPublicKey", "id"],
       properties: {
         pkpAddress: {
           type: "string",
@@ -79,7 +85,13 @@ describe("Generating a Solana Wrapped Key using generatePrivateKey", () => {
           type: "string",
           pattern: "^[1-9A-HJ-NP-Za-km-z]{43,44}$",
         },
+        id: {
+          type: "string",
+          pattern:
+            "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+        },
       },
+      additionalProperties: false,
     };
 
     const response = (await generateWrappedKey(
@@ -87,7 +99,7 @@ describe("Generating a Solana Wrapped Key using generatePrivateKey", () => {
       "solana",
       "This is a Dev Guide code example testing Solana key"
     )) as GeneratePrivateKeyResult;
-    console.log(response);
+
     expect(response).to.be.jsonSchema(responseSchema);
   }).timeout(120_000);
 });

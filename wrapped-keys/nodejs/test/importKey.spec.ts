@@ -41,6 +41,7 @@ describe("Importing an Ethereum key using importPrivateKey", () => {
             "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
         },
       },
+      additionalProperties: false,
     };
 
     const result = await importKey(
@@ -87,6 +88,7 @@ describe("Importing a Solana key using importPrivateKey", () => {
             "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
         },
       },
+      additionalProperties: false,
     };
 
     const result = await importKey(

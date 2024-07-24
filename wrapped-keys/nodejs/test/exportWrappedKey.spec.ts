@@ -81,6 +81,7 @@ describe("Exporting a wrapped Ethereum key using exportPrivateKey", () => {
           const: "datil-dev",
         },
       },
+      additionalProperties: false,
     };
 
     const result = await exportWrappedKey(
@@ -158,6 +159,7 @@ describe("Exporting a wrapped Solana key using exportPrivateKey", () => {
           const: "datil-dev",
         },
       },
+      additionalProperties: false,
     };
 
     const result = await exportWrappedKey(
