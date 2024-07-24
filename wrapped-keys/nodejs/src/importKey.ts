@@ -15,7 +15,8 @@ export const importKey = async (
   pkpPublicKey: string,
   privateKey: string,
   publicKey: string,
-  keyType: "K256" | "ed25519"
+  keyType: "K256" | "ed25519",
+  memo: string
 ) => {
   let litNodeClient: LitNodeClient;
 
@@ -54,17 +55,18 @@ export const importKey = async (
     console.log("✅ Got PKP Session Sigs");
 
     console.log("🔄 Importing private key...");
-    const pkpAddress = await importPrivateKey({
+    const response = await importPrivateKey({
       pkpSessionSigs,
       litNodeClient,
       privateKey,
       publicKey,
       keyType,
+      memo,
     });
     console.log(
-      `✅ Imported private key, and attached to PKP with address: ${pkpAddress}`
+      `✅ Imported private key, and attached to PKP with address: ${response.pkpAddress}`
     );
-    return pkpAddress;
+    return response;
   } catch (error) {
     console.error(error);
   } finally {
