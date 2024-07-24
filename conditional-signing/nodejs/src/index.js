@@ -1,5 +1,5 @@
 import { LitNodeClientNodeJs } from "@lit-protocol/lit-node-client-nodejs";
-import { LitNetwork } from "@lit-protocol/constants";
+import { LitNetwork, LIT_RPC } from "@lit-protocol/constants";
 import {
   createSiweMessageWithRecaps,
   generateAuthSig,
@@ -69,7 +69,7 @@ function getWallet(privateKey) {
     return new Wallet(
       privateKey,
       new ethersProviders.JsonRpcProvider(
-        "https://chain-rpc.litprotocol.com/http"
+        LIT_RPC.CHRONICLE_YELLOWSTONE
       )
     );
 
@@ -79,7 +79,7 @@ function getWallet(privateKey) {
   return new Wallet(
     process.env.PRIVATE_KEY,
     new ethersProviders.JsonRpcProvider(
-      "https://chain-rpc.litprotocol.com/http"
+      LIT_RPC.CHRONICLE_YELLOWSTONE
     )
   );
 }
@@ -100,7 +100,7 @@ async function mintPkp(ethersSigner) {
   console.log("Minting new PKP...");
   const litContracts = new LitContracts({
     signer: ethersSigner,
-    network: LitNetwork.Cayenne,
+    network: LitNetwork.DatilDev,
   });
 
   await litContracts.connect();
@@ -110,7 +110,7 @@ async function mintPkp(ethersSigner) {
 
 async function getLitNodeClient() {
   const litNodeClient = new LitNodeClientNodeJs({
-    litNetwork: LitNetwork.Cayenne,
+    litNetwork: LitNetwork.DatilDev,
   });
 
   console.log("Connecting litNodeClient to network...");

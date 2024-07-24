@@ -5,7 +5,10 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "test": "npx @dotenvx/dotenvx run -- mocha test/**/*.spec.ts"
+    "test": "npx @dotenvx/dotenvx run -- mocha test/**/*.spec.ts",
+    "test:addUsers": "npx @dotenvx/dotenvx run -- mocha test/**/addUsers.spec.ts",
+    "test:registerPayer": "npx @dotenvx/dotenvx run -- mocha test/**/registerPayer.spec.ts",
+    "test:runSimpleLitAction": "npx @dotenvx/dotenvx run -- mocha test/**/runSimpleLitAction.spec.ts"
   },
   "devDependencies": {
     "@types/chai": "^4.3.16",
@@ -19,6 +22,10 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@dotenvx/dotenvx": "^0.44.1"
+    "@dotenvx/dotenvx": "^0.44.1",
+    "@lit-protocol/auth-helpers": "^6.2.1",
+    "@lit-protocol/lit-node-client": "^6.2.1",
+    "@lit-protocol/types": "^6.2.1",
+    "ethers": "v5"
   }
 }

@@ -57,7 +57,7 @@ After clicking the button a couple things will happen:
      ```
 5. After signing that message, depending on whether or not you specified a PKP Public Key in the `.env` file:
    a. If you did, you'll be on the next step
-   b. If you didn't, you will be prompted by your wallet to sign a transaction to mint a new PKP on the Lit Chronicle rollup. This transaction will cost `testLPX` (which is only a testnet token with **no** real-world value). After signing this transaction you should see in the JavaScript console something similar to:
+   b. If you didn't, you will be prompted by your wallet to sign a transaction to mint a new PKP on the Lit Chronicle Yellowstone rollup. This transaction will cost `testLPX` (which is only a testnet token with **no** real-world value). After signing this transaction you should see in the JavaScript console something similar to:
    ```json
     Minted PKP!
     {
