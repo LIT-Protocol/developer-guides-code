@@ -1,6 +1,6 @@
 import * as ethers from "ethers";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
-import { LitNetwork } from "@lit-protocol/constants";
+import { LIT_RPC, LitNetwork } from "@lit-protocol/constants";
 import { EthWalletProvider } from "@lit-protocol/lit-auth-client";
 import { LitAbility, LitActionResource } from "@lit-protocol/auth-helpers";
 import { api } from "@lit-protocol/wrapped-keys";
@@ -21,14 +21,12 @@ export const signMessageWithWrappedKey = async (
   try {
     const ethersSigner = new ethers.Wallet(
       ETHEREUM_PRIVATE_KEY,
-      new ethers.providers.JsonRpcProvider(
-        "https://chain-rpc.litprotocol.com/http"
-      )
+      new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE)
     );
 
     console.log("🔄 Connecting to Lit network...");
     litNodeClient = new LitNodeClient({
-      litNetwork: LitNetwork.Cayenne,
+      litNetwork: LitNetwork.DatilDev,
       debug: false,
     });
     await litNodeClient.connect();

@@ -5,6 +5,7 @@ import { GeneratePrivateKeyResult } from "@lit-protocol/wrapped-keys";
 import { PublicKey } from "@solana/web3.js";
 import bs58 from "bs58";
 import nacl from "tweetnacl";
+import { LIT_RPC } from "@lit-protocol/constants";
 
 import { getEnv, mintPkp } from "../src/utils";
 import { generateWrappedKey } from "../src/generateWrappedKey";
@@ -22,9 +23,7 @@ describe("Signing an Ethereum message using generateWrappedKey and signMessageWi
     this.timeout(120_000);
     const ethersSigner = new ethers.Wallet(
       ETHEREUM_PRIVATE_KEY,
-      new ethers.providers.JsonRpcProvider(
-        "https://chain-rpc.litprotocol.com/http"
-      )
+      new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE)
     );
 
     mintedPkp = await mintPkp(ethersSigner);
@@ -73,9 +72,7 @@ describe("Signing a Solana message using generateWrappedKey and signMessageWithE
     this.timeout(120_000);
     const ethersSigner = new ethers.Wallet(
       ETHEREUM_PRIVATE_KEY,
-      new ethers.providers.JsonRpcProvider(
-        "https://chain-rpc.litprotocol.com/http"
-      )
+      new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE)
     );
 
     mintedPkp = await mintPkp(ethersSigner);
