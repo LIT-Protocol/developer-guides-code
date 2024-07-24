@@ -3,16 +3,16 @@ import chaiJsonSchema from "chai-json-schema";
 import * as ethers from "ethers";
 import { Keypair, PublicKey } from "@solana/web3.js";
 import bs58 from "bs58";
-
-import { getEnv, mintPkp } from "../src/utils";
-import { exportWrappedKey } from "../src/exportWrappedKey";
-import { importKey } from "../src/importKey";
-import { generateWrappedKey } from "../src/generateWrappedKey";
 import {
   GeneratePrivateKeyResult,
   ImportPrivateKeyResult,
 } from "@lit-protocol/wrapped-keys";
 import { LIT_RPC } from "@lit-protocol/constants";
+
+import { getEnv, mintPkp } from "../src/utils";
+import { exportWrappedKey } from "../src/exportWrappedKey";
+import { importKey } from "../src/importKey";
+import { generateWrappedKey } from "../src/generateWrappedKey";
 
 use(chaiJsonSchema);
 
