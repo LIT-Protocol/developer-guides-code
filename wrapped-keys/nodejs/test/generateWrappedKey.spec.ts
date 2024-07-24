@@ -44,7 +44,8 @@ describe("Generating an Ethereum Wrapped Key using generatePrivateKey", () => {
 
     const response = (await generateWrappedKey(
       mintedPkp!.publicKey,
-      "evm"
+      "evm",
+      "This is a Dev Guide code example testing Ethereum key"
     )) as GeneratePrivateKeyResult;
     expect(response).to.be.jsonSchema(responseSchema);
   }).timeout(120_000);
@@ -83,8 +84,10 @@ describe("Generating a Solana Wrapped Key using generatePrivateKey", () => {
 
     const response = (await generateWrappedKey(
       mintedPkp!.publicKey,
-      "solana"
+      "solana",
+      "This is a Dev Guide code example testing Solana key"
     )) as GeneratePrivateKeyResult;
+    console.log(response);
     expect(response).to.be.jsonSchema(responseSchema);
   }).timeout(120_000);
 });

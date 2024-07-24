@@ -13,7 +13,8 @@ const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 
 export const generateWrappedKey = async (
   pkpPublicKey: string,
-  evmOrSolana: "evm" | "solana"
+  evmOrSolana: "evm" | "solana",
+  memo: string
 ) => {
   let litNodeClient: LitNodeClient;
 
@@ -55,6 +56,7 @@ export const generateWrappedKey = async (
     const { pkpAddress, generatedPublicKey } = await generatePrivateKey({
       pkpSessionSigs,
       network: evmOrSolana,
+      memo,
       litNodeClient,
     });
     console.log("✅ Generated wrapped key");
