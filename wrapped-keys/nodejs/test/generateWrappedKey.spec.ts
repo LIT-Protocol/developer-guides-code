@@ -1,10 +1,11 @@
 import { expect, use } from "chai";
 import * as ethers from "ethers";
 import chaiJsonSchema from "chai-json-schema";
+import { GeneratePrivateKeyResult } from "@lit-protocol/wrapped-keys";
+import { LIT_RPC } from "@lit-protocol/constants";
 
 import { getEnv, mintPkp } from "../src/utils";
 import { generateWrappedKey } from "../src/generateWrappedKey";
-import { GeneratePrivateKeyResult } from "@lit-protocol/wrapped-keys";
 
 use(chaiJsonSchema);
 
@@ -17,9 +18,7 @@ describe("Generating an Ethereum Wrapped Key using generatePrivateKey", () => {
     this.timeout(120_000);
     const ethersSigner = new ethers.Wallet(
       ETHEREUM_PRIVATE_KEY,
-      new ethers.providers.JsonRpcProvider(
-        "https://chain-rpc.litprotocol.com/http"
-      )
+      new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE)
     );
 
     mintedPkp = await mintPkp(ethersSigner);
@@ -58,9 +57,7 @@ describe("Generating a Solana Wrapped Key using generatePrivateKey", () => {
     this.timeout(120_000);
     const ethersSigner = new ethers.Wallet(
       ETHEREUM_PRIVATE_KEY,
-      new ethers.providers.JsonRpcProvider(
-        "https://chain-rpc.litprotocol.com/http"
-      )
+      new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE)
     );
 
     mintedPkp = await mintPkp(ethersSigner);
