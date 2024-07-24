@@ -5,18 +5,19 @@ import { LitAbility, LitActionResource } from "@lit-protocol/auth-helpers";
 import { EthWalletProvider } from "@lit-protocol/lit-auth-client";
 import { api } from "@lit-protocol/wrapped-keys";
 
-const { storeEncryptedKeyMetadata } = api;
+const { storeEncryptedKey } = api;
 
 import { getEnv } from "./utils";
 
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 
-export const storeWrappedKeyMetadata = async (
+export const storeWrappedKey = async (
   pkpPublicKey: string,
   pkpEthAddress: string,
   privateKey: string,
   publicKey: string,
-  keyType: "K256" | "ed25519"
+  keyType: "K256" | "ed25519",
+  memo: string
 ) => {
   let litNodeClient: LitNodeClient;
 
@@ -77,16 +78,17 @@ export const storeWrappedKeyMetadata = async (
     console.log("✅ Encrypted private key");
 
     console.log("🔄 Storing Wrapped Key metadata...");
-    const success = await storeEncryptedKeyMetadata({
+    const result = await storeEncryptedKey({
       pkpSessionSigs,
       litNodeClient,
       ciphertext,
       dataToEncryptHash,
       publicKey,
       keyType,
+      memo,
     });
     console.log(`✅ Stored Wrapped Key metadata`);
-    return success;
+    return result;
   } catch (error) {
     console.error(error);
   } finally {
