@@ -9,6 +9,7 @@ import { exportWrappedKey } from "../src/exportWrappedKey";
 import { importKey } from "../src/importKey";
 import { generateWrappedKey } from "../src/generateWrappedKey";
 import { GeneratePrivateKeyResult } from "@lit-protocol/wrapped-keys";
+import { LIT_RPC } from "@lit-protocol/constants";
 
 use(chaiJsonSchema);
 
@@ -23,9 +24,7 @@ describe("Exporting a wrapped Ethereum key using exportPrivateKey", () => {
     this.timeout(120_000);
     const ethersSigner = new ethers.Wallet(
       ETHEREUM_PRIVATE_KEY,
-      new ethers.providers.JsonRpcProvider(
-        "https://chain-rpc.litprotocol.com/http"
-      )
+      new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE)
     );
 
     mintedPkp = await mintPkp(ethersSigner);
@@ -42,7 +41,8 @@ describe("Exporting a wrapped Ethereum key using exportPrivateKey", () => {
 
   it("should export a wrapped Ethereum private key", async () => {
     const exportedPrivateKeyResult = await exportWrappedKey(
-      mintedPkp!.publicKey
+      mintedPkp!.publicKey,
+      "evm"
     );
     expect(exportedPrivateKeyResult!.decryptedPrivateKey).to.equal(
       NEW_ETHEREUM_KEYPAIR_WALLET.privateKey
@@ -57,9 +57,7 @@ describe("Exporting a wrapped Solana key using exportPrivateKey", () => {
     this.timeout(120_000);
     const ethersSigner = new ethers.Wallet(
       ETHEREUM_PRIVATE_KEY,
-      new ethers.providers.JsonRpcProvider(
-        "https://chain-rpc.litprotocol.com/http"
-      )
+      new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE)
     );
 
     mintedPkp = await mintPkp(ethersSigner);
@@ -76,7 +74,8 @@ describe("Exporting a wrapped Solana key using exportPrivateKey", () => {
 
   it("should export a wrapped Solana private key", async () => {
     const exportedPrivateKeyResult = await exportWrappedKey(
-      mintedPkp!.publicKey
+      mintedPkp!.publicKey,
+      "solana"
     );
     expect(exportedPrivateKeyResult!.decryptedPrivateKey).to.equal(
       bs58.encode(NEW_SOLANA_PRIVATE_KEY)
@@ -133,7 +132,8 @@ describe.skip("Exporting a generated wrapped Solana key using generatePrivateKey
 
   it("should export a wrapped Solana private key", async () => {
     const exportedPrivateKeyResult = await exportWrappedKey(
-      mintedPkp!.publicKey
+      mintedPkp!.publicKey,
+      "solana"
     );
 
     const keyPair = Keypair.fromSecretKey(

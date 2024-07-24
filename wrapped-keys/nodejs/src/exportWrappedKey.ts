@@ -1,6 +1,6 @@
 import * as ethers from "ethers";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
-import { LitNetwork } from "@lit-protocol/constants";
+import { LIT_RPC, LitNetwork } from "@lit-protocol/constants";
 import { EthWalletProvider } from "@lit-protocol/lit-auth-client";
 import { LitAbility, LitActionResource } from "@lit-protocol/auth-helpers";
 import { api } from "@lit-protocol/wrapped-keys";
@@ -8,23 +8,25 @@ import { api } from "@lit-protocol/wrapped-keys";
 const { exportPrivateKey } = api;
 
 import { getEnv } from "./utils";
+import { Network } from "@lit-protocol/wrapped-keys/src/lib/types";
 
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 
-export const exportWrappedKey = async (pkpPublicKey: string) => {
+export const exportWrappedKey = async (
+  pkpPublicKey: string,
+  evmOrSolana: "evm" | "solana"
+) => {
   let litNodeClient: LitNodeClient;
 
   try {
     const ethersSigner = new ethers.Wallet(
       ETHEREUM_PRIVATE_KEY,
-      new ethers.providers.JsonRpcProvider(
-        "https://chain-rpc.litprotocol.com/http"
-      )
+      new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE)
     );
 
     console.log("🔄 Connecting to Lit network...");
     litNodeClient = new LitNodeClient({
-      litNetwork: LitNetwork.Cayenne,
+      litNetwork: LitNetwork.DatilDev,
       debug: false,
     });
     await litNodeClient.connect();
@@ -54,6 +56,7 @@ export const exportWrappedKey = async (pkpPublicKey: string) => {
     const exportedPrivateKey = await exportPrivateKey({
       pkpSessionSigs,
       litNodeClient,
+      network: evmOrSolana,
     });
     console.log("✅ Exported private key");
     return exportedPrivateKey;
