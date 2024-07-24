@@ -56,8 +56,8 @@ describe("Importing a Solana key using importPrivateKey", () => {
     const pkpAddressKeyWasAttachedTo = await importKey(
       mintedPkp!.publicKey,
       Buffer.from(solanaKeypair.secretKey).toString("hex"),
-      solanaKeypair.publicKey.toBase58(),
-      "K256"
+      solanaKeypair.publicKey.toString(),
+      "ed25519"
     );
 
     expect(pkpAddressKeyWasAttachedTo).to.equal(mintedPkp!.ethAddress);
