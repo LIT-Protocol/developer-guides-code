@@ -43,7 +43,7 @@ describe("Importing an Ethereum key using importPrivateKey", () => {
       },
     };
 
-    const response = await importKey(
+    const result = await importKey(
       mintedPkp!.publicKey,
       NEW_ETHEREUM_KEYPAIR_WALLET.privateKey,
       NEW_ETHEREUM_KEYPAIR_WALLET.publicKey,
@@ -51,7 +51,7 @@ describe("Importing an Ethereum key using importPrivateKey", () => {
       "This is a Dev Guide code example testing Ethereum key"
     );
 
-    expect(response).to.be.jsonSchema(importKeyResponseSchema);
+    expect(result).to.be.jsonSchema(importKeyResponseSchema);
   }).timeout(120_000);
 });
 
@@ -89,7 +89,7 @@ describe("Importing a Solana key using importPrivateKey", () => {
       },
     };
 
-    const response = await importKey(
+    const result = await importKey(
       mintedPkp!.publicKey,
       Buffer.from(solanaKeypair.secretKey).toString("hex"),
       solanaKeypair.publicKey.toString(),
@@ -97,6 +97,6 @@ describe("Importing a Solana key using importPrivateKey", () => {
       "This is a Dev Guide code example testing Solana key"
     );
 
-    expect(response).to.be.jsonSchema(importKeyResponseSchema);
+    expect(result).to.be.jsonSchema(importKeyResponseSchema);
   }).timeout(120_000);
 });
