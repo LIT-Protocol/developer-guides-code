@@ -16,7 +16,7 @@ export const mintPkp = async (ethersSigner: ethers.Wallet) => {
     console.log("🔄 Connecting LitContracts client to network...");
     const litContracts = new LitContracts({
       signer: ethersSigner,
-      network: LitNetwork.Cayenne,
+      network: LitNetwork.DatilDev,
     });
     await litContracts.connect();
     console.log("✅ Connected LitContracts client to network");
