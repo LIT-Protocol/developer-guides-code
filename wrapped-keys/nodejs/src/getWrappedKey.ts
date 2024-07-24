@@ -5,13 +5,16 @@ import { LitAbility, LitActionResource } from "@lit-protocol/auth-helpers";
 import { EthWalletProvider } from "@lit-protocol/lit-auth-client";
 import { api } from "@lit-protocol/wrapped-keys";
 
-const { getEncryptedKeyMetadata } = api;
+const { getEncryptedKey } = api;
 
 import { getEnv } from "./utils";
 
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 
-export const getWrappedKeyMetadata = async (pkpPublicKey: string) => {
+export const getWrappedKey = async (
+  pkpPublicKey: string,
+  wrappedKeyId: string
+) => {
   let litNodeClient: LitNodeClient;
 
   try {
@@ -49,8 +52,9 @@ export const getWrappedKeyMetadata = async (pkpPublicKey: string) => {
     console.log("✅ Got PKP Session Sigs");
 
     console.log("🔄 Getting Wrapped Key metadata...");
-    const wrappedKeyMetadata = await getEncryptedKeyMetadata({
+    const wrappedKeyMetadata = await getEncryptedKey({
       pkpSessionSigs,
+      id: wrappedKeyId,
       litNodeClient,
     });
     console.log(`✅ Got Wrapped Key metadata`);
