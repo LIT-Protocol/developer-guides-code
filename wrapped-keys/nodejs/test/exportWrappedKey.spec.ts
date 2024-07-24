@@ -45,19 +45,56 @@ describe("Exporting a wrapped Ethereum key using exportPrivateKey", () => {
   });
 
   it("should export a wrapped Ethereum private key", async () => {
-    const exportedPrivateKeyResult = await exportWrappedKey(
+    const exportedPrivateKeyResultSchema = {
+      type: "object",
+      required: [
+        "decryptedPrivateKey",
+        "pkpAddress",
+        "id",
+        "keyType",
+        "publicKey",
+        "litNetwork",
+      ],
+      properties: {
+        decryptedPrivateKey: {
+          type: "string",
+          const: NEW_ETHEREUM_KEYPAIR_WALLET.privateKey,
+        },
+        pkpAddress: {
+          type: "string",
+          const: mintedPkp!.ethAddress,
+        },
+        id: {
+          type: "string",
+          pattern:
+            "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+        },
+        keyType: {
+          type: "string",
+          enum: ["K256"],
+        },
+        publicKey: {
+          type: "string",
+          const: NEW_ETHEREUM_KEYPAIR_WALLET.publicKey,
+        },
+        litNetwork: {
+          const: "datil-dev",
+        },
+      },
+    };
+
+    const result = await exportWrappedKey(
       mintedPkp!.publicKey,
       importKeyResult.id,
       "evm"
     );
-    expect(exportedPrivateKeyResult!.decryptedPrivateKey).to.equal(
-      NEW_ETHEREUM_KEYPAIR_WALLET.privateKey
-    );
+    expect(result).to.be.jsonSchema(exportedPrivateKeyResultSchema);
   }).timeout(120_000);
 });
 
 describe("Exporting a wrapped Solana key using exportPrivateKey", () => {
   let mintedPkp;
+  let solanaKeypair: Keypair;
   let importKeyResult: ImportPrivateKeyResult;
 
   before(async function () {
@@ -67,12 +104,14 @@ describe("Exporting a wrapped Solana key using exportPrivateKey", () => {
       new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE)
     );
 
+    solanaKeypair = Keypair.fromSecretKey(NEW_SOLANA_PRIVATE_KEY);
+
     mintedPkp = await mintPkp(ethersSigner);
 
     importKeyResult = (await importKey(
       mintedPkp!.publicKey,
       bs58.encode(NEW_SOLANA_PRIVATE_KEY),
-      Keypair.fromSecretKey(NEW_SOLANA_PRIVATE_KEY).publicKey.toString(),
+      solanaKeypair.publicKey.toString(),
       "ed25519",
       "This is a Dev Guide code example testing Solana key"
     )) as ImportPrivateKeyResult;
@@ -81,14 +120,52 @@ describe("Exporting a wrapped Solana key using exportPrivateKey", () => {
   });
 
   it("should export a wrapped Solana private key", async () => {
-    const exportedPrivateKeyResult = await exportWrappedKey(
+    const exportedPrivateKeyResultSchema = {
+      type: "object",
+      required: [
+        "decryptedPrivateKey",
+        "pkpAddress",
+        "id",
+        "keyType",
+        "publicKey",
+        "litNetwork",
+      ],
+      properties: {
+        decryptedPrivateKey: {
+          type: "string",
+          const: Keypair.fromSecretKey(
+            NEW_SOLANA_PRIVATE_KEY
+          ).publicKey.toString(),
+        },
+        pkpAddress: {
+          type: "string",
+          const: solanaKeypair.publicKey.toString(),
+        },
+        id: {
+          type: "string",
+          pattern:
+            "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+        },
+        keyType: {
+          type: "string",
+          enum: ["ed25519"],
+        },
+        publicKey: {
+          type: "string",
+          const: solanaKeypair.publicKey.toString(),
+        },
+        litNetwork: {
+          const: "datil-dev",
+        },
+      },
+    };
+
+    const result = await exportWrappedKey(
       mintedPkp!.publicKey,
       importKeyResult.id,
       "solana"
     );
-    expect(exportedPrivateKeyResult!.decryptedPrivateKey).to.equal(
-      bs58.encode(NEW_SOLANA_PRIVATE_KEY)
-    );
+    expect(result).to.be.jsonSchema(exportedPrivateKeyResultSchema);
   }).timeout(120_000);
 });
 
