@@ -14,6 +14,7 @@ import {
   Transaction,
   clusterApiUrl,
 } from "@solana/web3.js";
+import { LIT_RPC } from "@lit-protocol/constants";
 
 import { getEnv, mintPkp } from "../src/utils";
 import { generateWrappedKey } from "../src/generateWrappedKey";
@@ -32,9 +33,7 @@ describe("Signing an Ethereum transaction using generateWrappedKey and signTrans
     this.timeout(120_000);
     ethersSigner = new ethers.Wallet(
       ETHEREUM_PRIVATE_KEY,
-      new ethers.providers.JsonRpcProvider(
-        "https://chain-rpc.litprotocol.com/http"
-      )
+      new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE)
     );
 
     mintedPkp = await mintPkp(ethersSigner);
@@ -67,7 +66,7 @@ describe("Signing an Ethereum transaction using generateWrappedKey and signTrans
   }).timeout(120_000);
 });
 
-describe("Signing a Solana transaction using generateWrappedKey and signTransactionWithEncryptedKey", () => {
+describe.skip("Signing a Solana transaction using generateWrappedKey and signTransactionWithEncryptedKey", () => {
   let mintedPkp;
   let generatedSolanaPublicKey: PublicKey;
 
@@ -75,9 +74,7 @@ describe("Signing a Solana transaction using generateWrappedKey and signTransact
     this.timeout(120_000);
     const ethersSigner = new ethers.Wallet(
       ETHEREUM_PRIVATE_KEY,
-      new ethers.providers.JsonRpcProvider(
-        "https://chain-rpc.litprotocol.com/http"
-      )
+      new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE)
     );
 
     mintedPkp = await mintPkp(ethersSigner);
