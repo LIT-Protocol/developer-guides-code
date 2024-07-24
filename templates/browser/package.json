@@ -16,7 +16,9 @@
     "@vitejs/plugin-react-swc": "^3.7.0",
     "ethers": "v5",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "rollup-plugin-polyfill-node": "^0.13.0",
+    "vite-plugin-node-polyfills": "^0.22.0"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
