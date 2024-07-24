@@ -18,6 +18,7 @@ const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 describe("Signing an Ethereum message using generateWrappedKey and signMessageWithEncryptedKey", () => {
   let mintedPkp;
   let expectedWrappedKeyEthAddress: string;
+  let generateWrappedKeyResponse: GeneratePrivateKeyResult;
 
   before(async function () {
     this.timeout(120_000);
@@ -28,10 +29,13 @@ describe("Signing an Ethereum message using generateWrappedKey and signMessageWi
 
     mintedPkp = await mintPkp(ethersSigner);
 
-    const generateWrappedKeyResponse = (await generateWrappedKey(
+    generateWrappedKeyResponse = (await generateWrappedKey(
       mintedPkp!.publicKey,
-      "evm"
+      "evm",
+      "This is a Dev Guide code example testing Ethereum key"
     )) as GeneratePrivateKeyResult;
+
+    console.log("generateWrappedKeyResponse", generateWrappedKeyResponse);
 
     const sanitizedPublicKey =
       generateWrappedKeyResponse.generatedPublicKey.slice(
@@ -51,6 +55,7 @@ describe("Signing an Ethereum message using generateWrappedKey and signMessageWi
     const signedMessage = (await signMessageWithWrappedKey(
       mintedPkp!.publicKey,
       "evm",
+      generateWrappedKeyResponse.id,
       messageToSign
     )) as string;
 
@@ -67,6 +72,7 @@ describe("Signing an Ethereum message using generateWrappedKey and signMessageWi
 describe("Signing a Solana message using generateWrappedKey and signMessageWithEncryptedKey", () => {
   let mintedPkp;
   let generatedSolanaPublicKey: PublicKey;
+  let generateWrappedKeyResponse: GeneratePrivateKeyResult;
 
   before(async function () {
     this.timeout(120_000);
@@ -77,9 +83,10 @@ describe("Signing a Solana message using generateWrappedKey and signMessageWithE
 
     mintedPkp = await mintPkp(ethersSigner);
 
-    const generateWrappedKeyResponse = (await generateWrappedKey(
+    generateWrappedKeyResponse = (await generateWrappedKey(
       mintedPkp!.publicKey,
-      "solana"
+      "solana",
+      "This is a Dev Guide code example testing Solana key"
     )) as GeneratePrivateKeyResult;
 
     generatedSolanaPublicKey = new PublicKey(
@@ -93,6 +100,7 @@ describe("Signing a Solana message using generateWrappedKey and signMessageWithE
     const signedMessage = (await signMessageWithWrappedKey(
       mintedPkp!.publicKey,
       "solana",
+      generateWrappedKeyResponse.id,
       messageToSign
     )) as string;
 

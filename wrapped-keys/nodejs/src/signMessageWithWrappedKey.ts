@@ -14,6 +14,7 @@ const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 export const signMessageWithWrappedKey = async (
   pkpPublicKey: string,
   evmOrSolana: "evm" | "solana",
+  wrappedKeyId: string,
   messageToSign: string | Uint8Array
 ) => {
   let litNodeClient: LitNodeClient;
@@ -56,6 +57,7 @@ export const signMessageWithWrappedKey = async (
     const signedMessage = await signMessageWithEncryptedKey({
       pkpSessionSigs,
       network: evmOrSolana,
+      id: wrappedKeyId,
       messageToSign,
       litNodeClient,
     });
