@@ -8,7 +8,10 @@ import { getEnv, mintPkp } from "../src/utils";
 import { exportWrappedKey } from "../src/exportWrappedKey";
 import { importKey } from "../src/importKey";
 import { generateWrappedKey } from "../src/generateWrappedKey";
-import { GeneratePrivateKeyResult } from "@lit-protocol/wrapped-keys";
+import {
+  GeneratePrivateKeyResult,
+  ImportPrivateKeyResult,
+} from "@lit-protocol/wrapped-keys";
 import { LIT_RPC } from "@lit-protocol/constants";
 
 use(chaiJsonSchema);
@@ -19,6 +22,7 @@ const NEW_SOLANA_PRIVATE_KEY = Keypair.generate().secretKey;
 
 describe("Exporting a wrapped Ethereum key using exportPrivateKey", () => {
   let mintedPkp;
+  let importKeyResult: ImportPrivateKeyResult;
 
   before(async function () {
     this.timeout(120_000);
@@ -29,19 +33,21 @@ describe("Exporting a wrapped Ethereum key using exportPrivateKey", () => {
 
     mintedPkp = await mintPkp(ethersSigner);
 
-    const pkpAddressKeyWasAttachedTo = await importKey(
+    importKeyResult = (await importKey(
       mintedPkp!.publicKey,
       NEW_ETHEREUM_KEYPAIR_WALLET.privateKey,
       NEW_ETHEREUM_KEYPAIR_WALLET.publicKey,
-      "K256"
-    );
+      "K256",
+      "This is a Dev Guide code example testing Ethereum key"
+    )) as ImportPrivateKeyResult;
 
-    expect(pkpAddressKeyWasAttachedTo).to.equal(mintedPkp!.ethAddress);
+    expect(importKeyResult.pkpAddress).to.equal(mintedPkp!.ethAddress);
   });
 
   it("should export a wrapped Ethereum private key", async () => {
     const exportedPrivateKeyResult = await exportWrappedKey(
       mintedPkp!.publicKey,
+      importKeyResult.id,
       "evm"
     );
     expect(exportedPrivateKeyResult!.decryptedPrivateKey).to.equal(
@@ -52,6 +58,7 @@ describe("Exporting a wrapped Ethereum key using exportPrivateKey", () => {
 
 describe("Exporting a wrapped Solana key using exportPrivateKey", () => {
   let mintedPkp;
+  let importKeyResult: ImportPrivateKeyResult;
 
   before(async function () {
     this.timeout(120_000);
@@ -62,19 +69,21 @@ describe("Exporting a wrapped Solana key using exportPrivateKey", () => {
 
     mintedPkp = await mintPkp(ethersSigner);
 
-    const pkpAddressKeyWasAttachedTo = await importKey(
+    importKeyResult = (await importKey(
       mintedPkp!.publicKey,
       bs58.encode(NEW_SOLANA_PRIVATE_KEY),
       Keypair.fromSecretKey(NEW_SOLANA_PRIVATE_KEY).publicKey.toString(),
-      "ed25519"
-    );
+      "ed25519",
+      "This is a Dev Guide code example testing Solana key"
+    )) as ImportPrivateKeyResult;
 
-    expect(pkpAddressKeyWasAttachedTo).to.equal(mintedPkp!.ethAddress);
+    expect(importKeyResult.pkpAddress).to.equal(mintedPkp!.ethAddress);
   });
 
   it("should export a wrapped Solana private key", async () => {
     const exportedPrivateKeyResult = await exportWrappedKey(
       mintedPkp!.publicKey,
+      importKeyResult.id,
       "solana"
     );
     expect(exportedPrivateKeyResult!.decryptedPrivateKey).to.equal(
