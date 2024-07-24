@@ -53,14 +53,16 @@ export const generateWrappedKey = async (
     console.log("✅ Got PKP Session Sigs");
 
     console.log("🔄 Generating wrapped key...");
-    const { pkpAddress, generatedPublicKey } = await generatePrivateKey({
+    const response = await generatePrivateKey({
       pkpSessionSigs,
       network: evmOrSolana,
       memo,
       litNodeClient,
     });
-    console.log("✅ Generated wrapped key");
-    return { pkpAddress, generatedPublicKey };
+    console.log(
+      `✅ Generated wrapped key with id: ${response.id} and public key: ${response.generatedPublicKey}`
+    );
+    return response;
   } catch (error) {
     console.error;
   } finally {
