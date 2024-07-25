@@ -10,6 +10,7 @@
     "test:generate": "npx @dotenvx/dotenvx run -- mocha test/**/generateWrappedKey.spec.ts",
     "test:getKey": "npx @dotenvx/dotenvx run -- mocha test/**/getWrappedKey.spec.ts",
     "test:storeKey": "npx @dotenvx/dotenvx run -- mocha test/**/storeWrappedKey.spec.ts",
+    "test:list": "npx @dotenvx/dotenvx run -- mocha test/**/listWrappedKeys.spec.ts",
     "test:sign:tx": "npx @dotenvx/dotenvx run -- mocha test/**/signTransactionWithWrappedKey.spec.ts",
     "test:sign:msg": "npx @dotenvx/dotenvx run -- mocha test/**/signMessageWithWrappedKey.spec.ts",
     "test:signAndSend:tx": "npx @dotenvx/dotenvx run -- mocha test/**/signAndSendTransactionWithWrappedKey.spec.ts"
