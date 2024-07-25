@@ -19,6 +19,7 @@ const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 export const signTransactionWithWrappedKey = async (
   pkpPublicKey: string,
   evmOrSolana: "evm" | "solana",
+  wrappedKeyId: string,
   unsignedTransaction: EthereumLitTransaction | SerializedTransaction,
   broadcastTransaction: boolean
 ) => {
@@ -62,6 +63,7 @@ export const signTransactionWithWrappedKey = async (
     const signedTransaction = await signTransactionWithEncryptedKey({
       pkpSessionSigs,
       network: evmOrSolana,
+      id: wrappedKeyId,
       unsignedTransaction,
       broadcast: broadcastTransaction,
       litNodeClient,
