@@ -25,7 +25,7 @@ In this directory, `session-signatures/getLitActionSessionSigs`, run `yarn` to i
 
 ### Setting up the `.env` File
 
-Make a copy of the provided `.env.example` file and name is `.env`:
+Make a copy of the provided `.env.example` file and name it `.env`:
 
 ```
 cp .env.example .env
