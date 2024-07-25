@@ -58,9 +58,7 @@ export const getSessionSigsPKP = async () => {
     );
 
     console.log("🔄 Minting a PKP using Auth Method...");
-
     const pkp = await litAuthClient.mintPKPWithAuthMethods([authMethod], {});
-
     console.log("✅ Successfully minted a PKP using the Auth Method");
 
     console.log("🔄 Getting the Session Sigs for the PKP...");
