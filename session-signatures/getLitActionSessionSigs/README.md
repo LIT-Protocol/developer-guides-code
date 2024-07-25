@@ -13,7 +13,7 @@ This code demonstrates how to use the `getLitActionSessionSigs()` method from th
 **NOTE**
 ---
 
- `getLitActionSessionSigs()` returns a PKP session signature, but it's purpose is to implement custom authentication/authorization within a Lit Action. An example of using `getLitActionSessionSigs` for custom authentication can be found [here](https://github.com/LIT-Protocol/developer-guides-code/blob/master/custom-auth/browser/src/index.ts#L284).
+ `getLitActionSessionSigs()` returns a PKP session signature, but it's purpose is to implement custom authentication/authorization within a Lit Action. An example of using `getLitActionSessionSigs()` for custom authentication can be found [here](https://github.com/LIT-Protocol/developer-guides-code/blob/master/custom-auth/browser/src/index.ts#L284).
 
 ---
 
