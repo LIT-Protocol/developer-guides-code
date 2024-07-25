@@ -74,7 +74,7 @@ export const getSessionSigsPKP = async () => {
           ability: LitAbility.PKPSigning,
         },
       ],
-      expiration: new Date(Date.now() + 1000 * 60 * 10).toISOString(),
+      expiration: new Date(Date.now() + 1000 * 60 * 10 ).toISOString(), // 10 minutes
     });
     console.log("✅ Got PKP Session Sigs");
     return sessionSignatures;

@@ -35,7 +35,7 @@ export const getSessionSigsViaAuthSig = async () => {
     console.log("🔄 Getting Session Sigs via an Auth Sig...");
     const sessionSignatures = await litNodeClient.getSessionSigs({
       chain: "ethereum",
-      expiration: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(), // 24 hours
+      expiration: new Date(Date.now() + 1000 * 60 * 10 ).toISOString(), // 10 minutes
       resourceAbilityRequests: [
         {
           resource: new LitAccessControlConditionResource("*"),
