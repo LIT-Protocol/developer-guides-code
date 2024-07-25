@@ -7,7 +7,7 @@ This code demonstrates how to use the `getLitActionSessionSigs()` method from th
 2. Connect to the Lit network using the `LitNodeClient` on the `datil-dev` network, specifying the local storage to hold the generated wallet and session keys
 3. Connect the `LitContracts` client to the Lit network
 4. Mint a PKP using the `pkpNftContractUtils.write.mint()` method from `LitContracts`.
-    - You may receive a gas error if your `ethersSigner` has insufficient tokens. This can be fixed by acquiring more tokens for the `Chronicle Yellowstone` blockchain
+    - You may receive a gas error if your `ethersSigner` has insufficient tokens. This can be fixed by acquiring more tokens from [the faucet](https://chronicle-yellowstone-faucet.getlit.dev/) for the `Chronicle Yellowstone` blockchain
 5. Get the session signatures for the newly minted PKP, specifying the ability to execute `Lit Actions`
 
 **NOTE**
