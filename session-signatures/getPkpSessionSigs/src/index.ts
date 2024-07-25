@@ -49,7 +49,6 @@ export const getSessionSigsPKP = async () => {
     console.log(
       "🔄 Authenticating EthWallerProvider, generating an Auth Method..."
     );
-
     const authMethod = await EthWalletProvider.authenticate({
       signer: ethersSigner,
       litNodeClient,
