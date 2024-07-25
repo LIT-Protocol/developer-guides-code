@@ -48,7 +48,7 @@ export const listWrappedKeys = async (pkpPublicKey: string) => {
     });
     console.log("✅ Got PKP Session Sigs");
 
-    console.log("🔄 Importing private key...");
+    console.log("🔄 Getting metadata for Wrapped Keys associated with PKP...");
     const response = await listEncryptedKeyMetadata({
       pkpSessionSigs,
       litNodeClient,
