@@ -5,7 +5,7 @@ import {
   EthWalletProvider,
   LitAuthClient,
 } from "@lit-protocol/lit-auth-client";
-import { LitAbility, LitActionResource } from "@lit-protocol/auth-helpers";
+import { LitAbility, LitPKPResource } from "@lit-protocol/auth-helpers";
 import * as ethers from "ethers";
 import { LocalStorage } from "node-localstorage";
 
@@ -70,8 +70,8 @@ export const getSessionSigsPKP = async () => {
       authMethods: [authMethod],
       resourceAbilityRequests: [
         {
-          resource: new LitActionResource("*"),
-          ability: LitAbility.LitActionExecution,
+          resource: new LitPKPResource("*"),
+          ability: LitAbility.PKPSigning,
         },
       ],
       expiration: new Date(Date.now() + 1000 * 60 * 10).toISOString(),
