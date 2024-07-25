@@ -1,4 +1,3 @@
-import { getEnv } from "./utils";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import { LitNetwork, ProviderType, LIT_RPC } from "@lit-protocol/constants";
 import {
@@ -8,6 +7,8 @@ import {
 import { LitAbility, LitPKPResource } from "@lit-protocol/auth-helpers";
 import * as ethers from "ethers";
 import { LocalStorage } from "node-localstorage";
+
+import { getEnv } from "./utils";
 
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 const LIT_RELAYER_API_KEY = getEnv("LIT_RELAYER_API_KEY");
