@@ -53,7 +53,6 @@ export const getSessionSigsPKP = async () => {
       signer: ethersSigner,
       litNodeClient,
     });
-
     console.log(
       "✅ Successfully authenticated EthWallerProvider, generated Auth Method"
     );
