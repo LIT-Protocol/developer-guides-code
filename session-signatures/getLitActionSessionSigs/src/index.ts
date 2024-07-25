@@ -55,9 +55,8 @@ export const getSessionSigsLitAction = async () => {
     console.log("✅ Successfully initialized LitAuthClient instance");
 
     console.log(
-      "🔄 Authenticating EthWallerProvider, generating an Auth Method..."
+      "🔄 Authenticating EthWalletProvider, generating an Auth Method..."
     );
-
     const authMethod = await EthWalletProvider.authenticate({
       signer: ethersSigner,
       litNodeClient,
