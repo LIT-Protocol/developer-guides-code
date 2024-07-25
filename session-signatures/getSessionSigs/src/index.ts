@@ -1,14 +1,15 @@
-import { getEnv } from "./utils";
+import { LitNetwork, LIT_RPC } from "@lit-protocol/constants";
+import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import {
   LitAbility,
   LitAccessControlConditionResource,
   createSiweMessage,
   generateAuthSig,
 } from "@lit-protocol/auth-helpers";
-import { LitNetwork, LIT_RPC } from "@lit-protocol/constants";
-import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import * as ethers from "ethers";
 import { LocalStorage } from "node-localstorage";
+
+import { getEnv } from "./utils";
 
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 

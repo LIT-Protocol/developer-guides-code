@@ -1,24 +1,42 @@
-# Getting Session Signatures using the `getLitActionSessionSigs` Method
+# `getLitActionSessionSigs` Code Example
+
+This code demonstrates how to use the `getLitActionSessionSigs()` method from the Lit SDK.
+
 ## Understanding the Implementation
-1. Using an imported ethereum private key, connect the wallet to the Lit RPC endpoint `Chronicle Yellowstone`
-2. Connect to the Lit network using the LitNodeClient on the `datil-dev` network, specifying the local storage to hold the generated wallet and session keys
-3. Initialize a secure connection through the Lit login with LitAuthClient using the `LIT_RELAYER_API_KEY`
-4. Generate a wallet signature to use as an [Auth Method](https://v6-api-doc-lit-js-sdk.vercel.app/interfaces/types_src.AuthMethod.html)
-5. Use the Auth Method to mint a PKP through the LitAuthClient
-6. Get the session signatures for the newly minted PKP, specifying the ability to execute Lit Actions
+1. Using an imported Ethereum private key, connect the wallet to the Lit RPC endpoint `Chronicle Yellowstone`
+2. Connect to the Lit network using the `LitNodeClient` on the `datil-dev` network, specifying the local storage to hold the generated wallet and session keys
+3. Connect the `LitContracts` client to the Lit network
+4. Mint a PKP using the `pkpNftContractUtils.write.mint()` method from `LitContracts`. You may receive a gas error if your `ethersSigner` has insufficient tokens. This can be fixed by acquiring more tokens for the `Chronicle Yellowstone` blockchain
+5. Get the session signatures for the newly minted PKP, specifying the ability to execute `Lit Actions`
 
 **NOTE**
 ---
 
-You may notice that this is nearly identical to the `getPkpSessionSigs` implementation. This is because this function does get a PKP session signature, but it's purpose is to implement custom authentication/authorization within a Lit Action. An example of using `getLitActionSessionSigs` for custom authentication can be found [here](../../custom-auth/browser/src/index.ts#L284)
+ `getLitActionSessionSigs()` returns a PKP session signature, but it's purpose is to implement custom authentication/authorization within a Lit Action. An example of using `getLitActionSessionSigs` for custom authentication can be found [here](https://github.com/LIT-Protocol/developer-guides-code/blob/master/custom-auth/browser/src/index.ts#L284).
 
 ---
 
-## Running this example
-1. Copy the ENVs of the example: `cp .env.example .env`
-2. Fill in the ENVs
-    * `ETHEREUM_PRIVATE_KEY`: Ethereum private key for the address that will be used in generating the Auth Method
-    * `LIT_RELAYER_API_KEY`: Lit Relayer API key, used for secure connection through the Lit login within the LitAuthClient
-3. Install dependencides with `yarn`
-4. Run the code example with `yarn test`
-    * Status of the code example will be logged to the console
+## Running the Examples
+
+### Install the Dependencies
+
+In this directory, `session-signatures/getLitActionSessionSigs`, run `yarn` to install the project dependencies.
+
+### Setting up the `.env` File
+
+Make a copy of the provided `.env.example` file and name is `.env`:
+
+```
+cp .env.example .env
+```
+
+Within the `.env` there is the ENV:
+
+1. `ETHEREUM_PRIVATE_KEY` - **Required**
+    - Must have Lit `tstLPX` tokens on the `Chronicle Yellowstone` blockchain
+        - [Faucet for Chronicle Yellowstone](https://chronicle-yellowstone-faucet.getlit.dev/)
+    - Will be used to mint the PKP and pay for Lit usage
+
+### Running the Test
+
+After the `.env` is configured, there is a NPM script in the `package.json` to run the test in the `test/index.spec.ts` file. To run the test, use the `yarn test` command.

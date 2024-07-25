@@ -1,5 +1,6 @@
 import { expect, use } from "chai";
 import chaiJsonSchema from "chai-json-schema";
+
 import { getSessionSigsViaAuthSig } from "../src";
 
 use(chaiJsonSchema);

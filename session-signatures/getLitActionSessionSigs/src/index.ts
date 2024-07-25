@@ -1,15 +1,6 @@
-import { getEnv } from "./utils";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
-import {
-  AuthMethodScope,
-  LitNetwork,
-  ProviderType,
-  LIT_RPC,
-} from "@lit-protocol/constants";
-import {
-  EthWalletProvider,
-  LitAuthClient,
-} from "@lit-protocol/lit-auth-client";
+import { LitNetwork, LIT_RPC } from "@lit-protocol/constants";
+import { LitContracts } from "@lit-protocol/contracts-sdk";
 import {
   LitAbility,
   LitActionResource,
@@ -18,8 +9,9 @@ import {
 import * as ethers from "ethers";
 import { LocalStorage } from "node-localstorage";
 
+import { getEnv } from "./utils";
+
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
-const LIT_RELAYER_API_KEY = getEnv("LIT_RELAYER_API_KEY");
 
 export const getSessionSigsLitAction = async () => {
   let litNodeClient: LitNodeClient;
@@ -41,45 +33,28 @@ export const getSessionSigsLitAction = async () => {
     await litNodeClient.connect();
     console.log("✅ Connected LitNodeClient to Lit network");
 
-    console.log(
-      "🔄 Initializing LitAuthClient for authentication through Lit login..."
-    );
-    const litAuthClient = new LitAuthClient({
-      debug: false,
-      litRelayConfig: {
-        relayApiKey: LIT_RELAYER_API_KEY,
-      },
-      rpcUrl: LIT_RPC.CHRONICLE_YELLOWSTONE,
-      litNodeClient,
-    });
-    console.log("✅ Successfully initialized LitAuthClient instance");
-
-    console.log(
-      "🔄 Authenticating EthWallerProvider, generating an Auth Method..."
-    );
-
-    const authMethod = await EthWalletProvider.authenticate({
+    console.log("🔄 Connecting LitContracts client to network...");
+    const litContracts = new LitContracts({
       signer: ethersSigner,
-      litNodeClient,
+      network: LitNetwork.DatilDev,
+      debug: false,
     });
+    await litContracts.connect();
+    console.log("✅ Connected LitContracts client to network");
+
+    console.log("🔄 Minting new PKP...");
+    const pkp = (await litContracts.pkpNftContractUtils.write.mint()).pkp;
     console.log(
-      "✅ Successfully authenticated EthWallerProvider, generated Auth Method"
+      `✅ Minted new PKP with public key: ${pkp.publicKey} and ETH address: ${pkp.ethAddress}`
     );
 
-    console.log("🔄 Minting a PKP using Auth Method...");
-    const pkp = await litAuthClient.mintPKPWithAuthMethods([authMethod], {});
-    console.log("✅ Successfully minted a PKP using the Auth Method");
-
-    const litActionCode = `const go = async () => {
+    const litActionCode = `(async () => {
       Lit.Actions.setResponse({ response: "true" });
-   };
-   
-   go();
-   `;
+    })();`;
+
     console.log("🔄 Getting Session Sigs...");
     const sessionSignatures = await litNodeClient.getLitActionSessionSigs({
-      pkpPublicKey: pkp.pkpPublicKey!,
-      authMethods: [authMethod],
+      pkpPublicKey: pkp.publicKey!,
       chain: "ethereum",
       resourceAbilityRequests: [
         {
@@ -91,10 +66,11 @@ export const getSessionSigsLitAction = async () => {
           ability: LitAbility.LitActionExecution,
         },
       ],
-      litActionCode: Buffer.from(litActionCode).toString("base64"),
+      litActionCode: litActionCode,
       jsParams: {},
     });
     console.log("✅ Got Session Sigs");
+
     return sessionSignatures;
   } catch (error) {
     console.error(error);
