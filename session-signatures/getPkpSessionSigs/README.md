@@ -7,7 +7,7 @@ This code demonstrates how to use the `getPkpSessionSigs()` method from the Lit 
 2. Connect to the Lit network using the LitNodeClient on the `datil-dev` network, specifying the local storage to hold the generated wallet and session keys
 3. Initialize a secure connection to the Lit Relayer using the `LitAuthClient` and a `LIT_RELAYER_API_KEY`
 4. Generate a wallet signature to use as an [`AuthMethod`](https://v6-api-doc-lit-js-sdk.vercel.app/interfaces/types_src.AuthMethod.html)
-5. Use the `AuthMethod` to mint a PKP through the LitAuthClient
+5. Use the `AuthMethod` to mint a PKP through the `LitAuthClient`
 6. Get the session signatures for the newly minted PKP
 
 **NOTE**
