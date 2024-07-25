@@ -69,12 +69,9 @@ export const getSessionSigsLitAction = async () => {
     const pkp = await litAuthClient.mintPKPWithAuthMethods([authMethod], {});
     console.log("✅ Successfully minted a PKP using the Auth Method");
 
-    const litActionCode = `const go = async () => {
+    const litActionCode = `(async () => {
       Lit.Actions.setResponse({ response: "true" });
-   };
-   
-   go();
-   `;
+    })();`
     console.log("🔄 Getting Session Sigs...");
     const sessionSignatures = await litNodeClient.getLitActionSessionSigs({
       pkpPublicKey: pkp.pkpPublicKey!,
