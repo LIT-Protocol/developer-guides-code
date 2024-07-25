@@ -15,7 +15,7 @@ In this directory, `session-signatures/getSessionSigs`, run `yarn` to install th
 
 ### Setting up the `.env` File
 
-Make a copy of the provided `.env.example` file and name is `.env`:
+Make a copy of the provided `.env.example` file and name it `.env`:
 
 ```
 cp .env.example .env
