@@ -1,20 +1,29 @@
 {
-  "name": "lit-action-using-fetch-nodejs",
-  "version": "0.1.0",
-  "description": "Example of executing a Lit Action that makes a API request using Fetch",
-  "main": "src/index.js",
+  "name": "nodejs",
+  "version": "1.0.0",
+  "main": "index.js",
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "start": "npx @dotenvx/dotenvx run -- node src/index.js"
+    "test": "npx @dotenvx/dotenvx run -- mocha test/**/*.spec.ts"
   },
   "dependencies": {
-    "@dotenvx/dotenvx": "^0.37.1",
-    "@lit-protocol/auth-helpers": "^6.2.2",
-    "@lit-protocol/constants": "^6.2.2",
-    "@lit-protocol/contracts-sdk": "^6.2.2",
-    "@lit-protocol/lit-node-client-nodejs": "^6.2.2",
-    "ethers": "5.7.2"
+    "@dotenvx/dotenvx": "^0.44.1",
+    "@lit-protocol/auth-helpers": "^6.3.0",
+    "@lit-protocol/constants": "^6.3.0",
+    "@lit-protocol/contracts-sdk": "^6.3.0",
+    "@lit-protocol/lit-node-client": "^6.3.0",
+    "ethers": "v5"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/chai": "^4.3.16",
+    "@types/chai-json-schema": "^1.4.10",
+    "@types/mocha": "^10.0.6",
+    "chai": "^5.1.1",
+    "chai-json-schema": "^1.5.1",
+    "mocha": "^10.4.0",
+    "tsc": "^2.0.4",
+    "tsx": "^4.12.0",
+    "typescript": "^5.4.5"
+  }
 }
