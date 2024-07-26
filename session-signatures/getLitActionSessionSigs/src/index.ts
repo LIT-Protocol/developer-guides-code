@@ -66,7 +66,7 @@ export const getSessionSigsLitAction = async () => {
           ability: LitAbility.LitActionExecution,
         },
       ],
-      litActionCode: litActionCode,
+      litActionCode: Buffer.from(litActionCode).toString('base64'),
       jsParams: {},
     });
     console.log("✅ Got Session Sigs");
