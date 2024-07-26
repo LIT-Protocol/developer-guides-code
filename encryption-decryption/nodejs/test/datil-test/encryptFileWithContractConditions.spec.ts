@@ -4,7 +4,7 @@ import { readFileSync } from "fs";
 import path from "path";
 
 import { getEnv } from "../../src/utils";
-import { encryptFileWithContractConditions } from "../../src/datil-dev/encryptFile";
+import { encryptFileWithContractConditions } from "../../src/datil-test/encryptFile";
 import deployedAllowList from "./fixtures/deployed.json";
 
 use(require("chai-json-schema"));

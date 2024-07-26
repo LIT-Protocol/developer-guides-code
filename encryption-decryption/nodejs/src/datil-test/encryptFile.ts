@@ -12,7 +12,7 @@ export const encryptFileWithContractConditions = async (
   try {
     console.log("🔄 Connecting to Lit network...");
     litNodeClient = new LitNodeClient({
-      litNetwork: LitNetwork.DatilDev,
+      litNetwork: LitNetwork.DatilTest,
       debug: false,
     });
     await litNodeClient.connect();

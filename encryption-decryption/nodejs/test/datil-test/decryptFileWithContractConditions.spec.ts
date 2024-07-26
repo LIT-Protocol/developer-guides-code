@@ -5,8 +5,8 @@ import path from "path";
 
 import { getEnv } from "../../src/utils";
 import deployedAllowList from "./fixtures/deployed.json";
-import { encryptFileWithContractConditions } from "../../src/datil-dev/encryptFile";
-import { decryptFileWithContractConditions } from "../../src/datil-dev/decryptFile";
+import { encryptFileWithContractConditions } from "../../src/datil-test/encryptFile";
+import { decryptFileWithContractConditions } from "../../src/datil-test/decryptFile";
 import { EvmContractConditions } from "@lit-protocol/types";
 
 use(require("chai-json-schema"));
