@@ -1,5 +1,6 @@
-export const litActionCode = `
-(async () => {
+// @ts-nocheck
+
+const _litActionCode = async () => {
   const url = "https://api.weather.gov/gridpoints/TOP/31,80/forecast";
   const resp = await fetch(url).then((response) => response.json());
   const temp = resp.properties.periods[0].temperature;
@@ -15,5 +16,6 @@ export const litActionCode = `
   // the signature share will be automatically returned in the HTTP response from the node
   // all the params (toSign, publicKey, sigName) are passed in from the LitJsSdk.executeJs() function
   const sigShare = await LitActions.signEcdsa({ toSign, publicKey, sigName });
-})();
-`;
+};
+
+export const litActionCode = `(${_litActionCode.toString()})();`;
