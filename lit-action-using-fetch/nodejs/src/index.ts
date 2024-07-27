@@ -83,8 +83,9 @@ export const runExample = async (pkpPublicKey: string) => {
         sigName: "sig",
       },
     });
-    console.log("litActionSignatures: ", litActionSignatures);
     console.log("✅ Executed Lit Action");
+
+    return litActionSignatures;
   } catch (error) {
     console.error(error);
   } finally {
