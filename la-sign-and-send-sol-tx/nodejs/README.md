@@ -27,7 +27,7 @@ Within the `.env` there are the ENVs:
 
 ### Run the Test
 
-After filling out the `.env` file, run `yarn test` to run the test. You will get a Lit Action timeout error, however, if you review the Lit node logs you'll see that code execution completes ~9 second before the request times out.
+After filling out the `.env` file, run `yarn test` to run the test. You will get a Lit Action timeout error, however, if you review the Lit node logs you'll see that code execution completes before the request times out.
 
 Here's an example log output for request `lit_baa0d493d6464`
 
