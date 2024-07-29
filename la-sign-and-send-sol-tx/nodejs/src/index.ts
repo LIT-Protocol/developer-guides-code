@@ -99,7 +99,7 @@ export const runExample = async (solanaKeypair: Keypair) => {
     console.log("🔄 Executing Lit Action...");
     const litActionSignatures = await litNodeClient.executeJs({
       sessionSigs,
-      ipfsId: "QmPBVa31Kgiy7H5T19JQf3Pb5juVcCfb8jJBviHty6Tk8q",
+      ipfsId: "QmYpFWsoP39MXXGGzAY1kRusQngsv6KpDNfh5iWd9Wqynn",
       jsParams: {
         signedTx: bs58.encode(solanaTransaction.serialize()),
       },
