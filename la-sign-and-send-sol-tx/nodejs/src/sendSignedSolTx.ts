@@ -3,7 +3,7 @@ import { Connection, clusterApiUrl } from "@solana/web3.js";
 import bs58 from "bs58";
 
 (async () => {
-  let txSignature = await Lit.Actions.runOnce(
+  const txSignature = await Lit.Actions.runOnce(
     { waitForResponse: true, name: "sendSignedSolTx" },
     async () => {
       try {
