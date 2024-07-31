@@ -8,7 +8,8 @@
     "test": "npx @dotenvx/dotenvx run -- mocha test/**/*.spec.ts",
     "test:addUsers": "npx @dotenvx/dotenvx run -- mocha test/**/addUsers.spec.ts",
     "test:registerPayer": "npx @dotenvx/dotenvx run -- mocha test/**/registerPayer.spec.ts",
-    "test:runSimpleLitAction": "npx @dotenvx/dotenvx run -- mocha test/**/runSimpleLitAction.spec.ts"
+    "test:runSimpleLitAction": "npx @dotenvx/dotenvx run -- mocha test/**/runSimpleLitAction.spec.ts",
+    "test:generateWrappedKey": "npx @dotenvx/dotenvx run -- mocha test/**/generateWrappedKey.spec.ts"
   },
   "devDependencies": {
     "@types/chai": "^4.3.16",
@@ -23,9 +24,13 @@
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^0.44.1",
-    "@lit-protocol/auth-helpers": "^6.2.1",
-    "@lit-protocol/lit-node-client": "^6.2.1",
-    "@lit-protocol/types": "^6.2.1",
+    "@lit-protocol/auth-helpers": "^6.3.0",
+    "@lit-protocol/constants": "^6.3.0",
+    "@lit-protocol/contracts-sdk": "^6.3.0",
+    "@lit-protocol/lit-auth-client": "^6.3.0",
+    "@lit-protocol/lit-node-client": "^6.3.0",
+    "@lit-protocol/types": "^6.3.0",
+    "@lit-protocol/wrapped-keys": "^6.3.0",
     "ethers": "v5"
   }
 }
