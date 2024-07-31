@@ -16,15 +16,10 @@ import {
   LitPKPResource,
 } from "@lit-protocol/auth-helpers";
 
-const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 const LIT_RELAYER_API_KEY = getEnv("LIT_RELAYER_API_KEY");
 
 describe("Generate a Wrapped Key using a payee PKP", () => {
   const payeeEthersSigner = ethers.Wallet.createRandom();
-  const ethersSigner = new ethers.Wallet(
-    ETHEREUM_PRIVATE_KEY,
-    new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE)
-  );
 
   it("should generate a Wrapped Key", async () => {
     let litNodeClient: LitNodeClient;
