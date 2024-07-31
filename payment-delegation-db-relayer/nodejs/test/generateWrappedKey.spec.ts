@@ -82,7 +82,7 @@ describe("Generate a Wrapped Key using a payee PKP", () => {
       });
       console.log("✅ Got PKP Session Sigs");
 
-      const newPayerInfo = await registerPayer();
+      // const newPayerInfo = await registerPayer();
       await addUsers([payeePkpInfo.pkpEthAddress as string]);
 
       console.log("🔄 Executing simple Lit Action...");
