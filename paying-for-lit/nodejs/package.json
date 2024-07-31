@@ -5,10 +5,18 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "test": "npx @dotenvx/dotenvx run -- mocha test/**/*.spec.ts"
+    "test": "npx @dotenvx/dotenvx run -- mocha test/**/*.spec.ts",
+    "test:credit:mint": "npx @dotenvx/dotenvx run -- mocha test/**/mintCapacityCredit.spec.ts",
+    "test:credit:delegate": "npx @dotenvx/dotenvx run -- mocha test/**/delegateCapacityCredit.spec.ts",
+    "test:credit:sessionSigs": "npx @dotenvx/dotenvx run -- mocha test/**/getSessionSigsWithCapacityCredit.spec.ts"
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^0.44.1",
+    "@lit-protocol/auth-helpers": "^6.3.0",
+    "@lit-protocol/constants": "^6.3.0",
+    "@lit-protocol/contracts-sdk": "^6.3.0",
+    "@lit-protocol/lit-auth-client": "^6.3.0",
+    "@lit-protocol/lit-node-client": "^6.3.0",
     "ethers": "v5"
   },
   "devDependencies": {
