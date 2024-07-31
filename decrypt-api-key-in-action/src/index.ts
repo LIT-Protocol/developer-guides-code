@@ -33,7 +33,7 @@ const ONE_WEEK_FROM_NOW = new Date(
 ).toISOString();
 
 const genProvider = () => {
-    return new ethers.providers.JsonRpcProvider(LIT_RPC.VESUVIUS);
+    return new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE);
 }
 
 const genWallet = () => {

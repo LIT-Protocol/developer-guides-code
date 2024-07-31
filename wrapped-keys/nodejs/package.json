@@ -1,0 +1,42 @@
+{
+  "name": "nodejs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "npx @dotenvx/dotenvx run -- mocha test/**/*.spec.ts",
+    "test:import": "npx @dotenvx/dotenvx run -- mocha test/**/importKey.spec.ts",
+    "test:export": "npx @dotenvx/dotenvx run -- mocha test/**/exportWrappedKey.spec.ts",
+    "test:generate": "npx @dotenvx/dotenvx run -- mocha test/**/generateWrappedKey.spec.ts",
+    "test:getKey": "npx @dotenvx/dotenvx run -- mocha test/**/getWrappedKey.spec.ts",
+    "test:storeKey": "npx @dotenvx/dotenvx run -- mocha test/**/storeWrappedKey.spec.ts",
+    "test:list": "npx @dotenvx/dotenvx run -- mocha test/**/listWrappedKeys.spec.ts",
+    "test:sign:tx": "npx @dotenvx/dotenvx run -- mocha test/**/signTransactionWithWrappedKey.spec.ts",
+    "test:sign:msg": "npx @dotenvx/dotenvx run -- mocha test/**/signMessageWithWrappedKey.spec.ts"
+  },
+  "dependencies": {
+    "@dotenvx/dotenvx": "^0.44.1",
+    "@lit-protocol/auth-browser": "^6.3.0",
+    "@lit-protocol/auth-helpers": "^6.3.0",
+    "@lit-protocol/constants": "^6.3.0",
+    "@lit-protocol/contracts-sdk": "^6.3.0",
+    "@lit-protocol/lit-auth-client": "^6.3.0",
+    "@lit-protocol/lit-node-client": "^6.3.0",
+    "@lit-protocol/wrapped-keys": "^6.3.0",
+    "ethers": "v5"
+  },
+  "devDependencies": {
+    "@solana/web3.js": "^1.93.4",
+    "@types/chai": "^4.3.16",
+    "@types/chai-json-schema": "^1.4.10",
+    "@types/mocha": "^10.0.6",
+    "bs58": "^5.0.0",
+    "chai": "^5.1.1",
+    "chai-json-schema": "^1.5.1",
+    "mocha": "^10.4.0",
+    "tsc": "^2.0.4",
+    "tsx": "^4.12.0",
+    "tweetnacl": "^1.0.3",
+    "typescript": "^5.4.5"
+  }
+}

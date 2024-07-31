@@ -39,14 +39,14 @@ export const connectLitNodeClientToDatilDev = async (step: number) => {
 export const connectLitContractsToDatilDev = async (step: number) => {
   logStep({
     step,
-    input: `Configuring the signer using a EOA private key, connecting it to the provider at ${LIT_RPC.VESUVIUS}, and setting the network to ${LitNetwork.DatilDev}.`,
+    input: `Configuring the signer using a EOA private key, connecting it to the provider at ${LIT_RPC.CHRONICLE_YELLOWSTONE}, and setting the network to ${LitNetwork.DatilDev}.`,
     output: "Loading...",
   });
 
   const litContracts = new LitContracts({
     signer: new ethers.Wallet(
       EOA_PRIVATE_KEY,
-      new ethers.providers.JsonRpcProvider(LIT_RPC.VESUVIUS)
+      new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE)
     ),
     debug: false,
     network: LitNetwork.DatilDev,
