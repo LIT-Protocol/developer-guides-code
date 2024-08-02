@@ -1,5 +1,5 @@
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
-import { LitNetwork, LIT_RPC } from "@lit-protocol/constants";
+import { LitNetwork, LIT_RPC, AuthMethodScope } from "@lit-protocol/constants";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
 import {
   LitAbility,
@@ -7,7 +7,6 @@ import {
   LitPKPResource,
 } from "@lit-protocol/auth-helpers";
 import * as ethers from "ethers";
-import { LocalStorage } from "node-localstorage";
 
 import { getEnv } from "./utils";
 
@@ -25,10 +24,7 @@ export const getSessionSigsLitAction = async () => {
     console.log("🔄 Connecting LitNodeClient to Lit network...");
     litNodeClient = new LitNodeClient({
       litNetwork: LitNetwork.DatilDev,
-      debug: false,
-      storageProvider: {
-        provider: new LocalStorage("./lit_storage.db"),
-      },
+      debug: true,
     });
     await litNodeClient.connect();
     console.log("✅ Connected LitNodeClient to Lit network");
@@ -48,14 +44,19 @@ export const getSessionSigsLitAction = async () => {
       `✅ Minted new PKP with public key: ${pkp.publicKey} and ETH address: ${pkp.ethAddress}`
     );
 
-    const litActionCode = `(async () => {
-      Lit.Actions.setResponse({ response: "true" });
-    })();`;
+    // add permitted auth method
+    // https://explorer.litprotocol.com/ipfs/QmTaYbqnGwrmseoDQdTNoU9FNzaiaTpKApgMFWqbsWs4Cr
+    await litContracts.addPermittedAction({
+      ipfsId: "QmTaYbqnGwrmseoDQdTNoU9FNzaiaTpKApgMFWqbsWs4Cr",
+      pkpTokenId: pkp.tokenId,
+      authMethodScopes: [AuthMethodScope.SignAnything],
+    });
+
+    const litActionCode = `(async () => {LitActions.setResponse({ response: makeItTrue });})();`;
 
     console.log("🔄 Getting Session Sigs...");
     const sessionSignatures = await litNodeClient.getLitActionSessionSigs({
       pkpPublicKey: pkp.publicKey!,
-      chain: "ethereum",
       resourceAbilityRequests: [
         {
           resource: new LitPKPResource("*"),
@@ -66,8 +67,10 @@ export const getSessionSigsLitAction = async () => {
           ability: LitAbility.LitActionExecution,
         },
       ],
-      litActionCode: Buffer.from(litActionCode).toString('base64'),
-      jsParams: {},
+      litActionCode: Buffer.from(litActionCode).toString("base64"),
+      jsParams: {
+        makeItTrue: "true",
+      },
     });
     console.log("✅ Got Session Sigs");
 
