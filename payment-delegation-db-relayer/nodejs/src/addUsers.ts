@@ -1,6 +1,10 @@
 import { ethers } from "ethers";
 import fs from "fs";
 
+import { datil, datilTest, datilDev } from "@lit-protocol/contracts";
+import { add } from "@lit-protocol/contracts-sdk/src/lib/hex2dec";
+import { LIT_NETWORK_VALUES } from "@lit-protocol/constants";
+
 const getEnv = (name: string): string => {
   const env = process.env[name];
   if (env === undefined || env === "")
@@ -15,6 +19,75 @@ const LIT_RELAYER_URL = `https://${LIT_NETWORK}-relayer.getlit.dev/add-users`;
 const LIT_RELAYER_API_KEY = getEnv("LIT_RELAYER_API_KEY");
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 const REQUESTS_PER_KILOSECOND = 1000000;
+
+const getPaymentDelegationContext = (
+  networkContext: typeof datil | typeof datilTest | typeof datilDev
+) => {
+  const contract = networkContext.data.find(
+    (d) => d.name === "PaymentDelegation"
+  )?.contracts[0];
+
+  if (!contract) {
+    throw new Error(`Contract not found in network context`);
+  }
+
+  return {
+    address: contract.address_hash,
+    abi: contract.ABI,
+  };
+};
+
+const getRateLimitContext = (
+  networkContext: typeof datil | typeof datilTest | typeof datilDev
+) => {
+  const contract = networkContext.data.find((d) => d.name === "RateLimitNFT")
+    ?.contracts[0];
+
+  if (!contract) {
+    throw new Error(`Contract not found in network context`);
+  }
+
+  return {
+    address: contract.address_hash,
+    abi: contract.ABI,
+  };
+};
+
+const PAYMENT_DB_BY_NETWORK: Record<
+  LIT_NETWORK_VALUES,
+  { address: string; abi: any }
+> = {
+  datil: {
+    address: getPaymentDelegationContext(datil).address,
+    abi: getPaymentDelegationContext(datil).abi,
+  },
+  "datil-test": {
+    address: getPaymentDelegationContext(datilTest).address,
+    abi: getPaymentDelegationContext(datilTest).abi,
+  },
+  "datil-dev": {
+    address: getPaymentDelegationContext(datilDev).address,
+    abi: getPaymentDelegationContext(datilDev).abi,
+  },
+} as const;
+
+const RATE_LIMIT_BY_NETWORK: Record<
+  LIT_NETWORK_VALUES,
+  { address: string; abi: any }
+> = {
+  datil: {
+    address: getRateLimitContext(datil).address,
+    abi: getRateLimitContext(datil).abi,
+  },
+  "datil-test": {
+    address: getRateLimitContext(datilTest).address,
+    abi: getRateLimitContext(datilTest).abi,
+  },
+  "datil-dev": {
+    address: getRateLimitContext(datilDev).address,
+    abi: getRateLimitContext(datilDev).abi,
+  },
+} as const;
 
 interface AddUserResponse {
   success: boolean;
@@ -49,13 +122,9 @@ export const addUsers = async (users: string[]) => {
     );
     const wallet = new ethers.Wallet(ETHEREUM_PRIVATE_KEY, provider);
 
-    const PaymentDbAbi = fs.readFileSync(
-      "./src/abis/PaymentDelegation.abi",
-      "utf-8"
-    );
     const paymentDbContract = new ethers.Contract(
-      "0xd7188e0348F1dA8c9b3d6e614844cbA22329B99E",
-      PaymentDbAbi,
+      PAYMENT_DB_BY_NETWORK[LIT_NETWORK].address,
+      PAYMENT_DB_BY_NETWORK[LIT_NETWORK].abi,
       wallet
     );
 
@@ -72,13 +141,10 @@ export const addUsers = async (users: string[]) => {
     console.log("✅ Added restriction");
 
     console.log(`🔄 Minting a rate limit NFT`);
-    const rateLimitAbi = fs.readFileSync(
-      "./src/abis/RateLimitNFT.abi",
-      "utf-8"
-    );
+
     const rateLimitContract = new ethers.Contract(
-      "0xa17f11B7f828EEc97926E56D98D5AB63A0231b77",
-      rateLimitAbi,
+      RATE_LIMIT_BY_NETWORK[LIT_NETWORK].address,
+      RATE_LIMIT_BY_NETWORK[LIT_NETWORK].abi,
       wallet
     );
 
