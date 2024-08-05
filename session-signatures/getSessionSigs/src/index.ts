@@ -1,68 +1,97 @@
-import { LitNetwork, LIT_RPC } from "@lit-protocol/constants";
+import { LitNetwork } from "@lit-protocol/constants";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import {
   LitAbility,
-  LitAccessControlConditionResource,
-  createSiweMessage,
-  generateAuthSig,
+  LitActionResource,
+  LitPKPResource,
+  createSiweMessageWithRecaps,
 } from "@lit-protocol/auth-helpers";
-import * as ethers from "ethers";
-import { LocalStorage } from "node-localstorage";
+import { AuthCallbackParams, AuthSig } from "@lit-protocol/types";
+import { privateKeyToAccount } from "viem/accounts";
+import { Account } from "viem";
 
 import { getEnv } from "./utils";
 
-const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
+const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY"); // Same as process.env
 
 export const getSessionSigsViaAuthSig = async () => {
   let litNodeClient: LitNodeClient;
+  const account = privateKeyToAccount(`0x${ETHEREUM_PRIVATE_KEY}`);
 
   try {
-    const ethersSigner = new ethers.Wallet(
-      ETHEREUM_PRIVATE_KEY,
-      new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE)
-    );
-
     console.log("🔄 Connecting LitNodeClient to Lit network...");
     litNodeClient = new LitNodeClient({
       litNetwork: LitNetwork.DatilDev,
       debug: false,
-      storageProvider: {
-        provider: new LocalStorage("./lit_storage.db"),
-      },
     });
     await litNodeClient.connect();
     console.log("✅ Connected LitNodeClient to Lit network");
 
     console.log("🔄 Getting Session Sigs via an Auth Sig...");
+
+    const createAuthSig = async (
+      params: AuthCallbackParams,
+      account: Account
+    ): Promise<AuthSig> => {
+      const address = account.address;
+      const preparedMessage = await createSiweMessageWithRecaps({
+        uri: String(params.uri),
+        expiration: String(params.expiration),
+        resources: params.resourceAbilityRequests!,
+        walletAddress: address as `0x${string}`,
+        nonce: params.nonce,
+        litNodeClient: litNodeClient,
+        statement: params.statement,
+        chainId: 84532,
+        //domain: process.env.NEXT_PUBLIC_HOST,
+      });
+
+      const signature = await account.signMessage!({
+        message: preparedMessage,
+      });
+
+      return {
+        sig: signature,
+        derivedVia: "ethereum.web3.auth",
+        signedMessage: preparedMessage,
+        address: address as string,
+      };
+    };
+
     const sessionSignatures = await litNodeClient.getSessionSigs({
-      chain: "ethereum",
-      expiration: new Date(Date.now() + 1000 * 60 * 10 ).toISOString(), // 10 minutes
+      chain: "baseSepolia",
       resourceAbilityRequests: [
         {
-          resource: new LitAccessControlConditionResource("*"),
-          ability: LitAbility.AccessControlConditionDecryption,
+          resource: new LitActionResource("*"),
+          ability: LitAbility.LitActionExecution,
+        },
+        {
+          resource: new LitPKPResource("*"),
+          ability: LitAbility.PKPSigning,
         },
       ],
-      authNeededCallback: async ({
-        uri,
-        expiration,
-        resourceAbilityRequests,
-      }) => {
-        const toSign = await createSiweMessage({
-          uri,
-          expiration,
-          resources: resourceAbilityRequests,
-          walletAddress: await ethersSigner.getAddress(),
-          nonce: await litNodeClient.getLatestBlockhash(),
-          litNodeClient,
-        });
-
-        return await generateAuthSig({
-          signer: ethersSigner,
-          toSign,
-        });
+      authNeededCallback: async (params) => {
+        return await createAuthSig(params, account);
       },
+      //capacityDelegationAuthSig,
     });
+    console.log(sessionSignatures);
+
+    const litActionCode = `
+    const go = async () => {
+      console.log("The answer to the universe is 42.");
+    };
+    go();
+  `;
+
+    const litActionResult = await litNodeClient.executeJs({
+      code: litActionCode,
+      sessionSigs: sessionSignatures,
+      jsParams: {},
+    });
+
+    console.log(litActionResult);
+
     console.log("✅ Got Session Sigs via an Auth Sig");
     return sessionSignatures;
   } catch (error) {

@@ -13,7 +13,8 @@
     "@lit-protocol/constants": "^6.3.0",
     "@lit-protocol/lit-node-client": "^6.3.0",
     "ethers": "v5",
-    "node-localstorage": "^3.0.5"
+    "node-localstorage": "^3.0.5",
+    "viem": "^2.18.8"
   },
   "devDependencies": {
     "@types/chai": "^4.3.16",
