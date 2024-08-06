@@ -123,7 +123,7 @@ export const runExample = async () => {
         return {
           sig: combinedSignatures,
           derivedVia: "EIP1271",
-          signedMessage: siweMessage,
+          signedMessage: siweMessageHash,
           address: DEPLOYED_EIP1271_WHITELIST_CONTRACT,
         };
       },
