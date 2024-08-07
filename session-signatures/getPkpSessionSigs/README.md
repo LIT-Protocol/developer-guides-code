@@ -1,19 +1,22 @@
 # `getPkpSessionSigs` Code Example
 
-This code demonstrates how to use the `getPkpSessionSigs()` method from the Lit SDK.
+This code demonstrates how to use the `getPkpSessionSigs` method from the Lit SDK.
 
 ## Understanding the Implementation
 1. Using an imported Ethereum private key, connect the wallet to the Lit RPC endpoint `Chronicle Yellowstone`
-2. Connect to the Lit network using the LitNodeClient on the `datil-dev` network, specifying the local storage to hold the generated wallet and session keys
-3. Initialize a secure connection to the Lit Relayer using the `LitAuthClient` and a `LIT_RELAYER_API_KEY`
-4. Generate a wallet signature to use as an [`AuthMethod`](https://v6-api-doc-lit-js-sdk.vercel.app/interfaces/types_src.AuthMethod.html)
-5. Use the `AuthMethod` to mint a PKP through the `LitAuthClient`
-6. Get the session signatures for the newly minted PKP
+2. Connect to the Lit network using the LitNodeClient on the `datil-test` network, specifying the local storage to hold the generated session signature and keypair
+3. Connect the `LitContracts` client to the Lit network
+4. Mint a PKP using the `pkpNftContractUtils.write.mint` method from `LitContracts`.
+    - You may receive a gas error if your `ethersSigner` has insufficient tokens. This can be fixed by acquiring more tokens from [the faucet](https://chronicle-yellowstone-faucet.getlit.dev/) for the `Chronicle Yellowstone` blockchain
+5. Mint a [`capacityCreditsNFT`](https://developer.litprotocol.com/sdk/capacity-credits) and define the requests and expiration date
+6. Use the `capacityCreditsNFT` to create a `capacityDelegationAuthSig`
+7. Generate a wallet signature to use as an [`AuthMethod`](https://v6-api-doc-lit-js-sdk.vercel.app/interfaces/types_src.AuthMethod.html)
+8. Get the session signatures for the newly minted PKP. Any network costs will be undertaken by the `dAppOwnerWallet` specified in the `capacityDelegationAuthSig`
 
 **NOTE**
 ---
 
-When using `getPkpSessionSigs()`, you have multiple authentication options. You can use `AuthSigs`, `AuthMethods`, or `Lit Actions`, and you're not strictly limited to using an `AuthMethod`.
+When using `getPkpSessionSigs`, you have multiple authentication options. You can use `AuthSigs`, `AuthMethods`, or `Lit Actions`, and you're not strictly limited to using an `AuthMethod`.
 
 ---
 
@@ -34,9 +37,9 @@ cp .env.example .env
 Within the `.env` there is the ENV:
 
 1. `ETHEREUM_PRIVATE_KEY` - **Required**
-    - Ethereum private key of the address used to generate a wallet signature as an `AuthMethod`
-2. `LIT_RELAYER_API_KEY` - **Required**
-    - API key requied to use the relay server run by Lit. If you need one, they can be requested [here](https://docs.google.com/forms/d/e/1FAIpQLSeVraHsp1evK_9j-8LpUBiEJWFn4G5VKjOWBmHFjxFRJZJdrg/viewform)
+    - Must have Lit `tstLPX` tokens on the `Chronicle Yellowstone` blockchain
+        - [Faucet for Chronicle Yellowstone](https://chronicle-yellowstone-faucet.getlit.dev/)
+    - Will be used to mint the PKP and pay for Lit usage
 
 ### Running the Test
 
