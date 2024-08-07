@@ -8,7 +8,7 @@ This code demonstrates how to use the `getPkpSessionSigs` method from the Lit SD
 3. Connect the `LitContracts` client to the Lit network
 4. Mint a PKP using the `pkpNftContractUtils.write.mint` method from `LitContracts`.
     - You may receive a gas error if your `ethersSigner` has insufficient tokens. This can be fixed by acquiring more tokens from [the faucet](https://chronicle-yellowstone-faucet.getlit.dev/) for the `Chronicle Yellowstone` blockchain
-5. Mint a [`capacityCreditsNFT`](https://developer.litprotocol.com/sdk/capacity-credits) and define the requests and expiration date
+5. Mint a [`capacityCreditsNFT`](https://developer.litprotocol.com/sdk/capacity-credits) and define the request limit and expiration date
 6. Use the `capacityCreditsNFT` to create a `capacityDelegationAuthSig`
 7. Generate a wallet signature to use as an [`AuthMethod`](https://v6-api-doc-lit-js-sdk.vercel.app/interfaces/types_src.AuthMethod.html)
 8. Get the session signatures for the newly minted PKP. Any network costs will be undertaken by the `dAppOwnerWallet` specified in the `capacityDelegationAuthSig`

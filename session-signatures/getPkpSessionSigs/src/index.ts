@@ -49,7 +49,7 @@ export const getSessionSigsPKP = async () => {
     const capacityTokenId = (
       await litContracts.mintCapacityCreditsNFT({
         requestsPerKilosecond: 10,
-        daysUntilUTCMidnightExpiration: 30,
+        daysUntilUTCMidnightExpiration: 1,
       })
     ).capacityTokenIdStr;
     console.log(`✅ Minted new Capacity Credit with ID: ${capacityTokenId}`);
