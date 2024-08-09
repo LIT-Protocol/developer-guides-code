@@ -4,9 +4,9 @@ This code demonstrates how to use the `getSessionSigs` method from the Lit SDK.
 
 ## Understanding the Implementation
 1. Using an imported Ethereum private key, connect the wallet to the Lit RPC endpoint `Chronicle Yellowstone`
-2. Connect to the Lit network using the LitNodeClient on the `datil-test` network, specifying the local storage to hold the generated session signature and keypair
+2. Connect to the Lit network using the LitNodeClient on the `datil-test` network
 3. Connect the `LitContracts` client to the Lit network
-4. Mint a [`capacityCreditsNFT`](https://developer.litprotocol.com/sdk/capacity-credits) and define the request limit and expiration date
+4. **If not provided in the arguments**: Mint a [`capacityCreditsNFT`](https://developer.litprotocol.com/sdk/capacity-credits) and define the request limit and expiration date
 5. Use the `capacityCreditsNFT` to create a `capacityDelegationAuthSig`
 6. Generate the session signatures via an [`AuthSig`](https://v6-api-doc-lit-js-sdk.vercel.app/interfaces/types_src.AuthSig.html) (Authentication Signature). Any network costs will be undertaken by the `dAppOwnerWallet` specified in the `capacityDelegationAuthSig`
 

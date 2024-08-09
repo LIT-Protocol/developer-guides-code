@@ -8,13 +8,12 @@ import {
   generateAuthSig,
 } from "@lit-protocol/auth-helpers";
 import * as ethers from "ethers";
-import { LocalStorage } from "node-localstorage";
 
 import { getEnv } from "./utils";
 
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 
-export const getSessionSigsViaAuthSig = async () => {
+export const getSessionSigsViaAuthSig = async (capacityTokenId?: string) => {
   let litNodeClient: LitNodeClient;
 
   try {
@@ -27,9 +26,6 @@ export const getSessionSigsViaAuthSig = async () => {
     litNodeClient = new LitNodeClient({
       litNetwork: LitNetwork.DatilTest,
       debug: false,
-      storageProvider: {
-        provider: new LocalStorage("./lit_storage.db"),
-      },
     });
     await litNodeClient.connect();
     console.log("✅ Connected LitNodeClient to Lit network");
@@ -43,14 +39,16 @@ export const getSessionSigsViaAuthSig = async () => {
     await litContracts.connect();
     console.log("✅ Connected LitContracts client to network");
 
-    console.log("🔄 Minting Capacity Credits NFT...");
-    const capacityTokenId = (
-      await litContracts.mintCapacityCreditsNFT({
-        requestsPerKilosecond: 10,
-        daysUntilUTCMidnightExpiration: 1,
-      })
-    ).capacityTokenIdStr;
-    console.log(`✅ Minted new Capacity Credit with ID: ${capacityTokenId}`);
+    if (!capacityTokenId) {
+      console.log("🔄 Minting Capacity Credits NFT...");
+      capacityTokenId = (
+        await litContracts.mintCapacityCreditsNFT({
+          requestsPerKilosecond: 10,
+          daysUntilUTCMidnightExpiration: 1,
+        })
+      ).capacityTokenIdStr;
+      console.log(`✅ Minted new Capacity Credit with ID: ${capacityTokenId}`);
+    }
 
     console.log("🔄 Creating capacityDelegationAuthSig...");
     const { capacityDelegationAuthSig } =

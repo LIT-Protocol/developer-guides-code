@@ -12,8 +12,7 @@
     "@lit-protocol/auth-helpers": "^6.4.0",
     "@lit-protocol/constants": "^6.4.0",
     "@lit-protocol/lit-node-client": "^6.4.0",
-    "ethers": "v5",
-    "node-localstorage": "^3.0.5"
+    "ethers": "v5"
   },
   "devDependencies": {
     "@types/chai": "^4.3.16",

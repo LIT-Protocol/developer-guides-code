@@ -2,15 +2,21 @@ import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import { LitNetwork, LIT_RPC } from "@lit-protocol/constants";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
 import { LitAbility, LitPKPResource } from "@lit-protocol/auth-helpers";
-import { EthWalletProvider } from '@lit-protocol/lit-auth-client';
+import { EthWalletProvider } from "@lit-protocol/lit-auth-client";
 import * as ethers from "ethers";
-import { LocalStorage } from "node-localstorage";
 
 import { getEnv } from "./utils";
 
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 
-export const getSessionSigsPKP = async () => {
+export const getSessionSigsPKP = async (
+  pkp?: {
+    tokenId: any;
+    publicKey: string;
+    ethAddress: string;
+  },
+  capacityTokenId?: string
+) => {
   let litNodeClient: LitNodeClient;
 
   try {
@@ -23,9 +29,6 @@ export const getSessionSigsPKP = async () => {
     litNodeClient = new LitNodeClient({
       litNetwork: LitNetwork.DatilTest,
       debug: false,
-      storageProvider: {
-        provider: new LocalStorage("./lit_storage.db"),
-      },
     });
     await litNodeClient.connect();
     console.log("✅ Connected LitNodeClient to Lit network");
@@ -39,20 +42,24 @@ export const getSessionSigsPKP = async () => {
     await litContracts.connect();
     console.log("✅ Connected LitContracts client to network");
 
-    console.log("🔄 Minting new PKP...");
-    const pkp = (await litContracts.pkpNftContractUtils.write.mint()).pkp;
-    console.log(
-      `✅ Minted new PKP with public key: ${pkp.publicKey} and ETH address: ${pkp.ethAddress}`
-    );
+    if (!pkp) {
+      console.log("🔄 Minting new PKP...");
+      pkp = (await litContracts.pkpNftContractUtils.write.mint()).pkp;
+      console.log(
+        `✅ Minted new PKP with public key: ${pkp.publicKey} and ETH address: ${pkp.ethAddress}`
+      );
+    }
 
-    console.log("🔄 Minting Capacity Credits NFT...");
-    const capacityTokenId = (
-      await litContracts.mintCapacityCreditsNFT({
-        requestsPerKilosecond: 10,
-        daysUntilUTCMidnightExpiration: 1,
-      })
-    ).capacityTokenIdStr;
-    console.log(`✅ Minted new Capacity Credit with ID: ${capacityTokenId}`);
+    if (!capacityTokenId) {
+      console.log("🔄 Minting Capacity Credits NFT...");
+      capacityTokenId = (
+        await litContracts.mintCapacityCreditsNFT({
+          requestsPerKilosecond: 10,
+          daysUntilUTCMidnightExpiration: 1,
+        })
+      ).capacityTokenIdStr;
+      console.log(`✅ Minted new Capacity Credit with ID: ${capacityTokenId}`);
+    }
 
     console.log("🔄 Creating capacityDelegationAuthSig...");
     const { capacityDelegationAuthSig } =
@@ -64,12 +71,12 @@ export const getSessionSigsPKP = async () => {
       });
     console.log(`✅ Created the capacityDelegationAuthSig`);
 
-    console.log("🔄 Creating AuthMethod using the ethersSigner...")
+    console.log("🔄 Creating AuthMethod using the ethersSigner...");
     const authMethod = await EthWalletProvider.authenticate({
       signer: ethersSigner,
       litNodeClient,
     });
-    console.log("✅ Finished creating the AuthMethod")
+    console.log("✅ Finished creating the AuthMethod");
 
     console.log("🔄 Getting the Session Sigs for the PKP...");
     const sessionSignatures = await litNodeClient.getPkpSessionSigs({

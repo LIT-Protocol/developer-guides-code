@@ -4,11 +4,11 @@ This code demonstrates how to use the `getLitActionSessionSigs` method from the 
 
 ## Understanding the Implementation
 1. Using an imported Ethereum private key, connect the wallet to the Lit RPC endpoint `Chronicle Yellowstone`
-2. Connect to the Lit network using the `LitNodeClient` on the `datil-test` network, specifying the local storage to hold the generated session signature and keypair
+2. Connect to the Lit network using the `LitNodeClient` on the `datil-test` network
 3. Connect the `LitContracts` client to the Lit network
-4. Mint a PKP using the `pkpNftContractUtils.write.mint` method from `LitContracts`.
+4. **If not provided in the arguments**: Mint a PKP using the `pkpNftContractUtils.write.mint` method from `LitContracts`.
     - You may receive a gas error if your `ethersSigner` has insufficient tokens. This can be fixed by acquiring more tokens from [the faucet](https://chronicle-yellowstone-faucet.getlit.dev/) for the `Chronicle Yellowstone` blockchain
-5. Mint a [`capacityCreditsNFT`](https://developer.litprotocol.com/sdk/capacity-credits) and define the request limit and expiration date
+5. **If not provided in the arguments**: Mint a [`capacityCreditsNFT`](https://developer.litprotocol.com/sdk/capacity-credits) and define the request limit and expiration date
 6. Use the `capacityCreditsNFT` to create a `capacityDelegationAuthSig`
 7. Define the `litActionCode` and locally create a hash of it
 8. Add the `litActionCode` hash as a permitted `Lit Action` of the PKP
