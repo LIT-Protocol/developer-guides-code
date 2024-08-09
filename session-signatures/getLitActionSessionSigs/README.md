@@ -10,7 +10,7 @@ This code demonstrates how to use the `getLitActionSessionSigs` method from the 
     - You may receive a gas error if your `ethersSigner` has insufficient tokens. This can be fixed by acquiring more tokens from [the faucet](https://chronicle-yellowstone-faucet.getlit.dev/) for the `Chronicle Yellowstone` blockchain
 5. Mint a [`capacityCreditsNFT`](https://developer.litprotocol.com/sdk/capacity-credits) and define the request limit and expiration date
 6. Use the `capacityCreditsNFT` to create a `capacityDelegationAuthSig`
-7. Define the `litActionCode` and locally create a hash of it
+7. Define the `litActionCode` and locally create the IPFS CID hash of it
 8. Add the `litActionCode` hash as a permitted `Lit Action` of the PKP
 9. Get the session signatures for the newly minted PKP, specifying the ability to execute `Lit Actions`. Any network costs will be undertaken by the `dAppOwnerWallet` specified in the `capacityDelegationAuthSig`
 
