@@ -1,31 +1,51 @@
 import { expect, use } from "chai";
 import chaiJsonSchema from "chai-json-schema";
 
-import { getSessionSigsViaAuthSig } from "../src";
+import { executeTestAction } from "../src";
 
 use(chaiJsonSchema);
 
-describe("getSessionSigsViaAuthSig", () => {
-  const sessionSigResponseSchema = {
+describe("executionResponse", () => {
+  const executeResponseSchema = {
     type: "object",
-    patternProperties: {
-      "^https://\\d+\\.\\d+\\.\\d+\\.\\d+:\\d+$": {
+    properties: {
+      signature: {
         type: "object",
         properties: {
-          sig: { type: "string" },
-          derivedVia: { type: "string" },
-          signedMessage: { type: "string" },
-          address: { type: "string" },
-          algo: { type: "string" },
+          r: { 
+            type: "string", 
+            pattern: "^[a-f0-9]{64}$" 
+          },
+          s: { 
+            type: "string", 
+            pattern: "^[a-f0-9]{64}$" 
+          },
+          recid: { 
+            type: "integer",
+            enum: [0, 1] 
+          },
+          signature: { 
+            type: "string", 
+            pattern: "^0x[a-f0-9]{130}$" 
+          },
+          publicKey: { 
+            type: "string", 
+            pattern: "^[A-F0-9]{130}$" 
+          },
+          dataSigned: { 
+            type: "string", 
+            pattern: "^[A-F0-9]{64}$" 
+          }
         },
-        required: ["sig", "derivedVia", "signedMessage", "address", "algo"],
-      },
+        required: ["r", "s", "recid", "signature", "publicKey", "dataSigned"]
+      }
     },
-    additionalProperties: false,
+    required: ["signature"],
+    additionalProperties: false
   };
 
-  it("Attempting to get session signatures...", async () => {
-    const sessionSignatures = await getSessionSigsViaAuthSig();
-    expect(sessionSignatures).to.be.jsonSchema(sessionSigResponseSchema);
+  it("Attempting to execute Lit Action...", async () => {
+    const executionResult = await executeTestAction();
+    expect(executionResult).to.be.jsonSchema(executeResponseSchema);
   }).timeout(120_000);
 });
