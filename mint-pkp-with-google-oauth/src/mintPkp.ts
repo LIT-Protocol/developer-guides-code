@@ -1,4 +1,8 @@
-import { AuthMethodScope, LitNetwork } from "@lit-protocol/constants";
+import {
+  AuthMethodScope,
+  AuthMethodType,
+  LitNetwork,
+} from "@lit-protocol/constants";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
 import { ethers } from "ethers";
 import { JwtPayload } from "jwt-decode";
@@ -10,7 +14,7 @@ export const mintPkp = async (decodedGoogleJwt: JwtPayload) => {
     await provider.send("eth_requestAccounts", []);
     const ethersSigner = provider.getSigner();
     console.log(
-      "ℹ️ Connected Ethereum account:",
+      "✅ Connected Ethereum account:",
       await ethersSigner.getAddress()
     );
 
@@ -33,8 +37,8 @@ export const mintPkp = async (decodedGoogleJwt: JwtPayload) => {
 
     const tx =
       await litContracts.pkpHelperContract.write.mintNextAndAddAuthMethods(
-        6, // keyType
-        [6], // permittedAuthMethodTypes
+        AuthMethodType.GoogleJwt, // keyType
+        [AuthMethodType.GoogleJwt], // permittedAuthMethodTypes
         [authMethodId], // permittedAuthMethodIds
         ["0x"], // permittedAuthMethodPubkeys
         [[AuthMethodScope.SignAnything]], // permittedAuthMethodScopes

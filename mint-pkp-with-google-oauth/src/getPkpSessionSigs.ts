@@ -1,6 +1,5 @@
-import { JwtPayload } from "jwt-decode";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
-import { LitNetwork } from "@lit-protocol/constants";
+import { AuthMethodType, LitNetwork } from "@lit-protocol/constants";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
 import { ethers } from "ethers";
 import { LitAbility, LitPKPResource } from "@lit-protocol/auth-helpers";
@@ -23,7 +22,7 @@ export const getPkpSessionSigs = async (
     await provider.send("eth_requestAccounts", []);
     const ethersSigner = provider.getSigner();
     console.log(
-      "ℹ️ Connected Ethereum account:",
+      "✅ Connected Ethereum account:",
       await ethersSigner.getAddress()
     );
 
@@ -69,7 +68,7 @@ export const getPkpSessionSigs = async (
       capabilityAuthSigs: [capacityDelegationAuthSig],
       authMethods: [
         {
-          authMethodType: 6,
+          authMethodType: AuthMethodType.GoogleJwt,
           accessToken: googleJwt,
         },
       ],
