@@ -1,9 +1,8 @@
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
-import { AuthMethodType, LitNetwork } from "@lit-protocol/constants";
+import { LitNetwork } from "@lit-protocol/constants";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
 import { ethers } from "ethers";
 import { LitAbility, LitPKPResource } from "@lit-protocol/auth-helpers";
-import { enc, HmacSHA256, SHA256 } from "crypto-js";
 
 import { TelegramUser } from "./mintPkp";
 
@@ -13,8 +12,11 @@ export interface MintedPkp {
   ethAddress: string;
 }
 
-const VITE_TELEGRAM_BOT_SECRET = import.meta.env.VITE_TELEGRAM_BOT_SECRET;
-const VITE_LIT_ACTION_IPFS_CID = import.meta.env.VITE_LIT_ACTION_IPFS_CID;
+const {
+  VITE_LIT_CAPACITY_CREDIT_TOKEN_ID,
+  VITE_TELEGRAM_BOT_SECRET,
+  VITE_LIT_ACTION_IPFS_CID,
+} = import.meta.env;
 
 export const getPkpSessionSigs = async (
   telegramUser: TelegramUser,
@@ -35,7 +37,7 @@ export const getPkpSessionSigs = async (
     console.log("🔄 Connecting LitNodeClient to Lit network...");
     litNodeClient = new LitNodeClient({
       litNetwork: LitNetwork.DatilTest,
-      debug: false,
+      debug: true,
     });
     await litNodeClient.connect();
     console.log("✅ Connected LitNodeClient to Lit network");
@@ -49,14 +51,21 @@ export const getPkpSessionSigs = async (
     await litContracts.connect();
     console.log("✅ Connected LitContracts client to network");
 
-    console.log("🔄 Minting Capacity Credits NFT...");
-    const capacityTokenId = (
-      await litContracts.mintCapacityCreditsNFT({
-        requestsPerKilosecond: 10,
-        daysUntilUTCMidnightExpiration: 1,
-      })
-    ).capacityTokenIdStr;
-    console.log(`✅ Minted new Capacity Credit with ID: ${capacityTokenId}`);
+    let capacityTokenId = VITE_LIT_CAPACITY_CREDIT_TOKEN_ID;
+    if (capacityTokenId === undefined) {
+      console.log("🔄 Minting Capacity Credits NFT...");
+      capacityTokenId = (
+        await litContracts.mintCapacityCreditsNFT({
+          requestsPerKilosecond: 10,
+          daysUntilUTCMidnightExpiration: 1,
+        })
+      ).capacityTokenIdStr;
+      console.log(`✅ Minted new Capacity Credit with ID: ${capacityTokenId}`);
+    } else {
+      console.log(
+        `ℹ️ Using provided Capacity Credit with ID: ${VITE_LIT_CAPACITY_CREDIT_TOKEN_ID}`
+      );
+    }
 
     console.log("🔄 Creating capacityDelegationAuthSig...");
     const { capacityDelegationAuthSig } =
@@ -68,16 +77,16 @@ export const getPkpSessionSigs = async (
       });
     console.log(`✅ Created the capacityDelegationAuthSig`);
 
-    console.log("🔄 Getting the Session Sigs for the PKP...");
+    console.log(
+      `🔄 Getting the Session Sigs for the PKP using Lit Action: ${VITE_LIT_ACTION_IPFS_CID}...`
+    );
     const sessionSignatures = await litNodeClient.getPkpSessionSigs({
       pkpPublicKey: mintedPkp.publicKey,
       capabilityAuthSigs: [capacityDelegationAuthSig],
       litActionIpfsId: VITE_LIT_ACTION_IPFS_CID,
       jsParams: {
         telegramUserData: JSON.stringify(telegramUser),
-        // telegramBotTokenHash: SHA256(VITE_TELEGRAM_BOT_SECRET),
-        // TODO Replace with hash
-        telegramBotTokenHash: VITE_TELEGRAM_BOT_SECRET,
+        telegramBotSecret: VITE_TELEGRAM_BOT_SECRET,
         pkpTokenId: mintedPkp.tokenId,
       },
       resourceAbilityRequests: [

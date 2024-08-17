@@ -9,53 +9,55 @@
   ]);
 
   try {
-    // const _telegramUserData = JSON.parse(telegramUserData);
+    const _telegramUserData = JSON.parse(telegramUserData);
 
-    // const { isValid, isRecent } = await validateTelegramUserData(
-    //   _telegramUserData
-    // );
+    const { isValid, isRecent } = await validateTelegramUserData(
+      _telegramUserData
+    );
+
+    console.log("VALIDATION CHECK", isValid, isRecent);
 
     // if (!isValid) {
     //   return Lit.Actions.setResponse({
-    //     response: false,
+    //     response: "false",
     //     reason: "Invalid Telegram user data",
     //   });
     // }
 
     // if (!isRecent) {
     //   return Lit.Actions.setResponse({
-    //     response: false,
+    //     response: "false",
     //     reason: "Authenticated Telegram user data is older than 10 minutes",
     //   });
     // }
 
-    // const usersAuthMethodId = ethers.utils.keccak256(
-    //   ethers.utils.toUtf8Bytes(`telegram:${_telegramUserData.id}`)
-    // );
-    // const abiEncodedData =
-    //   IS_PERMITTED_AUTH_METHOD_INTERFACE.encodeFunctionData(
-    //     "isPermittedAuthMethod",
-    //     [pkpTokenId, TELEGRAM_AUTH_METHOD_TYPE, usersAuthMethodId]
-    //   );
-    // const isPermittedTx = {
-    //   to: LIT_PKP_PERMISSIONS_CONTRACT_ADDRESS,
-    //   data: abiEncodedData,
-    // };
-    // const isPermitted = await Lit.Actions.callContract({
-    //   chain: "yellowstone",
-    //   txn: ethers.utils.serializeTransaction(isPermittedTx),
-    // });
-    // if (!isPermitted) {
-    //   return Lit.Actions.setResponse({
-    //     response: false,
-    //     reason: "Telegram user is not authorized to use this PKP",
-    //   });
-    // }
+    const usersAuthMethodId = ethers.utils.keccak256(
+      ethers.utils.toUtf8Bytes(`telegram:${_telegramUserData.id}`)
+    );
+    const abiEncodedData =
+      IS_PERMITTED_AUTH_METHOD_INTERFACE.encodeFunctionData(
+        "isPermittedAuthMethod",
+        [pkpTokenId, TELEGRAM_AUTH_METHOD_TYPE, usersAuthMethodId]
+      );
+    const isPermittedTx = {
+      to: LIT_PKP_PERMISSIONS_CONTRACT_ADDRESS,
+      data: abiEncodedData,
+    };
+    const isPermitted = await Lit.Actions.callContract({
+      chain: "yellowstone",
+      txn: ethers.utils.serializeTransaction(isPermittedTx),
+    });
+    if (!isPermitted) {
+      return Lit.Actions.setResponse({
+        response: "false",
+        reason: "Telegram user is not authorized to use this PKP",
+      });
+    }
 
-    return Lit.Actions.setResponse({ response: true });
+    return Lit.Actions.setResponse({ response: "true" });
   } catch (error) {
     return Lit.Actions.setResponse({
-      response: false,
+      response: "false",
       reason: `Error: ${error.message}`,
     });
   }
@@ -73,13 +75,13 @@ async function validateTelegramUserData(userData) {
     .map((field) => `${field}=${userData[field]}`)
     .join("\n");
 
-  const secretKey = await Lit.Actions.crypto.sha256(
-    new TextEncoder().encode(telegramBotTokenHash)
+  const secretKeyHash = await Lit.Actions.crypto.sha256(
+    new TextEncoder().encode(telegramBotSecret)
   );
 
   const hmac = await Lit.Actions.crypto.hmac(
     new TextEncoder().encode(dataCheckString),
-    secretKey,
+    secretKeyHash,
     "SHA-256"
   );
 

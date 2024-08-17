@@ -44,10 +44,11 @@ function App() {
         .map((key) => `${key}=${otherData[key as keyof typeof otherData]}`)
         .join("\n");
 
-      const secretKey = SHA256(VITE_TELEGRAM_BOT_SECRET);
-      const calculatedHash = HmacSHA256(dataCheckString, secretKey).toString(
-        enc.Hex
-      );
+      const secretKeyHash = SHA256(VITE_TELEGRAM_BOT_SECRET);
+      const calculatedHash = HmacSHA256(
+        dataCheckString,
+        secretKeyHash
+      ).toString(enc.Hex);
 
       const isValid = calculatedHash === user.hash;
       const isRecent = Date.now() / 1000 - user.auth_date < 3600;
