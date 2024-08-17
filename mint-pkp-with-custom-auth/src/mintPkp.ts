@@ -7,14 +7,7 @@ import { LitContracts } from "@lit-protocol/contracts-sdk";
 import { ethers } from "ethers";
 import bs58 from "bs58";
 
-export interface TelegramUser {
-  id: number;
-  first_name: string;
-  last_name?: string;
-  username?: string;
-  auth_date: number;
-  hash: string;
-}
+import { type TelegramUser } from "./types";
 
 const VITE_LIT_ACTION_IPFS_CID = import.meta.env.VITE_LIT_ACTION_IPFS_CID;
 

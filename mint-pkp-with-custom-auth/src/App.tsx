@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { enc, HmacSHA256, SHA256 } from "crypto-js";
 
 import TelegramLoginButton from "./TelegramLoginButton";
-import { mintPkp, type TelegramUser } from "./mintPkp";
+import { mintPkp } from "./mintPkp";
 import { getPkpSessionSigs } from "./getPkpSessionSigs";
+import { type TelegramUser } from "./types";
 
 type MintedPkp = {
   tokenId: string;

@@ -4,7 +4,7 @@ import { LitContracts } from "@lit-protocol/contracts-sdk";
 import { ethers } from "ethers";
 import { LitAbility, LitPKPResource } from "@lit-protocol/auth-helpers";
 
-import { TelegramUser } from "./mintPkp";
+import { type TelegramUser } from "./types";
 
 export interface MintedPkp {
   tokenId: string;
