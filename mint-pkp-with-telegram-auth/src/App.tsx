@@ -39,10 +39,18 @@ function App() {
 
   const verifyTelegramUser = useCallback(
     (user: TelegramUser): { isValid: boolean; isRecent: boolean } => {
+      console.log("🔄 Validating user Telegram info client side...");
       const { hash, ...otherData } = user;
-      const dataCheckString = Object.keys(otherData)
-        .sort()
-        .map((key) => `${key}=${otherData[key as keyof typeof otherData]}`)
+      const orderOfFields = [
+        "auth_date",
+        "first_name",
+        "id",
+        "photo_url",
+        "username",
+      ];
+      const dataCheckString = orderOfFields
+        // @ts-ignore
+        .map((field) => `${field}=${otherData[field]}`)
         .join("\n");
 
       const secretKeyHash = SHA256(VITE_TELEGRAM_BOT_SECRET);
@@ -52,7 +60,11 @@ function App() {
       ).toString(enc.Hex);
 
       const isValid = calculatedHash === user.hash;
-      const isRecent = Date.now() / 1000 - user.auth_date < 3600;
+      const isRecent = Date.now() / 1000 - user.auth_date < 600;
+
+      console.log(
+        `ℹ️ User Telegram data is valid: ${isValid}. User data is recent: ${isRecent}`
+      );
 
       return { isValid, isRecent };
     },

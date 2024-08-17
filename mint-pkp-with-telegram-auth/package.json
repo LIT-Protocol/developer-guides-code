@@ -1,13 +1,15 @@
 {
-  "name": "browser-template",
+  "name": "mint-pkp-with-telegram-auth",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:lit-action": "deno task bundle",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
+    "upload:lit-action": "npx @dotenvx/dotenvx run -- node uploadToPinata.js upload src/litAction.js",
     "start:tunnel": "npx lt --port 3000 --subdomain mint-pkp-telegram",
     "start:dev": "npx concurrently \"yarn start:tunnel\" \"yarn dev\""
   },
@@ -30,6 +32,8 @@
     "vite-plugin-node-polyfills": "^0.22.0"
   },
   "devDependencies": {
+    "@dotenvx/dotenvx": "^1.7.0",
+    "@pinata/sdk": "^2.1.0",
     "@types/crypto-js": "^4.2.2",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
