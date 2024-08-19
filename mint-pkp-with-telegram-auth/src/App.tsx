@@ -41,16 +41,10 @@ function App() {
     (user: TelegramUser): { isValid: boolean; isRecent: boolean } => {
       console.log("🔄 Validating user Telegram info client side...");
       const { hash, ...otherData } = user;
-      const orderOfFields = [
-        "auth_date",
-        "first_name",
-        "id",
-        "photo_url",
-        "username",
-      ];
-      const dataCheckString = orderOfFields
-        // @ts-ignore
-        .map((field) => `${field}=${otherData[field]}`)
+
+      const dataCheckString = Object.entries(otherData)
+        .sort(([a], [b]) => a.localeCompare(b))
+        .map(([key, value]) => `${key}=${value}`)
         .join("\n");
 
       const secretKeyHash = SHA256(VITE_TELEGRAM_BOT_SECRET);

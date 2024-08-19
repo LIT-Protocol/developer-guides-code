@@ -67,15 +67,11 @@ const { enc, HmacSHA256, SHA256 } = CryptoJS;
 
 async function validateTelegramUserData(userData) {
   try {
-    const orderOfFields = [
-      "auth_date",
-      "first_name",
-      "id",
-      "photo_url",
-      "username",
-    ];
-    const dataCheckString = orderOfFields
-      .map((field) => `${field}=${userData[field]}`)
+    const { hash, ...otherData } = userData;
+
+    const dataCheckString = Object.entries(otherData)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([key, value]) => `${key}=${value}`)
       .join("\n");
 
     const secretKeyHash = SHA256(telegramBotSecret);
