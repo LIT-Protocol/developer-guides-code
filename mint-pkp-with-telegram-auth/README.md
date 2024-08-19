@@ -75,7 +75,7 @@ You'll be presented with three steps:
 
 - [App.tsx](./src/App.tsx) is the frontend code for the app.
   - This file contains the React logic for the buttons, but also includes code that authenticates the received Telegram OAuth info as a sanity check.
-- [TelegramLoginButton.tsx] is the frontend code for the Telegram Login Widget button.
+- [TelegramLoginButton.tsx](./src/TelegramLoginButton.tsx) is the frontend code for the Telegram Login Widget button.
 - [mintPkp.ts](./src/mintPkp.ts) contains the logic for minting the PKP.
   1. It connects to a browser wallet using `new ethers.providers.Web3Provider(window.ethereum);`.
   2. Connects a `LitContracts` instance to the Lit network, Datil-test.
