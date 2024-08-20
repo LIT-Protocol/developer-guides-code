@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "build:lit-action": "deno task bundle",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "upload:lit-action": "npx @dotenvx/dotenvx run -- node uploadToPinata.js upload src/litAction.js",
@@ -23,7 +22,6 @@
     "@simplewebauthn/browser": "^10.0.0",
     "@vitejs/plugin-react-swc": "^3.7.0",
     "bs58": "^6.0.0",
-    "crypto-js": "^4.2.0",
     "ethers": "v5",
     "google-auth-library": "^9.13.0",
     "react": "^18.3.1",
