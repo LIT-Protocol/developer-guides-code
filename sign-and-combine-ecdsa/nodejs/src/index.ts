@@ -2,7 +2,7 @@ import * as ethers from "ethers";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
 
 import { litActionCode } from "./litAction";
-import { LitNetwork } from "@lit-protocol/constants";
+import { LitNetwork, LIT_RPC } from "@lit-protocol/constants";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import {
   LitAbility,
@@ -24,8 +24,9 @@ const getEnv = (name: string): string => {
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 const ETHERS_WALLET = new ethers.Wallet(
   ETHEREUM_PRIVATE_KEY,
-  new ethers.providers.JsonRpcProvider("https://chain-rpc.litprotocol.com/http")
+  new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE)
 );
+
 const SEPOLIA_RPC_URL = getEnv("SEPOLIA_RPC_URL");
 const LIT_PKP_PUBLIC_KEY = process.env.LIT_PKP_PUBLIC_KEY;
 const LIT_PKP_ETH_ADDRESS = process.env.LIT_PKP_ETH_ADDRESS;
@@ -35,25 +36,34 @@ export const signAndCombineAndSendTx = async () => {
 
   try {
     let mintedPkp;
+    console.log("🔄 Checking if PKP was given...");
     if (LIT_PKP_PUBLIC_KEY === undefined || LIT_PKP_PUBLIC_KEY == "") {
+      console.log("PKP not given, minting a new PKP");
       const litContracts = new LitContracts({
         signer: ETHERS_WALLET,
-        network: LitNetwork.Cayenne,
+        network: LitNetwork.DatilDev,
+        debug: false,
       });
 
       await litContracts.connect();
       mintedPkp = (await litContracts.pkpNftContractUtils.write.mint()).pkp;
       console.log("Minted a new PKP", mintedPkp);
     }
+    console.log("✅ PKP successfully minted/given");
 
+    console.log("🔄 Initializing connection to the Lit network...");
     litNodeClient = new LitNodeClient({
-      litNetwork: LitNetwork.Cayenne,
+      litNetwork: LitNetwork.DatilDev,
+      debug: false,
     });
     await litNodeClient.connect();
+    console.log("✅ Successfully connected to the Lit network");
 
     const ethersProvider = new ethers.providers.JsonRpcProvider(
       SEPOLIA_RPC_URL
     );
+
+    console.log("🔄 Creating and serializing unsigned transaction...");
     const unsignedTransaction = {
       to: "0x91fe35583603303EC3C2FF7CFBb81929A5C1bC89",
       value: 1,
@@ -68,7 +78,9 @@ export const signAndCombineAndSendTx = async () => {
     const unsignedTransactionHash = ethers.utils.keccak256(
       ethers.utils.serializeTransaction(unsignedTransaction)
     );
+    console.log("✅ Transaction created and serialized");
 
+    console.log("🔄 Attempting to execute the Lit Action code...")
     const result = await litNodeClient.executeJs({
       sessionSigs: await litNodeClient.getSessionSigs({
         chain: "ethereum",
@@ -112,7 +124,8 @@ export const signAndCombineAndSendTx = async () => {
         unsignedTransaction,
       },
     });
-    console.log("result", result);
+    console.log("✅ Lit Action code executed successfully");
+    return result;
   } catch (error) {
     console.error(error);
   } finally {
