@@ -13,8 +13,8 @@ describe("signAndCombineAndSendTx", () => {
       signedData: { type: "object" },
       decryptedData: { type: "object" },
       claimData: { type: "object" },
-      response: { type: "string" },
-      logs: { type: "string" },
+      response: { type: "string", pattern: `^\\{"to":"0x[0-9a-fA-F]{40}","from":"0x[0-9a-fA-F]{40}","contractAddress":(null|"0x[0-9a-fA-F]{40}"),"transactionIndex":\\d+,"gasUsed":\\{"type":"BigNumber","hex":"0x[0-9a-fA-F]+"\\},"logsBloom":"0x[0-9a-fA-F]+","blockHash":"0x[0-9a-fA-F]+","transactionHash":"0x[0-9a-fA-F]+","logs":\\[\\],"blockNumber":\\d+,"confirmations":\\d+,"cumulativeGasUsed":\\{"type":"BigNumber","hex":"0x[0-9a-fA-F]+"\\},"effectiveGasPrice":\\{"type":"BigNumber","hex":"0x[0-9a-fA-F]+"\\},"status":\\d+,"type":\\d+,"byzantium":true\\}$`},
+      logs: { type: "string", pattern: "^Recovered Address: 0x[0-9a-fA-F]{40}\\n$" },
     },
     required: [
       "success",
@@ -29,5 +29,5 @@ describe("signAndCombineAndSendTx", () => {
   it("Attempting to sign, combine, and send transaction...", async () => {
     const signedTx = await signAndCombineAndSendTx();
     expect(signedTx).to.be.jsonSchema(signedTxResponseSchema);
-  }).timeout(30_000);
+  }).timeout(100_000);
 });

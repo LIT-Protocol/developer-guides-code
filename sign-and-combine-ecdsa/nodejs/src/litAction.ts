@@ -21,7 +21,6 @@ const _litActionCode = async () => {
   console.log("Recovered Address:", recoveredAddress);
 
   try {
-    //Lit.Actions.runOnce()
     const rpcUrl = await Lit.Actions.getRpcUrl({ chain });
     const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
     const transactionResponse = await provider.sendTransaction(signedTx);
