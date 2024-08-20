@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from "react";
-import { enc, HmacSHA256, SHA256 } from "crypto-js";
 
 import TelegramLoginButton from "./TelegramLoginButton";
 import { mintPkp } from "./mintPkp";
@@ -37,8 +36,12 @@ function App() {
     }
   }, [telegramUser]);
 
+  // Validating the Telegram user data, go here to learn more:
+  // https://core.telegram.org/widgets/login#checking-authorization
   const verifyTelegramUser = useCallback(
-    (user: TelegramUser): { isValid: boolean; isRecent: boolean } => {
+    async (
+      user: TelegramUser
+    ): Promise<{ isValid: boolean; isRecent: boolean }> => {
       console.log("🔄 Validating user Telegram info client side...");
       const { hash, ...otherData } = user;
 
@@ -47,11 +50,27 @@ function App() {
         .map(([key, value]) => `${key}=${value}`)
         .join("\n");
 
-      const secretKeyHash = SHA256(VITE_TELEGRAM_BOT_SECRET);
-      const calculatedHash = HmacSHA256(
-        dataCheckString,
-        secretKeyHash
-      ).toString(enc.Hex);
+      const encoder = new TextEncoder();
+      const secretKeyHash = await crypto.subtle.digest(
+        "SHA-256",
+        encoder.encode(VITE_TELEGRAM_BOT_SECRET)
+      );
+      const key = await crypto.subtle.importKey(
+        "raw",
+        secretKeyHash,
+        { name: "HMAC", hash: "SHA-256" },
+        false,
+        ["sign"]
+      );
+      const signature = await crypto.subtle.sign(
+        "HMAC",
+        key,
+        encoder.encode(dataCheckString)
+      );
+
+      const calculatedHash = Array.from(new Uint8Array(signature))
+        .map((b) => b.toString(16).padStart(2, "0"))
+        .join("");
 
       const isValid = calculatedHash === user.hash;
       const isRecent = Date.now() / 1000 - user.auth_date < 600;
@@ -66,12 +85,12 @@ function App() {
   );
 
   const handleTelegramResponse = useCallback(
-    (user: TelegramUser) => {
+    async (user: TelegramUser) => {
       console.log("Telegram auth response received:", user);
       if (user && typeof user === "object") {
         setTelegramUser(user);
 
-        const { isValid, isRecent } = verifyTelegramUser(user);
+        const { isValid, isRecent } = await verifyTelegramUser(user);
         if (!isValid || !isRecent) {
           setValidationError(
             !isValid

@@ -1,7 +1,3 @@
-import CryptoJS from "https://jspm.dev/crypto-js";
-
-const { enc, HmacSHA256, SHA256 } = CryptoJS;
-
 (async () => {
   const LIT_PKP_PERMISSIONS_CONTRACT_ADDRESS =
     "0x60C1ddC8b9e38F730F0e7B70A2F84C1A98A69167";
@@ -65,6 +61,8 @@ const { enc, HmacSHA256, SHA256 } = CryptoJS;
   }
 })();
 
+// Validating the Telegram user data, go here to learn more:
+// https://core.telegram.org/widgets/login#checking-authorization
 async function validateTelegramUserData(userData) {
   try {
     const { hash, ...otherData } = userData;
@@ -74,10 +72,27 @@ async function validateTelegramUserData(userData) {
       .map(([key, value]) => `${key}=${value}`)
       .join("\n");
 
-    const secretKeyHash = SHA256(telegramBotSecret);
-    const calculatedHash = HmacSHA256(dataCheckString, secretKeyHash).toString(
-      enc.Hex
+    const encoder = new TextEncoder();
+    const secretKeyHash = await crypto.subtle.digest(
+      "SHA-256",
+      encoder.encode(telegramBotSecret)
     );
+    const key = await crypto.subtle.importKey(
+      "raw",
+      secretKeyHash,
+      { name: "HMAC", hash: "SHA-256" },
+      false,
+      ["sign"]
+    );
+    const signature = await crypto.subtle.sign(
+      "HMAC",
+      key,
+      encoder.encode(dataCheckString)
+    );
+
+    const calculatedHash = Array.from(new Uint8Array(signature))
+      .map((b) => b.toString(16).padStart(2, "0"))
+      .join("");
 
     const isValid = calculatedHash === userData.hash;
     const isRecent = Date.now() / 1000 - userData.auth_date < 600;
