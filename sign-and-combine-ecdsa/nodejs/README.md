@@ -35,7 +35,7 @@ Make a copy of the provided `.env.example` file and name it `.env`:
 cp .env.example .env
 ```
 
-Within the `.env` there is the ENV:
+Within the `.env` file there are the following ENVs:
 
 1. `ETHEREUM_PRIVATE_KEY` - **Required**
     - Must have Lit `tstLPX` tokens on the `Chronicle Yellowstone` blockchain
