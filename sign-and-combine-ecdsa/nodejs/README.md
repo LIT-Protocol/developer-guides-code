@@ -43,7 +43,7 @@ Within the `.env` file there are the following ENVs:
     - Will be used to mint the PKP and pay for Lit usage
 2. `LIT_CAPACITY_CREDIT_TOKEN_ID` - **Optional**
     - If not provided, a new `capacityCreditsNFT` will be minted and used. This enables the `ETHEREUM_PRIVATE_KEY` to pay for Lit usage
-3. `LIT_PKP_PUBLIC_KEY` - **Optional** and `LIT_PKP_ETH_ADDRESS` - **Optional**
+3. `LIT_PKP_PUBLIC_KEY` and `LIT_PKP_ETH_ADDRESS` - **Optional**
     - These are optional, but if you plan to provide them, you must provide both. If you do not provide them, a new PKP will be minted and used
 
 If you decide to include all of the above, your `.env` file should look like:
