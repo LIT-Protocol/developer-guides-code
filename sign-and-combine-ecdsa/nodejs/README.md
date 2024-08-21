@@ -46,6 +46,15 @@ Within the `.env` there is the ENV:
 3. `LIT_PKP_PUBLIC_KEY` - **Optional** and `LIT_PKP_ETH_ADDRESS` - **Optional**
     - These are optional, but if you plan to provide them, you must provide both. If you do not provide them, a new PKP will be minted and used
 
+If you decide to include all of the above, your `.env` file should look like:
+
+```
+ETHEREUM_PRIVATE_KEY=0xYourPrivateKey
+CAPACITY_TOKEN_ID=yourTokenId
+LIT_PKP_PUBLIC_KEY=yourPublicKey
+LIT_PKP_ETH_ADDRESS=yourEthAddress
+```
+
 ### Running the Test
 
 After the `.env` is configured, there is a NPM script in the `package.json` to run the test in the `test/signAndCombineAndSendTx.spec.ts` file. To run the test, use the `yarn test` command.
