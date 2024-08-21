@@ -50,7 +50,7 @@ If you decide to include all of the above, your `.env` file should look like:
 
 ```
 ETHEREUM_PRIVATE_KEY=0xYourPrivateKey
-CAPACITY_TOKEN_ID=yourTokenId
+LIT_CAPACITY_CREDIT_TOKEN_ID=yourTokenId
 LIT_PKP_PUBLIC_KEY=yourPublicKey
 LIT_PKP_ETH_ADDRESS=yourEthAddress
 ```
