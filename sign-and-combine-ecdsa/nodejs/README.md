@@ -1,6 +1,6 @@
 # `signAndCombineEcdsa` Lit Action Code Example
 
-This code demonstrates how to use the Lit and Lit Actions SDKs to implement the `signAndCombineEcdsa` method in a Lit Action. This method combines the signature shares of your PKP from each node onto a single node within a Lit Action, meaning they remain in [Lit's Trusted Execution Environment (TEE)](https://developer.litprotocol.com/resources/how-it-works#sealed-and-confidential-hardware) and are not exposed to the client.
+This code demonstrates how to use the Lit and Lit Actions SDKs to implement the `signAndCombineEcdsa` method in a Lit Action. This method combines the signature shares of your PKP from each node in a single node within a Lit Action, meaning they remain in [Lit's Trusted Execution Environment (TEE)](https://developer.litprotocol.com/resources/how-it-works#sealed-and-confidential-hardware) and are not exposed to the client.
 
 ## Understanding the Implementation
 1. Using an imported Ethereum private key, connect the wallet to the a RPC endpoint of the network you plan to execute the transactions on
