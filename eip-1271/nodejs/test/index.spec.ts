@@ -7,6 +7,7 @@ use(chaiJsonSchema);
 
 describe("Testing specific functionality", () => {
   it("should test for a specific thing", async () => {
-    await runExample();
+    const sessionSignatures = await runExample();
+    console.log(sessionSignatures);
   }).timeout(120_000);
 });
