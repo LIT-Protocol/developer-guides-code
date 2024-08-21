@@ -18,7 +18,6 @@ let capacityTokenId = getEnv("CAPACITY_TOKEN_ID");
 let LIT_PKP_PUBLIC_KEY = getEnv("LIT_PKP_PUBLIC_KEY");
 let LIT_PKP_ETH_ADDRESS = getEnv("LIT_PKP_ETH_ADDRESS");
 
-
 const chain = "sepolia";
 const rpcUrl = LIT_CHAINS[chain].rpcUrls[0];
 const chainId = LIT_CHAINS[chain].chainId;
@@ -47,6 +46,7 @@ export const signAndCombineAndSendTx = async () => {
 
   try {
     let mintedPkp;
+    
     console.log("🔄 Checking if PKP was given...");
     if (LIT_PKP_PUBLIC_KEY === undefined || LIT_PKP_PUBLIC_KEY === "") {
       console.log("PKP not given, minting a new PKP");
@@ -54,14 +54,13 @@ export const signAndCombineAndSendTx = async () => {
       mintedPkp = (await litContracts.pkpNftContractUtils.write.mint()).pkp;
       LIT_PKP_PUBLIC_KEY = mintedPkp.publicKey;
       LIT_PKP_ETH_ADDRESS = mintedPkp.ethAddress.slice(2);
-      console.log("Minted a new PKP", mintedPkp);
     }
     console.log("✅ PKP successfully minted/given");
 
     const fundPKP = async () => {
       const tx = {
         to: "0x" + LIT_PKP_ETH_ADDRESS,
-        value: ethers.utils.parseEther("0.0001"),
+        value: ethers.utils.parseEther("0.001"),
         gasLimit: 21_000,
         gasPrice: (await ethersWallet.getGasPrice()).toHexString(),
         nonce: await ethersProvider.getTransactionCount(ethersWallet.address),
@@ -110,7 +109,7 @@ export const signAndCombineAndSendTx = async () => {
     );
     console.log("✅ Transaction created and serialized");
 
-    if (capacityTokenId === "" || capacityTokenId=== undefined) {
+    if (capacityTokenId === "" || capacityTokenId === undefined) {
       console.log("🔄 Minting Capacity Credits NFT...");
       capacityTokenId = (
         await litContracts.mintCapacityCreditsNFT({
@@ -129,6 +128,7 @@ export const signAndCombineAndSendTx = async () => {
         delegateeAddresses: [ethersWallet.address],
         uses: "1",
       });
+    console.log("✅ Capacity Delegation Auth Sig created");
 
     console.log("🔄 Attempting to execute the Lit Action code...");
     const result = await litNodeClient.executeJs({

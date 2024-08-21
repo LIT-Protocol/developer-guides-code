@@ -21,6 +21,7 @@
     "@lit-protocol/constants": "^6.4.4",
     "@lit-protocol/contracts-sdk": "^6.4.4",
     "@lit-protocol/lit-node-client": "^6.4.4",
+    "@types/chai-json-schema": "^1.4.10",
     "chai-json-schema": "^1.5.1"
   }
 }

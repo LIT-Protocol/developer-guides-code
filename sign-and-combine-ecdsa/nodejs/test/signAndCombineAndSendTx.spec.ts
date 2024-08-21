@@ -13,8 +13,14 @@ describe("signAndCombineAndSendTx", () => {
       signedData: { type: "object" },
       decryptedData: { type: "object" },
       claimData: { type: "object" },
-      response: { type: "string", pattern: `^\\{"to":"0x[0-9a-fA-F]{40}","from":"0x[0-9a-fA-F]{40}","contractAddress":(null|"0x[0-9a-fA-F]{40}"),"transactionIndex":\\d+,"gasUsed":\\{"type":"BigNumber","hex":"0x[0-9a-fA-F]+"\\},"logsBloom":"0x[0-9a-fA-F]+","blockHash":"0x[0-9a-fA-F]+","transactionHash":"0x[0-9a-fA-F]+","logs":\\[\\],"blockNumber":\\d+,"confirmations":\\d+,"cumulativeGasUsed":\\{"type":"BigNumber","hex":"0x[0-9a-fA-F]+"\\},"effectiveGasPrice":\\{"type":"BigNumber","hex":"0x[0-9a-fA-F]+"\\},"status":\\d+,"type":\\d+,"byzantium":true\\}$`},
-      logs: { type: "string", pattern: "^Recovered Address: 0x[0-9a-fA-F]{40}\\n$" },
+      response: {
+        type: "string",
+        pattern: '^Transaction Sent Successfully\\. Transaction Hash:"0x[0-9a-fA-F]{64}"$',
+      },
+      logs: {
+        type: "string",
+        pattern: "^Recovered Address: 0x[0-9a-fA-F]{40}\\n$",
+      },
     },
     required: [
       "success",

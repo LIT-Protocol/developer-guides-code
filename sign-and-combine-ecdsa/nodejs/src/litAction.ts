@@ -21,14 +21,11 @@ const _litActionCode = async () => {
   console.log("Recovered Address:", recoveredAddress);
 
   try {
-    let res = Lit.Actions.runOnce({ waitForResponse: true, name: "txnSender" }, async () => {
-      const rpcUrl = await Lit.Actions.getRpcUrl({ chain });
-      const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
-      const transactionResponse = await provider.sendTransaction(signedTx);
-      const receipt = await transactionResponse.wait();
+    const rpcUrl = await Lit.Actions.getRpcUrl({ chain });
+    const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
+    const transactionResponse = await provider.sendTransaction(signedTx);
 
-      Lit.Actions.setResponse({ response: JSON.stringify(receipt) });
-    });
+      Lit.Actions.setResponse({ response: "Transaction Sent Successfully. Transaction Hash:" + JSON.stringify(transactionResponse.hash) });
   } catch (error) {
     const errorMessage = "Error: When sending transaction: " + error.message;
     Lit.Actions.setResponse({ response: errorMessage });

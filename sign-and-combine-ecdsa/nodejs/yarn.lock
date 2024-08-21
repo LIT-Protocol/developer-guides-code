@@ -1387,6 +1387,19 @@
     "@stablelib/random" "^1.0.2"
     "@stablelib/wipe" "^1.0.1"
 
+"@types/chai-json-schema@^1.4.10":
+  version "1.4.10"
+  resolved "https://registry.yarnpkg.com/@types/chai-json-schema/-/chai-json-schema-1.4.10.tgz#2ad5a4901e534c1902c63366c12e9b84e8a0e118"
+  integrity sha512-fwN8kxGqJSCI0gwudEMrzrF/YXRV0LSo22ERzC2D3P2pqYVbBIeTqhPS/xp+Dyf9v6z1C9twdbciH9jL4ISl6Q==
+  dependencies:
+    "@types/chai" "*"
+    "@types/tv4" "*"
+
+"@types/chai@*":
+  version "4.3.17"
+  resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.3.17.tgz#9195f9d242f2ac3b429908864b6b871a8f73f489"
+  integrity sha512-zmZ21EWzR71B4Sscphjief5djsLre50M6lI622OSySTmn9DB3j+C3kWroHfBQWXbOBwbgg/M8CG/hUxDLIloow==
+
 "@types/chai@^4.3.16":
   version "4.3.16"
   resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.3.16.tgz#b1572967f0b8b60bf3f87fe1d854a5604ea70c82"
@@ -1420,6 +1433,11 @@
   version "2.0.7"
   resolved "https://registry.yarnpkg.com/@types/trusted-types/-/trusted-types-2.0.7.tgz#baccb07a970b91707df3a3e8ba6896c57ead2d11"
   integrity sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw==
+
+"@types/tv4@*":
+  version "1.2.33"
+  resolved "https://registry.yarnpkg.com/@types/tv4/-/tv4-1.2.33.tgz#f6ac0f85cabffde144a16bf7ef8c043e89d1854a"
+  integrity sha512-7phCVTXC6Bj50IV1iKOwqGkR4JONJyMbRZnKTSuujv1S/tO9rG5OdCt7BMSjytO+zJmYdn1/I4fd3SH0gtO99g==
 
 "@types/wrap-ansi@^3.0.0":
   version "3.0.0"
