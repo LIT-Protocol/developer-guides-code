@@ -1,0 +1,3 @@
+[submodule "custom-auth-telegram-example"]
+	path = custom-auth-telegram-example
+	url = https://github.com/LIT-Protocol/custom-auth-telegram-example.git
