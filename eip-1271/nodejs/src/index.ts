@@ -8,26 +8,23 @@ import {
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import ethers from "ethers";
 import bs58 from "bs58";
-import {
-  createSiweMessage,
-  LitAbility,
-  LitAccessControlConditionResource,
-  LitPKPResource,
-} from "@lit-protocol/auth-helpers";
+import { LitAbility, LitPKPResource } from "@lit-protocol/auth-helpers";
+// @ts-ignore
+import IpfsHash from "ipfs-only-hash";
 
 import { getEnv } from "./utils";
+import { litActionCode } from "./litAction";
 import WhitelistEIP1271 from "./WhitelistEIP1271.json";
 
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
-const LIT_ACTION_IPFS_CID = getEnv("LIT_ACTION_IPFS_CID");
 const ANVIL_PRIVATE_KEY_1 = getEnv("ANVIL_PRIVATE_KEY_1");
 const ANVIL_PRIVATE_KEY_2 = getEnv("ANVIL_PRIVATE_KEY_2");
-const ANVIL_RPC_URL = getEnv("ANVIL_RPC_URL");
 const DEPLOYED_EIP1271_WHITELIST_CONTRACT = getEnv(
   "DEPLOYED_EIP1271_WHITELIST_CONTRACT"
 );
 const LIT_CAPACITY_CREDIT_TOKEN_ID = process.env.LIT_CAPACITY_CREDIT_TOKEN_ID;
 const LIT_NETWORK = LitNetwork.DatilTest;
+const LIT_RPC_URL = LIT_RPC.CHRONICLE_YELLOWSTONE;
 
 export const runExample = async () => {
   let litNodeClient: LitNodeClient;
@@ -50,15 +47,23 @@ export const runExample = async () => {
     const pkpMintCost = await litContracts.pkpNftContract.read.mintCost();
     console.log("✅ Got PKP mint cost");
 
+    console.log("🔄 Calculating the IPFS CID for Lit Action code string...");
+    const litActionIpfsCid = await IpfsHash.of(litActionCode);
+    console.log(
+      `✅ Calculated IPFS CID: ${litActionIpfsCid}. Hexlified version: 0x${Buffer.from(
+        bs58.decode(litActionIpfsCid)
+      ).toString("hex")}`
+    );
+
     console.log("🔄 Minting new PKP...");
     console.log(
-      `0x${Buffer.from(bs58.decode(LIT_ACTION_IPFS_CID)).toString("hex")}`
+      `0x${Buffer.from(bs58.decode(litActionIpfsCid)).toString("hex")}`
     );
     const tx =
       await litContracts.pkpHelperContract.write.mintNextAndAddAuthMethods(
         AuthMethodType.LitAction, // keyType
         [AuthMethodType.LitAction], // permittedAuthMethodTypes
-        [`0x${Buffer.from(bs58.decode(LIT_ACTION_IPFS_CID)).toString("hex")}`], // permittedAuthMethodIds
+        [`0x${Buffer.from(bs58.decode(litActionIpfsCid)).toString("hex")}`], // permittedAuthMethodIds
         ["0x"], // permittedAuthMethodPubkeys
         [[AuthMethodScope.SignAnything]], // permittedAuthMethodScopes
         true, // addPkpEthAddressAsPermittedAddress
@@ -76,13 +81,13 @@ export const runExample = async () => {
     console.log("🔄 Connecting LitNodeClient to Lit network...");
     litNodeClient = new LitNodeClient({
       litNetwork: LIT_NETWORK,
-      debug: true,
+      debug: false,
     });
     await litNodeClient.connect();
     console.log("✅ Connected LitNodeClient to Lit network");
 
     let capacityTokenId = LIT_CAPACITY_CREDIT_TOKEN_ID;
-    if (capacityTokenId === undefined) {
+    if (capacityTokenId === "" || capacityTokenId === undefined) {
       console.log("🔄 Minting Capacity Credits NFT...");
       capacityTokenId = (
         await litContracts.mintCapacityCreditsNFT({
@@ -97,7 +102,7 @@ export const runExample = async () => {
       );
     }
 
-    const provider = new ethers.providers.JsonRpcProvider(ANVIL_RPC_URL);
+    const provider = new ethers.providers.JsonRpcProvider(LIT_RPC_URL);
 
     const wallet1 = new ethers.Wallet(ANVIL_PRIVATE_KEY_1, provider);
     const wallet2 = new ethers.Wallet(ANVIL_PRIVATE_KEY_2, provider);
@@ -117,6 +122,40 @@ export const runExample = async () => {
       ethers.utils.toUtf8Bytes("The answer to the universe is 42.")
     );
 
+    const balanceThreshold = ethers.utils.parseEther("0.0001");
+
+    console.log(`🔄 Checking balance for Wallet 1: ${wallet1.address}...`);
+    const wallet1Balance = await ethersSigner.provider.getBalance(
+      wallet1.address
+    );
+    if (wallet1Balance.lt(balanceThreshold)) {
+      console.log("❗️ Wallet 1 has an insufficient balance, funding...");
+      const tx = await ethersSigner.sendTransaction({
+        to: wallet1.address,
+        value: balanceThreshold.sub(wallet1Balance),
+      });
+      await tx.wait();
+      console.log(`✅ Funded wallet. TX hash: ${tx.hash}`);
+    } else {
+      console.log("✅ Wallet 1 has a sufficient balance");
+    }
+
+    console.log(`🔄 Checking balance for Wallet 2: ${wallet2.address}...`);
+    const wallet2Balance = await ethersSigner.provider.getBalance(
+      wallet2.address
+    );
+    if (wallet2Balance.lt(balanceThreshold)) {
+      console.log("❗️ Wallet 2 has an insufficient balance, funding...");
+      const tx = await ethersSigner.sendTransaction({
+        to: wallet2.address,
+        value: balanceThreshold.sub(wallet2Balance),
+      });
+      await tx.wait();
+      console.log(`✅ Funded wallet. TX hash: ${tx.hash}`);
+    } else {
+      console.log("✅ Wallet 2 has a sufficient balance");
+    }
+
     console.log("🔄 Signing message with EIP-1271 Wallet #1...");
     const wallet1Signature = wallet1._signingKey().signDigest(messageHash);
     const wallet1SignatueTx = await whitelistEIP1271_wallet1.signTx(
@@ -125,7 +164,7 @@ export const runExample = async () => {
     );
     const wallet1SignatueTxReceipt = await wallet1SignatueTx.wait();
     console.log(
-      `✅ Signed message with EIP-1271 Wallet #1. Transaction hash: ${wallet1SignatueTxReceipt.hash}`
+      `✅ Signed message with EIP-1271 Wallet #1. Transaction hash: ${wallet1SignatueTxReceipt.transactionHash}`
     );
 
     console.log("🔄 Signing message with EIP-1271 Wallet #2...");
@@ -136,7 +175,7 @@ export const runExample = async () => {
     );
     const wallet2SignatureTxReceipt = await wallet2SignatureTx.wait();
     console.log(
-      `✅ Signed message with EIP-1271 Wallet #2. Transaction hash: ${wallet2SignatureTxReceipt.hash}`
+      `✅ Signed message with EIP-1271 Wallet #2. Transaction hash: ${wallet2SignatureTxReceipt.transactionHash}`
     );
 
     console.log("🔄 Getting combined signature for signed message...");
@@ -156,12 +195,12 @@ export const runExample = async () => {
     console.log(`✅ Created the capacityDelegationAuthSig`);
 
     console.log(
-      `🔄 Getting the Session Sigs for the PKP using Lit Action: ${LIT_ACTION_IPFS_CID}...`
+      `🔄 Getting the Session Sigs for the PKP using Lit Action: ${litActionIpfsCid}...`
     );
     const sessionSignatures = await litNodeClient.getPkpSessionSigs({
       pkpPublicKey: pkpInfo.publicKey,
       capabilityAuthSigs: [capacityDelegationAuthSig],
-      litActionIpfsId: LIT_ACTION_IPFS_CID,
+      litActionCode: Buffer.from(litActionCode).toString("base64"),
       jsParams: {
         eip1271MessageHash: messageHash,
         eip1271CombinedSignatures: combinedSignatures,
@@ -174,14 +213,13 @@ export const runExample = async () => {
       ],
       expiration: new Date(Date.now() + 1000 * 60 * 10).toISOString(), // 10 minutes
     });
-    console.log(
-      `✅ Got PKP Session Sigs: ${JSON.stringify(sessionSignatures, null, 2)}`
-    );
+    console.log("✅ Got PKP Session Sigs");
 
     return sessionSignatures;
   } catch (error) {
     console.error(error);
   } finally {
+    litNodeClient!.disconnect();
   }
 };
 

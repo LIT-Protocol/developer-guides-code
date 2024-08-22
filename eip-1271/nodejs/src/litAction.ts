@@ -1,8 +1,10 @@
-(async () => {
+// @ts-nocheck
+
+const _litActionCode = async () => {
   const WHITELIST_EIP1271_CONTRACT_ADDRESS =
-    "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+    "0x54a772813Df0E75f20A0984f31D1400991eD6a33";
   const IS_VALID_SIGNATURE_INTERFACE = new ethers.utils.Interface([
-    "isValidSignature(bytes32 _hash, bytes memory _signatures) public view returns (bytes4)",
+    "function isValidSignature(bytes32 _hash, bytes memory _signatures) public view returns (bytes4)",
   ]);
 
   try {
@@ -14,11 +16,14 @@
       to: WHITELIST_EIP1271_CONTRACT_ADDRESS,
       data: abiEncodedData,
     };
-    const isValid = await Lit.Actions.callContract({
+    const isValidResponse = await Lit.Actions.callContract({
       chain: "yellowstone",
       txn: ethers.utils.serializeTransaction(isValidTx),
     });
-    if (!isValid) {
+    if (
+      isValidResponse !==
+      "0x1626ba7e00000000000000000000000000000000000000000000000000000000"
+    ) {
       return Lit.Actions.setResponse({
         response: "false",
         reason: "The provided combined signatures is not valid",
@@ -32,4 +37,6 @@
       reason: `Error: ${error.message}`,
     });
   }
-})();
+};
+
+export const litActionCode = `(${_litActionCode.toString()})();`;
