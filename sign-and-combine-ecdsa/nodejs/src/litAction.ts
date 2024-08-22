@@ -20,16 +20,22 @@ const _litActionCode = async () => {
   const recoveredAddress = ethers.utils.recoverAddress(toSign, hexSignature);
   console.log("Recovered Address:", recoveredAddress);
 
-  try {
-    const rpcUrl = await Lit.Actions.getRpcUrl({ chain });
-    const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
-    const transactionResponse = await provider.sendTransaction(signedTx);
+  const response = await Lit.Actions.runOnce(
+    { waitForResponse: true, name: "txnSender" },
+    async () => {
+      try {
+        const rpcUrl = await Lit.Actions.getRpcUrl({ chain });
+        const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
+        const transactionReceipt = await provider.sendTransaction(signedTx);
 
-      Lit.Actions.setResponse({ response: "Transaction Sent Successfully. Transaction Hash:" + JSON.stringify(transactionResponse.hash) });
-  } catch (error) {
-    const errorMessage = "Error: When sending transaction: " + error.message;
-    Lit.Actions.setResponse({ response: errorMessage });
-  }
+        return `Transaction Sent Successfully. Transaction Hash: ${transactionReceipt.hash}`;
+      } catch (error) {
+        return `Error: When sending transaction: ${error.message}`;
+      }
+    }
+  );
+
+  Lit.Actions.setResponse({ response });
 };
 
 export const litActionCode = `(${_litActionCode.toString()})();`;
