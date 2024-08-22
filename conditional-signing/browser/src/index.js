@@ -4,7 +4,7 @@ import {
   createSiweMessageWithRecaps,
   generateAuthSig,
   LitAbility,
-  LitAccessControlConditionResource,
+
   LitActionResource,
   LitPKPResource,
 } from "@lit-protocol/auth-helpers";
@@ -25,6 +25,7 @@ async function buttonClick() {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     await provider.send("eth_requestAccounts", []);
     const ethersSigner = provider.getSigner();
+    console.log("ethersSigner:", ethersSigner);
     console.log("Connected account:", await ethersSigner.getAddress());
 
     const litNodeClient = await getLitNodeClient();
@@ -34,6 +35,9 @@ async function buttonClick() {
 
     const authSig = await genAuthSig(litNodeClient, ethersSigner);
     console.log("Got Auth Sig for Lit Action conditional check!", authSig);
+
+    const pkp = await getPkpPublicKey(ethersSigner);
+    console.log("Got PKP Public Key!", pkp.publicKey);
 
     const litActionSignatures = await litNodeClient.executeJs({
       sessionSigs,
@@ -58,7 +62,7 @@ async function buttonClick() {
         dataToSign: ethers.utils.arrayify(
           ethers.utils.keccak256([1, 2, 3, 4, 5])
         ),
-        publicKey: await getPkpPublicKey(ethersSigner),
+        publicKey: pkp.publicKey,
       },
     });
     console.log("litActionSignatures: ", litActionSignatures);
@@ -71,7 +75,7 @@ async function buttonClick() {
 
 async function getLitNodeClient() {
   const litNodeClient = new LitNodeClient({
-    litNetwork: LitNetwork.Cayenne,
+    litNetwork: LitNetwork.DatilDev,
   });
 
   console.log("Connecting litNodeClient to network...");
@@ -85,26 +89,20 @@ async function getPkpPublicKey(ethersSigner) {
   if (
     process.env.PKP_PUBLIC_KEY !== undefined &&
     process.env.PKP_PUBLIC_KEY !== ""
-  )
+  ) {
     return process.env.PKP_PUBLIC_KEY;
-
-  const pkp = await mintPkp(ethersSigner);
-  console.log("Minted PKP!", pkp);
-  return pkp.publicKey;
-}
-
-async function mintPkp(ethersSigner) {
+  }
   console.log("Minting new PKP...");
   const litContracts = new LitContracts({
     signer: ethersSigner,
-    network: LitNetwork.Cayenne,
+    network: LitNetwork.DatilDev,
+    debug: false,
   });
 
   await litContracts.connect();
 
   return (await litContracts.pkpNftContractUtils.write.mint()).pkp;
 }
-
 async function getSessionSigs(litNodeClient, ethersSigner) {
   console.log("Getting Session Signatures...");
   return litNodeClient.getSessionSigs({

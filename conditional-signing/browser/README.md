@@ -12,7 +12,7 @@ In this directory, `conditional-signing/browser`, run `yarn` to install the proj
 
 If you already have a Lit PKP that you'd like to use, you can copy the contents of the provided `.env.example` to a `.env` file to specify it. If you don't have a PKP, or wish to use a new one for this example, then you can skip this step and one will be created for you when you run this example.
 
-**NOTE** In order for a new Lit PKP to minted for you, you **must** have `testLPX` tokens. You can receive some `testLPX` using the faucet available [here](https://faucet.litprotocol.com/).
+**NOTE** In order for a new Lit PKP to minted for you, you **must** have `tstLPX` tokens. You can receive some `tstLPX` using the faucet available [here](https://chronicle-yellowstone-faucet.getlit.dev/).
 
 ```
 cp .env.example .env
@@ -57,7 +57,7 @@ After clicking the button a couple things will happen:
      ```
 5. After signing that message, depending on whether or not you specified a PKP Public Key in the `.env` file:
    a. If you did, you'll be on the next step
-   b. If you didn't, you will be prompted by your wallet to sign a transaction to mint a new PKP on the Lit Chronicle rollup. This transaction will cost `testLPX` (which is only a testnet token with **no** real-world value). After signing this transaction you should see in the JavaScript console something similar to:
+   b. If you didn't, you will be prompted by your wallet to sign a transaction to mint a new PKP on the Lit Chronicle rollup. This transaction will cost `tstLPX` (which is only a testnet token with **no** real-world value). After signing this transaction you should see in the JavaScript console something similar to:
    ```json
     Minted PKP!
     {
