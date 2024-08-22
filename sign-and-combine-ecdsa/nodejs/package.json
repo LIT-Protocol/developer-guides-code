@@ -8,8 +8,10 @@
   },
   "devDependencies": {
     "@types/chai": "^4.3.16",
+    "@types/chai-json-schema": "^1.4.10",
     "@types/mocha": "^10.0.6",
     "chai": "^5.1.1",
+    "chai-json-schema": "^1.5.1",
     "mocha": "^10.4.0",
     "tsc": "^2.0.4",
     "tsx": "^4.15.3",
@@ -20,8 +22,6 @@
     "@lit-protocol/auth-helpers": "^6.4.4",
     "@lit-protocol/constants": "^6.4.4",
     "@lit-protocol/contracts-sdk": "^6.4.4",
-    "@lit-protocol/lit-node-client": "^6.4.4",
-    "@types/chai-json-schema": "^1.4.10",
-    "chai-json-schema": "^1.5.1"
+    "@lit-protocol/lit-node-client": "^6.4.4"
   }
 }
