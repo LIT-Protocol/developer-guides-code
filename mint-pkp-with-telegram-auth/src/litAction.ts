@@ -1,4 +1,6 @@
-(async () => {
+// @ts-nocheck
+
+const _litActionCode = async () => {
   const LIT_PKP_PERMISSIONS_CONTRACT_ADDRESS =
     "0x60C1ddC8b9e38F730F0e7B70A2F84C1A98A69167";
   const TELEGRAM_AUTH_METHOD_TYPE = ethers.utils.keccak256(
@@ -10,6 +12,44 @@
 
   try {
     const _telegramUserData = JSON.parse(telegramUserData);
+
+    // Validating the Telegram user data, go here to learn more:
+    // https://core.telegram.org/widgets/login#checking-authorization
+    async function validateTelegramUserData(userData) {
+      const { hash, ...otherData } = userData;
+
+      const dataCheckString = Object.entries(otherData)
+        .sort(([a], [b]) => a.localeCompare(b))
+        .map(([key, value]) => `${key}=${value}`)
+        .join("\n");
+
+      const encoder = new TextEncoder();
+      const secretKeyHash = await crypto.subtle.digest(
+        "SHA-256",
+        encoder.encode(telegramBotSecret)
+      );
+      const key = await crypto.subtle.importKey(
+        "raw",
+        secretKeyHash,
+        { name: "HMAC", hash: "SHA-256" },
+        false,
+        ["sign"]
+      );
+      const signature = await crypto.subtle.sign(
+        "HMAC",
+        key,
+        encoder.encode(dataCheckString)
+      );
+
+      const calculatedHash = Array.from(new Uint8Array(signature))
+        .map((b) => b.toString(16).padStart(2, "0"))
+        .join("");
+
+      const isValid = calculatedHash === userData.hash;
+      const isRecent = Date.now() / 1000 - userData.auth_date < 600;
+
+      return { isValid, isRecent };
+    }
 
     const { isValid, isRecent } = await validateTelegramUserData(
       _telegramUserData
@@ -59,49 +99,6 @@
       reason: `Error: ${error.message}`,
     });
   }
-})();
+};
 
-// Validating the Telegram user data, go here to learn more:
-// https://core.telegram.org/widgets/login#checking-authorization
-async function validateTelegramUserData(userData) {
-  try {
-    const { hash, ...otherData } = userData;
-
-    const dataCheckString = Object.entries(otherData)
-      .sort(([a], [b]) => a.localeCompare(b))
-      .map(([key, value]) => `${key}=${value}`)
-      .join("\n");
-
-    const encoder = new TextEncoder();
-    const secretKeyHash = await crypto.subtle.digest(
-      "SHA-256",
-      encoder.encode(telegramBotSecret)
-    );
-    const key = await crypto.subtle.importKey(
-      "raw",
-      secretKeyHash,
-      { name: "HMAC", hash: "SHA-256" },
-      false,
-      ["sign"]
-    );
-    const signature = await crypto.subtle.sign(
-      "HMAC",
-      key,
-      encoder.encode(dataCheckString)
-    );
-
-    const calculatedHash = Array.from(new Uint8Array(signature))
-      .map((b) => b.toString(16).padStart(2, "0"))
-      .join("");
-
-    const isValid = calculatedHash === userData.hash;
-    const isRecent = Date.now() / 1000 - userData.auth_date < 600;
-
-    return { isValid, isRecent };
-  } catch (error) {
-    return Lit.Actions.setResponse({
-      response: "false",
-      reason: `Error: ${error.message}`,
-    });
-  }
-}
+export const litActionCode = `(${_litActionCode.toString()})();`;

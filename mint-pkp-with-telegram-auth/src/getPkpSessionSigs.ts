@@ -2,9 +2,14 @@ import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import { LitNetwork } from "@lit-protocol/constants";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
 import { ethers } from "ethers";
-import { LitAbility, LitPKPResource } from "@lit-protocol/auth-helpers";
+import {
+  LitAbility,
+  LitActionResource,
+  LitPKPResource,
+} from "@lit-protocol/auth-helpers";
 
 import { type TelegramUser } from "./types";
+import { litActionCode } from "./litAction";
 
 export interface MintedPkp {
   tokenId: string;
@@ -12,11 +17,8 @@ export interface MintedPkp {
   ethAddress: string;
 }
 
-const {
-  VITE_LIT_CAPACITY_CREDIT_TOKEN_ID,
-  VITE_TELEGRAM_BOT_SECRET,
-  VITE_LIT_ACTION_IPFS_CID,
-} = import.meta.env;
+const { VITE_LIT_CAPACITY_CREDIT_TOKEN_ID, VITE_TELEGRAM_BOT_SECRET } =
+  import.meta.env;
 
 export const getPkpSessionSigs = async (
   telegramUser: TelegramUser,
@@ -78,12 +80,12 @@ export const getPkpSessionSigs = async (
     console.log(`✅ Created the capacityDelegationAuthSig`);
 
     console.log(
-      `🔄 Getting the Session Sigs for the PKP using Lit Action: ${VITE_LIT_ACTION_IPFS_CID}...`
+      `🔄 Getting the Session Sigs for the PKP using Lit Action code string...`
     );
     const sessionSignatures = await litNodeClient.getPkpSessionSigs({
       pkpPublicKey: mintedPkp.publicKey,
       capabilityAuthSigs: [capacityDelegationAuthSig],
-      litActionIpfsId: VITE_LIT_ACTION_IPFS_CID,
+      litActionCode: Buffer.from(litActionCode).toString("base64"),
       jsParams: {
         telegramUserData: JSON.stringify(telegramUser),
         telegramBotSecret: VITE_TELEGRAM_BOT_SECRET,
@@ -93,6 +95,10 @@ export const getPkpSessionSigs = async (
         {
           resource: new LitPKPResource("*"),
           ability: LitAbility.PKPSigning,
+        },
+        {
+          resource: new LitActionResource("*"),
+          ability: LitAbility.LitActionExecution,
         },
       ],
       expiration: new Date(Date.now() + 1000 * 60 * 10).toISOString(), // 10 minutes

@@ -6,10 +6,11 @@ import {
 import { LitContracts } from "@lit-protocol/contracts-sdk";
 import { ethers } from "ethers";
 import bs58 from "bs58";
+// @ts-ignore
+import IpfsHash from "ipfs-only-hash";
 
 import { type TelegramUser } from "./types";
-
-const VITE_LIT_ACTION_IPFS_CID = import.meta.env.VITE_LIT_ACTION_IPFS_CID;
+import { litActionCode } from "./litAction";
 
 export const mintPkp = async (telegramUser: TelegramUser) => {
   try {
@@ -43,18 +44,21 @@ export const mintPkp = async (telegramUser: TelegramUser) => {
     const pkpMintCost = await litContracts.pkpNftContract.read.mintCost();
     console.log("✅ Got PKP mint cost");
 
-    console.log("🔄 Minting new PKP...");
+    console.log("🔄 Calculating the IPFS CID for Lit Action code string...");
+    const litActionIpfsCid = await IpfsHash.of(litActionCode);
     console.log(
-      `0x${Buffer.from(bs58.decode(VITE_LIT_ACTION_IPFS_CID)).toString("hex")}`
+      `✅ Calculated IPFS CID: ${litActionIpfsCid}. Hexlified version: 0x${Buffer.from(
+        bs58.decode(litActionIpfsCid)
+      ).toString("hex")}`
     );
+
+    console.log("🔄 Minting new PKP...");
     const tx =
       await litContracts.pkpHelperContract.write.mintNextAndAddAuthMethods(
         AuthMethodType.LitAction, // keyType
         [AuthMethodType.LitAction, authMethodType], // permittedAuthMethodTypes
         [
-          `0x${Buffer.from(bs58.decode(VITE_LIT_ACTION_IPFS_CID)).toString(
-            "hex"
-          )}`,
+          `0x${Buffer.from(bs58.decode(litActionIpfsCid)).toString("hex")}`,
           authMethodId,
         ], // permittedAuthMethodIds
         ["0x", "0x"], // permittedAuthMethodPubkeys

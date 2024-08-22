@@ -24,6 +24,7 @@
     "bs58": "^6.0.0",
     "ethers": "v5",
     "google-auth-library": "^9.13.0",
+    "ipfs-only-hash": "^4.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "rollup-plugin-polyfill-node": "^0.13.0",
