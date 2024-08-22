@@ -15,7 +15,8 @@ describe("signAndCombineAndSendTx", () => {
       claimData: { type: "object" },
       response: {
         type: "string",
-        pattern: '^Transaction Sent Successfully\\. Transaction Hash:"0x[0-9a-fA-F]{64}"$',
+        pattern:
+          "^Transaction Sent Successfully\\. Transaction Hash: 0x[0-9a-fA-F]{64}$",
       },
       logs: {
         type: "string",
