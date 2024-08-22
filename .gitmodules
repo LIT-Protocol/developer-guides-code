@@ -1,3 +1,6 @@
 [submodule "eip-1271/contracts/lib/forge-std"]
 	path = eip-1271/contracts/lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
+[submodule "custom-auth-telegram-example"]
+	path = custom-auth-telegram-example
+	url = https://github.com/LIT-Protocol/custom-auth-telegram-example.git
