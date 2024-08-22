@@ -32,7 +32,7 @@ export const runExample = async () => {
   try {
     const ethersSigner = new ethers.Wallet(
       ETHEREUM_PRIVATE_KEY,
-      new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE)
+      new ethers.providers.JsonRpcProvider(LIT_RPC_URL)
     );
 
     console.log("🔄 Connecting LitContracts client to network...");
