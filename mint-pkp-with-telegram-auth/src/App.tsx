@@ -190,7 +190,7 @@ function App() {
           {pkpSessionSigs && (
             <div>
               <p>Successfully generated Session Signatures!</p>
-              <p>Check the JavaScript console for PKP info</p>
+              <p>Check the JavaScript console for Session Sigs info</p>
             </div>
           )}
           <hr />
