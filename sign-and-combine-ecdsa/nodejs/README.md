@@ -1,6 +1,6 @@
 # `signAndCombineEcdsa` Lit Action Code Example
 
-This code demonstrates how to use the Lit and Lit Actions SDKs to implement the `signAndCombineEcdsa` method in a Lit Action. This method combines the signature shares of your PKP from each node onto a single node within a Lit Action, meaning they remain in [Lit's Trusted Execution Environment (TEE)](https://developer.litprotocol.com/resources/how-it-works#sealed-and-confidential-hardware) and are not exposed to the client.
+This code demonstrates how to use the Lit and Lit Actions SDKs to implement the `signAndCombineEcdsa` method in a Lit Action. This method combines the signature shares of your PKP from each node in a single node within a Lit Action, meaning they remain in [Lit's Trusted Execution Environment (TEE)](https://developer.litprotocol.com/resources/how-it-works#sealed-and-confidential-hardware) and are not exposed to the client.
 
 ## Understanding the Implementation
 
@@ -35,7 +35,7 @@ Make a copy of the provided `.env.example` file and name it `.env`:
 cp .env.example .env
 ```
 
-Within the `.env` there is the ENV:
+Within the `.env` file there are the following ENVs:
 
 1. `ETHEREUM_PRIVATE_KEY` - **Required**
    - Must have Lit `tstLPX` tokens on the `Chronicle Yellowstone` blockchain
