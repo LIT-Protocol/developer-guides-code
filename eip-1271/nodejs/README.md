@@ -37,7 +37,7 @@ The following is a brief overview of how it works:
 Clone the Developer Guides Code repo using:
 
 ```
-git clone git@github.com:LIT-Protocol/developer-guides-code.git
+git clone https://github.com/LIT-Protocol/developer-guides-code.git
 ```
 
 You'll want to `cd` into the code example directory:
