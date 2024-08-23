@@ -16,7 +16,7 @@ The following is a brief overview of how it works:
    - We'll refer to them as `wallet1` and `wallet2`
 5. Computes the `keccak256` hash of an example `string` that will be used as the signed data for the [WhitelistEIP1271 contract](../contracts/src/WhitelistEIP1271.sol)
 6. Checks if `wallet1` and `wallet2` has sufficient funds to call the `WhitelistEIP1271` contract, funding them using the wallet derived from the `ETHEREUM_PRIVATE_KEY` ENV
-7. Ssigns the `keccak256` hash of the example `string` using `wallet1`, and creates, signs, and sends a transaction executing the `signTx` method on the `WhitelistEIP1271` contract
+7. Signs the `keccak256` hash of the example `string` using `wallet1`, and creates, signs, and sends a transaction executing the `signTx` method on the `WhitelistEIP1271` contract
 8. Signs the `keccak256` hash of the example `string` using `wallet2`, and creates, signs, and sends a transaction executing the `signTx` method on the `WhitelistEIP1271` contract
    - Because the `WhitelistEIP1271` contract was deployed with a signature threshold of `2`, after two signatures from whitelisted addresses are provided, the EIP-1271 function `isValidSignature` will return the magic value (`0x1626ba7e`) signalling the signature as valid.
 9. Calls `litNodeClient.createCapacityDelegationAuthSig` to generate a `capacityDelegationAuthSig` to pay for the execution of `litNodeClient.getPkpSessionSigs`
