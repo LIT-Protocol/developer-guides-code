@@ -11,7 +11,7 @@ The following is a brief overview of how it works:
 1. The Example Script computes the IPFS CID for the EIP-1271 Auth Lit Action code ([litAction.ts](./src/litAction.ts))
 2. It then mints a new PKP, adding the IPFS CID of the EIP-1271 Auth Lit Action code as a permitted [Auth Method](https://developer.litprotocol.com/user-wallets/pkps/advanced-topics/auth-methods/overview), and sets the PKP to own itself
    - This results in the EIP-1271 Auth Lit Action being the only available method to produce signatures using the PKP.
-3. Mints a Lit Capacity Credit (if one wasn't provided)
+3. Mints a Lit [Capacity Credit](https://developer.litprotocol.com/paying-for-lit/capacity-credits) (if one wasn't provided)
 4. Creates two `ethers.js` signers using the `ANVIL_PRIVATE_KEY_1` and `ANVIL_PRIVATE_KEY_2` ENVs
    - We'll refer to them as `wallet1` and `wallet2`
 5. Computes the `keccak256` hash of an example `string` that will be used as the signed data for the [WhitelistEIP1271 contract](../contracts/src/WhitelistEIP1271.sol)
