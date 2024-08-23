@@ -36,7 +36,7 @@ Before you click the button, open up the JavaScript console in your browser so y
 After clicking the button a couple things will happen:
 
 1. You will be prompted by your wallet (i.e. MetaMask) to connect an account to the site
-2. After connecting an account, you will see the following output in the browserconsole:
+2. After connecting an account, you will see the following output in the browser console:
    ```
    Clicked
    Connected account: 0xA89543a7145C68E52a4D584f1ceb123605131211
