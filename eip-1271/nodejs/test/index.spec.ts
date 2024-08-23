@@ -5,8 +5,8 @@ import { runExample } from "../src";
 
 use(chaiJsonSchema);
 
-describe("Testing specific functionality", () => {
-  it("should test for a specific thing", async () => {
+describe("Custom Auth EIP-1271 Example", () => {
+  it("should return PKP Session Sigs", async () => {
     const expectedSessionSigsSchema = {
       type: "object",
       patternProperties: {
