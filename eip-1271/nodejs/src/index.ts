@@ -6,7 +6,7 @@ import {
   LIT_RPC,
 } from "@lit-protocol/constants";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
-import ethers from "ethers";
+import { ethers } from "ethers";
 import bs58 from "bs58";
 import { LitAbility, LitPKPResource } from "@lit-protocol/auth-helpers";
 // @ts-ignore
