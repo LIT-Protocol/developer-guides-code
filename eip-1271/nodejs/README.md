@@ -11,12 +11,12 @@ The following is a brief overview of how it works:
 1. The Example Script computes the IPFS CID for the EIP-1271 Auth Lit Action code ([litAction.ts](./src/litAction.ts))
 2. It then mints a new PKP, adding the IPFS CID of the EIP-1271 Auth Lit Action code as a permitted [Auth Method](https://developer.litprotocol.com/user-wallets/pkps/advanced-topics/auth-methods/overview), and sets the PKP to own itself
    - This results in the EIP-1271 Auth Lit Action being the only available method to produce signatures using the PKP.
-3. Mints a Lit Capacity Credit (if one wasn't provided)
+3. Mints a Lit [Capacity Credit](https://developer.litprotocol.com/paying-for-lit/capacity-credits) (if one wasn't provided)
 4. Creates two `ethers.js` signers using the `ANVIL_PRIVATE_KEY_1` and `ANVIL_PRIVATE_KEY_2` ENVs
    - We'll refer to them as `wallet1` and `wallet2`
 5. Computes the `keccak256` hash of an example `string` that will be used as the signed data for the [WhitelistEIP1271 contract](../contracts/src/WhitelistEIP1271.sol)
 6. Checks if `wallet1` and `wallet2` has sufficient funds to call the `WhitelistEIP1271` contract, funding them using the wallet derived from the `ETHEREUM_PRIVATE_KEY` ENV
-7. Ssigns the `keccak256` hash of the example `string` using `wallet1`, and creates, signs, and sends a transaction executing the `signTx` method on the `WhitelistEIP1271` contract
+7. Signs the `keccak256` hash of the example `string` using `wallet1`, and creates, signs, and sends a transaction executing the `signTx` method on the `WhitelistEIP1271` contract
 8. Signs the `keccak256` hash of the example `string` using `wallet2`, and creates, signs, and sends a transaction executing the `signTx` method on the `WhitelistEIP1271` contract
    - Because the `WhitelistEIP1271` contract was deployed with a signature threshold of `2`, after two signatures from whitelisted addresses are provided, the EIP-1271 function `isValidSignature` will return the magic value (`0x1626ba7e`) signalling the signature as valid.
 9. Calls `litNodeClient.createCapacityDelegationAuthSig` to generate a `capacityDelegationAuthSig` to pay for the execution of `litNodeClient.getPkpSessionSigs`
@@ -37,7 +37,7 @@ The following is a brief overview of how it works:
 Clone the Developer Guides Code repo using:
 
 ```
-git clone git@github.com:LIT-Protocol/developer-guides-code.git
+git clone https://github.com/LIT-Protocol/developer-guides-code.git
 ```
 
 You'll want to `cd` into the code example directory:
