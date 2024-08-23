@@ -122,7 +122,7 @@ export const runExample = async () => {
       ethers.utils.toUtf8Bytes("The answer to the universe is 42.")
     );
 
-    const balanceThreshold = ethers.utils.parseEther("0.0001");
+    const balanceThreshold = ethers.utils.parseEther("0.001");
 
     console.log(`🔄 Checking balance for Wallet 1: ${wallet1.address}...`);
     const wallet1Balance = await ethersSigner.provider.getBalance(
