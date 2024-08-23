@@ -5,7 +5,9 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "test": "npx @dotenvx/dotenvx run -- mocha test/**/*.spec.ts"
+    "test": "npx @dotenvx/dotenvx run -- mocha test/**/*.spec.ts",
+    "test:session-sigs": "npx @dotenvx/dotenvx run -- mocha test/**/generateSessionSigs.spec.ts",
+    "test:encryption": "npx @dotenvx/dotenvx run -- mocha test/**/encryption.spec.ts"
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^0.44.1",
