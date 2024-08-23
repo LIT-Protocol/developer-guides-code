@@ -6,7 +6,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "test": "npx @dotenvx/dotenvx run -- mocha test/**/*.spec.js"
+    "test": "npx @dotenvx/dotenvx run -- mocha test/**/*.spec.ts"
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^0.37.1",
@@ -20,9 +20,13 @@
     "@types/chai": "^4.3.17",
     "@types/chai-json-schema": "^1.4.10",
     "@types/mocha": "^10.0.7",
+    "@types/node": "^22.5.0",
     "chai": "^5.1.1",
     "chai-json-schema": "^1.5.1",
     "mocha": "^10.7.3",
-    "tslib": "^2.6.2"
+    "ts-node": "^10.9.2",
+    "tslib": "^2.6.2",
+    "tsx": "^4.17.0",
+    "typescript": "^5.5.4"
   }
 }

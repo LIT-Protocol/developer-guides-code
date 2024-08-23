@@ -10,28 +10,34 @@ import {
 import { LitContracts } from "@lit-protocol/contracts-sdk";
 import * as ethers from "ethers";
 
-import { litActionCode } from "./litAction.js";
-import { getEnv } from "./utils.js";
+import { litActionCode } from "./litAction";
+import { getEnv } from "./utils";
 
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 const LIT_PKP_PUBLIC_KEY = getEnv("LIT_PKP_PUBLIC_KEY");
 const LIT_CAPACITY_CREDIT_TOKEN_ID = getEnv("LIT_CAPACITY_CREDIT_TOKEN_ID");
+const LIT_NETWORK = LitNetwork.DatilTest;
 
 export const conditionalSigning = async () => {
-  let litNodeClient;
-  let pkpInfo = {
+  let litNodeClient: LitNodeClientNodeJs;
+  let pkpInfo: {
+    tokenId?: string;
+    publicKey?: string;
+    ethAddress?: string;
+  } = {
     publicKey: LIT_PKP_PUBLIC_KEY,
   };
+
 
   try {
     const ethersWallet = new ethers.Wallet(
       ETHEREUM_PRIVATE_KEY,
       new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE)
     );
-    
+
     console.log("🔄 Connecting to the Lit network...");
     litNodeClient = new LitNodeClientNodeJs({
-      litNetwork: LitNetwork.DatilTest,
+      litNetwork: LIT_NETWORK,
       debug: false,
     });
     await litNodeClient.connect();
@@ -40,7 +46,7 @@ export const conditionalSigning = async () => {
     console.log("🔄 Connecting LitContracts client to network...");
     const litContracts = new LitContracts({
       signer: ethersWallet,
-      network: LitNetwork.DatilTest,
+      network: LIT_NETWORK,
       debug: false,
     });
     await litContracts.connect();
@@ -87,10 +93,6 @@ export const conditionalSigning = async () => {
       });
     console.log("✅ Capacity Delegation Auth Sig created");
 
-    console.log("🔄 Generating Auth Sig for Lit Action conditional check...");
-    const authSig = await genAuthSig(litNodeClient, ethersWallet);
-    console.log("✅ Generated Auth Sig for Lit Action conditional check!");
-
     console.log("🔄 Executing Lit Action...");
     const litActionSignatures = await litNodeClient.executeJs({
       sessionSigs: await litNodeClient.getSessionSigs({
@@ -107,7 +109,25 @@ export const conditionalSigning = async () => {
             ability: LitAbility.LitActionExecution,
           },
         ],
-        authNeededCallback: getAuthNeededCallback(litNodeClient, ethersWallet),
+        authNeededCallback: async ({
+          resourceAbilityRequests,
+          expiration,
+          uri,
+        }) => {
+          const toSign = await createSiweMessageWithRecaps({
+            uri: uri!,
+            expiration: expiration!, // 24 hours
+            resources: resourceAbilityRequests!,
+            walletAddress: await ethersWallet.getAddress(),
+            nonce: await litNodeClient.getLatestBlockhash(),
+            litNodeClient: litNodeClient,
+          });
+
+          return await generateAuthSig({
+            signer: ethersWallet,
+            toSign,
+          });
+        },
       }),
       code: litActionCode,
       jsParams: {
@@ -125,11 +145,31 @@ export const conditionalSigning = async () => {
             },
           },
         ],
-        authSig,
+        authSig: await (async () => {
+          const toSign = await createSiweMessageWithRecaps({
+            uri: "http://localhost",
+            expiration: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(), // 24 hours
+            walletAddress: await ethersWallet.getAddress(),
+            nonce: await litNodeClient.getLatestBlockhash(),
+            resources: [
+              {
+                resource: new LitPKPResource("*"),
+                ability: LitAbility.PKPSigning,
+              },
+              {
+                resource: new LitActionResource("*"),
+                ability: LitAbility.LitActionExecution,
+              },
+            ],
+            litNodeClient: litNodeClient,
+          });
+          return await generateAuthSig({
+            signer: ethersWallet,
+            toSign,
+          });
+        })(),
         chain: "ethereum",
-        dataToSign: ethers.utils.arrayify(
-          ethers.utils.keccak256([1, 2, 3, 4, 5])
-        ),
+        dataToSign: ethers.utils.arrayify(ethers.utils.keccak256([1, 2, 3, 4, 5])),
         publicKey: pkpInfo.publicKey,
       },
     });
@@ -140,39 +180,6 @@ export const conditionalSigning = async () => {
   } catch (error) {
     console.error(error);
   } finally {
-    litNodeClient.disconnect();
+    litNodeClient!.disconnect();
   }
 };
-
-async function genAuthSig(litNodeClient, ethersWallet) {
-  const toSign = await createSiweMessageWithRecaps({
-    uri: "http://localhost",
-    expiration: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(), // 24 hours
-    walletAddress: await ethersWallet.getAddress(),
-    nonce: await litNodeClient.getLatestBlockhash(),
-    litNodeClient: litNodeClient,
-  });
-
-  return await generateAuthSig({
-    signer: ethersWallet,
-    toSign,
-  });
-}
-
-function getAuthNeededCallback(litNodeClient, ethersWallet) {
-  return async ({ resourceAbilityRequests, expiration, uri }) => {
-    const toSign = await createSiweMessageWithRecaps({
-      uri,
-      expiration,
-      resources: resourceAbilityRequests,
-      walletAddress: await ethersWallet.getAddress(),
-      nonce: await litNodeClient.getLatestBlockhash(),
-      litNodeClient,
-    });
-
-    return await generateAuthSig({
-      signer: ethersWallet,
-      toSign,
-    });
-  };
-}

@@ -1,7 +1,7 @@
 import { expect, use } from "chai";
 import chaiJsonSchema from "chai-json-schema";
 
-import { conditionalSigning } from "../src/index.js";
+import { conditionalSigning } from "../src/index";
 
 use(chaiJsonSchema);
 
