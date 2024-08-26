@@ -52,6 +52,7 @@ export const conditionalSigning = async() => {
     });
     await litContracts.connect();
     console.log("✅ Connected LitContracts client to network");
+
     if (LIT_PKP_PUBLIC_KEY === undefined || LIT_PKP_PUBLIC_KEY === "") {
       console.log("🔄 PKP wasn't provided, minting a new one...");
       pkpInfo = (await litContracts.pkpNftContractUtils.write.mint()).pkp;
