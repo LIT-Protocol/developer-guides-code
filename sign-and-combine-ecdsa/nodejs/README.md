@@ -41,9 +41,11 @@ Within the `.env` file there are the following ENVs:
    - Must have Lit `tstLPX` tokens on the `Chronicle Yellowstone` blockchain
      - [Faucet for Chronicle Yellowstone](https://chronicle-yellowstone-faucet.getlit.dev/)
    - Will be used to mint the PKP and pay for Lit usage
-2. `LIT_CAPACITY_CREDIT_TOKEN_ID` - **Optional**
+2. `CHAIN_TO_SEND_TX_ON` - **Required**
+   - The chain on which the transactions for funding the PKP and having the PKP send funds back to the wallet can be easily changed by modifying the `CHAIN_TO_SEND_TX_ON` ENV.
+3. `LIT_CAPACITY_CREDIT_TOKEN_ID` - **Optional**
    - If not provided, a new `capacityCreditsNFT` will be minted and used. This enables the `ETHEREUM_PRIVATE_KEY` to pay for Lit usage
-3. `LIT_PKP_PUBLIC_KEY` - **Optional**
+4. `LIT_PKP_PUBLIC_KEY` - **Optional**
    - This is the PKP used to sign and send the transaction. If not provided, a new PKP will be minted (`ETHEREUM_PRIVATE_KEY` will be used to pay the minting fee).
 
 ### Running the Test

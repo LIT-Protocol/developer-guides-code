@@ -33,9 +33,12 @@ Your `.env` file should look like:
 ETHEREUM_PRIVATE_KEY=0xYourPrivateKey
 LIT_PKP_PUBLIC_KEY=yourPublicKey
 LIT_CAPACITY_CREDIT_TOKEN_ID=yourCapacityCreditTokenId
+CHAIN_TO_CHECK_CONDITION_ON=ethereum
 ```
 
 Remember, leave `LIT_PKP_PUBLIC_KEY` empty if you want a new PKP to be minted for you, and if you leave `LIT_CAPACITY_CREDIT_TOKEN_ID` empty, a new CapacityCredit will be minted for you.
+
+**NOTE** By changing the `CHAIN_TO_CHECK_CONDITION_ON` value, you can change the chain that the Lit Action will check the condition on. The current `.example.env` file sets this value to `ethereum`.
 
 ### Starting the Example
 
@@ -86,7 +89,7 @@ In this directory, `conditional-signing/nodejs`, run `yarn test` to execute the 
     "signedData": {},
     "decryptedData": {},
     "claimData": {},
-    "response": "address does not have 1 or more Wei on Ethereum Mainnet",
+    "response": "address does not have 1 or more Wei on ethereum",
     "logs": null
   }
    ```

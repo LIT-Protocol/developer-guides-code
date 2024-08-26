@@ -48,7 +48,7 @@ describe("conditionalSigning", () => {
       claimData: { type: "object" },
       response: {
         type: "string",
-        pattern: "^address does not have 1 or more Wei on Ethereum Mainnet$",
+        pattern: "^address does not have 1 or more Wei on .*$",
       },
     },
     required: [

@@ -16,6 +16,7 @@ import { getEnv } from "./utils";
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 const LIT_PKP_PUBLIC_KEY = getEnv("LIT_PKP_PUBLIC_KEY");
 const LIT_CAPACITY_CREDIT_TOKEN_ID = getEnv("LIT_CAPACITY_CREDIT_TOKEN_ID");
+const CHAIN_TO_CHECK_CONDITION_ON = getEnv("CHAIN_TO_CHECK_CONDITION_ON");
 const LIT_NETWORK = LitNetwork.DatilTest;
 
 export const conditionalSigning = async () => {
@@ -96,7 +97,7 @@ export const conditionalSigning = async () => {
     console.log("🔄 Executing Lit Action...");
     const litActionSignatures = await litNodeClient.executeJs({
       sessionSigs: await litNodeClient.getSessionSigs({
-        chain: "ethereum",
+        chain: CHAIN_TO_CHECK_CONDITION_ON,
         capabilityAuthSigs: [capacityDelegationAuthSig],
         expiration: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(), // 24 hours
         resourceAbilityRequests: [
@@ -136,7 +137,7 @@ export const conditionalSigning = async () => {
             conditionType: "evmBasic",
             contractAddress: "",
             standardContractType: "",
-            chain: "ethereum",
+            chain: CHAIN_TO_CHECK_CONDITION_ON,
             method: "eth_getBalance",
             parameters: [":userAddress", "latest"],
             returnValueTest: {
@@ -168,7 +169,7 @@ export const conditionalSigning = async () => {
             toSign,
           });
         })(),
-        chain: "ethereum",
+        chain: CHAIN_TO_CHECK_CONDITION_ON,
         dataToSign: ethers.utils.arrayify(ethers.utils.keccak256([1, 2, 3, 4, 5])),
         publicKey: pkpInfo.publicKey,
       },

@@ -23,7 +23,10 @@ Your `.env` file should look like:
 ```
 VITE_LIT_PKP_PUBLIC_KEY=yourPublicKey
 VITE_LIT_CAPACITY_CREDIT_TOKEN_ID=yourCapacityCreditTokenId
+VITE_CHAIN_TO_CHECK_CONDITION_ON=ethereum
 ```
+
+**NOTE** By changing the `VITE_CHAIN_TO_CHECK_CONDITION_ON` value, you can change the chain that the Lit Action will check the condition on. The current `.example.env` file sets this value to `ethereum`.
 
 ### Starting the Example
 
@@ -85,6 +88,6 @@ After clicking the button a couple things will happen:
      "signedData": {},
      "decryptedData": {},
      "claimData": {},
-     "response": "address does not have 1 or more Wei on Ethereum Mainnet"
+     "response": "address does not have 1 or more Wei on ethereum"
    }
    ```
