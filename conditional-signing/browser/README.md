@@ -30,7 +30,7 @@ VITE_CHAIN_TO_CHECK_CONDITION_ON=ethereum
 
 ### Starting the Example
 
-In this directory, `conditional-signing/browser`, run `yarn dev` to bundle all of this code and server the HTML file at: [http://localhost:5173](http://localhost:5173).
+In this directory, `conditional-signing/browser`, run `yarn dev` to bundle all of this code and serve the HTML file at: [http://localhost:5173](http://localhost:5173).
 
 After starting and waiting for Vite to serve the website, you should see a page with a single button that says: `Run the Lit Action`.
 
