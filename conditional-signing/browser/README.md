@@ -10,7 +10,7 @@ In this directory, `conditional-signing/browser`, run `yarn` to install the proj
 
 ### Specifying Your Lit PKP's Public Key and CapacityCredit Token ID
 
-If you already have a Lit PKP that you'd like to use, you can copy the contents of the provided `.env.example` to a `.env` file to specify it. If you don't have a PKP, or wish to use a new one for this example, then you can skip this step and one will be created for you when you run this example. This is also the case if you'd like to use a different Lit Capacity Credit Token ID.
+If you already have a Lit PKP that you'd like to use, you can copy the contents of the provided `.env.example` to a `.env` file to specify it. If you don't have a PKP, or wish to use a new one for this example, then you can skip this step and one will be created for you when you run this example. This is also the case for the Lit Capacity Credit Token ID; You can provide one or have one minted for you.
 
 **NOTE** In order for a new Lit PKP to minted for you, you **must** have `tstLPX` tokens. You can receive some `tstLPX` using the faucet available [here](https://chronicle-yellowstone-faucet.getlit.dev/).
 
