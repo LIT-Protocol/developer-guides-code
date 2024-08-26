@@ -20,7 +20,6 @@ const CHAIN_TO_CHECK_CONDITION_ON = getEnv("VITE_CHAIN_TO_CHECK_CONDITION_ON");
 const LIT_NETWORK = LitNetwork.DatilTest;
 
 export const conditionalSigning = async() => {
-  console.log("Clicked");
   let litNodeClient: LitNodeClient;
   let pkpInfo: {
     tokenId?: string;
