@@ -9,6 +9,7 @@ const getEnv = (name: string): string => {
 
 const LIT_NETWORK = getEnv("LIT_NETWORK");
 const LIT_RELAYER_URL = `https://${LIT_NETWORK}-relayer.getlit.dev/register-payer`;
+console.log(LIT_RELAYER_URL);
 const LIT_RELAYER_API_KEY = getEnv("LIT_RELAYER_API_KEY");
 
 interface RegisterPayerResponse {
@@ -23,6 +24,7 @@ export const registerPayer = async () => {
   };
 
   try {
+    console.log("🔄 Registering new payer...");
     const response = await fetch(LIT_RELAYER_URL, {
       method: "POST",
       headers: headers,
@@ -34,6 +36,7 @@ export const registerPayer = async () => {
 
     const { payerWalletAddress, payerSecretKey } =
       (await response.json()) as RegisterPayerResponse;
+    console.log(`✅ New payer registered: ${payerWalletAddress}`);
 
     return { payerWalletAddress, payerSecretKey };
   } catch (error) {

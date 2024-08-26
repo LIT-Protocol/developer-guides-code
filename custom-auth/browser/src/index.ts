@@ -2,9 +2,8 @@ import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import { LitNetwork } from "@lit-protocol/constants";
 import { logStep, getOutputData } from "./utils/state-manager";
 import { ethers } from "ethers";
-import { LIT_CHAIN_RPC_URL } from "@lit-protocol/constants";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
-import { AuthMethodScope } from "@lit-protocol/constants";
+import { AuthMethodScope, LIT_RPC } from "@lit-protocol/constants";
 import { LitPKPResource, LitActionResource } from "@lit-protocol/auth-helpers";
 import { LitAbility } from "@lit-protocol/types";
 import { ipfsHelpers } from "ipfs-helpers";
@@ -12,9 +11,9 @@ import { ipfsHelpers } from "ipfs-helpers";
 export const EOA_PRIVATE_KEY =
   "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
 
-export const connectLitNodeClientToCayenne = async (step: number) => {
+export const connectLitNodeClientToDatilDev = async (step: number) => {
   const config = {
-    litNetwork: LitNetwork.Cayenne,
+    litNetwork: LitNetwork.DatilDev,
     debug: true,
   };
 
@@ -30,27 +29,27 @@ export const connectLitNodeClientToCayenne = async (step: number) => {
 
   logStep({
     step,
-    output: "✅ litNodeClient is connected to Cayenne network.",
+    output: "✅ litNodeClient is connected to DatilDev network.",
     outputData: { litNodeClient: client },
   });
 
   return client;
 };
 
-export const connectLitContractsToCayenne = async (step: number) => {
+export const connectLitContractsToDatilDev = async (step: number) => {
   logStep({
     step,
-    input: `Configuring the signer using a EOA private key, connecting it to the provider at ${LIT_CHAIN_RPC_URL}, and setting the network to ${LitNetwork.Cayenne}.`,
+    input: `Configuring the signer using a EOA private key, connecting it to the provider at ${LIT_RPC.CHRONICLE_YELLOWSTONE}, and setting the network to ${LitNetwork.DatilDev}.`,
     output: "Loading...",
   });
 
   const litContracts = new LitContracts({
     signer: new ethers.Wallet(
       EOA_PRIVATE_KEY,
-      new ethers.providers.JsonRpcProvider(LIT_CHAIN_RPC_URL)
+      new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE)
     ),
     debug: false,
-    network: LitNetwork.Cayenne,
+    network: LitNetwork.DatilDev,
   });
 
   await litContracts.connect();
@@ -58,7 +57,7 @@ export const connectLitContractsToCayenne = async (step: number) => {
   logStep({
     step,
     output:
-      "✅ litContracts is connected to Cayenne network. All contracts are loaded.",
+      "✅ litContracts is connected to DatilDev network. All contracts are loaded.",
     outputData: { litContracts },
   });
 
@@ -373,7 +372,7 @@ const stepsConfig: {
     description:
       "Establishes a connection with the LitNodeClient to interact with Lit Protocol nodes.",
     action: () => {
-      connectLitNodeClientToCayenne(1);
+      connectLitNodeClientToDatilDev(1);
     },
   },
   {
@@ -383,7 +382,7 @@ const stepsConfig: {
     description:
       "Sets up the LitContracts SDK to interact with Lit Protocol smart contracts.",
     action: () => {
-      connectLitContractsToCayenne(2);
+      connectLitContractsToDatilDev(2);
     },
   },
   {

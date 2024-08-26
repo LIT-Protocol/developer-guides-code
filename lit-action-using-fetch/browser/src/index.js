@@ -56,7 +56,7 @@ async function buttonClick() {
 
 async function getLitNodeClient() {
   const litNodeClient = new LitNodeClient({
-    litNetwork: LitNetwork.Cayenne,
+    litNetwork: LitNetwork.DatilDev,
   });
 
   console.log("Connecting litNodeClient to network...");
@@ -82,7 +82,7 @@ async function mintPkp(ethersSigner) {
   console.log("Minting new PKP...");
   const litContracts = new LitContracts({
     signer: ethersSigner,
-    network: LitNetwork.Cayenne,
+    network: LitNetwork.DatilDev,
   });
 
   await litContracts.connect();
