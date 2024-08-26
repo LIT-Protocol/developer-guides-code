@@ -29,7 +29,6 @@ export const conditionalSigning = async () => {
     publicKey: LIT_PKP_PUBLIC_KEY,
   };
 
-
   try {
     const ethersWallet = new ethers.Wallet(
       ETHEREUM_PRIVATE_KEY,
