@@ -1,5 +1,6 @@
-export const litActionCode = `
-(async () => {
+// @ts-nocheck
+
+const _litActionCode = async () => {
   try {
     // test an access control condition
     const testResult = await Lit.Actions.checkConditions({
@@ -21,5 +22,6 @@ export const litActionCode = `
   } catch (error) {
     LitActions.setResponse({ response: error.message });
   }
-})();
-`;
+};
+
+export const litActionCode = `(${_litActionCode.toString()})();`;
