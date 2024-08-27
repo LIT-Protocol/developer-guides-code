@@ -12,13 +12,14 @@ import * as ethers from "ethers";
 import { litActionCode } from "./litAction";
 import { getEnv } from "./utils";
 
-const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 const CHAIN_TO_CHECK_CONDITION_ON = getEnv("CHAIN_TO_CHECK_CONDITION_ON");
 const LIT_PKP_PUBLIC_KEY = process.env["LIT_PKP_PUBLIC_KEY"];
 const LIT_CAPACITY_CREDIT_TOKEN_ID = process.env["LIT_CAPACITY_CREDIT_TOKEN_ID"];
 const LIT_NETWORK = LitNetwork.DatilTest;
 
-export const conditionalSigning = async () => {
+export const conditionalSigning = async (privateKey?: string) => {
+  const ETHEREUM_PRIVATE_KEY = privateKey || getEnv("ETHEREUM_PRIVATE_KEY");
+
   let litNodeClient: LitNodeClientNodeJs;
   let pkpInfo: {
     tokenId?: string;
@@ -165,7 +166,6 @@ export const conditionalSigning = async () => {
       },
     });
     console.log("✅ Lit Action executed successfully");
-    console.log(litActionSignatures);
 
     return litActionSignatures;
   } catch (error) {

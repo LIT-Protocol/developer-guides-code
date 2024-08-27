@@ -68,8 +68,7 @@ describe("conditionalSigning", () => {
 
   it("Should fail with an unfunded account", async () => {
     const wallet = ethers.Wallet.createRandom();
-    process.env["ETHEREUM_PRIVATE_KEY"] = wallet.privateKey;
-    const signedTx = await conditionalSigning();
+    const signedTx = await conditionalSigning(wallet.privateKey);
     expect(signedTx).to.be.jsonSchema(conditionalSigningResponseSchemaNotFunded);
   }).timeout(100_000);
 });
