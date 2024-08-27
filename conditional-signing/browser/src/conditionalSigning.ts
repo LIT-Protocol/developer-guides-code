@@ -2,11 +2,10 @@
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import { LitNetwork } from "@lit-protocol/constants";
 import {
-  createSiweMessageWithRecaps,
+  createSiweMessage,
   generateAuthSig,
   LitAbility,
   LitActionResource,
-  LitPKPResource,
 } from "@lit-protocol/auth-helpers";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
 import * as ethers from "ethers";
@@ -14,8 +13,8 @@ import * as ethers from "ethers";
 import { litActionCode } from "./litAction";
 import { getEnv } from "./utils";
 
-const LIT_PKP_PUBLIC_KEY = getEnv("VITE_LIT_PKP_PUBLIC_KEY");
-const LIT_CAPACITY_CREDIT_TOKEN_ID = getEnv("VITE_LIT_CAPACITY_CREDIT_TOKEN_ID");
+const LIT_PKP_PUBLIC_KEY = import.meta.env["VITE_LIT_PKP_PUBLIC_KEY"];
+const LIT_CAPACITY_CREDIT_TOKEN_ID = import.meta.env["VITE_LIT_CAPACITY_CREDIT_TOKEN_ID"];
 const CHAIN_TO_CHECK_CONDITION_ON = getEnv("VITE_CHAIN_TO_CHECK_CONDITION_ON");
 const LIT_NETWORK = LitNetwork.DatilTest;
 
@@ -34,7 +33,6 @@ export const conditionalSigning = async() => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     await provider.send("eth_requestAccounts", []);
     const ethersSigner = provider.getSigner();
-    console.log("ethersSigner:", ethersSigner);
     console.log("Connected account:", await ethersSigner.getAddress());
   
     console.log("🔄 Connecting to the Lit network...");
@@ -102,10 +100,6 @@ export const conditionalSigning = async() => {
         expiration: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(), // 24 hours
         resourceAbilityRequests: [
           {
-            resource: new LitPKPResource("*"),
-            ability: LitAbility.PKPSigning,
-          },
-          {
             resource: new LitActionResource("*"),
             ability: LitAbility.LitActionExecution,
           },
@@ -115,7 +109,7 @@ export const conditionalSigning = async() => {
           expiration,
           uri,
         }) => {
-          const toSign = await createSiweMessageWithRecaps({
+          const toSign = await createSiweMessage({
             uri: uri!,
             expiration: expiration!, // 24 hours
             resources: resourceAbilityRequests!,
@@ -147,16 +141,12 @@ export const conditionalSigning = async() => {
           },
         ],
         authSig: await (async () => {
-          const toSign = await createSiweMessageWithRecaps({
+          const toSign = await createSiweMessage({
             uri: "http://localhost",
             expiration: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(), // 24 hours
             walletAddress: await ethersSigner.getAddress(),
             nonce: await litNodeClient.getLatestBlockhash(),
             resources: [
-              {
-                resource: new LitPKPResource("*"),
-                ability: LitAbility.PKPSigning,
-              },
               {
                 resource: new LitActionResource("*"),
                 ability: LitAbility.LitActionExecution,
@@ -175,7 +165,6 @@ export const conditionalSigning = async() => {
       },
     });
     console.log("✅ Lit Action executed successfully");
-    console.log(litActionSignatures);
 
     return litActionSignatures;
   } catch (error) {

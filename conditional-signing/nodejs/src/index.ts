@@ -1,11 +1,10 @@
 import { LitNodeClientNodeJs } from "@lit-protocol/lit-node-client-nodejs";
 import { LitNetwork, LIT_RPC } from "@lit-protocol/constants";
 import {
-  createSiweMessageWithRecaps,
+  createSiweMessage,
   generateAuthSig,
   LitAbility,
   LitActionResource,
-  LitPKPResource,
 } from "@lit-protocol/auth-helpers";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
 import * as ethers from "ethers";
@@ -14,9 +13,9 @@ import { litActionCode } from "./litAction";
 import { getEnv } from "./utils";
 
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
-const LIT_PKP_PUBLIC_KEY = getEnv("LIT_PKP_PUBLIC_KEY");
-const LIT_CAPACITY_CREDIT_TOKEN_ID = getEnv("LIT_CAPACITY_CREDIT_TOKEN_ID");
 const CHAIN_TO_CHECK_CONDITION_ON = getEnv("CHAIN_TO_CHECK_CONDITION_ON");
+const LIT_PKP_PUBLIC_KEY = process.env["LIT_PKP_PUBLIC_KEY"];
+const LIT_CAPACITY_CREDIT_TOKEN_ID = process.env["LIT_CAPACITY_CREDIT_TOKEN_ID"];
 const LIT_NETWORK = LitNetwork.DatilTest;
 
 export const conditionalSigning = async () => {
@@ -28,7 +27,6 @@ export const conditionalSigning = async () => {
   } = {
     publicKey: LIT_PKP_PUBLIC_KEY,
   };
-
 
   try {
     const ethersWallet = new ethers.Wallet(
@@ -102,10 +100,6 @@ export const conditionalSigning = async () => {
         expiration: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(), // 24 hours
         resourceAbilityRequests: [
           {
-            resource: new LitPKPResource("*"),
-            ability: LitAbility.PKPSigning,
-          },
-          {
             resource: new LitActionResource("*"),
             ability: LitAbility.LitActionExecution,
           },
@@ -115,7 +109,7 @@ export const conditionalSigning = async () => {
           expiration,
           uri,
         }) => {
-          const toSign = await createSiweMessageWithRecaps({
+          const toSign = await createSiweMessage({
             uri: uri!,
             expiration: expiration!, // 24 hours
             resources: resourceAbilityRequests!,
@@ -147,16 +141,12 @@ export const conditionalSigning = async () => {
           },
         ],
         authSig: await (async () => {
-          const toSign = await createSiweMessageWithRecaps({
+          const toSign = await createSiweMessage({
             uri: "http://localhost",
             expiration: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(), // 24 hours
             walletAddress: await ethersWallet.getAddress(),
             nonce: await litNodeClient.getLatestBlockhash(),
             resources: [
-              {
-                resource: new LitPKPResource("*"),
-                ability: LitAbility.PKPSigning,
-              },
               {
                 resource: new LitActionResource("*"),
                 ability: LitAbility.LitActionExecution,

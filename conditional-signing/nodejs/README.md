@@ -62,34 +62,4 @@ In this directory, `conditional-signing/nodejs`, run `yarn test` to execute the 
    ✅ Minted new Capacity Credit with ID: 2888
    ```
    This CapacityCredit token ID will be used to create an AuthSig to pay for usage of the Lit network, specificied in the `capabilityAuthSig` field when generating session signatures.
-6. Finally, a request to the Lit network will be used to execute the Lit Action. If the Ethereum address derived from your provided private key has a balance equal to or greater than 1 Wei on Ethereum Mainnet, you should see in the console something similar to:
-   ```json
-   litActionSignatures:
-   {
-    "claims": {},
-    "signatures": {
-      "sig": {
-        "r": "3a71f3a020ca8557bc1ec157f826561c282585eb447035626ee4059531083ce8",
-        "s": "02be0bf088da8ee1dc4de06b6d9f9c399b578f19f90b574875e9ad9727100edb",
-        "recid": 1,
-        "signature": "0x3a71f3a020ca8557bc1ec157f826561c282585eb447035626ee4059531083ce802be0bf088da8ee1dc4de06b6d9f9c399b578f19f90b574875e9ad9727100edb1c",
-        "publicKey": "041E7A220A697F47491525798337BFAAC6073C6094FDDE9187D749D28D947F59FE73FBAE024FC0B87D2A61068EA8087E94ECC843820752295307537F9D06432876",
-        "dataSigned": "7D87C5EA75F7378BB701E404C50639161AF3EFF66293E9F375B5F17EB50476F4"
-      }
-    },
-    "response": null,
-    "logs": ""
-  }
-   ```
-   If the address does not have 1 or more Wei, you should see an empty signature with the custom error response set within the Lit Action:
-   ```json
-   litActionSignatures:
-   {
-    "success": true,
-    "signedData": {},
-    "decryptedData": {},
-    "claimData": {},
-    "response": "address does not have 1 or more Wei on ethereum",
-    "logs": null
-  }
-   ```
+6. Finally, a request to the Lit network will be used to execute the Lit Action. If the Ethereum address derived from your provided private key has a balance equal to or greater than 1 Wei on your specified chain, you should either see the signature in the console or a response in the console notifying you that the address does not have 1 or more Wei on the specified chain.

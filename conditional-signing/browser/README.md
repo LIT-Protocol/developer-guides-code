@@ -62,32 +62,4 @@ After clicking the button a couple things will happen:
    ```
    ✅ Minted new Capacity Credit with ID: 2888
    ```
-6. Finally, if the Ethereum address you signed the SIWE message with has a balance equal to or greater than 1 Wei on Ethereum Mainnet, you should see in the JavaScript console something similar to:
-   ```json
-   litActionSignatures:
-   {
-     "claims": {},
-     "signatures": {
-       "sig": {
-         "r": "b276fc11cbb133eeb25e0d5ff5c759514cfb21f15d0248cdfafc0440fa148d2a",
-         "s": "006e3b9ece94f8531b5baa4b428a8c6155335e61a5639980d20c9d7477f6746f",
-         "recid": 1,
-         "signature": "0xb276fc11cbb133eeb25e0d5ff5c759514cfb21f15d0248cdfafc0440fa148d2a006e3b9ece94f8531b5baa4b428a8c6155335e61a5639980d20c9d7477f6746f1c",
-         "publicKey": "041E7A220A697F47491525798337BFAAC6073C6094FDDE9187D749D28D947F59FE73FBAE024FC0B87D2A61068EA8087E94ECC843820752295307537F9D06432876",
-         "dataSigned": "7D87C5EA75F7378BB701E404C50639161AF3EFF66293E9F375B5F17EB50476F4"
-       }
-     },
-     "logs": ""
-   }
-   ```
-   If the address does not have 1 or more Wei, you should see an empty signature with the custom error response set within the Lit Action:
-   ```json
-   litActionSignatures:
-   {
-     "success": true,
-     "signedData": {},
-     "decryptedData": {},
-     "claimData": {},
-     "response": "address does not have 1 or more Wei on ethereum"
-   }
-   ```
+6. Finally, a request to the Lit network will be used to execute the Lit Action. If the Ethereum address derived from your provided private key has a balance equal to or greater than 1 Wei on your specified chain, you should either see the signature in the console or a response in the console notifying you that the address does not have 1 or more Wei on the specified chain.

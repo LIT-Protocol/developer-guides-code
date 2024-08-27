@@ -12,7 +12,7 @@
   "dependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
-    "@lit-protocol/lit-node-client": "^6.4.4",
+    "@lit-protocol/lit-node-client": "^6.4.10",
     "@simplewebauthn/browser": "^10.0.0",
     "@vitejs/plugin-react-swc": "^3.7.0",
     "react": "^18.3.1",

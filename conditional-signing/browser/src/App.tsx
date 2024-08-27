@@ -1,4 +1,4 @@
-import { conditionalSigning } from "./connect";
+import { conditionalSigning } from "./conditionalSigning";
 
 function App() {
 

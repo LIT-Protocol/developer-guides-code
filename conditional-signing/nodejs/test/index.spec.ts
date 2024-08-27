@@ -1,5 +1,6 @@
 import { expect, use } from "chai";
 import chaiJsonSchema from "chai-json-schema";
+import { ethers } from "ethers";
 
 import { conditionalSigning } from "../src/index";
 
@@ -60,13 +61,15 @@ describe("conditionalSigning", () => {
     ],
   };
 
-  it("Attempting to perform conditional signing...", async () => {
+  it("Should succeed with a funded account", async () => {
     const signedTx = await conditionalSigning();
-    expect(signedTx).to.be.jsonSchema({
-      anyOf: [
-        conditionalSigningResponseSchemaFunded,
-        conditionalSigningResponseSchemaNotFunded,
-      ],
-    });
+    expect(signedTx).to.be.jsonSchema(conditionalSigningResponseSchemaFunded);
+  }).timeout(100_000);
+
+  it("Should fail with an unfunded account", async () => {
+    const wallet = ethers.Wallet.createRandom();
+    process.env["ETHEREUM_PRIVATE_KEY"] = wallet.privateKey;
+    const signedTx = await conditionalSigning();
+    expect(signedTx).to.be.jsonSchema(conditionalSigningResponseSchemaNotFunded);
   }).timeout(100_000);
 });
