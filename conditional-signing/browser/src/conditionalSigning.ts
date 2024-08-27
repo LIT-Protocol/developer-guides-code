@@ -19,7 +19,6 @@ const CHAIN_TO_CHECK_CONDITION_ON = getEnv("VITE_CHAIN_TO_CHECK_CONDITION_ON");
 const LIT_NETWORK = LitNetwork.DatilTest;
 
 export const conditionalSigning = async() => {
-  console.log("Clicked");
   let litNodeClient: LitNodeClient;
   let pkpInfo: {
     tokenId?: string;
@@ -51,6 +50,7 @@ export const conditionalSigning = async() => {
     });
     await litContracts.connect();
     console.log("✅ Connected LitContracts client to network");
+
     if (LIT_PKP_PUBLIC_KEY === undefined || LIT_PKP_PUBLIC_KEY === "") {
       console.log("🔄 PKP wasn't provided, minting a new one...");
       pkpInfo = (await litContracts.pkpNftContractUtils.write.mint()).pkp;

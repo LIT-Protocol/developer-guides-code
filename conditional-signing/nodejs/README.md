@@ -57,7 +57,7 @@ In this directory, `conditional-signing/nodejs`, run `yarn test` to execute the 
    ```
 5. Next, depending on whether or not you specified a CapacityCredit Token ID in the `.env` file:
    - If you did, you'll be on the next step
-   - If you didn't, your provided private key will be used to sign a transaction to mint a new CapacityCredit on the Lit Chronicle Yellowstone rollup. Agin, this transaction will cost `tstLPX`. Your CapacityCredit token ID will be `console.log`ed, you can search the console output for: `✅ CapacityCredit successfully minted` and you should see something similar to:
+   - If you didn't, your provided private key will be used to sign a transaction to mint a new CapacityCredit on the Lit Chronicle Yellowstone rollup. Again, this transaction will cost `tstLPX`. Your CapacityCredit token ID will be `console.log`ed, you can search the console output for: `✅ CapacityCredit successfully minted` and you should see something similar to:
    ```
    ✅ Minted new Capacity Credit with ID: 2888
    ```
