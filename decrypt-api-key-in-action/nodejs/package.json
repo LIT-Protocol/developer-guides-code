@@ -1,0 +1,29 @@
+{
+  "name": "decryption-in-lit-action",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "npx @dotenvx/dotenvx run -- mocha test/**/*.spec.ts"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.3.16",
+    "@types/chai-json-schema": "^1.4.10",
+    "@types/mocha": "^10.0.6",
+    "chai": "^5.1.1",
+    "chai-json-schema": "^1.5.1",
+    "mocha": "^10.4.0",
+    "tsc": "^2.0.4",
+    "tsx": "^4.15.3",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "@dotenvx/dotenvx": "^0.44.1",
+    "@lit-protocol/auth-helpers": "^6.4.10",
+    "@lit-protocol/constants": "^6.4.10",
+    "@lit-protocol/contracts-sdk": "^6.4.10",
+    "@lit-protocol/lit-node-client": "^6.4.10",
+    "ipfs-helpers": "^0.0.5",
+    "typestub-ipfs-only-hash": "^4.0.0"
+  }
+}
