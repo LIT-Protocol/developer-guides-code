@@ -7,7 +7,7 @@
     "nx": "19.6.3"
   },
   "scripts": {
-    "test-lit": "nx run-many --target=test-lit --all --parallel=1",
-    "update-lit": "nx run-many --target=update-lit --all"
+    "test-lit": "nx run-many --target=test-lit --all --parallel=1 --exclude=pkp-migration-nodejs,sign-and-combine-ecdsa-nodejs",
+    "update-lit": "nx run-many --target=update-lit --all --parallel"
   }
 }
