@@ -3,12 +3,12 @@ name: Test Lit Examples
 on:
 #   schedule:
 #     - cron: '0 0,12 * * *'
-  push:
-    branches:
-      - ci
   pull_request:
     branches:
       - master
+  push:
+    branches:
+      - ci
   workflow_dispatch:
 
 jobs:
