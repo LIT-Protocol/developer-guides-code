@@ -1,9 +1,9 @@
 import { expect } from "chai";
 import ethers from "ethers";
 
-import { registerPayer } from "../registerPayer";
-import { addUsers } from "../addUsers";
-import { runSimpleLitAction } from "../runSimpleLitAction";
+import { registerPayer } from "../src/registerPayer";
+import { addUsers } from "../src/addUsers";
+import { runSimpleLitAction } from "../src/runSimpleLitAction";
 
 describe("Run simple Lit Action to test user delegation", () => {
   const newEthersSigner = ethers.Wallet.createRandom();

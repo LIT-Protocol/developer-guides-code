@@ -5,7 +5,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "test": "npx @dotenvx/dotenvx run -- mocha src/test/**/*.spec.ts",
+    "test": "npx @dotenvx/dotenvx run -- mocha test/**/*.spec.ts",
     "test:credit:mint": "npx @dotenvx/dotenvx run -- mocha test/**/mintCapacityCredit.spec.ts",
     "test:credit:delegate": "npx @dotenvx/dotenvx run -- mocha test/**/delegateCapacityCredit.spec.ts",
     "test:credit:sessionSigs": "npx @dotenvx/dotenvx run -- mocha test/**/getSessionSigsWithCapacityCredit.spec.ts"
