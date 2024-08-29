@@ -1,3 +1,5 @@
+#!/bin/bash
+
 CALLER_DIR=$(pwd)
 
 if [ -f "$CALLER_DIR/package.json" ]; then
@@ -11,4 +13,3 @@ if [ -f "$CALLER_DIR/package.json" ]; then
 else
   echo "No package.json found in $CALLER_DIR."
 fi
-done
