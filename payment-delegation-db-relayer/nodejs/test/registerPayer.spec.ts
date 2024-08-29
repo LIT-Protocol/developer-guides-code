@@ -1,7 +1,7 @@
 import { expect, use } from "chai";
 import chaiJsonSchema from "chai-json-schema";
 
-import { registerPayer } from "../registerPayer";
+import { registerPayer } from "../src/registerPayer";
 
 use(chaiJsonSchema);
 

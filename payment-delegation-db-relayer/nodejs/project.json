@@ -1,0 +1,18 @@
+{
+    "name": "payment-delegation-db-relayer-nodejs",
+    "root": "payment-delegation-db-relayer/nodejs",
+    "targets": {
+        "test-lit": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "cd payment-delegation-db-relayer/nodejs && yarn && yarn test"
+            }
+        },
+        "update-lit": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "cd payment-delegation-db-relayer/nodejs && LATEST_VERSION=$(npm show @lit-protocol/lit-node-client version) && npm pkg set dependencies.@lit-protocol/lit-node-client=^$LATEST_VERSION"
+            }
+        }
+    }
+}

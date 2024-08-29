@@ -6,10 +6,10 @@ import { AuthSig } from "@lit-protocol/auth-helpers";
 import { LitNetwork } from "@lit-protocol/constants";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
 
-import { delegateCapacityCredit } from "../delegateCapacityCredit";
-import { mintCapacityCredit } from "../mintCapacityCredit";
-import { getEnv } from "../utils";
-import { getSessionSigsWithCapacityCreditAuthSig } from "../getSessionSigsWithCapacityCreditAuthSig";
+import { delegateCapacityCredit } from "../src/delegateCapacityCredit";
+import { mintCapacityCredit } from "../src/mintCapacityCredit";
+import { getEnv } from "../src/utils";
+import { getSessionSigsWithCapacityCreditAuthSig } from "../src/getSessionSigsWithCapacityCreditAuthSig";
 
 use(chaiJsonSchema);
 

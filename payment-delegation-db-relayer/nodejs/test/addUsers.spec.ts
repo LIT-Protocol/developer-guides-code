@@ -1,6 +1,6 @@
 import { expect } from "chai";
 
-import { addUsers } from "../addUsers";
+import { addUsers } from "../src/addUsers";
 
 describe("addUsers", () => {
   const users = [

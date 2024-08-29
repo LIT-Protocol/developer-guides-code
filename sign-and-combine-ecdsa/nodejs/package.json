@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "test": "npx @dotenvx/dotenvx run -- mocha src/test/**/*.spec.ts"
+    "test": "npx @dotenvx/dotenvx run -- mocha test/**/*.spec.ts"
   },
   "devDependencies": {
     "@types/chai": "^4.3.16",

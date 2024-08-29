@@ -5,7 +5,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "test": "npx @dotenvx/dotenvx run -- mocha src/test/**/*.spec.ts",
+    "test": "npx @dotenvx/dotenvx run -- mocha test/**/*.spec.ts",
     "test:addUsers": "npx @dotenvx/dotenvx run -- mocha test/**/addUsers.spec.ts",
     "test:registerPayer": "npx @dotenvx/dotenvx run -- mocha test/**/registerPayer.spec.ts",
     "test:runSimpleLitAction": "npx @dotenvx/dotenvx run -- mocha test/**/runSimpleLitAction.spec.ts"

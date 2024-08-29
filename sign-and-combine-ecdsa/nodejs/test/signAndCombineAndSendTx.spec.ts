@@ -1,7 +1,7 @@
 import { expect, use } from "chai";
 import chaiJsonSchema from "chai-json-schema";
 
-import { signAndCombineAndSendTx } from "..";
+import { signAndCombineAndSendTx } from "../src";
 
 use(chaiJsonSchema);
 

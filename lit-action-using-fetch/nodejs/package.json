@@ -5,7 +5,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "test": "npx @dotenvx/dotenvx run -- mocha src/test/**/*.spec.ts"
+    "test": "npx @dotenvx/dotenvx run -- mocha test/**/*.spec.ts"
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^0.44.1",
