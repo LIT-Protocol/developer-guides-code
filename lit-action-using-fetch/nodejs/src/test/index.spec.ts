@@ -3,8 +3,8 @@ import chaiJsonSchema from "chai-json-schema";
 import { LIT_RPC } from "@lit-protocol/constants";
 import ethers from "ethers";
 
-import { getEnv, mintPkp } from "../src/utils";
-import { runExample } from "../src";
+import { getEnv, mintPkp } from "../utils";
+import { runExample } from "..";
 
 use(chaiJsonSchema);
 
