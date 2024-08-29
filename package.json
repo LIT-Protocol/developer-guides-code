@@ -31,6 +31,7 @@
     "wrapped-keys/nodejs"
   ],
   "scripts": {
+<<<<<<< HEAD
     "install:all": "yarn workspaces focus --all",
     "upgrade:all": "yarn workspaces foreach --all exec yarn up \"@lit-protocol/*@latest\"",
     "upgrade:all:alpha": "yarn workspaces foreach --all exec yarn up \"@lit-protocol/*@alpha\"",
@@ -41,5 +42,9 @@
   "devDependencies": {
     "rimraf": "^6.0.1",
     "nx": "19.6.3"
+=======
+    "test-lit": "nx run-many --target=test-lit --all --parallel=1 --exclude=pkp-migration-nodejs,sign-and-combine-ecdsa-nodejs",
+    "update-lit": "nx run-many --target=update-lit --all --parallel"
+>>>>>>> 27a642f (feat: added and excluded pkp-migration project to nx)
   }
 }
