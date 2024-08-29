@@ -859,67 +859,6 @@
     uint8arrays "^4.0.3"
     util "0.12.5"
 
-"@lit-protocol/lit-auth-client@^6.4.10":
-  version "6.4.10"
-  resolved "https://registry.yarnpkg.com/@lit-protocol/lit-auth-client/-/lit-auth-client-6.4.10.tgz#fe984e07097faec7b0fbd78407b0b805f7ad80be"
-  integrity sha512-lC7ZlG7zOgyuIrvm5FqL15++v8CBrn2c+LO4zQSRO10tiec0CA2s4c9fRegtZGakjr+/meETldg/eTmbArlasg==
-  dependencies:
-    "@cosmjs/amino" "0.30.1"
-    "@cosmjs/crypto" "0.30.1"
-    "@cosmjs/encoding" "0.30.1"
-    "@ethersproject/abi" "5.7.0"
-    "@ethersproject/abstract-provider" "5.7.0"
-    "@ethersproject/bytes" "5.7.0"
-    "@ethersproject/contracts" "5.7.0"
-    "@ethersproject/providers" "5.7.2"
-    "@ethersproject/strings" "5.7.0"
-    "@ethersproject/transactions" "5.7.0"
-    "@ethersproject/wallet" "5.7.0"
-    "@lit-protocol/access-control-conditions" "6.4.10"
-    "@lit-protocol/accs-schemas" "^0.0.11"
-    "@lit-protocol/auth-browser" "6.4.10"
-    "@lit-protocol/auth-helpers" "6.4.10"
-    "@lit-protocol/bls-sdk" "6.4.10"
-    "@lit-protocol/constants" "6.4.10"
-    "@lit-protocol/contracts" "^0.0.63"
-    "@lit-protocol/contracts-sdk" "6.4.10"
-    "@lit-protocol/core" "6.4.10"
-    "@lit-protocol/crypto" "6.4.10"
-    "@lit-protocol/ecdsa-sdk" "6.4.10"
-    "@lit-protocol/encryption" "6.4.10"
-    "@lit-protocol/lit-node-client" "6.4.10"
-    "@lit-protocol/lit-node-client-nodejs" "6.4.10"
-    "@lit-protocol/logger" "6.4.10"
-    "@lit-protocol/misc" "6.4.10"
-    "@lit-protocol/misc-browser" "6.4.10"
-    "@lit-protocol/nacl" "6.4.10"
-    "@lit-protocol/sev-snp-utils-sdk" "6.4.10"
-    "@lit-protocol/types" "6.4.10"
-    "@lit-protocol/uint8arrays" "6.4.10"
-    "@walletconnect/ethereum-provider" "2.9.2"
-    "@walletconnect/modal" "2.6.1"
-    ajv "^8.12.0"
-    base64url "^3.0.1"
-    bitcoinjs-lib "^6.1.0"
-    bs58 "^5.0.0"
-    cbor-web "^9.0.1"
-    cross-fetch "3.1.4"
-    date-and-time "^2.4.1"
-    ethers "^5.7.1"
-    jose "^4.14.4"
-    jszip "^3.10.1"
-    multiformats "^9.7.1"
-    pako "1.0.11"
-    process "0.11.10"
-    punycode "2.3.1"
-    siwe "^2.0.5"
-    siwe-recap "0.0.2-alpha.0"
-    tslib "^2.3.0"
-    tweetnacl "^1.0.3"
-    tweetnacl-util "^0.15.1"
-    uint8arrays "^4.0.3"
-    util "0.12.5"
-
 "@lit-protocol/lit-node-client-nodejs@6.4.10":
   version "6.4.10"
   resolved "https://registry.yarnpkg.com/@lit-protocol/lit-node-client-nodejs/-/lit-node-client-nodejs-6.4.10.tgz#aad22e233fd22fea892b9c92b302f4120db7b83d"
@@ -969,7 +908,7 @@
     uint8arrays "^4.0.3"
     util "0.12.5"
 
-"@lit-protocol/lit-node-client@6.4.10", "@lit-protocol/lit-node-client@^6.4.10":
+"@lit-protocol/lit-node-client@^6.4.10":
   version "6.4.10"
   resolved "https://registry.yarnpkg.com/@lit-protocol/lit-node-client/-/lit-node-client-6.4.10.tgz#36b854b7161baa4e400bdf807adfcddd8b914ec3"
   integrity sha512-VN9qbSwiRTqtwXyAn8SQKSpKp/tNV6xab4pNAEK6a+QR0yCnqImFXU32lkVUg+hViDSrIFP2OASlo57OTED8zw==
@@ -1917,11 +1856,6 @@ base64-js@^1.3.0, base64-js@^1.3.1:
   resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.5.1.tgz#1b1b440160a5bf7ad40b650f095963481903930a"
   integrity sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==
 
-base64url@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/base64url/-/base64url-3.0.1.tgz#6399d572e2bc3f90a9a8b22d5dbb0a32d33f788d"
-  integrity sha512-ir1UPr3dkwexU7FdV8qBBbNDRUhMmIekYMFZfi+C/sLNnRESKPl23nB9b2pltqfOQNnGzsDdId90AEtG5tCx4A==
-
 bech32@1.1.4, bech32@^1.1.4:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/bech32/-/bech32-1.1.4.tgz#e38c9f37bf179b8eb16ae3a772b40c356d4832e9"
@@ -2045,11 +1979,6 @@ canonicalize@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/canonicalize/-/canonicalize-2.0.0.tgz#32be2cef4446d67fd5348027a384cae28f17226a"
   integrity sha512-ulDEYPv7asdKvqahuAY35c1selLdzDwHqugK92hfkzvlDCwXRRelDkR+Er33md/PtnpqHemgkuDPanZ4fiYZ8w==
-
-cbor-web@^9.0.1:
-  version "9.0.2"
-  resolved "https://registry.yarnpkg.com/cbor-web/-/cbor-web-9.0.2.tgz#1915f1ef1a72ea905db07480f71cf12ff601c661"
-  integrity sha512-N6gU2GsJS8RR5gy1d9wQcSPgn9FGJFY7KNvdDRlwHfz6kCxrQr2TDnrjXHmr6TFSl6Fd0FC4zRnityEldjRGvQ==
 
 chai-json-schema@^1.5.1:
   version "1.5.1"
