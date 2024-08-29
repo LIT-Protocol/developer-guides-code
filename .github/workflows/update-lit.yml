@@ -1,0 +1,45 @@
+name: Package Migration and Create PR
+
+on:
+  pull_request:
+    branches:
+      - master
+    types: [opened]
+  workflow_dispatch:
+
+jobs:
+  migrate-package:
+    if: ${{ github.actor == 'dependabot[bot]' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Run package migration
+        run: yarn update-lit
+
+      - name: Check for changes
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "GitHub Actions Bot"
+          git checkout -b package-migration-branch
+          git add .
+          git commit -m "Automated package migration" || echo "No changes to commit"
+
+      - name: Push changes and create PR
+        if: success()
+        uses: peter-evans/create-pull-request@v5
+        with:
+          branch: package-migration-branch
+          base: main
+          title: "Automated Package Migration"
+          body: "This PR was created automatically after running the package migration script."
