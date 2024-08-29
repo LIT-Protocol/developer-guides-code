@@ -11,7 +11,7 @@
         "update-lit": {
             "executor": "nx:run-commands",
             "options": {
-                "command": "cd paying-for-lit/nodejs && LATEST_VERSION=$(npm show @lit-protocol/lit-node-client version) && npm pkg set dependencies.@lit-protocol/lit-node-client=^$LATEST_VERSION"
+                "command": "chmod +x ../../scripts/update-lit.sh && ../../scripts/update-lit.sh"
             }
         }
     }
