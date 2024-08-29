@@ -1,7 +1,7 @@
 // @ts-nocheck
 
 const _litActionCode = () => {
-  Lit.setResponse({ response: "true" });
+  Lit.Actions.claimKey({ keyId: userId });
 };
 
 export const litActionCode = `(${_litActionCode.toString()})();`;

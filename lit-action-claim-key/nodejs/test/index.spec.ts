@@ -1,36 +1,34 @@
 import { expect, use } from "chai";
 import chaiJsonSchema from "chai-json-schema";
 
-import { getEnv } from "../src/utils";
+import { runExample } from "../src";
 
 use(chaiJsonSchema);
 
-const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
-
 describe("Testing specific functionality", () => {
-  before(async function () {
-    this.timeout(120_000);
-  });
-
   it("should test for a specific thing", async () => {
-    const exampleResponseSchema = {
+    const pkpInfoSchema = {
+      title: "Token Object Schema",
       type: "object",
-      required: ["these", "are", "requiredProperties"],
+      required: ["tokenId", "publicKey", "ethAddress"],
       properties: {
-        these: {
+        tokenId: {
           type: "string",
+          pattern: "^[0-9]+$",
         },
-        are: {
+        publicKey: {
           type: "string",
-          pattern: "^[a-fA-F0-9]{64}$",
+          pattern: "^0x[a-fA-F0-9]{130}$",
         },
-        requiredProperties: {
+        ethAddress: {
           type: "string",
-          enum: ["foobar"],
+          pattern: "^0x[a-fA-F0-9]{40}$",
         },
       },
+      additionalProperties: false,
     };
 
-    expect({ foo: "bar" }).to.be.jsonSchema(exampleResponseSchema);
+    const pkpInfo = await runExample();
+    expect(pkpInfo).to.be.jsonSchema(pkpInfoSchema);
   }).timeout(120_000);
 });
