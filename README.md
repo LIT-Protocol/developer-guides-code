@@ -4,6 +4,15 @@ These examples are designed to help you get started building with Lit!
 
 Each example has instructions within its own README file!
 
+# Test
+
+Test the examples
+
+```
+yarn
+yarn test-lit
+```
+
 # Tools
 
 Reports the versions of dependencies starting with `@lit-protocol`
