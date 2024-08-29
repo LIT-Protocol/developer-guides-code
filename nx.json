@@ -5,16 +5,10 @@
       "runner": "nx/tasks-runners/default",
       "options": {
         "cacheableOperations": [
-          "test-lit",
           "update-lit"
         ]
       }
     }
   },
-  "defaultBase": "master",
-  "projects": {
-    "lit-action-using-fetch-node": {
-      "tags": []
-    }
-  }
+  "defaultBase": "master"
 }
