@@ -1,124 +1,34 @@
-import { LitNodeClient, encryptString } from "@lit-protocol/lit-node-client";
-import { LitNetwork, LIT_RPC } from "@lit-protocol/constants";
-import {
-  createSiweMessage,
-  LitAbility,
-  LitAccessControlConditionResource,
-  LitActionResource,
-  generateAuthSig,
-} from "@lit-protocol/auth-helpers";
-import { AccessControlConditions } from "@lit-protocol/types";
-import { ethers } from "ethers";
+import { accessControlConditions, LitServer } from "./lit";
+import { SessionSigsMap } from "@lit-protocol/types";
+import { litActionCode } from "./litAction";
+import * as ethers from "ethers";
 
-import { litActionCode } from "./litAction.js";
-import { getEnv } from "./utils.js";
-
-const LIT_NETWORK = LitNetwork.DatilDev;
-const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
-
-export const decryptApiKey = async (url: string, key: string) => {
-  let litNodeClient: LitNodeClient;
-
+(async () => {
   try {
-    const ethersWallet = new ethers.Wallet(
-      ETHEREUM_PRIVATE_KEY,
-      new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE)
-    );
+    const lit = new LitServer();
+    const userAccount = new ethers.Wallet("3faafe8744f6f69d571001d8b52149448020a95752798191fe2adc28988803d8")
+    const das = await lit.createDelegateAuthSig(userAccount.address);
+    const sessionSigs = await lit.generateSessionSigs(userAccount, das);
 
-    console.log("🔄 Connecting to the Lit network...");
-    litNodeClient = new LitNodeClient({
-      litNetwork: LIT_NETWORK,
-      debug: false
-    });
-    await litNodeClient.connect();
-    console.log("✅ Connected to the Lit network");
-
-    const accessControlConditions: AccessControlConditions = [
-      {
-        contractAddress: "",
-        standardContractType: "",
-        chain: "ethereum",
-        method: "eth_getBalance",
-        parameters: [":userAddress", "latest"],
-        returnValueTest: {
-          comparator: ">=",
-          value: "0",
-        },
-      },
-    ];
-
-    console.log("🔐 Encrypting the API key...");
-    const { ciphertext, dataToEncryptHash } = await encryptString(
-      {
-        accessControlConditions,
-        dataToEncrypt: key,
-      },
-      litNodeClient
-    );
-    console.log("✅ Encrypted the API key");
-    console.log("ℹ️  The base64-encoded ciphertext:", ciphertext);
-    console.log("ℹ️  The hash of the data that was encrypted:", dataToEncryptHash);
-
-    console.log("🔄 Generating the Resource String...");
-    const accsResourceString =
-      await LitAccessControlConditionResource.generateResourceString(
-        accessControlConditions as any,
-        dataToEncryptHash
-      );
-    console.log("✅ Generated the Resource String");
-
-    console.log("🔄 Getting the Session Signatures...");
-    const sessionSigs = await litNodeClient.getSessionSigs({
-      chain: "ethereum",
-      expiration: new Date(Date.now() + 1000 * 60 * 10).toISOString(), // 10 minutes
-      resourceAbilityRequests: [
-        {
-          resource: new LitAccessControlConditionResource(accsResourceString),
-          ability: LitAbility.AccessControlConditionDecryption,
-        },
-        {
-          resource: new LitActionResource(`*`), // QmQ1CnVvYR5to5r3H6uX4on2QHL4NybrE9UozFBN57t79v
-          ability: LitAbility.LitActionExecution,
-        }
-      ],
-      authNeededCallback: async ({
-        uri,
-        expiration,
-        resourceAbilityRequests,
-      }) => {
-        const toSign = await createSiweMessage({
-          uri,
-          expiration,
-          resources: resourceAbilityRequests,
-          walletAddress: await ethersWallet.getAddress(),
-          nonce: await litNodeClient.getLatestBlockhash(),
-          litNodeClient,
-        });
-
-        return await generateAuthSig({
-          signer: ethersWallet,
-          toSign,
-        });
-      },
-    });
-    console.log("✅ Generated the Session Signatures");
-
-    console.log("🔄 Executing the Lit Action...");
-    const litActionSignatures= await litNodeClient.executeJs({
-      sessionSigs,
+    console.log("HAHAHAHAHAHA -1 ")
+    const litActionResult = await lit.client.executeJs({
       code: litActionCode,
+      sessionSigs,
       jsParams: {
-        accessControlConditions,
-        ciphertext,
-        dataToEncryptHash,
+        conditions: accessControlConditions.public,
+        chain: "baseSepolia",
+        nonce: 1,
+        exp: Date.now() + 5 * 60 * 1000,
+        publicKey: '04a68733c38c2c08d1ac9e78b8d00b8edbc6a9f6f5ff6020deb82e3494470f157af788264d18988cc0d2cca468b71b35ecc5df8497f399c70f7779484731de9bb7',
       },
     });
-    console.log("✅ Executed the Lit Action");
+    console.log("HAHAHAHAHAHA - 2")
+    const res = litActionResult.response as string;
+    console.log(res)
 
-    return litActionSignatures;
-  } catch (error) {
-    console.error(error);
-  } finally {
-    litNodeClient!.disconnect();
+    process.exit(0);
+  } catch (e) {
+    console.error(e);
+    process.exit(1);
   }
-};
+})();

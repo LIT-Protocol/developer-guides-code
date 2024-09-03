@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "test": "npx @dotenvx/dotenvx run -- mocha test/**/*.spec.ts"
+    "test": "npx @dotenvx/dotenvx run src/index.ts"
   },
   "devDependencies": {
     "@types/chai": "^4.3.16",
@@ -24,6 +24,7 @@
     "@lit-protocol/contracts-sdk": "^6.4.10",
     "@lit-protocol/lit-node-client": "^6.4.10",
     "ipfs-helpers": "^0.0.5",
+    "ts-node": "^10.9.2",
     "typestub-ipfs-only-hash": "^4.0.0"
   }
 }
