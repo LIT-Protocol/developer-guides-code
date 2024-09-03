@@ -1,42 +1,42 @@
 // @ts-nocheck
 
-
-const _litActionCode = async () =>  {
-  const signature = await Lit.Actions.signAndCombineEcdsa({
-    toSign,
-    publicKey,
-    sigName,
+const _litActionCode = async () => {
+  try {
+  const apiKey = await Lit.Actions.decryptAndCombine({
+    accessControlConditions,
+    ciphertext,
+    dataToEncryptHash,
+    authSig: null,
+    chain: "ethereum",
   });
 
-  const jsonSignature = JSON.parse(signature);
-  jsonSignature.r = "0x" + jsonSignature.r.substring(2);
-  jsonSignature.s = "0x" + jsonSignature.s;
-  const hexSignature = ethers.utils.joinSignature(jsonSignature);
+  const fullUrl = url + apiKey;
 
-  const signedTx = ethers.utils.serializeTransaction(
-    unsignedTransaction,
-    hexSignature
-  );
+  const resp = await fetch(fullUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      jsonrpc: '2.0',
+      id: 1,
+      method: 'eth_blockNumber',
+      params: []
+    })
+  });
 
-  const recoveredAddress = ethers.utils.recoverAddress(toSign, hexSignature);
-  console.log("Recovered Address:", recoveredAddress);
+  let data = await resp.json();
 
-  const response = await Lit.Actions.runOnce(
-    { waitForResponse: true, name: "txnSender" },
-    async () => {
-      try {
-        const rpcUrl = await Lit.Actions.getRpcUrl({ chain });
-        const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
-        const transactionReceipt = await provider.sendTransaction(signedTx);
+  if (data.result) { 
+    data.result = parseInt(data.result, 16);
+  }
 
-        return `Transaction Sent Successfully. Transaction Hash: ${transactionReceipt.hash}`;
-      } catch (error) {
-        return `Error: When sending transaction: ${error.message}`;
-      }
-    }
-  );
+  Lit.Actions.setResponse({ response: JSON.stringify(data) });
 
-  Lit.Actions.setResponse({ response });
+  } catch (e) {
+    Lit.Actions.setResponse({ response: e.message });
+  }
+
 };
 
-const litActionCode = `(${_litActionCode.toString()})();`;
+export const litActionCode = `(${_litActionCode.toString()})();`;
