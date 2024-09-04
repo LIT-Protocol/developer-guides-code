@@ -14,7 +14,7 @@ import { getChainInfo, getEnv } from "./utils";
 import { litActionCode } from "./litAction";
 
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
-const LIT_NETWORK = LitNetwork.DatilTest;
+const LIT_NETWORK = LitNetwork.Datil;
 const LIT_CAPACITY_CREDIT_TOKEN_ID = getEnv("LIT_CAPACITY_CREDIT_TOKEN_ID");
 const LIT_PKP_PUBLIC_KEY = getEnv("LIT_PKP_PUBLIC_KEY");
 const CHAIN_TO_SEND_TX_ON = getEnv("CHAIN_TO_SEND_TX_ON");
@@ -100,7 +100,7 @@ export const signAndCombineAndSendTx = async () => {
 
     console.log("🔄 Initializing connection to the Lit network...");
     litNodeClient = new LitNodeClient({
-      litNetwork: LitNetwork.DatilTest,
+      litNetwork: LIT_NETWORK,
       debug: false,
     });
     await litNodeClient.connect();
