@@ -44,8 +44,6 @@ export const decryptApiKey = async (url: string, key: string) => {
     await litContracts.connect();
     console.log("✅ Connected LitContracts client to network");
 
-    /*
-
     let capacityTokenId = LIT_CAPACITY_CREDIT_TOKEN_ID;
     if (capacityTokenId === "" || capacityTokenId === undefined) {
       console.log("🔄 No Capacity Credit provided, minting a new one...");
@@ -71,8 +69,6 @@ export const decryptApiKey = async (url: string, key: string) => {
         uses: "1",
       });
     console.log("✅ Capacity Delegation Auth Sig created");
-    */
-    
 
     const accessControlConditions: AccessControlConditions = [
       {
@@ -111,7 +107,7 @@ export const decryptApiKey = async (url: string, key: string) => {
     console.log("🔄 Getting the Session Signatures...");
     const sessionSigs = await litNodeClient.getSessionSigs({
       chain: "ethereum",
-      //capabilityAuthSigs: [capacityDelegationAuthSig],
+      capabilityAuthSigs: [capacityDelegationAuthSig],
       expiration: new Date(Date.now() + 1000 * 60 * 10).toISOString(), // 10 minutes
       resourceAbilityRequests: [
         {
