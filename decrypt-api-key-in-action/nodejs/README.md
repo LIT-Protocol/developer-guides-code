@@ -1,23 +1,20 @@
-# `signAndCombineEcdsa` Lit Action Code Example
+# `decryptAndCombine` Lit Action Code Example
 
-This code demonstrates how to use the Lit and Lit Actions SDKs to implement the `signAndCombineEcdsa` method in a Lit Action. This method combines the signature shares of your PKP from each node in a single node within a Lit Action, meaning they remain in [Lit's Trusted Execution Environment (TEE)](https://developer.litprotocol.com/resources/how-it-works#sealed-and-confidential-hardware) and are not exposed to the client.
+This code demonstrates how to use the Lit and Lit Actions SDKs to implement the `decryptAndCombine` method in a Lit Action. This method collects and combines the decryption shares from each of the Lit nodes onto a single Lit node, where the given content is decrypted. In this example, that means the API key remains in [Lit's Trusted Execution Environment (TEE)](https://developer.litprotocol.com/resources/how-it-works#sealed-and-confidential-hardware) and is not exposed to the client.
 
 ## Understanding the Implementation
 
-1. Using an imported Ethereum private key, connect the wallet to the a RPC endpoint of the network you plan to execute the transactions on
-2. Connect an ethers Provider to the Lit RPC endpoint `Chronicle Yellowstone`. This will be used to pay for Lit usage
+1. Using an imported Ethereum private key, connect the wallet to the Lit RPC endpoint `Chronicle Yellowstone`
+2. Connect to the Lit network using the `LitNodeClient` on the `datil-test` network
 3. Connect the `LitContracts` client to the Lit network (`datil-test` in this case)
-4. **If not provided in the .env file**: Mint a PKP using the `pkpNftContractUtils.write.mint` method from `LitContracts`
-5. If the PKP will not have enough funds to pay for the transaction, fund the PKP. This amount largely depends on the gas price of the network you are using
-6. Connect to the Lit network using the `LitNodeClient` on the `datil-test` network
-7. Create and serialize an unsigned transaction. This transaction will be signed in the Lit Action code
-8. **If not provided in the .env file**: Mint a [`capacityCreditsNFT`](https://developer.litprotocol.com/sdk/capacity-credits) and define the request limit and expiration date
-9. Create a `capacityDelegationAuthSig`. Any network costs will be undertaken by the `dAppOwnerWallet`
-10. Use the `executeJs` method to execute the Lit Action code. This step also involves generating the session signatures for the PKP, specifying the ability to sign transactions and execute `Lit Actions`.
+4. **If not provided in the .env file**: Mint a [`capacityCreditsNFT`](https://developer.litprotocol.com/sdk/capacity-credits) and define the request limit and expiration date
+5. Define the Access Control Conditions (ACCs) required to decrypt the data, and encrypt the API key using the `encryptString` function
+6. Generate an ACCs resource string. This will be used when we generate session signatures to specify that our current session is permitted to only decrypt the encrypted data we have created
+7. Use the `executeJs` method to execute the Lit Action code. This step also involves generating the session signatures, specifying decryption and Lit Action execution as abilities for our session
 
 ## **NOTE**
 
-The chain on which the transactions for funding the PKP and having the PKP send funds back to the wallet can be easily changed by modifying the `CHAIN_TO_SEND_TX_ON` ENV. Please do make sure that the wallet you are using has sufficient funds to pay for the gas fees, transactions, and is supported by Lit. A list of supported chains can be found [here](https://developer.litprotocol.com/resources/supported-chains).
+Running the test in this repository will make an HTTP request to the Base Mainnet, querying the current blocknumber. If you'd like to use a different blockchain, change the URL in the Lit Action file and run the test again.
 
 ---
 
@@ -25,7 +22,7 @@ The chain on which the transactions for funding the PKP and having the PKP send 
 
 ### Install the Dependencies
 
-In this directory, `sign-and-combine-ecdsa/nodejs`, run `yarn` to install the project dependencies.
+In this directory, `decrypt-api-key-in-action/nodejs`, run `yarn` to install the project dependencies.
 
 ### Setting up the `.env` File
 
@@ -40,14 +37,12 @@ Within the `.env` file there are the following ENVs:
 1. `ETHEREUM_PRIVATE_KEY` - **Required**
    - Must have Lit `tstLPX` tokens on the `Chronicle Yellowstone` blockchain
      - [Faucet for Chronicle Yellowstone](https://chronicle-yellowstone-faucet.getlit.dev/)
-   - Will be used to mint the PKP and pay for Lit usage
-2. `CHAIN_TO_SEND_TX_ON` - **Required**
-   - The chain on which the transactions for funding the PKP and having the PKP send funds back to the wallet can be easily changed by modifying the `CHAIN_TO_SEND_TX_ON` ENV.
+   - Will be used to pay for Lit usage
+2. `ALCHEMY_API_KEY` - **Required**
+   - The Alchemy API key that will be encrypted and later decrypted in the Lit Action. Afterwards, it will be used to make an HTTP request to the Base Mainnet blockchain. If you need an Alchemy API key, you can make an account on [their website](https://www.alchemy.com/)
 3. `LIT_CAPACITY_CREDIT_TOKEN_ID` - **Optional**
    - If not provided, a new `capacityCreditsNFT` will be minted and used. This enables the `ETHEREUM_PRIVATE_KEY` to pay for Lit usage
-4. `LIT_PKP_PUBLIC_KEY` - **Optional**
-   - This is the PKP used to sign and send the transaction. If not provided, a new PKP will be minted (`ETHEREUM_PRIVATE_KEY` will be used to pay the minting fee).
 
 ### Running the Test
 
-After the `.env` is configured, there is a NPM script in the `package.json` to run the test in the `test/signAndCombineAndSendTx.spec.ts` file. To run the test, use the `yarn test` command.
+After the `.env` is configured, there is a NPM script in the `package.json` to run the test in the `test/decryptApiKeyInActionTest.spec.ts` file. To run the test, use the `yarn test` command.

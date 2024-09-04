@@ -7,14 +7,16 @@ import {
   LitActionResource,
   generateAuthSig,
 } from "@lit-protocol/auth-helpers";
+import { LitContracts } from "@lit-protocol/contracts-sdk";
 import { AccessControlConditions } from "@lit-protocol/types";
-import { ethers } from "ethers";
+import * as ethers from "ethers";
 
 import { litActionCode } from "./litAction";
 import { getEnv } from "./utils";
 
-const LIT_NETWORK = LitNetwork.DatilDev;
+const LIT_NETWORK = LitNetwork.DatilTest;
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
+const LIT_CAPACITY_CREDIT_TOKEN_ID = process.env["LIT_CAPACITY_CREDIT_TOKEN_ID"];
 
 export const decryptApiKey = async (url: string, key: string) => {
   let litNodeClient: LitNodeClient;
@@ -28,10 +30,49 @@ export const decryptApiKey = async (url: string, key: string) => {
     console.log("🔄 Connecting to the Lit network...");
     litNodeClient = new LitNodeClient({
       litNetwork: LIT_NETWORK,
-      debug: false
+      debug: false,
     });
     await litNodeClient.connect();
     console.log("✅ Connected to the Lit network");
+
+    console.log("🔄 Connecting LitContracts client to network...");
+    const litContracts = new LitContracts({
+      signer: ethersWallet,
+      network: LIT_NETWORK,
+      debug: false,
+    });
+    await litContracts.connect();
+    console.log("✅ Connected LitContracts client to network");
+
+    /*
+
+    let capacityTokenId = LIT_CAPACITY_CREDIT_TOKEN_ID;
+    if (capacityTokenId === "" || capacityTokenId === undefined) {
+      console.log("🔄 No Capacity Credit provided, minting a new one...");
+      capacityTokenId = (
+        await litContracts.mintCapacityCreditsNFT({
+          requestsPerKilosecond: 10,
+          daysUntilUTCMidnightExpiration: 1,
+        })
+      ).capacityTokenIdStr;
+      console.log(`✅ Minted new Capacity Credit with ID: ${capacityTokenId}`);
+    } else {
+      console.log(
+        `ℹ️  Using provided Capacity Credit with ID: ${LIT_CAPACITY_CREDIT_TOKEN_ID}`
+      );
+    }
+    
+    console.log("🔄 Creating capacityDelegationAuthSig...");
+    const { capacityDelegationAuthSig } =
+      await litNodeClient.createCapacityDelegationAuthSig({
+        dAppOwnerWallet: ethersWallet,
+        capacityTokenId,
+        delegateeAddresses: [ethersWallet.address],
+        uses: "1",
+      });
+    console.log("✅ Capacity Delegation Auth Sig created");
+    */
+    
 
     const accessControlConditions: AccessControlConditions = [
       {
@@ -70,6 +111,7 @@ export const decryptApiKey = async (url: string, key: string) => {
     console.log("🔄 Getting the Session Signatures...");
     const sessionSigs = await litNodeClient.getSessionSigs({
       chain: "ethereum",
+      //capabilityAuthSigs: [capacityDelegationAuthSig],
       expiration: new Date(Date.now() + 1000 * 60 * 10).toISOString(), // 10 minutes
       resourceAbilityRequests: [
         {
@@ -77,9 +119,9 @@ export const decryptApiKey = async (url: string, key: string) => {
           ability: LitAbility.AccessControlConditionDecryption,
         },
         {
-          resource: new LitActionResource(`*`), // QmQ1CnVvYR5to5r3H6uX4on2QHL4NybrE9UozFBN57t79v
+          resource: new LitActionResource("*"),
           ability: LitAbility.LitActionExecution,
-        }
+        },
       ],
       authNeededCallback: async ({
         uri,
@@ -90,7 +132,7 @@ export const decryptApiKey = async (url: string, key: string) => {
           uri,
           expiration,
           resources: resourceAbilityRequests,
-          walletAddress: await ethersWallet.getAddress(),
+          walletAddress: ethersWallet.address,
           nonce: await litNodeClient.getLatestBlockhash(),
           litNodeClient,
         });
@@ -104,18 +146,18 @@ export const decryptApiKey = async (url: string, key: string) => {
     console.log("✅ Generated the Session Signatures");
 
     console.log("🔄 Executing the Lit Action...");
-    const litActionSignatures= await litNodeClient.executeJs({
+    const litActionSignatures = await litNodeClient.executeJs({
       sessionSigs,
       code: litActionCode,
       jsParams: {
         accessControlConditions,
         ciphertext,
         dataToEncryptHash,
-        url
+        url,
       },
     });
     console.log("✅ Executed the Lit Action");
-    console.log(litActionSignatures);
+
     return litActionSignatures;
   } catch (error) {
     console.error(error);
