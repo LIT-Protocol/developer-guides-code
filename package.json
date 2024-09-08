@@ -59,6 +59,7 @@
   "devDependencies": {
     "nx": "19.6.3"
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> ca326e0 (merge)
 =======
   },
@@ -68,5 +69,7 @@
     "@lit-protocol/contracts-sdk": "^6.4.10",
     "@lit-protocol/lit-node-client-nodejs": "^6.4.10"
 >>>>>>> 6c326c5 (fix: making update-lit callable with directory context)
+=======
+>>>>>>> bce6dbd (fix: scripts bug fix)
   }
 }
