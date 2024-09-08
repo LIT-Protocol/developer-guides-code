@@ -12,3 +12,20 @@ Test the examples
 yarn
 yarn test-lit
 ```
+<<<<<<< HEAD
+=======
+
+# Tools
+
+Reports the versions of dependencies starting with `@lit-protocol`
+
+```
+node ./report.mjs --tag=latest
+node ./report.mjs --tag=datil-dev
+```
+
+Update lit sdk on a specific subdirectory
+```
+./scripts/update-lit.sh conditional-signing/nodejs
+```
+>>>>>>> 6c326c5 (fix: making update-lit callable with directory context)

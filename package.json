@@ -58,6 +58,15 @@
   },
   "devDependencies": {
     "nx": "19.6.3"
+<<<<<<< HEAD
 >>>>>>> ca326e0 (merge)
+=======
+  },
+  "dependencies": {
+    "@lit-protocol/auth-helpers": "^6.4.10",
+    "@lit-protocol/constants": "^6.4.10",
+    "@lit-protocol/contracts-sdk": "^6.4.10",
+    "@lit-protocol/lit-node-client-nodejs": "^6.4.10"
+>>>>>>> 6c326c5 (fix: making update-lit callable with directory context)
   }
 }
