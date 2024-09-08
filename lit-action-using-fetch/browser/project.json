@@ -1,0 +1,12 @@
+{
+    "name": "lit-action-using-fetch-browser",
+    "root": "lit-action-using-fetch/browser",
+    "targets": {
+        "update-lit": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "cd lit-action-using-fetch/nodejs && chmod +x ../../scripts/update-lit.sh && ../../scripts/update-lit.sh"
+            }
+        }
+    }
+}

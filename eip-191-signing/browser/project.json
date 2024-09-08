@@ -1,0 +1,12 @@
+{
+    "name": "eip-191-signing-browser",
+    "root": "eip-191-signing/browser",
+    "targets": {
+        "update-lit": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "cd eip-191-signing/browser && chmod +x ../../scripts/update-lit.sh && ../../scripts/update-lit.sh"
+            }
+        }
+    }
+}
