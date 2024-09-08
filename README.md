@@ -21,3 +21,8 @@ Reports the versions of dependencies starting with `@lit-protocol`
 node ./report.mjs --tag=latest
 node ./report.mjs --tag=datil-dev
 ```
+
+Update lit sdk on a specific subdirectory
+```
+./scripts/update-lit.sh conditional-signing/nodejs
+```
