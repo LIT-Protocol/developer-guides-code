@@ -1,0 +1,12 @@
+{
+    "name": "custom-auth-browser",
+    "root": "custom-auth/browser",
+    "targets": {
+        "update-lit": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "cd custom-auth/browser && chmod +x ../../scripts/update-lit.sh && ../../scripts/update-lit.sh"
+            }
+        }
+    }
+}
