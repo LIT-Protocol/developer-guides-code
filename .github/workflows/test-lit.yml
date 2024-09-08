@@ -71,3 +71,4 @@ jobs:
 
     - name: Run Tests
       run: yarn test-lit
+      continue-on-error: false
