@@ -18,6 +18,10 @@ To run this example, we will need to create a Telegram Mini App. To start, we'll
 2. Use the `/newbot` command to create a new bot. Give the bot a name and a username.
 3. At this point you will be given a Bot Secret Token. We will need this later
 
+
+https://github.com/user-attachments/assets/e7864d8f-d38e-45b8-b31d-133790793d66
+
+
 ### Step 2: Clone the Repository
 The next step is to clone this repository, and push the code to a new Github repo that your account owns. This is a requirement because we need to give Vercel access to the repo in order to host it.
 
@@ -104,9 +108,4 @@ If you'd like to dive deeper into the code to understand how this example works,
 - [litAction.ts](./src/litAction.ts) contains the Lit Action code
   - The Lit Action is hardcoded to only communicate with the PKP Permission contract deployed on Chronicle Yellowstone at `0x60C1ddC8b9e38F730F0e7B70A2F84C1A98A69167`.
   - It's also hardcoded to only use the Auth Method with the type: `keccak256('Lit Developer Guide Telegram Auth Example')`.
-
-
-
-
-https://github.com/user-attachments/assets/3445902d-6b63-42a1-96e6-25380a3ab00f
 
