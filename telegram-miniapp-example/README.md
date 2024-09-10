@@ -106,3 +106,7 @@ If you'd like to dive deeper into the code to understand how this example works,
   - It's also hardcoded to only use the Auth Method with the type: `keccak256('Lit Developer Guide Telegram Auth Example')`.
 
 
+
+
+https://github.com/user-attachments/assets/3445902d-6b63-42a1-96e6-25380a3ab00f
+
