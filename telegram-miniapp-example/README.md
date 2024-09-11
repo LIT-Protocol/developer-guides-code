@@ -57,6 +57,10 @@ Then push the cloned code to your Github repo:
 git push -u origin main
 ```
 
+
+https://github.com/user-attachments/assets/26c4d45a-7dbc-4077-9639-64fa565f2162
+
+
 ### Step 3: Setup Vercel
 
 Create a free Vercel account [here](https://vercel.com/signup), if you don't already have one.
@@ -76,6 +80,10 @@ https://NAME_OF_YOUR_GITHUB_REPO.vercel.app/
 
 You should visit this URL in your browser and see the deployed code. Please keep in mind that the example will not work unless opened in a Telegram Mini App.
 
+
+https://github.com/user-attachments/assets/c76e8374-528b-4ffe-8dc5-76ef94c6f574
+
+
 ### Step 4: Set the Menu Button for the Bot
 
 Now that you have a working Telegram Mini App, you'll need to set the menu button for the bot. This can be done by:
@@ -86,6 +94,10 @@ Now that you have a working Telegram Mini App, you'll need to set the menu butto
 4. Click "Configure menu button", send the Vercel URL generated previously and give a title to the menu button.
 5. You'll also want to give the bot a domain. This is done using the `/setdomain` command. You'll be prompted to enter the username of the bot to set the domain for, enter the name you gave your bot that ends with `_bot` or `Bot`, prefixed with the `@` symbol e.g. `@Example_bot`.
 6. Enter the URL generated for your project by Vercel, after you receive the success message, you'll be all good to go!
+
+
+https://github.com/user-attachments/assets/7f08405a-037e-4c2a-b815-62dc706c8d96
+
 
 ### Step 5: Run the Example
 
