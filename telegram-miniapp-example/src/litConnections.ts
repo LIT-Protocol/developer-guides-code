@@ -77,7 +77,7 @@ export const getSessionSignatures = async (
     litActionCode: Buffer.from(litActionCode).toString("base64"),
     jsParams: {
       telegramUserData: telegramUser,
-      telegramBotSecret: import.meta.env.VITE_TELEGRAM_BOT_TOKEN,
+      telegramBotSecret: import.meta.env.VITE_TELEGRAM_BOT_SECRET,
       pkpTokenId: pkp.tokenId,
     },
     resourceAbilityRequests: [
