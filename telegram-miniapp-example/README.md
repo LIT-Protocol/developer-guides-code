@@ -103,9 +103,13 @@ https://github.com/user-attachments/assets/7f08405a-037e-4c2a-b815-62dc706c8d96
 
 In order to successfully run the example, the Ethereum account that you connect to the web app using your browser wallet extension needs to have Lit test tokens. If you don't already have some, you can request some using [the faucet](https://chronicle-yellowstone-faucet.getlit.dev/).
 
-Your Mini App opened in Telegram should now look like:
+Your Mini App opened in Telegram Web should look like the video below. The MiniApp also works on mobile with the MetaMask mobile app.
 
-![image](https://github.com/user-attachments/assets/6bab315f-1db2-404c-bd59-602e0545f26d)
+
+
+https://github.com/user-attachments/assets/92ba6384-0eee-48e7-b399-df4d7ce41c41
+
+
 
 If your Mini App says `Valid: false`, there might be something wrong with the `VITE_TELEGRAM_BOT_SECRET` in Vercel. 
 
