@@ -23,14 +23,14 @@ describe("Testing specific functionality", () => {
     DEPLOYED_ACCESS_CONTROL_CONTRACT_ADDRESS,
     [
       {
-        inputs: [{ internalType: "address", name: "user", type: "address" }],
+        inputs: [],
         name: "grantAccess",
         outputs: [],
         stateMutability: "nonpayable",
         type: "function",
       },
       {
-        inputs: [{ internalType: "address", name: "user", type: "address" }],
+        inputs: [],
         name: "revokeAccess",
         outputs: [],
         stateMutability: "nonpayable",
@@ -41,7 +41,7 @@ describe("Testing specific functionality", () => {
   );
 
   it("should decrypt the secret string because access has been granted", async () => {
-    const tx = await accessControlContract.grantAccess(ethersWallet.address);
+    const tx = await accessControlContract.grantAccess();
     await tx.wait();
 
     const decryptedString = await runExample(SECRET_STRING);
@@ -49,7 +49,7 @@ describe("Testing specific functionality", () => {
   }).timeout(120_000);
 
   it("shouldn't decrypt the secret string because access has been revoked", async () => {
-    const tx = await accessControlContract.revokeAccess(ethersWallet.address);
+    const tx = await accessControlContract.revokeAccess();
     await tx.wait();
 
     let response;

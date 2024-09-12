@@ -10,25 +10,33 @@ contract AccessControlTest is Test {
     function setUp() public {
         accessControl = new AccessControl();
     }
+    
+    function testGrantedByDefault() public {
+        address user = address(this);
+        assertFalse(accessControl.hasRevokedAccess(user));
+    }
 
     function testGrantAccess() public {
-        address user = address(0xBEEF);
-        accessControl.grantAccess(user);
+        address user = address(this);
+        accessControl.grantAccess();
         assertFalse(accessControl.hasRevokedAccess(user));
     }
 
     function testRevokeAccess() public {
-        address user = address(0xCAFE);
-        accessControl.revokeAccess(user);
+        address user = address(this);
+        accessControl.revokeAccess();
         assertTrue(accessControl.hasRevokedAccess(user));
     }
 
     function testHasRevokedAccess() public {
-        address user1 = address(0xDEAD);
+        address user1 = address(this);
         address user2 = address(0xFEED);
 
-        accessControl.revokeAccess(user1);
-        accessControl.grantAccess(user2);
+        vm.prank(user1);
+        accessControl.revokeAccess();
+
+        vm.prank(user2);
+        accessControl.grantAccess();
 
         assertTrue(accessControl.hasRevokedAccess(user1));
         assertFalse(accessControl.hasRevokedAccess(user2));

@@ -4,12 +4,12 @@ pragma solidity ^0.8.13;
 contract AccessControl {
     mapping(address => bool) public revokedAccess;
 
-    function grantAccess(address user) public {
-        revokedAccess[user] = false;
+    function grantAccess() public {
+        revokedAccess[msg.sender] = false;
     }
 
-    function revokeAccess(address user) public {
-        revokedAccess[user] = true;
+    function revokeAccess() public {
+        revokedAccess[msg.sender] = true;
     }
 
     function hasRevokedAccess(address user) public view returns (bool) {
