@@ -1,17 +1,15 @@
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
-import {
-  LitNetwork,
-  LIT_RPC,
-  AuthMethodScope
-} from "@lit-protocol/constants";
+import { LitNetwork, LIT_RPC, AuthMethodScope } from "@lit-protocol/constants";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
 import { LitAbility, LitPKPResource } from "@lit-protocol/auth-helpers";
 import { EthWalletProvider } from "@lit-protocol/lit-auth-client";
 import * as ethers from "ethers";
 
-const ETHEREUM_PRIVATE_KEY = "addfe92d4342a89960aaacdb27fe097094354264915aa39529d902bee3764475"
+import { getEnv } from "./utils";
 
-const getSessionSigsPKP = async (
+const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
+
+export const getSessionSigsPKP = async (
   pkp?: {
     tokenId: any;
     publicKey: string;
@@ -51,12 +49,10 @@ const getSessionSigsPKP = async (
     });
     console.log("✅ Finished creating the AuthMethod");
 
-    const pkp = (
-      await litContracts.mintWithAuth({
-        authMethod: authMethod,
-        scopes: [AuthMethodScope.PersonalSign],
-      })
-    ).pkp;
+    const pkp = (await litContracts.mintWithAuth({
+      authMethod: authMethod,
+      scopes: [AuthMethodScope.PersonalSign],
+    })).pkp;
 
     if (!capacityTokenId) {
       console.log("🔄 Minting Capacity Credits NFT...");
@@ -93,13 +89,6 @@ const getSessionSigsPKP = async (
       expiration: new Date(Date.now() + 1000 * 60 * 15).toISOString(), // 15 minutes
     });
     console.log("✅ Got PKP Session Sigs");
-
-    const permAuthMethod =
-    await litContracts.pkpPermissionsContract.read.getPermittedAuthMethods(
-      pkp.tokenId
-    );
-
-    console.log(permAuthMethod);
     return sessionSigs;
   } catch (error) {
     console.error(error);
@@ -107,5 +96,3 @@ const getSessionSigsPKP = async (
     litNodeClient!.disconnect();
   }
 };
-
-getSessionSigsPKP();

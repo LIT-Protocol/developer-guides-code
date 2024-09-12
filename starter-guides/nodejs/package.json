@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "type": "module",
   "dependencies": {
-    "@lit-protocol/lit-node-client": "^6.2.2"
+    "@lit-protocol/lit-node-client": "^6.4.10",
+    "ethers": "v5"
   }
 }

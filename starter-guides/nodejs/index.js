@@ -1,9 +1,16 @@
-const { LitNodeClient } = require('@lit-protocol/lit-node-client');
-const { LitNetwork } = require('@lit-protocol/constants');
+import { LitNodeClient } from '@lit-protocol/lit-node-client';
+import { LitNetwork, LIT_RPC } from '@lit-protocol/constants';
+import * as ethers from 'ethers';
 
 const connectToLit = async () => {
     try {
-      // More information about the available Lit Networks: https://developer.litprotocol.com/category/networks
+      const provider = new ethers.providers.JsonRpcProvider({
+        skipFetchSetup: true,
+        url: LIT_RPC.CHRONICLE_YELLOWSTONE,
+      });
+
+      console.log("Provider", provider);
+
       const litNodeClient = new LitNodeClient({
         litNetwork: LitNetwork.DatilDev,
         debug: false
