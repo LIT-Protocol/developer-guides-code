@@ -1,46 +1,52 @@
-import { LitNodeClient } from "@lit-protocol/lit-node-client";
+import { LitNodeClient, encryptString } from "@lit-protocol/lit-node-client";
 import { LitNetwork } from "@lit-protocol/constants";
+import * as ethers from "ethers";
 
-export const DEFAULT_AUTHORIZED_ETH_ADDRESS =
-  "0xA89543a7145C68E52a4D584f1ceb123605131211";
+const LIT_NETWORK = LitNetwork.DatilTest;
 
-export const encryptString = async (
-  toEncrypt: string = "The answer to the universe is 42.",
-  authorizedEthAddress: string = DEFAULT_AUTHORIZED_ETH_ADDRESS
-) => {
+export const encryptToString = async (toEncrypt: string) => {
   let litNodeClient: LitNodeClient;
 
   try {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    await provider.send("eth_requestAccounts", []);
+    const ethersSigner = provider.getSigner();
+    const address = await ethersSigner.getAddress();
+    console.log("Connected account:", await ethersSigner.getAddress());
+
     console.log("🔄 Connecting to Lit network...");
     litNodeClient = new LitNodeClient({
-      litNetwork: LitNetwork.DatilTest,
+      litNetwork: LIT_NETWORK,
       debug: false,
     });
     await litNodeClient.connect();
     console.log("✅ Connected to Lit network");
 
     console.log("🔄 Encoding and encrypting string...");
-    const encoder = new TextEncoder();
-    const { ciphertext, dataToEncryptHash } = await litNodeClient.encrypt({
-      accessControlConditions: [
-        {
-          contractAddress: "",
-          standardContractType: "",
-          chain: "ethereum",
-          method: "",
-          parameters: [":userAddress"],
-          returnValueTest: {
-            comparator: "=",
-            value: authorizedEthAddress,
-          },
+    const accessControlConditions = [
+      {
+        contractAddress: "",
+        standardContractType: "",
+        chain: "ethereum",
+        method: "",
+        parameters: [":userAddress"],
+        returnValueTest: {
+          comparator: "=",
+          value: address,
         },
-      ],
-      dataToEncrypt: encoder.encode(toEncrypt),
-    });
+      },
+    ];
+
+    const { ciphertext, dataToEncryptHash } = await encryptString(
+      {
+        accessControlConditions,
+        dataToEncrypt: toEncrypt,
+      },
+      litNodeClient
+    );
     console.log("✅ Encrypted string");
 
     console.log({ ciphertext, dataToEncryptHash });
-
     return { ciphertext, dataToEncryptHash };
   } catch (error) {
     console.error(error);

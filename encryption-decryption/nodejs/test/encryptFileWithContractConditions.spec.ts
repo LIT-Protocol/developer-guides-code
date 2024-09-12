@@ -3,8 +3,8 @@ import * as ethers from "ethers";
 import { readFileSync } from "fs";
 import path from "path";
 
-import { getEnv } from "../../src/utils";
-import { encryptFileWithContractConditions } from "../../src/datil-dev/encryptFile";
+import { getEnv } from "../src/utils";
+import { encryptFileWithContractConditions } from "../src/encryptFile";
 import deployedAllowList from "./fixtures/deployed.json";
 
 use(require("chai-json-schema"));
@@ -44,7 +44,7 @@ describe("Encrypting a file with EVM contract conditions", () => {
       [
         {
           contractAddress: deployedAllowList.address,
-          chain: "sepolia",
+          chain: "yellowstone",
           functionName: "isOnAllowlist",
           functionParams: [":userAddress", FAKE_TOKEN_ID.toString()],
           functionAbi: {

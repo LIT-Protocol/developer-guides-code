@@ -3,24 +3,24 @@ import * as ethers from "ethers";
 import { readFileSync } from "fs";
 import path from "path";
 
-import { getEnv } from "../../src/utils";
+import { getEnv } from "../src/utils";
 import deployedAllowList from "./fixtures/deployed.json";
-import { encryptFileWithContractConditions } from "../../src/datil-dev/encryptFile";
-import { decryptFileWithContractConditions } from "../../src/datil-dev/decryptFile";
+import { encryptFileWithContractConditions } from "../src/encryptFile";
+import { decryptFileWithContractConditions } from "../src/decryptFile";
 import { EvmContractConditions } from "@lit-protocol/types";
+import { LIT_RPC } from "@lit-protocol/constants";
 
 use(require("chai-json-schema"));
 
 const FILE_TO_ENCRYPT_PATH = path.join(__dirname, "fileToEncrypt.txt");
 const FAKE_TOKEN_ID = 42;
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
-const SEPOLIA_RPC_URL = getEnv("SEPOLIA_RPC_URL");
 
 describe("Decrypting a file with EVM contract conditions", () => {
   const evmContractConditions = [
     {
       contractAddress: deployedAllowList.address,
-      chain: "sepolia",
+      chain: "yellowstone",
       functionName: "isOnAllowlist",
       functionParams: [":userAddress", FAKE_TOKEN_ID.toString()],
       functionAbi: {
@@ -68,7 +68,7 @@ describe("Decrypting a file with EVM contract conditions", () => {
 
     const ethersSigner = new ethers.Wallet(
       ETHEREUM_PRIVATE_KEY,
-      new ethers.providers.JsonRpcProvider(SEPOLIA_RPC_URL)
+      new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE)
     );
     const allowListContract = new ethers.Contract(
       deployedAllowList.address,

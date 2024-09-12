@@ -3,6 +3,8 @@ import { LitNetwork } from "@lit-protocol/constants";
 import { EvmContractConditions } from "@lit-protocol/types";
 import { encryptFile } from "@lit-protocol/encryption";
 
+const LIT_NETWORK = LitNetwork.DatilTest;
+
 export const encryptFileWithContractConditions = async (
   toEncryptFileBlob: Blob,
   evmContractConditions: EvmContractConditions
@@ -12,7 +14,7 @@ export const encryptFileWithContractConditions = async (
   try {
     console.log("🔄 Connecting to Lit network...");
     litNodeClient = new LitNodeClient({
-      litNetwork: LitNetwork.DatilDev,
+      litNetwork: LIT_NETWORK,
       debug: false,
     });
     await litNodeClient.connect();
