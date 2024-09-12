@@ -16,7 +16,7 @@ Make a copy of the provided `.env.example` file and name it `.env`:
 cp .env.example .env
 ```
 
-Within the `.env` there are to ENVs
+Within the `.env` file there are three ENVs
 
 1. `ETHEREUM_PRIVATE_KEY` - **Required** Will be used to generate an Ethers.js wallet to perform the signing of transactions
 2. `LIT_PKP_PUBLIC_KEY` - **Optional**
