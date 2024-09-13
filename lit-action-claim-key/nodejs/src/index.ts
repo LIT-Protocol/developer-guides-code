@@ -13,15 +13,15 @@ import { getEnv, getPkpInfoFromMintReceipt } from "./utils";
 import { litActionCode } from "./litAction";
 
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
-const LIT_RPC_URL = LIT_RPC.CHRONICLE_YELLOWSTONE;
-const LIT_NETWORK = LitNetwork.DatilDev;
+const LIT_CAPACITY_CREDIT_TOKEN_ID = process.env["LIT_CAPACITY_CREDIT_TOKEN_ID"];
+const LIT_NETWORK = LitNetwork.DatilTest;
 
 export const runExample = async () => {
   let litNodeClient: LitNodeClient;
   try {
     const ethersSigner = new ethers.Wallet(
       ETHEREUM_PRIVATE_KEY,
-      new ethers.providers.JsonRpcProvider(LIT_RPC_URL)
+      new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE)
     );
 
     console.log("🔄 Connecting LitNodeClient to Lit network...");
@@ -33,16 +33,43 @@ export const runExample = async () => {
     console.log("✅ Connected LitNodeClient to Lit network");
 
     console.log("🔄 Connecting to Lit network...");
-    const litContractClient = new LitContracts({
+    const litContracts = new LitContracts({
       signer: ethersSigner,
       network: LIT_NETWORK,
     });
-    await litContractClient.connect();
+    await litContracts.connect();
     console.log("✅ Connected to Lit network");
+
+    let capacityTokenId = LIT_CAPACITY_CREDIT_TOKEN_ID;
+    if (capacityTokenId === "" || capacityTokenId === undefined) {
+      console.log("🔄 No Capacity Credit provided, minting a new one...");
+      capacityTokenId = (
+        await litContracts.mintCapacityCreditsNFT({
+          requestsPerKilosecond: 10,
+          daysUntilUTCMidnightExpiration: 1,
+        })
+      ).capacityTokenIdStr;
+      console.log(`✅ Minted new Capacity Credit with ID: ${capacityTokenId}`);
+    } else {
+      console.log(
+        `ℹ️  Using provided Capacity Credit with ID: ${LIT_CAPACITY_CREDIT_TOKEN_ID}`
+      );
+    }
+
+    console.log("🔄 Creating capacityDelegationAuthSig...");
+    const { capacityDelegationAuthSig } =
+      await litNodeClient.createCapacityDelegationAuthSig({
+        dAppOwnerWallet: ethersSigner,
+        capacityTokenId,
+        delegateeAddresses: [ethersSigner.address],
+        uses: "1",
+      });
+    console.log("✅ Capacity Delegation Auth Sig created");
 
     console.log("🔄 Getting Session Sigs via an Auth Sig...");
     const sessionSigs = await litNodeClient.getSessionSigs({
       chain: "ethereum",
+      capabilityAuthSigs: [capacityDelegationAuthSig],
       expiration: new Date(Date.now() + 1000 * 60 * 10).toISOString(), // 10 minutes
       resourceAbilityRequests: [
         {
@@ -90,8 +117,8 @@ export const runExample = async () => {
 
     console.log("🔄 Getting public key for derived key id...");
     const publicKey =
-      await litContractClient.pubkeyRouterContract.read.getDerivedPubkey(
-        litContractClient.stakingContract.read.address,
+      await litContracts.pubkeyRouterContract.read.getDerivedPubkey(
+        litContracts.stakingContract.read.address,
         `0x${result.claims![userId].derivedKeyId}`
       );
     console.log(`✅ Derived public key: ${publicKey}`);
@@ -100,10 +127,10 @@ export const runExample = async () => {
     );
 
     console.log("🔄 Getting PKP mint cost...");
-    const pkpMintCost = await litContractClient.pkpNftContract.read.mintCost();
+    const pkpMintCost = await litContracts.pkpNftContract.read.mintCost();
     console.log("✅ Got PKP mint cost");
 
-    const claimTx = await litContractClient.pkpNftContract.write.claimAndMint(
+    const claimTx = await litContracts.pkpNftContract.write.claimAndMint(
       2, // keyType,
       `0x${result.claims![userId].derivedKeyId}`, // derivedKeyId
       result.claims![userId].signatures, // signatures
@@ -115,7 +142,7 @@ export const runExample = async () => {
 
     const pkpInfo = await getPkpInfoFromMintReceipt(
       claimTxReceipt,
-      litContractClient
+      litContracts
     );
     console.log(`ℹ️  PKP Public Key: ${pkpInfo.publicKey}`);
     console.log(`ℹ️  PKP Token ID: ${pkpInfo.tokenId}`);
