@@ -6,17 +6,27 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "start": "npx @dotenvx/dotenvx run -- node src/index.js"
+    "test": "npx @dotenvx/dotenvx run -- mocha test/**/*.spec.ts"
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^0.37.1",
-    "@lit-protocol/auth-helpers": "^6.2.2",
-    "@lit-protocol/constants": "^6.2.2",
-    "@lit-protocol/contracts-sdk": "^6.2.2",
-    "@lit-protocol/lit-node-client-nodejs": "^6.2.2",
+    "@lit-protocol/auth-helpers": "^6.4.10",
+    "@lit-protocol/constants": "^6.4.10",
+    "@lit-protocol/contracts-sdk": "^6.4.10",
+    "@lit-protocol/lit-node-client-nodejs": "^6.4.10",
     "ethers": "5.7.2"
   },
   "devDependencies": {
-    "tslib": "^2.6.2"
+    "@types/chai": "^4.3.17",
+    "@types/chai-json-schema": "^1.4.10",
+    "@types/mocha": "^10.0.7",
+    "@types/node": "^22.5.0",
+    "chai": "^5.1.1",
+    "chai-json-schema": "^1.5.1",
+    "mocha": "^10.7.3",
+    "ts-node": "^10.9.2",
+    "tslib": "^2.6.2",
+    "tsx": "^4.17.0",
+    "typescript": "^5.5.4"
   }
 }
