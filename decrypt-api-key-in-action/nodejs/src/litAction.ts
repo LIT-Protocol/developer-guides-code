@@ -10,7 +10,7 @@ const _litActionCode = async () => {
       chain: "ethereum",
     });
 
-    const jsonRpcResponse = await Lit.Actions.runOnce(
+    const blockNumber = await Lit.Actions.runOnce(
       { waitForResponse: true, name: "ETH block number" },
       async () => {
         const resp = await fetch(`${alchemyUrl}${apiKey}`, {
@@ -37,7 +37,7 @@ const _litActionCode = async () => {
       }
     );
 
-    Lit.Actions.setResponse({ response: JSON.stringify(jsonRpcResponse) });
+    Lit.Actions.setResponse({ response: blockNumber });
   } catch (e) {
     Lit.Actions.setResponse({ response: e.message });
   }
