@@ -16,9 +16,10 @@ import { getEnv } from "./utils";
 
 const LIT_NETWORK = LitNetwork.DatilTest;
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
-const LIT_CAPACITY_CREDIT_TOKEN_ID = process.env["LIT_CAPACITY_CREDIT_TOKEN_ID"];
+const LIT_CAPACITY_CREDIT_TOKEN_ID =
+  process.env["LIT_CAPACITY_CREDIT_TOKEN_ID"];
 
-export const decryptApiKey = async (url: string, key: string) => {
+export const decryptApiKey = async (alchemyUrl: string, key: string) => {
   let litNodeClient: LitNodeClient;
 
   try {
@@ -59,7 +60,7 @@ export const decryptApiKey = async (url: string, key: string) => {
         `ℹ️  Using provided Capacity Credit with ID: ${LIT_CAPACITY_CREDIT_TOKEN_ID}`
       );
     }
-    
+
     console.log("🔄 Creating capacityDelegationAuthSig...");
     const { capacityDelegationAuthSig } =
       await litNodeClient.createCapacityDelegationAuthSig({
@@ -94,7 +95,10 @@ export const decryptApiKey = async (url: string, key: string) => {
     );
     console.log("✅ Encrypted the API key");
     console.log("ℹ️  The base64-encoded ciphertext:", ciphertext);
-    console.log("ℹ️  The hash of the data that was encrypted:", dataToEncryptHash);
+    console.log(
+      "ℹ️  The hash of the data that was encrypted:",
+      dataToEncryptHash
+    );
 
     console.log("🔄 Generating the Resource String...");
     const accsResourceString =
@@ -149,7 +153,7 @@ export const decryptApiKey = async (url: string, key: string) => {
         accessControlConditions,
         ciphertext,
         dataToEncryptHash,
-        url,
+        alchemyUrl,
       },
     });
     console.log("✅ Executed the Lit Action");
