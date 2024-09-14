@@ -13,6 +13,7 @@
     "chai": "^5.1.1",
     "chai-json-schema": "^1.5.1",
     "mocha": "^10.4.0",
+    "ts-node": "^10.9.2",
     "tsc": "^2.0.4",
     "tsx": "^4.15.3",
     "typescript": "^5.4.5"
@@ -22,7 +23,6 @@
     "@lit-protocol/auth-helpers": "^6.4.10",
     "@lit-protocol/constants": "^6.4.10",
     "@lit-protocol/contracts-sdk": "^6.4.10",
-    "@lit-protocol/lit-node-client": "^6.4.10",
-    "ts-node": "^10.9.2"
+    "@lit-protocol/lit-node-client": "^6.4.10"
   }
 }
