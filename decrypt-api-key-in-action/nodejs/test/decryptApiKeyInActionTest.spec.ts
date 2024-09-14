@@ -7,7 +7,7 @@ const ALCHEMY_API_KEY = getEnv("ALCHEMY_API_KEY");
 describe("decryptApiKey", () => {
   it("should decrypt API key successfully", async () => {
     const url = "https://base-mainnet.g.alchemy.com/v2/";
-    const result = await decryptApiKey(url, key);
+    const result = await decryptApiKey(url, ALCHEMY_API_KEY);
 
     expect(result).to.deep.include({
       success: true,
