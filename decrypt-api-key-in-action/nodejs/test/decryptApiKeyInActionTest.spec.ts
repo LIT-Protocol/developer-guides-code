@@ -2,10 +2,11 @@ import { expect } from "chai";
 import { decryptApiKey } from "../src/index.js";
 import { getEnv } from "../src/utils"
 
+const ALCHEMY_API_KEY = getEnv("ALCHEMY_API_KEY");
+
 describe("decryptApiKey", () => {
   it("should decrypt API key successfully", async () => {
     const url = "https://base-mainnet.g.alchemy.com/v2/";
-    const key = getEnv("ALCHEMY_API_KEY");
     const result = await decryptApiKey(url, key);
 
     expect(result).to.deep.include({
