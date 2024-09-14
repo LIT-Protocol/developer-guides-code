@@ -10,9 +10,7 @@ const _litActionCode = async () => {
     chain: "ethereum",
   });
 
-  const fullUrl = url + apiKey;
-
-  const resp = await fetch(fullUrl, {
+  const resp = await fetch(`${url}${apiKey}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
