@@ -45,6 +45,7 @@ After encrypting the string, clicking the `Decrypt String` button will:
 The full example should look something like:
 
 
-https://github.com/user-attachments/assets/7ddbee56-ef43-402c-9bd4-0e648be15f23
+https://github.com/user-attachments/assets/64bcc6a9-e35e-48b2-969f-e05b6c22907f
+
 
 
