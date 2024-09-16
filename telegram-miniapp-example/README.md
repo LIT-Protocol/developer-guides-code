@@ -7,7 +7,7 @@ This implementation is based on the [custom-auth-telegram-example](https://githu
 1. The user opens the Telegram Mini App. Through opening the Mini App window, we are able to get the user `initData` from the Telegram window.
 2. We verify the `initData` to ensure it is valid and recent. We do this by using the `isRecent` and `verifyInitData` functions from the [TelegramAuthHelpers.ts](src/telegramAuthHelpers.ts) file.
 3. The user connects their MetaMask wallet to the Mini App by clicking the "Connect to MetaMask" button.
-4. The user clicks the "Mint PKP" button to mint a new PKP and add the custom Telegram authorization to it.
+4. The user clicks the "Mint PKP" button to mint a new PKP and adds the custom Telegram auth Lit Action to it.
 5. The user clicks the "Get Session Signatures" button to get the session signatures for the PKP.
 
 ## How to Run the Example
