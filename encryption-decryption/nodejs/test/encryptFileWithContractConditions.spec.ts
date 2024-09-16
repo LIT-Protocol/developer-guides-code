@@ -1,9 +1,7 @@
 import { expect, use } from "chai";
-import * as ethers from "ethers";
 import { readFileSync } from "fs";
 import path from "path";
 
-import { getEnv } from "../src/utils";
 import { encryptFileWithContractConditions } from "../src/encryptFile";
 import deployedAllowList from "./fixtures/deployed.json";
 

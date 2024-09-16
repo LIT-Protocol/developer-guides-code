@@ -1,3 +1,5 @@
+import { EvmContractConditions } from "@lit-protocol/types";
+import { LIT_RPC } from "@lit-protocol/constants";
 import { expect, use } from "chai";
 import * as ethers from "ethers";
 import { readFileSync } from "fs";
@@ -7,8 +9,6 @@ import { getEnv } from "../src/utils";
 import deployedAllowList from "./fixtures/deployed.json";
 import { encryptFileWithContractConditions } from "../src/encryptFile";
 import { decryptFileWithContractConditions } from "../src/decryptFile";
-import { EvmContractConditions } from "@lit-protocol/types";
-import { LIT_RPC } from "@lit-protocol/constants";
 
 use(require("chai-json-schema"));
 
