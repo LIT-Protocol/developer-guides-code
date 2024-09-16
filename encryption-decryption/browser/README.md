@@ -44,4 +44,7 @@ After encrypting the string, clicking the `Decrypt String` button will:
 
 The full example should look something like:
 
-***video***
+
+https://github.com/user-attachments/assets/7ddbee56-ef43-402c-9bd4-0e648be15f23
+
+
