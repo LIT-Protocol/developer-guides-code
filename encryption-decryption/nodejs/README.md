@@ -36,28 +36,28 @@ In this directory, `encryption-decryption/nodejs`, run `yarn test:encrypt` to te
 
 `encryptFile.ts`:
 
-1. Will take a blob created from a file and contract conditions to encrypt the file.
+1. Requires a blob created from a file and contract conditions to encrypt the file
 2. Connects to the Lit network
 3. Encrypts the file and returns the `ciphertext` and `dataToEncryptHash`
 
 `decryptFile.ts`:
 
 1. Connects to the Lit network and LitContracts client
-2. Mints a new CapacityCredit if a CapacityCredit tokenId is not provided in the `.env` file and creates a capacityDelegationAuthSig to pay for use of the Lit network, decrypting data in this case
+2. Mints a new CapacityCredit if a CapacityCredit tokenId is not provided in the `.env` file and creates a capacityDelegationAuthSig to pay for use of the Lit network, which is decrypting data in this case
 3. Generates session signatures with the ability to decrypt the file
 4. Decrypts the file and returns a decrypted file buffer
 
-However the tests created in the `test` directory are more complicated.
+The tests created in the `test` directory are slightly more complex.
 
-`encryptFileWithContractConditions.spec.ts`
+`encryptFileWithContractConditions.spec.ts`:
 
 ```
 yarn test:encrypt
 ```
 
-Encrypt the file with specific `EVMContractConditions`. These conditions check the [deployedAllowList](./test/fixtures/deployed.json) contract address on the Chronicle Yellowstone network and calls the `isOnAllowList` function, expecting to return true if the address of the Ethereum account is on the allow list.
+Encrypt the file with specific `EVMContractConditions`. These conditions check the [deployedAllowList](./test/fixtures/deployed.json) contract address on the Chronicle Yellowstone network and calls the `isOnAllowList` function, expecting to return true if the address of the Ethereum account is on the allow list. This means that the encrypted file can only be decrypted if the same contract conditions are able to return true while decrypting.
 
-`decryptFileWithContractConditions.spec.ts`
+`decryptFileWithContractConditions.spec.ts`:
 
 ```
 yarn test:decrypt
