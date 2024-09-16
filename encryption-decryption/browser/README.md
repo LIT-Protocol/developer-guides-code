@@ -33,13 +33,13 @@ Before you click the buttons, open up the JavaScript console in your browser so 
 After typing in the text you want to encrypt, clicking the `Encrypt String` button will:
 
 1. You will be prompted by your wallet (i.e. MetaMask) to connect an account to the site
-2. After connecting an account, the console should display a successful connection to the Lit network and the encrypted `ciphertext` and `dataToEncryptHash` that will later be used to decrypt the string.
+2. After connecting an account, the console should display a successful connection to the Lit network and the encrypted `ciphertext` and `dataToEncryptHash` that will later be used to decrypt the string
 
 After encrypting the string, clicking the `Decrypt String` button will:
 
 1. Connect you to the Lit network and LitContracts client
 2. If you did not provide a Capacity Credit token ID, you will be prompted by your wallet to mint a new one
-3. You will then be prompted by your wallet to sign a message. This message will create a `capacityDelegationAuthSig`, which is used to pay for decrypting data ([and other functionality](https://developer.litprotocol.com/paying-for-lit/capacity-credits)) on the Lit 
+3. You will then be prompted by your wallet to sign a message. This message will create a `capacityDelegationAuthSig`, which is used to pay for decrypting data ([and other functionality](https://developer.litprotocol.com/paying-for-lit/capacity-credits)) on the Lit network
 4. You will then be prompted by your wallet to sign another one final message. This message is the SIWE message that will derive your address from to use for the conditional check of whether or not you are permitted to decrypt the data
 
 The full example should look something like:
