@@ -1,4 +1,4 @@
-import { signEIP191 } from "./connect";
+import { signEIP191 } from "./eip-191";
 
 function App() {
 

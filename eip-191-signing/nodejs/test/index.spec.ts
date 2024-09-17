@@ -3,7 +3,7 @@ import chaiJsonSchema from "chai-json-schema";
 
 use(chaiJsonSchema);
 
-import { signEIP191 } from "../src/index";
+import { signEIP191 } from "../src/eip-191";
 
 describe("signEIP191", () => {
   it("should sign the EIP-191 successfully", async () => {
