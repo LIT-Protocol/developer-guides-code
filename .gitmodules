@@ -4,3 +4,6 @@
 [submodule "evm-swap-example"]
 	path = evm-swap-example
 	url = https://github.com/LIT-Protocol/evm-swap-example.git
+[submodule "telegram-miniapp-example"]
+	path = telegram-miniapp-example
+	url = https://github.com/LIT-Protocol/telegram-miniapp-example.git
