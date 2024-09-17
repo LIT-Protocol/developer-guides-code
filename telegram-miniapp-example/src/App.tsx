@@ -71,7 +71,6 @@ function App() {
     try {
       const accounts = await sdk?.connect();
       setAccount(accounts?.[0]);
-      
       webApp!.showPopup({
         title: "Connected",
         message: `Connected to MetaMask with account: ${accounts[0]}`,
