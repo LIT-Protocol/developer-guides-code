@@ -28,7 +28,10 @@ export async function signEIP191() {
     publicKey: LIT_PKP_PUBLIC_KEY,
   };
   try {
-    const ethersWallet = new ethers.Wallet(ETHEREUM_PRIVATE_KEY, new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE))
+    const ethersWallet = new ethers.Wallet(
+        ETHEREUM_PRIVATE_KEY,
+        new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE)
+    );
     console.log("🔄 Connecting to the Lit network...");
     litNodeClient = new LitNodeClient({
       litNetwork: LIT_NETWORK,
