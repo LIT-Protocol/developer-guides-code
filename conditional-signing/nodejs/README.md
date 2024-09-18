@@ -16,7 +16,7 @@ Make a copy of the provided `.env.example` file and name it `.env`:
 cp .env.example .env
 ```
 
-Within the `.env` file there are three ENVs
+Within the `.env` file there are four ENVs
 
 1. `ETHEREUM_PRIVATE_KEY` - **Required** Will be used to generate an Ethers.js wallet to perform the signing of transactions
 2. `LIT_PKP_PUBLIC_KEY` - **Optional**
@@ -26,6 +26,7 @@ Within the `.env` file there are three ENVs
 3. `LIT_CAPACITY_CREDIT_TOKEN_ID` - **Optional**
    - If provided, this [CapacityCredit](https://developer.litprotocol.com/paying-for-lit/capacity-credits) will be used to create an AuthSig to pay for usage the Lit network
    - If not provided, a new CapacityCredit will be minted and used to run this example. Please make sure that your wallet has enough `tstLPX` to pay for execution of the Lit Action
+4. `CHAIN_TO_CHECK_CONDITION_ON` - **Required** Will be used to specify the chain that the Lit Action will check the condition on.
 
 Your `.env` file should look like:
 
