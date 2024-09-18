@@ -126,7 +126,7 @@ export async function signEIP191() {
     });
     console.log("✅ Got Session Sigs via an Auth Sig");
 
-    console.log("🔄 Attempting to execute the Lit Action, signing the EIP-191..");
+    console.log("🔄 Attempting to execute the Lit Action, signing the EIP-191 message...");
     const litActionSignatures = await litNodeClient.executeJs({
       sessionSigs,
       code: litActionCode,
