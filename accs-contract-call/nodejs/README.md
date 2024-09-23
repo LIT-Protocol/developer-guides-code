@@ -1,6 +1,6 @@
 # Revoke Access to Encrypted Data
 
-This code example demonstrates how access can be revoked to decrypt data using `EvmContractConditions` to making a request to an Access Control Contract.
+This code example demonstrates how access to decrypt data can be revoked using `EvmContractConditions` by making a request to an Access Control Contract.
 
 ## Running the Example
 
