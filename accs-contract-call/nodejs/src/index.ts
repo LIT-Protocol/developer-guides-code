@@ -44,6 +44,11 @@ export const runExample = async (dataToEncrypt: string) => {
       },
     ];
 
+    const ethersWallet = new ethers.Wallet(
+      ETHEREUM_PRIVATE_KEY,
+      new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE)
+    );
+
     console.log(`🔄 Connecting to Lit ${LIT_NETWORK} network...`);
     litNodeClient = new LitNodeClient({
       litNetwork: LIT_NETWORK,
@@ -51,6 +56,15 @@ export const runExample = async (dataToEncrypt: string) => {
     });
     await litNodeClient.connect();
     console.log(`✅ Connected to Lit ${LIT_NETWORK} network`);
+
+    console.log(`🔄 Connecting LitContracts client to ${LIT_NETWORK} network...`);
+    const litContracts = new LitContracts({
+      signer: ethersWallet,
+      network: LIT_NETWORK,
+      debug: false,
+    });
+    await litContracts.connect();
+    console.log(`✅ Connected LitContracts client to ${LIT_NETWORK} network`);
 
     console.log("🔄 Encrypting the string...");
     const { ciphertext, dataToEncryptHash } = await encryptString(
@@ -61,22 +75,6 @@ export const runExample = async (dataToEncrypt: string) => {
       litNodeClient
     );
     console.log("✅ Encrypted the string");
-
-    const ethersWallet = new ethers.Wallet(
-      ETHEREUM_PRIVATE_KEY,
-      new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE)
-    );
-
-    console.log(
-      `🔄 Connecting LitContracts client to ${LIT_NETWORK} network...`
-    );
-    const litContracts = new LitContracts({
-      signer: ethersWallet,
-      network: LIT_NETWORK,
-      debug: false,
-    });
-    await litContracts.connect();
-    console.log(`✅ Connected LitContracts client to ${LIT_NETWORK} network`);
 
     let capacityTokenId = LIT_CAPACITY_CREDIT_TOKEN_ID;
     if (capacityTokenId === "" || capacityTokenId === undefined) {
