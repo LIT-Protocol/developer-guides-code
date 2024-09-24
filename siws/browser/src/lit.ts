@@ -1,8 +1,7 @@
 import { LIT_RPC, LitNetwork } from "@lit-protocol/constants";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
-import { SolRpcConditions } from "@lit-protocol/types";
+import { UnifiedAccessControlConditions } from "@lit-protocol/types";
 import { ethers } from "ethers";
-
 import {
   createSiweMessage,
   generateAuthSig,
@@ -10,10 +9,24 @@ import {
   LitAccessControlConditionResource,
   LitActionResource,
 } from "@lit-protocol/auth-helpers";
+import ipfsOnlyHash from "typestub-ipfs-only-hash";
+
 import { SiwsObject } from "./App";
 import litActionCode from "./dist/litActionSiws.js?raw";
 
 const ETHEREUM_PRIVATE_KEY = import.meta.env.VITE_ETHEREUM_PRIVATE_KEY;
+
+export async function calculateLitActionCodeCID(
+  input: string
+): Promise<string> {
+  try {
+    const cid = await ipfsOnlyHash.of(input);
+    return cid;
+  } catch (error) {
+    console.error("Error calculating CID for litActionCode:", error);
+    throw error;
+  }
+}
 
 export const encryptStringForAddress = async (
   stringToEncrypt: string,
@@ -32,8 +45,9 @@ export const encryptStringForAddress = async (
 
     const { ciphertext, dataToEncryptHash } = await litNodeClient.encrypt({
       dataToEncrypt: new TextEncoder().encode(stringToEncrypt),
-      solRpcConditions: [
+      unifiedAccessControlConditions: [
         {
+          conditionType: "solRpc",
           method: "",
           params: [":userAddress"],
           pdaParams: [],
@@ -44,6 +58,21 @@ export const encryptStringForAddress = async (
             key: "",
             comparator: "=",
             value: addressToEncryptFor,
+          },
+        },
+        {
+          operator: "and",
+        },
+        {
+          conditionType: "evmBasic",
+          contractAddress: "",
+          standardContractType: "",
+          chain: "ethereum",
+          method: "",
+          parameters: [":currentActionIpfsId"],
+          returnValueTest: {
+            comparator: "=",
+            value: await calculateLitActionCodeCID(litActionCode),
           },
         },
       ],
@@ -58,9 +87,9 @@ export const encryptStringForAddress = async (
   }
 };
 
-async function decryptData(
+export async function decryptData(
   siwsObject: SiwsObject,
-  solRpcConditions: SolRpcConditions,
+  unifiedAccessControlConditions: UnifiedAccessControlConditions,
   ciphertext: string,
   dataToEncryptHash: string
 ) {
@@ -82,7 +111,7 @@ async function decryptData(
 
     console.log("jsParams", {
       siwsObject: JSON.stringify(siwsObject),
-      solRpcConditions,
+      unifiedAccessControlConditions,
       ciphertext,
       dataToEncryptHash,
     });
@@ -124,7 +153,7 @@ async function decryptData(
       }),
       jsParams: {
         siwsObject: JSON.stringify(siwsObject),
-        solRpcConditions,
+        unifiedAccessControlConditions,
         ciphertext,
         dataToEncryptHash,
       },
@@ -140,5 +169,3 @@ async function decryptData(
     litNodeClient!.disconnect();
   }
 }
-
-export { decryptData };
