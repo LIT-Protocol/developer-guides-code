@@ -11,7 +11,7 @@
         "update-lit": {
             "executor": "nx:run-commands",
             "options": {
-                "command": "cd sign-and-combine-ecdsa/nodejs && chmod +x ../../scripts/update-lit.sh && ../../scripts/update-lit.sh"
+                "command": "cd sign-and-combine-ecdsa/nodejs && ../../scripts/update-lit.sh"
             }
         }
     }
