@@ -21,9 +21,9 @@
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^0.44.1",
-    "@lit-protocol/contracts-sdk": "^6.1.0-beta.2",
-    "@lit-protocol/lit-auth-client": "^6.1.0-beta.2",
-    "@lit-protocol/types": "^6.1.0-beta.2",
+    "@lit-protocol/contracts-sdk": "^6.4.10",
+    "@lit-protocol/lit-auth-client": "^6.4.10",
+    "@lit-protocol/types": "^6.4.10",
     "ethers": "v5"
   }
 }

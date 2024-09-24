@@ -5,7 +5,7 @@
         "update-lit": {
             "executor": "nx:run-commands",
             "options": {
-                "command": "cd conditional-signing/nodejs && chmod +x ../../scripts/update-lit.sh && ../../scripts/update-lit.sh"
+                "command": "cd conditional-signing/nodejs && ../../scripts/update-lit.sh"
             }
         }
     }

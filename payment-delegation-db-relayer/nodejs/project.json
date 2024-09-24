@@ -11,7 +11,7 @@
         "update-lit": {
             "executor": "nx:run-commands",
             "options": {
-                "command": "cd payment-delegation-db-relayer/nodejs && chmod +x ../../scripts/update-lit.sh && ../../scripts/update-lit.sh"
+                "command": "cd payment-delegation-db-relayer/nodejs && ../../scripts/update-lit.sh"
             }
         }
     }

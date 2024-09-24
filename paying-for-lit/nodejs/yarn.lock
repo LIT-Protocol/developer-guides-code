@@ -659,7 +659,7 @@
     tslib "1.14.1"
     uint8arrays "^4.0.3"
 
-"@lit-protocol/auth-helpers@6.4.10", "@lit-protocol/auth-helpers@^6.4.0":
+"@lit-protocol/auth-helpers@6.4.10", "@lit-protocol/auth-helpers@^6.4.10":
   version "6.4.10"
   resolved "https://registry.yarnpkg.com/@lit-protocol/auth-helpers/-/auth-helpers-6.4.10.tgz#1c3aed304c0d10ef87e877f2b572636dad906e09"
   integrity sha512-1WCPuvFxzuhwrKbdL8ciaboiGjlXsCn/4BeYYpa25ZoxVizEz6VhgshCQpgj76RnA++wPznogpXDyrkpidVMYA==
@@ -693,7 +693,7 @@
     tslib "1.14.1"
     util "0.12.5"
 
-"@lit-protocol/constants@6.4.10", "@lit-protocol/constants@^6.4.0":
+"@lit-protocol/constants@6.4.10", "@lit-protocol/constants@^6.4.10":
   version "6.4.10"
   resolved "https://registry.yarnpkg.com/@lit-protocol/constants/-/constants-6.4.10.tgz#39b909fee6dfe8cd6cca2297269a32f0490a4fb8"
   integrity sha512-vfMjrkBgWThY2zC44/jGpic9rqYBawmKShFoHIFmOgxMpR/EX5OK0tucjl02C1RFmsn77b/PiHRWe1gzayehpA==
@@ -707,7 +707,7 @@
     siwe "^2.0.5"
     tslib "1.14.1"
 
-"@lit-protocol/contracts-sdk@6.4.10", "@lit-protocol/contracts-sdk@^6.4.0":
+"@lit-protocol/contracts-sdk@6.4.10", "@lit-protocol/contracts-sdk@^6.4.10":
   version "6.4.10"
   resolved "https://registry.yarnpkg.com/@lit-protocol/contracts-sdk/-/contracts-sdk-6.4.10.tgz#d7e7ab7b5230f19073e166a70d079c0364de6816"
   integrity sha512-QQIDXzXAdpEeZw+RPWiiFV243ZR1vI1bmXZ1S4FmBeYGtXTcwHGqDdWb44GiBqKK0xMp+XCchpG2CtFt9ACDOg==
@@ -854,7 +854,7 @@
     uint8arrays "^4.0.3"
     util "0.12.5"
 
-"@lit-protocol/lit-auth-client@^6.4.0":
+"@lit-protocol/lit-auth-client@^6.4.10":
   version "6.4.10"
   resolved "https://registry.yarnpkg.com/@lit-protocol/lit-auth-client/-/lit-auth-client-6.4.10.tgz#fe984e07097faec7b0fbd78407b0b805f7ad80be"
   integrity sha512-lC7ZlG7zOgyuIrvm5FqL15++v8CBrn2c+LO4zQSRO10tiec0CA2s4c9fRegtZGakjr+/meETldg/eTmbArlasg==
@@ -964,7 +964,7 @@
     uint8arrays "^4.0.3"
     util "0.12.5"
 
-"@lit-protocol/lit-node-client@6.4.10", "@lit-protocol/lit-node-client@^6.4.0":
+"@lit-protocol/lit-node-client@6.4.10", "@lit-protocol/lit-node-client@^6.4.10":
   version "6.4.10"
   resolved "https://registry.yarnpkg.com/@lit-protocol/lit-node-client/-/lit-node-client-6.4.10.tgz#36b854b7161baa4e400bdf807adfcddd8b914ec3"
   integrity sha512-VN9qbSwiRTqtwXyAn8SQKSpKp/tNV6xab4pNAEK6a+QR0yCnqImFXU32lkVUg+hViDSrIFP2OASlo57OTED8zw==
@@ -4315,6 +4315,7 @@ workerpool@^6.5.1:
   integrity sha512-Fs4dNYcsdpYSAfVxhnl1L5zTksjvOJxtC5hzMNl+1t9B8hTJTdKDyZ5ju7ztgPy+ft9tBFXoOlDNiOT9WUXZlA==
 
 "wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
+  name wrap-ansi-cjs
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
