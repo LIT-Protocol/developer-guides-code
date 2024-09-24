@@ -5,7 +5,7 @@
         "update-lit": {
             "executor": "nx:run-commands",
             "options": {
-                "command": "cd decrypt-api-key-in-action/nodejs && chmod +x ../../scripts/update-lit.sh && ../../scripts/update-lit.sh"
+                "command": "cd decrypt-api-key-in-action/nodejs && ../../scripts/update-lit.sh"
             }
         }
     }
