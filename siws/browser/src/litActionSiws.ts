@@ -104,17 +104,14 @@ function bytesToHex(uint8arr) {
       console.log("Signature is valid.");
       try {
         const decryptedData = await Lit.Actions.decryptAndCombine({
-          accessControlConditions: unifiedAccessControlConditions,
+          accessControlConditions: solRpcConditions,
           ciphertext,
           dataToEncryptHash,
-          authSigs: {
-            solana: {
-              sig: bytesToHex(decodeBase58(signature)),
-              derivedVia: "solana.signMessage",
-              signedMessage: reconstructedMessage,
-              address: publicKeyBase58,
-            },
-            ethereum: null,
+          authSig: {
+            sig: bytesToHex(decodeBase58(signature)),
+            derivedVia: "solana.signMessage",
+            signedMessage: reconstructedMessage,
+            address: publicKeyBase58,
           },
           chain: "solana",
         });
@@ -145,6 +142,7 @@ function bytesToHex(uint8arr) {
         success: false,
         message: "Error verifying signature.",
         error: error.toString(),
+        stack: error.stack || "No stack trace available",
       }),
     });
   }

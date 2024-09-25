@@ -16,7 +16,10 @@ import {
   decryptData,
   calculateLitActionCodeCID,
 } from "./lit";
-import { UnifiedAccessControlConditions } from "@lit-protocol/types";
+import {
+  SolRpcConditions,
+  UnifiedAccessControlConditions,
+} from "@lit-protocol/types";
 
 import SignInButton from "./SignInButton";
 import litActionCode from "./dist/litActionSiws.js?raw";
@@ -46,7 +49,7 @@ function App() {
     dataToEncryptHash: string;
   } | null>(null);
   const [siwsObject, setSiwsObject] = useState<SiwsObject | null>(null);
-  const [unifiedAccessControlConditions, setUnifiedAccessControlConditions] =
+  const [solAccessControlConditions, setSolAccessControlConditions] =
     useState<UnifiedAccessControlConditions | null>(null);
   const [decryptedData, setDecryptedData] = useState<string | null>(null);
 
@@ -71,9 +74,8 @@ function App() {
         siwsObject.siwsInput.address
       );
       setEncryptedData(result || null);
-      const unifiedAccessControlConditions: UnifiedAccessControlConditions = [
+      const solRpcConditions: SolRpcConditions = [
         {
-          conditionType: "solRpc",
           method: "",
           params: [":userAddress"],
           pdaParams: [],
@@ -86,24 +88,22 @@ function App() {
             value: siwsObject.siwsInput.address,
           },
         },
+        { operator: "and" },
         {
-          operator: "and",
-        },
-        {
-          conditionType: "evmBasic",
-          contractAddress: "",
-          standardContractType: "",
-          chain: "ethereum",
           method: "",
-          parameters: [":currentActionIpfsId"],
+          params: [":currentActionIpfsId"],
+          pdaParams: [],
+          pdaInterface: { offset: 0, fields: {} },
+          pdaKey: "",
+          chain: "solana",
           returnValueTest: {
+            key: "",
             comparator: "=",
             value: await calculateLitActionCodeCID(litActionCode),
           },
         },
       ];
-      setUnifiedAccessControlConditions(unifiedAccessControlConditions);
-      console.log("Encrypted data:", result);
+      setSolAccessControlConditions(solRpcConditions);
     } catch (error) {
       console.error("Error encrypting data:", error);
       alert("Failed to encrypt data. Check the console for details.");
@@ -111,7 +111,7 @@ function App() {
   };
 
   const decryptDataHandler = async () => {
-    if (!siwsObject || !unifiedAccessControlConditions || !encryptedData) {
+    if (!siwsObject || !solAccessControlConditions || !encryptedData) {
       alert("Missing necessary data for decryption.");
       return;
     }
@@ -119,7 +119,7 @@ function App() {
     try {
       const decryptedData = await decryptData(
         siwsObject,
-        unifiedAccessControlConditions,
+        solAccessControlConditions,
         encryptedData.ciphertext,
         encryptedData.dataToEncryptHash
       );

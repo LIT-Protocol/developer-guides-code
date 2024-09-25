@@ -1,6 +1,9 @@
 import { LIT_RPC, LitNetwork } from "@lit-protocol/constants";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
-import { UnifiedAccessControlConditions } from "@lit-protocol/types";
+import {
+  SolRpcConditions,
+  UnifiedAccessControlConditions,
+} from "@lit-protocol/types";
 import { ethers } from "ethers";
 import {
   createSiweMessage,
@@ -45,9 +48,8 @@ export const encryptStringForAddress = async (
 
     const { ciphertext, dataToEncryptHash } = await litNodeClient.encrypt({
       dataToEncrypt: new TextEncoder().encode(stringToEncrypt),
-      unifiedAccessControlConditions: [
+      solRpcConditions: [
         {
-          conditionType: "solRpc",
           method: "",
           params: [":userAddress"],
           pdaParams: [],
@@ -60,22 +62,34 @@ export const encryptStringForAddress = async (
             value: addressToEncryptFor,
           },
         },
+        { operator: "and" },
         {
-          operator: "and",
-        },
-        {
-          conditionType: "evmBasic",
-          contractAddress: "",
-          standardContractType: "",
-          chain: "ethereum",
           method: "",
-          parameters: [":currentActionIpfsId"],
+          params: [":currentActionIpfsId"],
+          pdaParams: [],
+          pdaInterface: { offset: 0, fields: {} },
+          pdaKey: "",
+          chain: "solana",
           returnValueTest: {
+            key: "",
             comparator: "=",
             value: await calculateLitActionCodeCID(litActionCode),
           },
         },
       ],
+      // accessControlConditions: [
+      //   {
+      //     contractAddress: "",
+      //     standardContractType: "",
+      //     chain: "ethereum",
+      //     method: "",
+      //     parameters: [":currentActionIpfsId"],
+      //     returnValueTest: {
+      //       comparator: "=",
+      //       value: await calculateLitActionCodeCID(litActionCode),
+      //     },
+      //   },
+      // ],
     });
 
     return { ciphertext, dataToEncryptHash };
@@ -89,7 +103,7 @@ export const encryptStringForAddress = async (
 
 export async function decryptData(
   siwsObject: SiwsObject,
-  unifiedAccessControlConditions: UnifiedAccessControlConditions,
+  solRpcConditions: SolRpcConditions,
   ciphertext: string,
   dataToEncryptHash: string
 ) {
@@ -111,7 +125,7 @@ export async function decryptData(
 
     console.log("jsParams", {
       siwsObject: JSON.stringify(siwsObject),
-      unifiedAccessControlConditions,
+      solRpcConditions,
       ciphertext,
       dataToEncryptHash,
     });
@@ -153,7 +167,7 @@ export async function decryptData(
       }),
       jsParams: {
         siwsObject: JSON.stringify(siwsObject),
-        unifiedAccessControlConditions,
+        solRpcConditions,
         ciphertext,
         dataToEncryptHash,
       },
