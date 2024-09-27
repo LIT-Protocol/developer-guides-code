@@ -3,7 +3,7 @@
 This example was made to compile the code found in the blog post [here](spark.litprotocol.com/programming-bitcoin).
 
 Please visit the blog post for more information.
-https://spark.litprotocol.com/programming-bitcoin/
+
 ## Prerequisites
 Before compiling and trying this example out, there are a few things you'll need to prepare.
 1. You will need to mint a PKP. The fastest way to do this is through the [Lit Explorer](https://explorer.litprotocol.com/). Please make sure you mint the PKP on the same network you run the example on.
