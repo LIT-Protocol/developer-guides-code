@@ -14,33 +14,13 @@ import "@solana/wallet-adapter-react-ui/styles.css";
 import {
   encryptStringForAddress,
   decryptData,
-  calculateLitActionCodeCID,
+  getSolRpcConditions,
 } from "./lit";
-import {
-  SolRpcConditions,
-  UnifiedAccessControlConditions,
-} from "@lit-protocol/types";
+import { UnifiedAccessControlConditions } from "@lit-protocol/types";
 
 import SignInButton from "./SignInButton";
 import litActionCode from "./dist/litActionSiws.js?raw";
-
-export interface SiwsObject {
-  siwsInput: {
-    domain?: string;
-    address: string;
-    statement?: string;
-    uri?: string;
-    version?: string;
-    chainId?: number;
-    nonce?: number;
-    issuedAt?: string;
-    expirationTime?: string;
-    notBefore?: string;
-    requestId?: string;
-    resources?: [];
-  };
-  signature: string;
-}
+import { MainContentProps, SiwsObject } from "./types";
 
 function App() {
   const [inputData, setInputData] = useState("");
@@ -57,7 +37,7 @@ function App() {
     setSiwsObject(siws);
   };
 
-  const encryptData = async () => {
+  const encryptDataHandler = async () => {
     if (!inputData) {
       alert("Please enter data to encrypt");
       return;
@@ -74,36 +54,10 @@ function App() {
         siwsObject.siwsInput.address
       );
       setEncryptedData(result || null);
-      const solRpcConditions: SolRpcConditions = [
-        {
-          method: "",
-          params: [":userAddress"],
-          pdaParams: [],
-          pdaInterface: { offset: 0, fields: {} },
-          pdaKey: "",
-          chain: "solana",
-          returnValueTest: {
-            key: "",
-            comparator: "=",
-            value: siwsObject.siwsInput.address,
-          },
-        },
-        { operator: "and" },
-        {
-          method: "",
-          params: [":currentActionIpfsId"],
-          pdaParams: [],
-          pdaInterface: { offset: 0, fields: {} },
-          pdaKey: "",
-          chain: "solana",
-          returnValueTest: {
-            key: "",
-            comparator: "=",
-            value: await calculateLitActionCodeCID(litActionCode),
-          },
-        },
-      ];
-      setSolAccessControlConditions(solRpcConditions);
+
+      setSolAccessControlConditions(
+        await getSolRpcConditions(siwsObject.siwsInput.address, litActionCode)
+      );
     } catch (error) {
       console.error("Error encrypting data:", error);
       alert("Failed to encrypt data. Check the console for details.");
@@ -124,7 +78,6 @@ function App() {
         encryptedData.dataToEncryptHash
       );
       setDecryptedData(decryptedData as string);
-      console.log("Decrypted data:", decryptedData);
     } catch (error) {
       console.error("Error decrypting data:", error);
       alert("Failed to decrypt data. Check the console for details.");
@@ -146,7 +99,7 @@ function App() {
             handleSignIn={handleSignIn}
             inputData={inputData}
             setInputData={setInputData}
-            encryptData={encryptData}
+            encryptData={encryptDataHandler}
             encryptedData={encryptedData}
             decryptData={decryptDataHandler}
             decryptedData={decryptedData}
@@ -155,20 +108,6 @@ function App() {
       </WalletProvider>
     </ConnectionProvider>
   );
-}
-
-interface MainContentProps {
-  siwsObject: SiwsObject | null;
-  handleSignIn: (siws: SiwsObject) => void;
-  inputData: string;
-  setInputData: (data: string) => void;
-  encryptData: () => Promise<void>;
-  encryptedData: {
-    ciphertext: string;
-    dataToEncryptHash: string;
-  } | null;
-  decryptData: () => Promise<void>;
-  decryptedData: string | null;
 }
 
 const MainContent: React.FC<MainContentProps> = ({

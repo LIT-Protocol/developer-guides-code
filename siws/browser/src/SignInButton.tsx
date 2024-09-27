@@ -1,7 +1,7 @@
 import { useWallet } from "@solana/wallet-adapter-react";
 import bs58 from "bs58";
 
-import { SiwsObject } from "./App";
+import { SiwsObject } from "./types";
 
 interface SignInButtonProps {
   onSignIn: (siwsObject: SiwsObject) => void;
@@ -20,10 +20,6 @@ function SignInButton({ onSignIn }: SignInButtonProps) {
       const siwsInput = createSiwsInput(publicKey.toString());
       const siwsMessage = new TextEncoder().encode(getSiwsMessage(siwsInput));
       const signature = await signMessage(siwsMessage);
-
-      console.log("SIWS Input:", siwsInput);
-      console.log("SIWS Message:", getSiwsMessage(siwsInput));
-      console.log("Signature:", signature);
 
       const siwsObject: SiwsObject = {
         siwsInput,

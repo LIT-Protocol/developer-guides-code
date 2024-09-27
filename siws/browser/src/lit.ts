@@ -1,9 +1,6 @@
 import { LIT_RPC, LitNetwork } from "@lit-protocol/constants";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
-import {
-  SolRpcConditions,
-  UnifiedAccessControlConditions,
-} from "@lit-protocol/types";
+import { SolRpcConditions } from "@lit-protocol/types";
 import { ethers } from "ethers";
 import {
   createSiweMessage,
@@ -12,92 +9,79 @@ import {
   LitAccessControlConditionResource,
   LitActionResource,
 } from "@lit-protocol/auth-helpers";
-import ipfsOnlyHash from "typestub-ipfs-only-hash";
 
-import { SiwsObject } from "./App";
+import { calculateLitActionCodeCID } from "./utils";
+import { SiwsObject } from "./types";
 import litActionCode from "./dist/litActionSiws.js?raw";
 
 const ETHEREUM_PRIVATE_KEY = import.meta.env.VITE_ETHEREUM_PRIVATE_KEY;
 
-export async function calculateLitActionCodeCID(
-  input: string
-): Promise<string> {
-  try {
-    const cid = await ipfsOnlyHash.of(input);
-    return cid;
-  } catch (error) {
-    console.error("Error calculating CID for litActionCode:", error);
-    throw error;
-  }
-}
+let litNodeClient: LitNodeClient | null = null;
 
-export const encryptStringForAddress = async (
-  stringToEncrypt: string,
-  addressToEncryptFor: string
-) => {
-  let litNodeClient: LitNodeClient;
-
-  try {
-    console.log("🔄 Connecting LitNodeClient to Lit network...");
+const getLitNodeClient = async () => {
+  if (!litNodeClient) {
     litNodeClient = new LitNodeClient({
       litNetwork: LitNetwork.DatilDev,
       debug: false,
     });
     await litNodeClient.connect();
-    console.log("✅ Connected LitNodeClient to Lit network");
+  }
+  return litNodeClient;
+};
 
+export const getSolRpcConditions = async (
+  address: string,
+  litActionCode: string
+) => {
+  return [
+    {
+      method: "",
+      params: [":userAddress"],
+      pdaParams: [],
+      pdaInterface: { offset: 0, fields: {} },
+      pdaKey: "",
+      chain: "solana",
+      returnValueTest: {
+        key: "",
+        comparator: "=",
+        value: address,
+      },
+    },
+    { operator: "and" },
+    {
+      method: "",
+      params: [":currentActionIpfsId"],
+      pdaParams: [],
+      pdaInterface: { offset: 0, fields: {} },
+      pdaKey: "",
+      chain: "solana",
+      returnValueTest: {
+        key: "",
+        comparator: "=",
+        value: await calculateLitActionCodeCID(litActionCode),
+      },
+    },
+  ];
+};
+
+export const encryptStringForAddress = async (
+  stringToEncrypt: string,
+  addressToEncryptFor: string
+) => {
+  try {
+    const litNodeClient = await getLitNodeClient();
     const { ciphertext, dataToEncryptHash } = await litNodeClient.encrypt({
       dataToEncrypt: new TextEncoder().encode(stringToEncrypt),
-      solRpcConditions: [
-        {
-          method: "",
-          params: [":userAddress"],
-          pdaParams: [],
-          pdaInterface: { offset: 0, fields: {} },
-          pdaKey: "",
-          chain: "solana",
-          returnValueTest: {
-            key: "",
-            comparator: "=",
-            value: addressToEncryptFor,
-          },
-        },
-        { operator: "and" },
-        {
-          method: "",
-          params: [":currentActionIpfsId"],
-          pdaParams: [],
-          pdaInterface: { offset: 0, fields: {} },
-          pdaKey: "",
-          chain: "solana",
-          returnValueTest: {
-            key: "",
-            comparator: "=",
-            value: await calculateLitActionCodeCID(litActionCode),
-          },
-        },
-      ],
-      // accessControlConditions: [
-      //   {
-      //     contractAddress: "",
-      //     standardContractType: "",
-      //     chain: "ethereum",
-      //     method: "",
-      //     parameters: [":currentActionIpfsId"],
-      //     returnValueTest: {
-      //       comparator: "=",
-      //       value: await calculateLitActionCodeCID(litActionCode),
-      //     },
-      //   },
-      // ],
+      solRpcConditions: await getSolRpcConditions(
+        addressToEncryptFor,
+        litActionCode
+      ),
     });
 
     return { ciphertext, dataToEncryptHash };
   } catch (error) {
     console.error("Error in encryptStringForAddress:", error);
     throw error;
-  } finally {
-    litNodeClient!.disconnect();
   }
 };
 
@@ -107,29 +91,13 @@ export async function decryptData(
   ciphertext: string,
   dataToEncryptHash: string
 ) {
-  let litNodeClient: LitNodeClient;
-
   try {
-    console.log("🔄 Connecting LitNodeClient to Lit network...");
-    litNodeClient = new LitNodeClient({
-      litNetwork: LitNetwork.DatilDev,
-      debug: false,
-    });
-    await litNodeClient.connect();
-    console.log("✅ Connected LitNodeClient to Lit network");
-
     const ethersSigner = new ethers.Wallet(
       ETHEREUM_PRIVATE_KEY,
       new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE)
     );
 
-    console.log("jsParams", {
-      siwsObject: JSON.stringify(siwsObject),
-      solRpcConditions,
-      ciphertext,
-      dataToEncryptHash,
-    });
-
+    const litNodeClient = await getLitNodeClient();
     const response = await litNodeClient.executeJs({
       code: litActionCode,
       sessionSigs: await litNodeClient.getSessionSigs({
@@ -173,13 +141,9 @@ export async function decryptData(
       },
     });
 
-    console.log("response", response);
-
     return response.response;
   } catch (error) {
     console.error("Error in decryptData:", error);
     throw error;
-  } finally {
-    litNodeClient!.disconnect();
   }
 }
