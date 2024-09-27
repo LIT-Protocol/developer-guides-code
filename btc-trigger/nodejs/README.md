@@ -1,6 +1,6 @@
 # Triggering a Bitcoin (P2PKH) Transaction with Lit Protocol
 
-This example was made to compile the code found in the blog post [here](spark.litprotocol.com/programming-bitcoin).
+This example was made to compile the code found in the blog post [here](https://spark.litprotocol.com/programming-bitcoin/).
 
 Please visit the blog post for more information.
 
