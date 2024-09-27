@@ -11,16 +11,13 @@ import {
 } from "@solana/wallet-adapter-react-ui";
 import { clusterApiUrl } from "@solana/web3.js";
 import "@solana/wallet-adapter-react-ui/styles.css";
-import {
-  encryptStringForAddress,
-  decryptData,
-  getSolRpcConditions,
-} from "./lit";
 import { UnifiedAccessControlConditions } from "@lit-protocol/types";
 
 import SignInButton from "./SignInButton";
 import litActionCode from "./dist/litActionSiws.js?raw";
+import { encryptStringForAddress, decryptData } from "./lit";
 import { MainContentProps, SiwsObject } from "./types";
+import { getSolRpcConditions } from "./utils";
 
 function App() {
   const [inputData, setInputData] = useState("");

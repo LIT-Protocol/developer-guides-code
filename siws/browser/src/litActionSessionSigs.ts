@@ -1,6 +1,15 @@
 // @ts-nocheck
 import { decodeBase58 } from "https://deno.land/std@0.224.0/encoding/base58.ts";
 
+const LIT_PKP_PERMISSIONS_CONTRACT_ADDRESS =
+  "0x213Db6E1446928E19588269bEF7dFc9187c4829A";
+const SIWS_AUTH_METHOD_TYPE = ethers.utils.keccak256(
+  ethers.utils.toUtf8Bytes("Lit Developer Guide Solana SIWS Example")
+);
+const IS_PERMITTED_AUTH_METHOD_INTERFACE = new ethers.utils.Interface([
+  "function isPermittedAuthMethod(uint256 tokenId, uint256 authMethodType, bytes memory id) public view returns (bool)",
+]);
+
 function getSiwsMessage(siwsInput) {
   let message = `${siwsInput.domain} wants you to sign in with your Solana account:\n${siwsInput.address}`;
 
@@ -77,11 +86,32 @@ async function verifySiwsSignature(
   }
 }
 
-function bytesToHex(uint8arr) {
-  if (!uint8arr) return "";
-  return Array.from(uint8arr)
-    .map((byte) => ("0" + (byte & 0xff).toString(16)).slice(-2))
-    .join("");
+async function checkIfAuthedSolPubKeyIsPermitted(solanaPublicKey) {
+  const usersAuthMethodId = ethers.utils.keccak256(
+    ethers.utils.toUtf8Bytes(`siws:${solanaPublicKey}`)
+  );
+  const abiEncodedData = IS_PERMITTED_AUTH_METHOD_INTERFACE.encodeFunctionData(
+    "isPermittedAuthMethod",
+    [pkpTokenId, SIWS_AUTH_METHOD_TYPE, usersAuthMethodId]
+  );
+  const isPermittedTx = {
+    to: LIT_PKP_PERMISSIONS_CONTRACT_ADDRESS,
+    data: abiEncodedData,
+  };
+  const isPermitted = await Lit.Actions.callContract({
+    chain: "yellowstone",
+    txn: ethers.utils.serializeTransaction(isPermittedTx),
+  });
+  if (!isPermitted) {
+    console.log("Solana public key is not authorized to use this PKP");
+    return Lit.Actions.setResponse({
+      response: "false",
+      reason: "Solana public key is not authorized to use this PKP",
+    });
+  }
+
+  console.log("Solana public key is authorized to use this PKP");
+  return Lit.Actions.setResponse({ response: "true" });
 }
 
 (async () => {
@@ -102,7 +132,8 @@ function bytesToHex(uint8arr) {
 
     if (isValid) {
       console.log("Signature is valid.");
-      LitActions.setResponse({ response: "true" });
+
+      return await checkIfAuthedSolPubKeyIsPermitted(siwsInput.address);
     } else {
       console.log("Signature is invalid.");
       LitActions.setResponse({
