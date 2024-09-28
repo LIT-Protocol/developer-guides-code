@@ -48,6 +48,7 @@
       "dependencies": [
         "npm:@esbuild-plugins/node-globals-polyfill@^0.2.3",
         "npm:@esbuild-plugins/node-modules-polyfill@^0.2.2",
+        "npm:@lit-protocol/auth-browser@^6.7.0",
         "npm:@lit-protocol/auth-helpers@^6.5.3",
         "npm:@lit-protocol/constants@^6.5.3",
         "npm:@lit-protocol/contracts-sdk@^6.5.3",

@@ -23,8 +23,8 @@ import {
 } from "./utils";
 import { SiwsObject } from "./types";
 import { getSolRpcConditions } from "./utils";
-import litActionCodeSessionSigs from "./dist/litActionSessionSigs.js?raw";
-import litActionCodeSiws from "./dist/litActionSiws.js?raw";
+import litActionCodeSessionSigs from "./litActions/dist/litActionSessionSigs.js?raw";
+import litActionCodeSiws from "./litActions/dist/litActionSiws.js?raw";
 
 const ETHEREUM_PRIVATE_KEY = import.meta.env.VITE_ETHEREUM_PRIVATE_KEY;
 

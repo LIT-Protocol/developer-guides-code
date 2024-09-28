@@ -14,7 +14,7 @@ import "@solana/wallet-adapter-react-ui/styles.css";
 import { UnifiedAccessControlConditions } from "@lit-protocol/types";
 
 import SignInButton from "./SignInButton";
-import litActionCode from "./dist/litActionSiws.js?raw";
+import litActionCodeSiws from "./litActions/dist/litActionSiws.js?raw";
 import { encryptStringForAddress, decryptData } from "./lit";
 import { MainContentProps, SiwsObject } from "./types";
 import { getSolRpcConditions } from "./utils";
@@ -53,7 +53,10 @@ function App() {
       setEncryptedData(result || null);
 
       setSolAccessControlConditions(
-        await getSolRpcConditions(siwsObject.siwsInput.address, litActionCode)
+        await getSolRpcConditions(
+          siwsObject.siwsInput.address,
+          litActionCodeSiws
+        )
       );
     } catch (error) {
       console.error("Error encrypting data:", error);

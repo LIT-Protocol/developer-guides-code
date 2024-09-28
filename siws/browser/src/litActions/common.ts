@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { decodeBase58 } from "https://deno.land/std@0.224.0/encoding/base58.ts";
 
-function getSiwsMessage(siwsInput) {
+export function getSiwsMessage(siwsInput) {
   let message = `${siwsInput.domain} wants you to sign in with your Solana account:\n${siwsInput.address}`;
 
   if (siwsInput.statement) {
@@ -38,7 +38,7 @@ function getSiwsMessage(siwsInput) {
   return message;
 }
 
-async function verifySiwsSignature(
+export async function verifySiwsSignature(
   message: string,
   signatureBase58: string,
   publicKeyBase58: string
@@ -76,74 +76,3 @@ async function verifySiwsSignature(
     throw error;
   }
 }
-
-function bytesToHex(uint8arr) {
-  if (!uint8arr) return "";
-  return Array.from(uint8arr)
-    .map((byte) => ("0" + (byte & 0xff).toString(16)).slice(-2))
-    .join("");
-}
-
-(async () => {
-  try {
-    const _siwsObject = JSON.parse(siwsObject);
-    const siwsInput = _siwsObject.siwsInput;
-    const signature = _siwsObject.signature;
-    const publicKeyBase58 = siwsInput.address;
-
-    // Use the exact message that was signed
-    const reconstructedMessage = getSiwsMessage(siwsInput);
-
-    const isValid = await verifySiwsSignature(
-      reconstructedMessage,
-      signature,
-      publicKeyBase58
-    );
-
-    if (isValid) {
-      console.log("Signature is valid.");
-      try {
-        const decryptedData = await Lit.Actions.decryptAndCombine({
-          accessControlConditions: solRpcConditions,
-          ciphertext,
-          dataToEncryptHash,
-          authSig: {
-            sig: bytesToHex(decodeBase58(signature)),
-            derivedVia: "solana.signMessage",
-            signedMessage: reconstructedMessage,
-            address: publicKeyBase58,
-          },
-          chain: "solana",
-        });
-        LitActions.setResponse({ response: decryptedData });
-      } catch (error) {
-        console.error("Error decrypting data:", error);
-        LitActions.setResponse({
-          response: JSON.stringify({
-            success: false,
-            message: "Error decrypting data.",
-            error: error.toString(),
-          }),
-        });
-      }
-    } else {
-      console.log("Signature is invalid.");
-      LitActions.setResponse({
-        response: JSON.stringify({
-          success: false,
-          message: "Signature is invalid.",
-        }),
-      });
-    }
-  } catch (error) {
-    console.error("Error verifying signature:", error);
-    LitActions.setResponse({
-      response: JSON.stringify({
-        success: false,
-        message: "Error verifying signature.",
-        error: error.toString(),
-        stack: error.stack || "No stack trace available",
-      }),
-    });
-  }
-})();
