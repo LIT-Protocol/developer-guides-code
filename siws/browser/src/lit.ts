@@ -9,10 +9,12 @@ import { SolRpcConditions } from "@lit-protocol/types";
 import { ethers } from "ethers";
 import {
   LitAbility,
+  LitAccessControlConditionResource,
   LitActionResource,
   LitPKPResource,
 } from "@lit-protocol/auth-helpers";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
+import { disconnectWeb3 } from "@lit-protocol/auth-browser";
 
 import {
   calculateLitActionCodeCID,
@@ -20,9 +22,9 @@ import {
   mintCapacityCredit,
 } from "./utils";
 import { SiwsObject } from "./types";
+import { getSolRpcConditions } from "./utils";
 import litActionCodeSessionSigs from "./dist/litActionSessionSigs.js?raw";
 import litActionCodeSiws from "./dist/litActionSiws.js?raw";
-import { getSolRpcConditions } from "./utils";
 
 const ETHEREUM_PRIVATE_KEY = import.meta.env.VITE_ETHEREUM_PRIVATE_KEY;
 
@@ -117,14 +119,18 @@ const mintPkpAndAddPermittedAuthMethods = async (solanaPublicKey: string) => {
       ], // permittedAuthMethodIds
       ["0x", "0x"], // permittedAuthMethodPubkeys
       [[AuthMethodScope.SignAnything], [AuthMethodScope.NoPermissions]], // permittedAuthMethodScopes
-      false, // addPkpEthAddressAsPermittedAddress
+      true, // addPkpEthAddressAsPermittedAddress
       true, // sendPkpToItself
       { value: await litContractsClient.pkpNftContract.read.mintCost() }
     );
   const receipt = await tx.wait();
   console.log("✅ Minted PKP");
 
-  return getPkpInfoFromMintReceipt(receipt, litContractsClient);
+  const pkpInfo = await getPkpInfoFromMintReceipt(receipt, litContractsClient);
+  console.log(`ℹ️ Minted PKP with token id: ${pkpInfo.tokenId}`);
+  console.log(`ℹ️ Minted PKP with public key: ${pkpInfo.publicKey}`);
+  console.log(`ℹ️ Minted PKP with ETH address: ${pkpInfo.ethAddress}`);
+  return pkpInfo;
 };
 
 const getSessionSigs = async (
@@ -138,17 +144,17 @@ const getSessionSigs = async (
   const litNodeClient = await getLitNodeClient();
   const ethersSigner = await getEthersSigner();
 
-  console.log("🔄 Minting capacity credit...");
   const capacityTokenId = await mintCapacityCredit(ethersSigner);
-  console.log("✅ Minted capacity credit");
 
-  console.log("🔄 Creating capacity delegation auth sig...");
+  console.log(
+    `🔄 Creating capacity delegation auth sig for ${pkpInfo.ethAddress}...`
+  );
   const { capacityDelegationAuthSig } =
     await litNodeClient.createCapacityDelegationAuthSig({
       dAppOwnerWallet: ethersSigner,
       capacityTokenId,
       delegateeAddresses: [pkpInfo.ethAddress],
-      uses: "1",
+      uses: "10",
     });
   console.log("✅ Created capacity delegation auth sig");
 
@@ -166,6 +172,10 @@ const getSessionSigs = async (
       {
         resource: new LitActionResource("*"),
         ability: LitAbility.LitActionExecution,
+      },
+      {
+        resource: new LitAccessControlConditionResource("*"),
+        ability: LitAbility.AccessControlConditionDecryption,
       },
     ],
     jsParams: {
@@ -202,11 +212,12 @@ export async function decryptData(
     });
     console.log("✅ Decrypted data");
 
-    litNodeClient.disconnect();
-
     return response.response;
   } catch (error) {
     console.error("Error in decryptData:", error);
     throw error;
+  } finally {
+    disconnectWeb3();
+    litNodeClient!.disconnect();
   }
 }

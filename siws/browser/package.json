@@ -13,6 +13,7 @@
   "dependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
+    "@lit-protocol/auth-browser": "^6.7.0",
     "@lit-protocol/auth-helpers": "^6.5.3",
     "@lit-protocol/constants": "^6.5.3",
     "@lit-protocol/contracts-sdk": "^6.5.3",

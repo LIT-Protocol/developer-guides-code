@@ -3,6 +3,29 @@ import { LitContracts } from "@lit-protocol/contracts-sdk";
 import { LitNetwork } from "@lit-protocol/constants";
 import ipfsOnlyHash from "typestub-ipfs-only-hash";
 
+export const mintCapacityCredit = async (ethersSigner: ethers.Wallet) => {
+  try {
+    const litContracts = new LitContracts({
+      signer: ethersSigner,
+      network: LitNetwork.Datil,
+    });
+    await litContracts.connect();
+
+    console.log(`🔄 Minting capacity credit for ${ethersSigner.address}...`);
+    const capacityTokenId = (
+      await litContracts.mintCapacityCreditsNFT({
+        requestsPerKilosecond: 10,
+        daysUntilUTCMidnightExpiration: 1,
+      })
+    ).capacityTokenIdStr;
+    console.log(`✅ Minted capacity credit with id: ${capacityTokenId}`);
+    return capacityTokenId;
+  } catch (error) {
+    console.error("Error minting capacity credit:", error);
+    throw error;
+  }
+};
+
 export const getPkpInfoFromMintReceipt = async (
   txReceipt: ethers.ContractReceipt,
   litContractsClient: LitContracts
@@ -24,27 +47,6 @@ export const getPkpInfoFromMintReceipt = async (
     publicKey,
     ethAddress,
   };
-};
-
-export const mintCapacityCredit = async (ethersSigner: ethers.Wallet) => {
-  try {
-    const litContracts = new LitContracts({
-      signer: ethersSigner,
-      network: LitNetwork.Datil,
-    });
-    await litContracts.connect();
-
-    const capacityTokenId = (
-      await litContracts.mintCapacityCreditsNFT({
-        requestsPerKilosecond: 10,
-        daysUntilUTCMidnightExpiration: 30,
-      })
-    ).capacityTokenIdStr;
-    return capacityTokenId;
-  } catch (error) {
-    console.error("Error minting capacity credit:", error);
-    throw error;
-  }
 };
 
 export async function calculateLitActionCodeCID(
