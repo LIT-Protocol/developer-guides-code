@@ -68,7 +68,6 @@
         "npm:@typescript-eslint/parser@^7.13.1",
         "npm:@vitejs/plugin-react-swc@^3.7.0",
         "npm:@vitejs/plugin-react@^4.3.1",
-        "npm:bs58@^6.0.0",
         "npm:eslint-plugin-react-hooks@^4.6.2",
         "npm:eslint-plugin-react-refresh@^0.4.7",
         "npm:eslint@^8.57.0",
