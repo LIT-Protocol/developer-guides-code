@@ -15,9 +15,10 @@ import { UnifiedAccessControlConditions } from "@lit-protocol/types";
 
 import SignInButton from "./SignInButton";
 import litActionCodeSiws from "./litActions/dist/litActionSiws.js?raw";
-import { encryptStringForAddress, decryptData } from "./lit";
 import { MainContentProps, SiwsObject } from "./types";
 import { getSolRpcConditions } from "./utils";
+import { decryptData } from "./litDecrypt";
+import { encryptStringForAddress } from "./litEncrypt";
 
 function App() {
   const [inputData, setInputData] = useState("");
