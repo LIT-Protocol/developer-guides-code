@@ -4,14 +4,17 @@ import { decodeBase58 } from "https://deno.land/std@0.224.0/encoding/base58.ts";
 import { getSiwsMessage, verifySiwsSignature } from "./common.ts";
 
 (async () => {
+  const _siwsObject = JSON.parse(siwsObject);
+  const siwsInput = _siwsObject.siwsInput;
+
   let signatureIsValid = false;
+  let siwsMessage;
 
   try {
-    const _siwsObject = JSON.parse(siwsObject);
-    const siwsInput = _siwsObject.siwsInput;
+    siwsMessage = getSiwsMessage(siwsInput);
 
     signatureIsValid = await verifySiwsSignature(
-      getSiwsMessage(siwsInput),
+      siwsMessage,
       _siwsObject.signature,
       siwsInput.address
     );
@@ -44,10 +47,10 @@ import { getSiwsMessage, verifySiwsSignature } from "./common.ts";
       ciphertext,
       dataToEncryptHash,
       authSig: {
-        sig: ethers.utils.hexlify(decodeBase58(signature)).slice(2),
+        sig: ethers.utils.hexlify(decodeBase58(_siwsObject.signature)).slice(2),
         derivedVia: "solana.signMessage",
-        signedMessage: reconstructedMessage,
-        address: publicKeyBase58,
+        signedMessage: siwsMessage,
+        address: siwsInput.address,
       },
       chain: "solana",
     });
