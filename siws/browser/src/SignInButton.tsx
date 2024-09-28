@@ -1,5 +1,5 @@
 import { useWallet } from "@solana/wallet-adapter-react";
-import bs58 from "bs58";
+import { ethers } from "ethers";
 
 import { SiwsObject } from "./types";
 
@@ -23,7 +23,7 @@ function SignInButton({ onSignIn }: SignInButtonProps) {
 
       const siwsObject: SiwsObject = {
         siwsInput,
-        signature: bs58.encode(signature),
+        signature: ethers.utils.base58.encode(signature),
       };
 
       onSignIn(siwsObject);

@@ -27,7 +27,6 @@
     "@solana/wallet-standard-util": "^1.1.1",
     "@solana/web3.js": "^1.95.3",
     "@vitejs/plugin-react-swc": "^3.7.0",
-    "bs58": "^6.0.0",
     "ethers": "v5",
     "ipfs-only-hash": "^4.0.0",
     "react": "^18.3.1",
