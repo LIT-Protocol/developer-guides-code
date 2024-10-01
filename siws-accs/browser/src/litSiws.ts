@@ -86,6 +86,7 @@ export const litSiws = async (
     await litNodeClient.connect();
     console.log("✅ Connected to Lit Node Client");
 
+console.log("🔄 Attempting SIWS authentication...");
     const response = await litNodeClient.executeJs({
       code: litActionSiws,
       sessionSigs: await getSessionSigs(litNodeClient, ethersSigner),
