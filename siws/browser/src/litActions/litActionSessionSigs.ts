@@ -1,6 +1,4 @@
 // @ts-nocheck
-import { decodeBase58 } from "https://deno.land/std@0.224.0/encoding/base58.ts";
-
 import { getSiwsMessage, verifySiwsSignature } from "./common.ts";
 
 async function checkIfAuthedSolPubKeyIsPermitted(solanaPublicKey) {

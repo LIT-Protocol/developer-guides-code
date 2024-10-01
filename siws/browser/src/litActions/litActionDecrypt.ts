@@ -1,6 +1,4 @@
 // @ts-nocheck
-import { decodeBase58 } from "https://deno.land/std@0.224.0/encoding/base58.ts";
-
 import { getSiwsMessage, verifySiwsSignature } from "./common.ts";
 
 (async () => {
@@ -47,7 +45,9 @@ import { getSiwsMessage, verifySiwsSignature } from "./common.ts";
       ciphertext,
       dataToEncryptHash,
       authSig: {
-        sig: ethers.utils.hexlify(decodeBase58(_siwsObject.signature)).slice(2),
+        sig: ethers.utils
+          .hexlify(ethers.utils.base58.decode(_siwsObject.signature))
+          .slice(2),
         derivedVia: "solana.signMessage",
         signedMessage: siwsMessage,
         address: siwsInput.address,

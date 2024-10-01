@@ -5,7 +5,7 @@ esbuild.build({
   plugins: [...denoPlugins()],
   entryPoints: [
     "src/litActions/litActionSessionSigs.ts",
-    "src/litActions/litActionSiws.ts",
+    "src/litActions/litActionDecrypt.ts",
   ],
   outdir: "src/litActions/dist/",
   bundle: true,

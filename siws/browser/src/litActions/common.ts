@@ -1,6 +1,4 @@
 // @ts-nocheck
-import { decodeBase58 } from "https://deno.land/std@0.224.0/encoding/base58.ts";
-
 export function getSiwsMessage(siwsInput) {
   let message = `${siwsInput.domain} wants you to sign in with your Solana account:\n${siwsInput.address}`;
 
@@ -47,8 +45,8 @@ export async function verifySiwsSignature(
   const messageBytes = new TextEncoder().encode(message);
 
   try {
-    const signatureBytes = decodeBase58(signatureBase58);
-    const publicKeyBytes = decodeBase58(publicKeyBase58);
+    const signatureBytes = ethers.utils.base58.decode(signatureBase58);
+    const publicKeyBytes = ethers.utils.base58.decode(publicKeyBase58);
 
     // Import the public key
     const publicKey = await crypto.subtle.importKey(

@@ -1,5 +1,5 @@
 import { getLitNodeClient, getSolRpcConditions } from "./utils";
-import litActionCodeSiws from "./litActions/dist/litActionSiws.js?raw";
+import litActionDecrypt from "./litActions/dist/litActionDecrypt.js?raw";
 
 export const encryptStringForAddress = async (
   stringToEncrypt: string,
@@ -12,7 +12,7 @@ export const encryptStringForAddress = async (
       dataToEncrypt: new TextEncoder().encode(stringToEncrypt),
       solRpcConditions: await getSolRpcConditions(
         addressToEncryptFor,
-        litActionCodeSiws
+        litActionDecrypt
       ),
     });
     console.log("✅ Encrypted data");

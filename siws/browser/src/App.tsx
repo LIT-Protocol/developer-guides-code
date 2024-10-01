@@ -14,7 +14,7 @@ import "@solana/wallet-adapter-react-ui/styles.css";
 import { UnifiedAccessControlConditions } from "@lit-protocol/types";
 
 import SignInButton from "./SignInButton";
-import litActionCodeSiws from "./litActions/dist/litActionSiws.js?raw";
+import litActionDecrypt from "./litActions/dist/litActionDecrypt.js?raw";
 import { MainContentProps, SiwsObject } from "./types";
 import { getSolRpcConditions } from "./utils";
 import { decryptData } from "./litDecrypt";
@@ -56,7 +56,7 @@ function App() {
       setSolAccessControlConditions(
         await getSolRpcConditions(
           siwsObject.siwsInput.address,
-          litActionCodeSiws
+          litActionDecrypt
         )
       );
     } catch (error) {

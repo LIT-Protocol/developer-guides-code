@@ -7,7 +7,7 @@ import {
   mintPkpAndAddPermittedAuthMethods,
 } from "./utils";
 import { SiwsObject } from "./types";
-import litActionCodeSiws from "./litActions/dist/litActionSiws.js?raw";
+import litActionDecrypt from "./litActions/dist/litActionDecrypt.js?raw";
 
 export async function decryptData(
   siwsObject: SiwsObject,
@@ -23,7 +23,7 @@ export async function decryptData(
   try {
     console.log("🔄 Decrypting data...");
     const response = await litNodeClient.executeJs({
-      code: litActionCodeSiws,
+      code: litActionDecrypt,
       sessionSigs: await getSessionSigs(pkpInfo, siwsObject),
       jsParams: {
         siwsObject: JSON.stringify(siwsObject),
