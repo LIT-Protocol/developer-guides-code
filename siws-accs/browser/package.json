@@ -1,0 +1,51 @@
+{
+  "name": "browser-template",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "build:lit-action": "deno task bundle",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
+    "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
+    "@lit-protocol/auth-browser": "^6.7.0",
+    "@lit-protocol/auth-helpers": "^6.5.3",
+    "@lit-protocol/constants": "^6.5.3",
+    "@lit-protocol/contracts-sdk": "^6.5.3",
+    "@lit-protocol/lit-node-client": "^6.5.3",
+    "@simplewebauthn/browser": "^10.0.0",
+    "@solana/wallet-adapter-base": "^0.9.23",
+    "@solana/wallet-adapter-react": "^0.15.35",
+    "@solana/wallet-adapter-react-ui": "^0.9.35",
+    "@solana/wallet-adapter-wallets": "^0.19.32",
+    "@solana/wallet-standard-features": "^1.2.0",
+    "@solana/wallet-standard-util": "^1.1.1",
+    "@solana/web3.js": "^1.95.3",
+    "@vitejs/plugin-react-swc": "^3.7.0",
+    "ethers": "v5",
+    "ipfs-only-hash": "^4.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "rollup-plugin-polyfill-node": "^0.13.0",
+    "vite-plugin-node-polyfills": "^0.22.0"
+  },
+  "devDependencies": {
+    "@lit-protocol/types": "^6.6.0",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "^7.13.1",
+    "@typescript-eslint/parser": "^7.13.1",
+    "@vitejs/plugin-react": "^4.3.1",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.7",
+    "typescript": "^5.5.3",
+    "typestub-ipfs-only-hash": "^4.0.0",
+    "vite": "^5.3.1"
+  }
+}
