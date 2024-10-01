@@ -96,6 +96,7 @@ console.log("🔄 Attempting SIWS authentication...");
       },
     });
 
+console.log("✅ Successfully authenticated with SIWS message");
     return Boolean(response.response);
   } catch (error) {
     console.error("Error in litSiws:", error);
