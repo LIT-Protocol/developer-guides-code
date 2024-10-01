@@ -37,9 +37,9 @@ function getSiwsMessage(siwsInput) {
 }
 
 async function verifySiwsSignature(
-  message: string,
-  signatureBase58: string,
-  publicKeyBase58: string
+  message,
+  signatureBase58,
+  publicKeyBase58
 ) {
   // Convert message to Uint8Array
   const messageBytes = new TextEncoder().encode(message);
