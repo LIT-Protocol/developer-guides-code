@@ -3,7 +3,7 @@ import { signAndCombineEcdsa } from "./lit";
 function App() {
   const handleSignAndCombine = async () => {
     try {
-      const result = await signAndCombineEcdsa("ethereum");
+      const result = await signAndCombineEcdsa();
       console.log("Sign and Combine ECDSA Result:", result);
     } catch (error) {
       console.error("Error in Sign and Combine ECDSA:", error);

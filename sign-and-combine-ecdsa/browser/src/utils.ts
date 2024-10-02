@@ -1,6 +1,6 @@
 import * as ethers from "ethers";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
-import { LIT_CHAINS, LitNetwork } from "@lit-protocol/constants";
+import { LIT_CHAINS, LIT_RPC, LitNetwork } from "@lit-protocol/constants";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
 
 export const connectLitNodeClient = async (litNetwork: LitNetwork) => {
@@ -15,7 +15,7 @@ export const connectLitNodeClient = async (litNetwork: LitNetwork) => {
 };
 
 export const connectLitContractsClient = async (
-  ethersSigner: ethers.providers.JsonRpcSigner,
+  ethersSigner: ethers.Wallet,
   litNetwork: LitNetwork
 ) => {
   console.log(`🔄 Connecting LitContracts client to ${litNetwork} network...`);
@@ -31,20 +31,57 @@ export const connectLitContractsClient = async (
 export const getChainInfo = (
   chain: string
 ): { rpcUrl: string; chainId: number } => {
+  console.log(`🔄 Getting chain info for ${chain}...`);
   if (LIT_CHAINS[chain] === undefined)
     throw new Error(`Chain: ${chain} is not supported by Lit`);
 
+  console.log(
+    `✅ Successfully got chain info for ${JSON.stringify(
+      {
+        rpcUrl: LIT_CHAINS[chain].rpcUrls[0],
+        chainId: LIT_CHAINS[chain].chainId,
+      },
+      null,
+      2
+    )}`
+  );
   return {
     rpcUrl: LIT_CHAINS[chain].rpcUrls[0],
     chainId: LIT_CHAINS[chain].chainId,
   };
 };
 
+// export const getEthersSigner = async () => {
+//   console.log("🔄 Connecting to Ethereum account...");
+//   if (typeof window.ethereum === "undefined") {
+//     throw new Error(
+//       "No Ethereum wallet detected. Please install MetaMask or another Web3 wallet."
+//     );
+//   }
+//   const provider = new ethers.providers.Web3Provider(window.ethereum);
+//   try {
+//     await provider.send("eth_requestAccounts", []);
+//     const ethersSigner = provider.getSigner();
+//     console.log(ethersSigner);
+//     console.log(
+//       "✅ Connected Ethereum account:",
+//       await ethersSigner.getAddress()
+//     );
+//     return ethersSigner;
+//   } catch (error) {
+//     console.error("Failed to connect to Ethereum account:", error);
+//     throw new Error(
+//       "Failed to connect to Ethereum account. Please make sure your wallet is unlocked and connected to this site."
+//     );
+//   }
+// };
+
 export const getEthersSigner = async () => {
   console.log("🔄 Connecting to Ethereum account...");
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
-  await provider.send("eth_requestAccounts", []);
-  const ethersSigner = provider.getSigner();
+  const ethersSigner = new ethers.Wallet(
+    import.meta.env.VITE_ETHEREUM_PRIVATE_KEY,
+    new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE)
+  );
   console.log(
     "✅ Connected Ethereum account:",
     await ethersSigner.getAddress()
@@ -52,30 +89,30 @@ export const getEthersSigner = async () => {
   return ethersSigner;
 };
 
-export const mintPkp = async (
-  ethersSigner: ethers.providers.JsonRpcSigner,
-  litNetwork: LitNetwork
-) => {
-  try {
-    const litContracts = await connectLitContractsClient(
-      ethersSigner,
-      litNetwork
-    );
+// export const mintPkp = async (
+//   ethersSigner: ethers.Wallet,
+//   litNetwork: LitNetwork
+// ) => {
+//   try {
+//     const litContracts = await connectLitContractsClient(
+//       ethersSigner,
+//       litNetwork
+//     );
 
-    console.log("🔄 Minting new PKP...");
-    const pkpInfo = (await litContracts.pkpNftContractUtils.write.mint()).pkp;
-    console.log("✅ PKP successfully minted");
-    console.log(`ℹ️  PKP token ID: ${pkpInfo.tokenId}`);
-    console.log(`ℹ️  PKP public key: ${pkpInfo.publicKey}`);
-    console.log(`ℹ️  PKP ETH address: ${pkpInfo.ethAddress}`);
-    return pkpInfo;
-  } catch (error) {
-    console.error(error);
-  }
-};
+//     console.log("🔄 Minting new PKP...");
+//     const pkpInfo = (await litContracts.pkpNftContractUtils.write.mint()).pkp;
+//     console.log("✅ PKP successfully minted");
+//     console.log(`ℹ️  PKP token ID: ${pkpInfo.tokenId}`);
+//     console.log(`ℹ️  PKP public key: ${pkpInfo.publicKey}`);
+//     console.log(`ℹ️  PKP ETH address: ${pkpInfo.ethAddress}`);
+//     return pkpInfo;
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
 
-export const getPkpBalance = async (
-  ethersSigner: ethers.providers.JsonRpcSigner,
+export const fundPkp = async (
+  ethersSigner: ethers.Wallet,
   chainInfo: { rpcUrl: string; chainId: number },
   pkpInfo: { ethAddress: string }
 ) => {
@@ -106,13 +143,15 @@ export const getPkpBalance = async (
     console.log(
       `✅ PKP funded. Transaction hash: ${fundingTxReceipt.transactionHash}`
     );
+  } else {
+    console.log(`✅ PKP has a sufficient balance of: ${formattedBal}`);
   }
 };
 
 export const getHashSerializedUnsignedTransaction = async (
-  ethersSigner: ethers.providers.JsonRpcSigner,
+  ethersSigner: ethers.Wallet,
   chainInfo: { rpcUrl: string; chainId: number },
-  pkpInfo: { ethAddress: string }
+  pkpEthAddress: string
 ) => {
   console.log("🔄 Creating and serializing unsigned transaction...");
   const unsignedTransaction = {
@@ -120,7 +159,7 @@ export const getHashSerializedUnsignedTransaction = async (
     value: 1,
     gasLimit: 21_000,
     gasPrice: (await ethersSigner.getGasPrice()).toHexString(),
-    nonce: await ethersSigner.provider.getTransactionCount(pkpInfo.ethAddress!),
+    nonce: await ethersSigner.provider.getTransactionCount(pkpEthAddress),
     chainId: chainInfo.chainId,
   };
 
@@ -132,7 +171,7 @@ export const getHashSerializedUnsignedTransaction = async (
 };
 
 export const mintCapacityCredit = async (
-  ethersSigner: ethers.providers.JsonRpcSigner,
+  ethersSigner: ethers.Wallet,
   litNetwork: LitNetwork
 ) => {
   try {
@@ -164,7 +203,7 @@ export const mintCapacityCredit = async (
 
 export const createCapacityDelegationAuthSig = async (
   litNodeClient: LitNodeClient,
-  ethersWallet: ethers.providers.JsonRpcSigner,
+  ethersWallet: ethers.Wallet,
   capacityTokenId: string
 ) => {
   console.log("🔄 Creating capacityDelegationAuthSig...");

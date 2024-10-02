@@ -14,7 +14,7 @@ import { getChainInfo, getEnv } from "./utils";
 import { litActionCode } from "./litAction";
 
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
-const LIT_NETWORK = LitNetwork.Datil;
+const LIT_NETWORK = LitNetwork.DatilTest;
 const LIT_CAPACITY_CREDIT_TOKEN_ID = getEnv("LIT_CAPACITY_CREDIT_TOKEN_ID");
 const LIT_PKP_PUBLIC_KEY = getEnv("LIT_PKP_PUBLIC_KEY");
 const CHAIN_TO_SEND_TX_ON = getEnv("CHAIN_TO_SEND_TX_ON");
@@ -115,6 +115,7 @@ export const signAndCombineAndSendTx = async () => {
       nonce: await ethersProvider.getTransactionCount(pkpInfo.ethAddress!),
       chainId: chainInfo.chainId,
     };
+    console.log("unsignedTransaction", unsignedTransaction);
 
     const unsignedTransactionHash = ethers.utils.keccak256(
       ethers.utils.serializeTransaction(unsignedTransaction)
