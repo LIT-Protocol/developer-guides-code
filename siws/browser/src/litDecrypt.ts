@@ -39,7 +39,8 @@ export async function decryptData(
     console.error("Error in decryptData:", error);
     throw error;
   } finally {
-    disconnectWeb3();
+    // If you enable this, Session Sigs will not be cached
+    // disconnectWeb3();
     litNodeClient!.disconnect();
   }
 }
