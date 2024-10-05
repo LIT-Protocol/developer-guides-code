@@ -7,19 +7,76 @@ import {
   generateAuthSig,
   LitActionResource,
 } from "@lit-protocol/auth-helpers";
-
+import { LitContracts } from "@lit-protocol/contracts-sdk";
 import { SiwsObject } from "./types";
 import litActionSiws from "./dist/litActionSiws.js?raw";
 
 const ETHEREUM_PRIVATE_KEY = import.meta.env.VITE_ETHEREUM_PRIVATE_KEY;
+const LIT_CAPACITY_CREDIT_TOKEN_ID =
+  import.meta.env.VITE_LIT_CAPACITY_CREDIT_TOKEN_ID || undefined;
+const LIT_NETWORK = import.meta.env.VITE_LIT_NETWORK || LitNetwork.DatilTest;
+
+const mintLitCapacityCredit = async (ethersSigner: ethers.Wallet) => {
+  console.log("🔄  Connecting LitContracts client to network...");
+  const litContracts = new LitContracts({
+    signer: ethersSigner,
+    network: LIT_NETWORK,
+    debug: false,
+  });
+  await litContracts.connect();
+  console.log("✅ Connected LitContracts client to network");
+
+  console.log("🔄 No Capacity Credit provided, minting a new one...");
+  const capacityTokenId = (
+    await litContracts.mintCapacityCreditsNFT({
+      requestsPerKilosecond: 10,
+      daysUntilUTCMidnightExpiration: 1,
+    })
+  ).capacityTokenIdStr;
+  console.log(`✅ Minted new Capacity Credit with ID: ${capacityTokenId}`);
+
+  return capacityTokenId;
+};
+
+const getCapacityCreditDelegationAuthSig = async (
+  litNodeClient: LitNodeClient,
+  ethersSigner: ethers.Wallet,
+  capacityTokenId: string
+) => {
+  console.log("🔄 Creating capacityDelegationAuthSig...");
+  const { capacityDelegationAuthSig } =
+    await litNodeClient.createCapacityDelegationAuthSig({
+      dAppOwnerWallet: ethersSigner,
+      capacityTokenId,
+    });
+  console.log("✅ Capacity Delegation Auth Sig created");
+
+  return capacityDelegationAuthSig;
+};
 
 const getSessionSigs = async (
   litNodeClient: LitNodeClient,
   ethersSigner: ethers.Wallet
 ) => {
+  let capacityTokenId = LIT_CAPACITY_CREDIT_TOKEN_ID;
+  if (capacityTokenId === "" || capacityTokenId === undefined) {
+    capacityTokenId = await mintLitCapacityCredit(ethersSigner);
+  } else {
+    console.log(
+      `ℹ️  Using provided Capacity Credit with ID: ${capacityTokenId}`
+    );
+  }
+
   return litNodeClient.getSessionSigs({
     chain: "ethereum",
     expiration: new Date(Date.now() + 1000 * 60 * 10).toISOString(), // 10 minutes
+    capabilityAuthSigs: [
+      await getCapacityCreditDelegationAuthSig(
+        litNodeClient,
+        ethersSigner,
+        capacityTokenId
+      ),
+    ],
     resourceAbilityRequests: [
       {
         resource: new LitActionResource("*"),
@@ -80,13 +137,13 @@ export const litSiws = async (
 
     console.log("🔄 Connecting to Lit Node Client...");
     litNodeClient = new LitNodeClient({
-      litNetwork: LitNetwork.DatilDev,
+      litNetwork: LIT_NETWORK,
       debug: false,
     });
     await litNodeClient.connect();
     console.log("✅ Connected to Lit Node Client");
 
-console.log("🔄 Attempting SIWS authentication...");
+    console.log("🔄 Attempting SIWS authentication...");
     const response = await litNodeClient.executeJs({
       code: litActionSiws,
       sessionSigs: await getSessionSigs(litNodeClient, ethersSigner),
@@ -96,7 +153,7 @@ console.log("🔄 Attempting SIWS authentication...");
       },
     });
 
-console.log("✅ Successfully authenticated with SIWS message");
+    console.log("✅ Successfully authenticated with SIWS message");
     return Boolean(response.response);
   } catch (error) {
     console.error("Error in litSiws:", error);
