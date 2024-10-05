@@ -32,13 +32,17 @@ This code example has a [corresponding doc page](https://developer.litprotocol.c
 3. Click the `Select Wallet` button and connect your Phantom wallet
 4. Click the `Sign In` button to sign the SIWS message
 
+The following diagram provides an overview of how this code example works:
+
+![Code Example Overview](./src/assets/siws-accs-diagram.png)
+
 ### Expected Output
 
 After clicking the `Sign In` button, the code example will submit your signed SIWS message to the Lit network to be authenticated using Lit Action and ACCs that only returns true if the SIWS message was signed by your Solana public key.
 
 After successful execution, you should see `✅ Successfully signed SIWS message` in the JavaScript console and `Authentication Successful` on the web page:
 
-![Successful execution](./static/successful-execution.png)
+![Successful execution](./src/assets/successful-execution.png)
 
 ## Specific Files to Reference
 
