@@ -1,14 +1,25 @@
-Title: Sign-In with Solana
+Title: Sign-In with Solana Session Signatures
 
 User -> App: Clicks `Sign In` button
 App -> User: Generates a Sign-in with Solana (SIWS) message
 User -> App: User signs and submits signed SIWS message
-App -> Lit Network: Submits a request to execute the SIWS Lit Action
+App -> Lit Blockchain: Mints a Lit Capacity Credit
+App -> Lit Network: Generates Capacity Credit Delegation Auth Sig
+App -> Lit Blockchain: Mints a PKP with Permitted Auth Methods
+note App, Lit Network:
+Two Auth Methods are permitted:
+
+1. The Lit Action IPFS CID is permitted to sign anything using the minted PKP
+2. A custom Auth Method derived from the User's Solana public key
+
+The second Auth Method is not permitted to sign anything using the PKP. We're permitting it as an Auth Method to associate the User's Solana public key as authorized to sign using the PKP
+App -> Lit Network: Submits a request to execute the SIWS Session Sigs Lit Action
 Lit Network -> Lit Nodes: Requests each Lit Node to run the Lit Action
 Lit Nodes -> Lit Nodes: Uses the raw SIWS message values to build the SIWS message according to the spec
 Lit Nodes -> Lit Nodes: Validates the SIWS message values according to App specific logic
 Lit Nodes -> Lit Nodes: Dervies a Solana public key using the built SIWS message and the User's signature
-Lit Nodes -> Lit Nodes: Compares the derived Solana public key against what's specific in the Access Control Conditions
-Lit Nodes -> Lit Network: Returns whether the SIWS message is valid and signed by a specific address
-Lit Network -> App: Returns whether the SIWS message is valid and signed by a specific address
-App -> App: Permits user access based on Lit Action response
+Lit Nodes -> Lit Blockchain: Submits a request to check if the derived Solana public key is a permitted Auth Method for the PKP
+Lit Blockchain -> Lit Nodes: Returns `true` that the Solana public key is permitted to use the PKP
+Lit Nodes -> Lit Network: Returns `true` to signal generation of Session Sigs using the PKP
+Lit Network -> Lit Nodes: Collects signature shares to form the Session Signatures
+Lit Network -> App: Returns Session Signatures

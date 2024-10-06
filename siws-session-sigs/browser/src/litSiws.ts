@@ -22,6 +22,8 @@ const ETHEREUM_PRIVATE_KEY = import.meta.env.VITE_ETHEREUM_PRIVATE_KEY;
 const LIT_CAPACITY_CREDIT_TOKEN_ID =
   import.meta.env.VITE_LIT_CAPACITY_CREDIT_TOKEN_ID || undefined;
 const LIT_NETWORK = import.meta.env.VITE_LIT_NETWORK || LitNetwork.DatilTest;
+const LIT_PKP_PUBLIC_KEY = import.meta.env.VITE_LIT_PKP_PUBLIC_KEY || undefined;
+const LIT_PKP_TOKEN_ID = import.meta.env.VITE_LIT_PKP_TOKEN_ID || undefined;
 
 const mintLitCapacityCredit = async (ethersSigner: ethers.Wallet) => {
   console.log("🔄  Connecting LitContracts client to network...");
@@ -180,14 +182,24 @@ export const getSiwsSessionSigs = async (
       capacityTokenId
     );
 
-    const pkpInfo = await mintPkpAndAddPermittedAuthMethods(
-      ethersSigner,
-      siwsObject.siwsInput.address
-    );
+    let pkpPublicKey = LIT_PKP_PUBLIC_KEY;
+    let pkpTokenId = LIT_PKP_TOKEN_ID;
+    if (pkpPublicKey === undefined || pkpTokenId === undefined) {
+      const pkpInfo = await mintPkpAndAddPermittedAuthMethods(
+        ethersSigner,
+        siwsObject.siwsInput.address
+      );
+      pkpPublicKey = pkpInfo.publicKey;
+      pkpTokenId = pkpInfo.tokenId;
+    } else {
+      console.log(
+        `ℹ️  Using provided PKP with public key: ${pkpPublicKey} and token id: ${pkpTokenId}`
+      );
+    }
 
     console.log("🔄 Getting session sigs...");
     const sessionSigs = await litNodeClient.getLitActionSessionSigs({
-      pkpPublicKey: pkpInfo.publicKey,
+      pkpPublicKey: pkpPublicKey,
       litActionCode: Buffer.from(litActionSessionSigs).toString("base64"),
       capabilityAuthSigs: [capacityDelegationAuthSig],
       chain: "ethereum",
@@ -207,7 +219,7 @@ export const getSiwsSessionSigs = async (
       ],
       jsParams: {
         siwsObject: JSON.stringify(siwsObject),
-        pkpTokenId: pkpInfo.tokenId,
+        pkpTokenId: pkpTokenId,
       },
     });
     console.log("✅ Got session sigs");
