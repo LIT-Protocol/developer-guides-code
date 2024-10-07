@@ -4,6 +4,8 @@ The code example demonstrates how to create [Lit Access Control Conditions (ACCs
 
 This code example has a [corresponding doc page](https://developer.litprotocol.com/sdk/access-control/solana/siws-access-control) that covers the implementation in more detail, this repository acts as a reference implementation for you to use as a guide for implementing SIWS ACCs in your project.
 
+An example use case fo this functionality is permitting decryption capabilities to specific users on Solana based on their wallet address.
+
 ## Prerequisites
 
 - An Ethereum private key
