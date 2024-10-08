@@ -3,8 +3,6 @@ Title: Generating Session Signatures with Sign-in With Solana
 User -> App: Clicks `Sign In` button
 App -> User: Generates a Sign-in with Solana (SIWS) message
 User -> App: User signs and submits signed SIWS message
-App -> Lit Blockchain: Mints a Lit Capacity Credit
-App -> Lit Network: Generates Capacity Credit Delegation Auth Sig
 App -> Lit Blockchain: Mints a PKP with Permitted Auth Methods
 note App, Lit Network:
 Two Auth Methods are permitted:
