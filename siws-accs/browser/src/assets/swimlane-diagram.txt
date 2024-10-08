@@ -1,4 +1,4 @@
-Title: Sign-In with Solana
+Title: Sign-In with Solana Access Control
 
 User -> App: Clicks `Sign In` button
 App -> User: Generates a Sign-in with Solana (SIWS) message
