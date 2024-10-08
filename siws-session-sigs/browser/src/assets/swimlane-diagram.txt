@@ -1,4 +1,4 @@
-Title: Sign-In with Solana Session Signatures
+Title: Generating Session Signatures with Sign-in With Solana
 
 User -> App: Clicks `Sign In` button
 App -> User: Generates a Sign-in with Solana (SIWS) message
