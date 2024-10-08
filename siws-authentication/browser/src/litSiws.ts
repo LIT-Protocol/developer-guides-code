@@ -57,8 +57,7 @@ const getCapacityCreditDelegationAuthSig = async (
 
 const getSessionSigs = async (
   litNodeClient: LitNodeClient,
-  ethersSigner: ethers.Wallet,
-  siwsObject: SiwsObject
+  ethersSigner: ethers.Wallet
 ): Promise<SessionSigs> => {
   let capacityTokenId = LIT_CAPACITY_CREDIT_TOKEN_ID;
   if (capacityTokenId === "" || capacityTokenId === undefined) {
@@ -134,11 +133,7 @@ export const authenticateSiwsMessage = async (
     console.log("🔄 Authenticating SIWS message...");
     const response = await litNodeClient.executeJs({
       code: litActionSiwsAuth,
-      sessionSigs: await getSessionSigs(
-        litNodeClient,
-        ethersSigner,
-        siwsObject
-      ),
+      sessionSigs: await getSessionSigs(litNodeClient, ethersSigner),
       jsParams: {
         siwsObject: JSON.stringify(siwsObject),
       },
