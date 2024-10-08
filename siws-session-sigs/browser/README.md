@@ -37,7 +37,7 @@ This code example has a [corresponding doc page](https://developer.litprotocol.c
 
 The following diagram provides an overview of how this code example works:
 
-![Code Example Overview](./src/assets/siws-session-sigs.png)
+![Code Example Overview](./src/assets/siws-session-signatures.png)
 
 ### Expected Output
 
