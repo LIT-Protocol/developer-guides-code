@@ -1,6 +1,6 @@
 # Sign-in With Solana Authentication
 
-This code example demonstrates how to authenticate a Sign-in With Solana (SIWS) message using a Lit Action and Phantom's [SIWS specification](https://github.com/phantom/sign-in-with-solana/tree/main?tab=readme-ov-file). With this functionality, you can enforce that only specific Solana public keys (aka. addresses) are able to perform certain actions like decryption data encrypted using Lit, signing transactions using a specific PKP and more.
+This code example demonstrates how to authenticate a Sign-in With Solana (SIWS) message using a Lit Action and Phantom's [SIWS specification](https://github.com/phantom/sign-in-with-solana/tree/main?tab=readme-ov-file). With this functionality, you can enforce that only specific Solana public keys (aka. addresses) are able to perform certain actions like decrypting data encrypted using Lit, signing transactions using a specific PKP and more.
 
 This code example has a [corresponding doc page](https://developer.litprotocol.com/sdk/authentication/authenticating-siws) that covers the implementation in more detail, this repository acts as a reference implementation for you to use as a guide for authenticating SIWS messages in your project.
 
