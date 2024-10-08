@@ -36,7 +36,7 @@ An example use case fo this functionality is permitting decryption capabilities 
 
 The following diagram provides an overview of how this code example works:
 
-![Code Example Overview](./src/assets/siws-accs-diagram.png)
+![Code Example Overview](./src/assets/siws-accs.png)
 
 ### Expected Output
 
