@@ -1,4 +1,4 @@
-import { LitNodeClientNodeJs } from "@lit-protocol/lit-node-client-nodejs";
+import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import { LitNetwork, LIT_RPC } from "@lit-protocol/constants";
 import {
   createSiweMessage,
@@ -12,15 +12,14 @@ import * as ethers from "ethers";
 import { litActionCode } from "./litAction";
 import { getEnv } from "./utils";
 
+const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 const CHAIN_TO_CHECK_CONDITION_ON = getEnv("CHAIN_TO_CHECK_CONDITION_ON");
 const LIT_PKP_PUBLIC_KEY = process.env["LIT_PKP_PUBLIC_KEY"];
 const LIT_CAPACITY_CREDIT_TOKEN_ID = process.env["LIT_CAPACITY_CREDIT_TOKEN_ID"];
 const LIT_NETWORK = LitNetwork.DatilTest;
 
-export const conditionalSigning = async (privateKey?: string) => {
-  const ETHEREUM_PRIVATE_KEY = privateKey || getEnv("ETHEREUM_PRIVATE_KEY");
-
-  let litNodeClient: LitNodeClientNodeJs;
+export const conditionalSigning = async () => {
+  let litNodeClient: LitNodeClient;
   let pkpInfo: {
     tokenId?: string;
     publicKey?: string;
@@ -36,7 +35,7 @@ export const conditionalSigning = async (privateKey?: string) => {
     );
 
     console.log("🔄 Connecting to the Lit network...");
-    litNodeClient = new LitNodeClientNodeJs({
+    litNodeClient = new LitNodeClient({
       litNetwork: LIT_NETWORK,
       debug: false,
     });

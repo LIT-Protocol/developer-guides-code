@@ -188,7 +188,7 @@ describe("Signing a Solana transaction using generateWrappedKey and signTransact
     expect(signedTransaction).to.match(RegExp("^[A-Za-z0-9+/]+={0,2}$"));
   }).timeout(120_000);
 
-  it("should sign and send a Solana transaction", async () => {
+  it("should sign and send a Solana transaction within the Lit Action", async () => {
     const fundingSolanaWallet = Keypair.fromSecretKey(
       bs58.decode(SOLANA_PRIVATE_KEY)
     );
@@ -251,10 +251,93 @@ describe("Signing a Solana transaction using generateWrappedKey and signTransact
     );
 
     expect(signedTransaction).to.match(RegExp("^[A-Za-z0-9+/]+={0,2}$"));
+
+    // Wait for confirmation
     const confirmation = await solanaConnection.confirmTransaction({
-      signature: bs58.encode(
-        Buffer.from(signedTransaction as string, "base64")
-      ),
+      signature: signedTransaction as string,
+      blockhash: blockhash,
+      lastValidBlockHeight: lastValidBlockHeight,
+    });
+    expect(confirmation.value.err).to.be.null;
+  }).timeout(120_000);
+
+  it("should sign and send a Solana transaction manually", async () => {
+    const fundingSolanaWallet = Keypair.fromSecretKey(
+      bs58.decode(SOLANA_PRIVATE_KEY)
+    );
+    const transferAmount = LAMPORTS_PER_SOL / 100; // 0.01 SOL
+    const solanaConnection = new Connection(
+      clusterApiUrl("devnet"),
+      "confirmed"
+    );
+    const wrappedKeyPublicKey = new PublicKey(
+      generateWrappedKeyResponse.generatedPublicKey
+    );
+
+    console.log(
+      `🔄 Using ${fundingSolanaWallet.publicKey.toBase58()} to send ${
+        transferAmount / LAMPORTS_PER_SOL
+      } SOL to ${wrappedKeyPublicKey.toBase58()} for transfer test...`
+    );
+    const solanaTransaction = new Transaction().add(
+      SystemProgram.transfer({
+        fromPubkey: fundingSolanaWallet.publicKey,
+        toPubkey: wrappedKeyPublicKey,
+        lamports: transferAmount,
+      })
+    );
+    const fundingSignature = await sendAndConfirmTransaction(
+      solanaConnection,
+      solanaTransaction,
+      [fundingSolanaWallet]
+    );
+    console.log(`✅ Funded Wrapped Key tx signature: ${fundingSignature}`);
+
+    const testTransaction = new Transaction().add(
+      SystemProgram.transfer({
+        fromPubkey: wrappedKeyPublicKey,
+        toPubkey: fundingSolanaWallet.publicKey,
+        lamports: transferAmount / 2, // Return half the amount
+      })
+    );
+    testTransaction.feePayer = wrappedKeyPublicKey;
+    const { blockhash, lastValidBlockHeight } =
+      await solanaConnection.getLatestBlockhash();
+    testTransaction.recentBlockhash = blockhash;
+
+    const serializedTransaction = testTransaction
+      .serialize({
+        requireAllSignatures: false,
+        verifySignatures: false,
+      })
+      .toString("base64");
+    const litTransaction: SerializedTransaction = {
+      serializedTransaction,
+      chain: "devnet",
+    };
+    const signedTransaction = await signTransactionWithWrappedKey(
+      mintedPkp!.publicKey,
+      "solana",
+      generateWrappedKeyResponse.id,
+      litTransaction,
+      false
+    );
+
+    expect(signedTransaction).to.match(RegExp("^[A-Za-z0-9+/]+={0,2}$"));
+
+    testTransaction.addSignature(
+      wrappedKeyPublicKey,
+      Buffer.from(signedTransaction as string, "base64")
+    );
+    const serializedSignedTransaction = testTransaction.serialize();
+    const txSig = await solanaConnection.sendRawTransaction(
+      serializedSignedTransaction
+    );
+    console.log("Transaction signature:", txSig);
+
+    // Wait for confirmation
+    const confirmation = await solanaConnection.confirmTransaction({
+      signature: txSig,
       blockhash: blockhash,
       lastValidBlockHeight: lastValidBlockHeight,
     });
@@ -328,7 +411,7 @@ describe("Signing a Solana transaction using importPrivateKey and signTransactio
     expect(signedTransaction).to.match(RegExp("^[A-Za-z0-9+/]+={0,2}$"));
   }).timeout(120_000);
 
-  it("should sign and send a Solana transaction", async () => {
+  it("should sign and send a Solana transaction within the Lit Action", async () => {
     const fundingSolanaWallet = Keypair.fromSecretKey(
       bs58.decode(SOLANA_PRIVATE_KEY)
     );
@@ -388,10 +471,89 @@ describe("Signing a Solana transaction using importPrivateKey and signTransactio
     );
 
     expect(signedTransaction).to.match(RegExp("^[A-Za-z0-9+/]+={0,2}$"));
+
+    // Wait for confirmation
     const confirmation = await solanaConnection.confirmTransaction({
-      signature: bs58.encode(
-        Buffer.from(signedTransaction as string, "base64")
-      ),
+      signature: signedTransaction as string,
+      blockhash: blockhash,
+      lastValidBlockHeight: lastValidBlockHeight,
+    });
+    expect(confirmation.value.err).to.be.null;
+  }).timeout(120_000);
+
+  it("should sign and send a Solana transaction manually", async () => {
+    const fundingSolanaWallet = Keypair.fromSecretKey(
+      bs58.decode(SOLANA_PRIVATE_KEY)
+    );
+    const transferAmount = LAMPORTS_PER_SOL / 100; // 0.01 SOL
+    const solanaConnection = new Connection(
+      clusterApiUrl("devnet"),
+      "confirmed"
+    );
+
+    console.log(
+      `🔄 Using ${fundingSolanaWallet.publicKey.toBase58()} to send ${
+        transferAmount / LAMPORTS_PER_SOL
+      } SOL to ${solanaKeypair.publicKey.toString()} for transfer test...`
+    );
+    const solanaTransaction = new Transaction().add(
+      SystemProgram.transfer({
+        fromPubkey: fundingSolanaWallet.publicKey,
+        toPubkey: solanaKeypair.publicKey,
+        lamports: transferAmount,
+      })
+    );
+    const fundingSignature = await sendAndConfirmTransaction(
+      solanaConnection,
+      solanaTransaction,
+      [fundingSolanaWallet]
+    );
+    console.log(`✅ Funded Wrapped Key tx signature: ${fundingSignature}`);
+
+    const testTransaction = new Transaction().add(
+      SystemProgram.transfer({
+        fromPubkey: solanaKeypair.publicKey,
+        toPubkey: fundingSolanaWallet.publicKey,
+        lamports: transferAmount / 2, // Return half the amount
+      })
+    );
+    testTransaction.feePayer = solanaKeypair.publicKey;
+    const { blockhash, lastValidBlockHeight } =
+      await solanaConnection.getLatestBlockhash();
+    testTransaction.recentBlockhash = blockhash;
+
+    const serializedTransaction = testTransaction
+      .serialize({
+        requireAllSignatures: false,
+        verifySignatures: false,
+      })
+      .toString("base64");
+    const litTransaction: SerializedTransaction = {
+      serializedTransaction,
+      chain: "devnet",
+    };
+    const signedTransaction = await signTransactionWithWrappedKey(
+      mintedPkp!.publicKey,
+      "solana",
+      importKeyResponse.id,
+      litTransaction,
+      false
+    );
+
+    expect(signedTransaction).to.match(RegExp("^[A-Za-z0-9+/]+={0,2}$"));
+
+    testTransaction.addSignature(
+      solanaKeypair.publicKey,
+      Buffer.from(signedTransaction as string, "base64")
+    );
+    const serializedSignedTransaction = testTransaction.serialize();
+    const txSig = await solanaConnection.sendRawTransaction(
+      serializedSignedTransaction
+    );
+
+    // Wait for confirmation
+    const confirmation = await solanaConnection.confirmTransaction({
+      signature: txSig,
       blockhash: blockhash,
       lastValidBlockHeight: lastValidBlockHeight,
     });

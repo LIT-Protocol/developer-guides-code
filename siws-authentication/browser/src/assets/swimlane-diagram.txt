@@ -1,0 +1,13 @@
+Title: Sign-In with Solana Authentication
+
+User -> App: Clicks `Sign In` button
+App -> User: Generates a Sign-in with Solana (SIWS) message
+User -> App: User signs and submits signed SIWS message
+App -> Lit Network: Submits a request to execute the SIWS Lit Action
+Lit Network -> Lit Nodes: Requests each Lit Node to run the Lit Action
+Lit Nodes -> Lit Nodes: Uses the raw SIWS message values to build the SIWS message according to the spec
+Lit Nodes -> Lit Nodes: Validates the SIWS message values according to App specific logic
+Lit Nodes -> Lit Nodes: Dervies a Solana public key using the built SIWS message and the User's signature
+Lit Nodes -> Lit Network: Returns the authenticated Solana public key
+Lit Network -> App: Returns the authenticated Solana public key
+App -> App: Permits user access based on Lit Action response
