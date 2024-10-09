@@ -1,8 +1,14 @@
-# Sign-in With Solana Session Signatures
+# Encrypting Data with Sign-in With Solana
 
-The code example demonstrates how to create [Lit Session Signatures](https://developer.litprotocol.com/sdk/authentication/session-sigs/intro) using a [Programmable Key Pair (PKP)](https://developer.litprotocol.com/user-wallets/pkps/overview) that will only sign if a specific Solana public key is authenticated using a signed Sign-in With Solana (SIWS) message as defined by [Phantom's specification](https://github.com/phantom/sign-in-with-solana/tree/main?tab=readme-ov-file).
+This example demonstrates how to use Lit Protocol to encrypt and decrypt data based on authenticated Solana public keys. It leverages three key components:
 
-This code example has a [corresponding doc page](https://developer.litprotocol.com/sdk/access-control/solana/siws-session-sigs) that covers the implementation in more detail, this repository acts as a reference implementation for you to use as a guide for generating Session Signatures using SIWS in your project.
+1. Lit Access Control Conditions
+2. Sign-in With Solana (SIWS) messages (following [Phantom's specification](https://github.com/phantom/sign-in-with-solana/tree/main))
+3. Lit Actions
+
+By combining these technologies, we create a secure system for data decryption tied to Solana wallet authentication.
+
+This code example has a [corresponding doc page](https://developer.litprotocol.com/sdk/access-control/solana/siws-encryption) that covers the implementation in more detail, this repository acts as a reference implementation for you to use as a guide for restricting data decryption to specific Solana public keys in your project.
 
 ## Prerequisites
 
@@ -34,6 +40,8 @@ This code example has a [corresponding doc page](https://developer.litprotocol.c
 2. Open the JavaScript browser console
 3. Click the `Select Wallet` button and connect your Phantom wallet
 4. Click the `Sign In` button to sign the SIWS message
+5. Enter some text in the encryption input field and click the `Encrypt` button
+6. Click the `Decrypt` button to decrypt the data
 
 The following diagram provides an overview of how this code example works:
 
