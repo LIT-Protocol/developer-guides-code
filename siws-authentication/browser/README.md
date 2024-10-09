@@ -11,7 +11,7 @@ This code example has a [corresponding doc page](https://developer.litprotocol.c
     - Mint a Lit Capacity Credit if none was specific in the project's `.env` file
       - In order to pay for this, the corresponding Ethereum account must have Lit Test Tokens. If you do not have any, you can get some from [the faucet](https://chronicle-yellowstone-faucet.getlit.dev/)
     - Create a Lit Capacity Credit delegation Auth Sig
-- This code example uses Node.js and Yarn, please have these installed before running the example
+- This code example uses Node.js, Yarn, and Deno please have these installed before running the example
 - The code example also expects the [Phantom wallet browser extension](https://chromewebstore.google.com/detail/phantom/bfnaelmomeimhlpmgjnjophhpkkoljpa?hl=en) to be installed and setup with a Solana wallet
 
 ## Installation and Setup
