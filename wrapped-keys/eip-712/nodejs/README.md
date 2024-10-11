@@ -9,6 +9,8 @@ This code example demonstrates how to sign an EIP-712 message using a Wrapped Ke
     - Mint a Lit Capacity Credit if none was specific in the project's `.env` file
       - In order to pay for this, the corresponding Ethereum account must have Lit Test Tokens. If you do not have any, you can get some from [the faucet](https://chronicle-yellowstone-faucet.getlit.dev/)
     - Create a Lit Capacity Credit delegation Auth Sig
+    - Mint a PKP
+    - Generate PKP Session Signatures
 - This code example uses Node.js and Yarn please have these installed before running the example
 
 ## Installation and Setup
