@@ -49,17 +49,36 @@ describe("Signing an EIP-712 message using a Wrapped Key", () => {
     );
 
     const { signedMessage, wrappedKeyEthAddress } = (await runExample(
-      serializedEip712Message
+      serializedEip712Message,
+      true
     )) ?? { signedMessage: "", wrappedKeyEthAddress: "" };
     expect(signedMessage).to.not.equal("");
     expect(wrappedKeyEthAddress).to.not.equal("");
 
+    // Verify the signature using EIP-712
     const recoveredAddress = ethers.utils.verifyTypedData(
       domain,
       types,
       message,
       signedMessage
     );
+    expect(recoveredAddress).to.equal(wrappedKeyEthAddress);
+  }).timeout(120_000);
+});
+
+describe("Signing a EIP-191 message using a Wrapped Key", () => {
+  it("should return signed EIP-191 message", async () => {
+    const message = "Hello, World!";
+
+    const { signedMessage, wrappedKeyEthAddress } = (await runExample(
+      message,
+      false
+    )) ?? { signedMessage: "", wrappedKeyEthAddress: "" };
+    expect(signedMessage).to.not.equal("");
+    expect(wrappedKeyEthAddress).to.not.equal("");
+
+    // Verify the signature using EIP-191
+    const recoveredAddress = ethers.utils.verifyMessage(message, signedMessage);
     expect(recoveredAddress).to.equal(wrappedKeyEthAddress);
   }).timeout(120_000);
 });

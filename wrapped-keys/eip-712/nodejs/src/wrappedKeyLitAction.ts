@@ -46,7 +46,7 @@ async function signMessageEthereumKey({ privateKey, messageToSign }) {
   const wallet = new ethers.Wallet(privateKey);
 
   let signature;
-  if (useEip712Signing ?? false) {
+  if (useEip712Signing) {
     const { domain, types, message } = JSON.parse(messageToSign);
 
     signature = await wallet._signTypedData(domain, types, message);

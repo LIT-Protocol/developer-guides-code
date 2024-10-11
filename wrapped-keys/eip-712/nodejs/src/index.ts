@@ -26,7 +26,10 @@ const CAPACITY_CREDIT_TOKEN_ID =
 const LIT_NETWORK =
   (process.env.LIT_NETWORK as LitNetwork) || LitNetwork.DatilTest;
 
-export const runExample = async (serializedEip712Message: string) => {
+export const runExample = async (
+  messageToSign: string,
+  useEip712Signing: boolean
+) => {
   let litNodeClient: LitNodeClient;
 
   try {
@@ -102,8 +105,8 @@ export const runExample = async (serializedEip712Message: string) => {
         ],
         ciphertext: wrappedKeyMetadata.ciphertext,
         dataToEncryptHash: wrappedKeyMetadata.dataToEncryptHash,
-        messageToSign: serializedEip712Message,
-        useEip712Signing: true,
+        messageToSign,
+        useEip712Signing,
       },
     });
     console.log("✅ Signed EIP-712 message");
