@@ -90,7 +90,7 @@ export const getSessionSigsLitAction = async (
       pkpTokenId: pkp.tokenId,
       authMethodScopes: [AuthMethodScope.SignAnything],
     });
-    console.log("✅ Example Lit Action permissions added to the PKP");
+    console.log("✅ Lit Action permissions added to the PKP");
 
     console.log("🔄 Getting Session Sigs...");
     const sessionSignatures = await litNodeClient.getLitActionSessionSigs({
