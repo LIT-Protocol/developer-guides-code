@@ -10,7 +10,7 @@ import {
 } from "@lit-protocol/auth-helpers";
 import { EthWalletProvider } from "@lit-protocol/lit-auth-client";
 import { api } from "@lit-protocol/wrapped-keys";
-import { SessionSigsMap } from "@lit-protocol/types";
+import { AccsDefaultParams, SessionSigsMap } from "@lit-protocol/types";
 
 const { generatePrivateKey } = api;
 
@@ -143,3 +143,25 @@ export const generateWrappedKey = async (
 
   return wrappedKeyInfo;
 };
+
+export function getPkpAccessControlCondition(
+  pkpAddress: string
+): AccsDefaultParams {
+  if (!ethers.utils.isAddress(pkpAddress)) {
+    throw new Error(
+      `pkpAddress is not a valid Ethereum Address: ${pkpAddress}`
+    );
+  }
+
+  return {
+    contractAddress: "",
+    standardContractType: "",
+    chain: "ethereum",
+    method: "",
+    parameters: [":userAddress"],
+    returnValueTest: {
+      comparator: "=",
+      value: pkpAddress,
+    },
+  };
+}

@@ -1,10 +1,9 @@
 import { LIT_RPC, LitNetwork } from "@lit-protocol/constants";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import { LitAbility } from "@lit-protocol/types";
-import { api } from "@lit-protocol/wrapped-keys";
 import { ethers } from "ethers";
-
-const { signMessageWithEncryptedKey } = api;
+import { api } from "@lit-protocol/wrapped-keys";
+import { LitActionResource } from "@lit-protocol/auth-helpers";
 
 import {
   generateWrappedKey,
@@ -13,10 +12,13 @@ import {
   getEnv,
   getLitContracts,
   getLitNodeClient,
+  getPkpAccessControlCondition,
   getSessionSigsViaPkp,
   mintPkp,
 } from "./utils";
-import { LitActionResource } from "@lit-protocol/auth-helpers";
+import { litActionCode } from "./wrappedKeyLitAction";
+
+const { getEncryptedKey } = api;
 
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 const CAPACITY_CREDIT_TOKEN_ID =
@@ -76,19 +78,41 @@ export const runExample = async (serializedEip712Message: string) => {
       "This is a test memo"
     );
 
-    console.log("🔄 Signing EIP-712 message with Wrapped Key...");
-    const signedMessage = await signMessageWithEncryptedKey({
-      litNodeClient,
+    console.log("🔄 Getting wrapped key metadata...");
+    const wrappedKeyMetadata = await getEncryptedKey({
       pkpSessionSigs,
-      network: "evm",
+      litNodeClient,
       id: wrappedKeyInfo.id,
-      messageToSign: serializedEip712Message,
+    });
+    console.log(
+      `✅ Got wrapped key metadata: ${JSON.stringify(
+        wrappedKeyMetadata,
+        null,
+        2
+      )}`
+    );
+
+    console.log("🔄 Signing EIP-712 message with Wrapped Key...");
+    const response = await litNodeClient.executeJs({
+      sessionSigs: pkpSessionSigs,
+      code: litActionCode,
+      jsParams: {
+        accessControlConditions: [
+          getPkpAccessControlCondition(wrappedKeyInfo.pkpAddress),
+        ],
+        ciphertext: wrappedKeyMetadata.ciphertext,
+        dataToEncryptHash: wrappedKeyMetadata.dataToEncryptHash,
+        messageToSign: serializedEip712Message,
+        useEip712Signing: true,
+      },
     });
     console.log("✅ Signed EIP-712 message");
 
     return {
-      signedMessage,
-      wrappedKeyEthAddress: wrappedKeyInfo.pkpAddress,
+      signedMessage: response.response as string,
+      wrappedKeyEthAddress: ethers.utils.computeAddress(
+        wrappedKeyMetadata.publicKey
+      ),
     };
   } catch (error) {
     console.error(error);
