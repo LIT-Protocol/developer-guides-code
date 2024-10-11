@@ -25,7 +25,7 @@ This code example demonstrates how to sign an EIP-712 message using a Wrapped Ke
 
 ## Executing the Example
 
-1. Run `yarn test` to execute the examples-authentication.png)
+1. Run `yarn test` to execute the test that runs the example code
 
 ### Expected Output
 
