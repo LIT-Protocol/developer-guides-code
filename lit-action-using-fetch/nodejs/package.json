@@ -9,10 +9,10 @@
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^0.44.1",
-    "@lit-protocol/auth-helpers": "^6.3.0",
-    "@lit-protocol/constants": "^6.3.0",
-    "@lit-protocol/contracts-sdk": "^6.3.0",
-    "@lit-protocol/lit-node-client": "^6.3.0",
+    "@lit-protocol/auth-helpers": "^6.5.1",
+    "@lit-protocol/constants": "^6.5.1",
+    "@lit-protocol/contracts-sdk": "^6.5.1",
+    "@lit-protocol/lit-node-client": "^6.5.1",
     "ethers": "v5"
   },
   "devDependencies": {
