@@ -6,102 +6,86 @@ import { readFileSync } from "fs";
 import path from "path";
 
 import { getEnv } from "../src/utils";
-import deployedAllowList from "./fixtures/deployed.json";
+
 import { encryptFileWithContractConditions } from "../src/encryptFile";
 import { decryptFileWithContractConditions } from "../src/decryptFile";
 
 use(require("chai-json-schema"));
 
 const FILE_TO_ENCRYPT_PATH = path.join(__dirname, "fileToEncrypt.txt");
-const FAKE_TOKEN_ID = 42;
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 
 describe("Decrypting a file with EVM contract conditions", () => {
-  const evmContractConditions = [
-    {
-      contractAddress: deployedAllowList.address,
-      chain: "yellowstone",
-      functionName: "isOnAllowlist",
-      functionParams: [":userAddress", FAKE_TOKEN_ID.toString()],
-      functionAbi: {
-        inputs: [
-          {
-            internalType: "address",
-            name: "account",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "tokenId",
-            type: "uint256",
-          },
-        ],
-        name: "isOnAllowlist",
-        outputs: [
-          {
-            internalType: "bool",
-            name: "",
-            type: "bool",
-          },
-        ],
-        stateMutability: "view",
-        type: "function",
-      },
-      returnValueTest: {
-        key: "",
-        comparator: "=",
-        value: "true",
-      },
-    },
-  ];
 
   let toEncryptFileBuffer: string;
   let _ciphertext: string;
   let _dataToEncryptHash: string;
+  let evmContractConditions: EvmContractConditions;
 
   before(async function () {
     this.timeout(60_000);
-
-    console.log(`🔄 Reading file: ${FILE_TO_ENCRYPT_PATH}...`);
-    toEncryptFileBuffer = readFileSync(FILE_TO_ENCRYPT_PATH, "utf8");
-    console.log("✅ Read file");
 
     const ethersSigner = new ethers.Wallet(
       ETHEREUM_PRIVATE_KEY,
       new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE)
     );
-    const allowListContract = new ethers.Contract(
-      deployedAllowList.address,
-      deployedAllowList.abi,
-      ethersSigner
-    );
 
-    console.log(`🔄 Checking if ${ethersSigner.address} is on allow list...`);
-    let isAllowed = await allowListContract.isOnAllowlist(
-      ethersSigner.address,
-      FAKE_TOKEN_ID
-    );
+    const message = "Hello, Ethereum!";
+    const signature = await ethersSigner.signMessage(message);
+    console.log(`Signature: ${signature}`);
+    const messageHash = ethers.utils.hashMessage(message);
+    console.log(`Signature hash: ${messageHash}`);
 
-    if (!isAllowed) {
-      console.log(`⚠️  ${ethersSigner.address} not on allow list`);
-      console.log(`🔄 Adding ${ethersSigner.address} to allow list...`);
-      const tx = await allowListContract.addToAllowlist(
-        FAKE_TOKEN_ID,
-        ethersSigner.address
-      );
-      const receipt = await tx.wait();
-      console.log(
-        `✅ Added ${ethersSigner.address} to allow list. Tx hash: ${receipt.transactionHash}`
-      );
-    } else {
-      console.log(`✅ ${ethersSigner.address} is on allow list`);
-    }
+    evmContractConditions = [
+      {
+        contractAddress: '0xec989963a17a6801A8A1cEc8DF195121B02e0d0B',
+        functionName: "isValidSignature",
+        functionParams: [
+          ":userAddress",   // _signer
+          messageHash,   // _hash
+          signature,   // _signature
+        ],
+        functionAbi: {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_signer",
+              type: "address"
+            },
+            {
+              internalType: "bytes32",
+              name: "_hash",
+              type: "bytes32"
+            },
+            {
+              internalType: "bytes",
+              name: "_signature",
+              type: "bytes"
+            }
+          ],
+          name: "isValidSignature",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "isValid",
+              type: "bool"
+            }
+          ],
+          stateMutability: "pure",
+          type: "function"
+        },
+        chain: "yellowstone",
+        returnValueTest: {
+          key: "",
+          comparator: "=",
+          value: "true",
+        },
+      },
+    ];
 
-    isAllowed = await allowListContract.isOnAllowlist(
-      ethersSigner.address,
-      FAKE_TOKEN_ID
-    );
-    expect(isAllowed).true;
+    console.log(`🔄 Reading file: ${FILE_TO_ENCRYPT_PATH}...`);
+    toEncryptFileBuffer = readFileSync(FILE_TO_ENCRYPT_PATH, "utf8");
+    console.log("✅ Read file");
 
     // @ts-ignore
     const { ciphertext, dataToEncryptHash } =

@@ -64,7 +64,7 @@ export const decryptFileWithContractConditions = async (
       await litNodeClient.createCapacityDelegationAuthSig({
         dAppOwnerWallet: ethersSigner,
         capacityTokenId,
-        delegateeAddresses: [await ethersSigner.getAddress()],
+        delegateeAddresses: [ethersSigner.address],
         uses: "1",
       });
     console.log("✅ Capacity Delegation Auth Sig created");

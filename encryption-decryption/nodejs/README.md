@@ -55,7 +55,7 @@ The tests created in the `test` directory are slightly more complex.
 yarn test:encrypt
 ```
 
-Encrypt the file with specific `EVMContractConditions`. These conditions check the [deployedAllowList](./test/fixtures/deployed.json) contract address on the Chronicle Yellowstone network and calls the `isOnAllowList` function, expecting to return true if the address of the Ethereum account is on the allow list. This means that the encrypted file can only be decrypted if the same contract conditions are able to return true while decrypting.
+Encrypt the file with specific `evmContractConditions`. These conditions check the [ERC1271](./test/fixtures/ERC1271.sol) contract address on the Chronicle Yellowstone network and calls the `isValidSignature` function, expecting to return true if the signature is valid. This means that the encrypted file can only be decrypted if the same contract conditions are able to return true while decrypting.
 
 `decryptFileWithContractConditions.spec.ts`:
 
@@ -63,4 +63,4 @@ Encrypt the file with specific `EVMContractConditions`. These conditions check t
 yarn test:decrypt
 ```
 
-Decrypts the file, first checking if the address is on the allow list, and if not, adding it to the allow list. Once the address is on the allow list, the file can be successfully decrypted.
+Decrypts the file.

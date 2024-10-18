@@ -3,7 +3,6 @@ import { readFileSync } from "fs";
 import path from "path";
 
 import { encryptFileWithContractConditions } from "../src/encryptFile";
-import deployedAllowList from "./fixtures/deployed.json";
 
 use(require("chai-json-schema"));
 
@@ -38,39 +37,47 @@ describe("Encrypting a file with EVM contract conditions", () => {
       },
     };
     const encryptionResult = await encryptFileWithContractConditions(
-      new Blob([toEncryptFileBuffer], { type: "text/plain" }),
-      [
+      new Blob([toEncryptFileBuffer], { type: "text/plain" }), [
         {
-          contractAddress: deployedAllowList.address,
-          chain: "yellowstone",
-          functionName: "isOnAllowlist",
-          functionParams: [":userAddress", FAKE_TOKEN_ID.toString()],
+          contractAddress: '0xec989963a17a6801A8A1cEc8DF195121B02e0d0B',
+          functionName: "isValidSignature",
+          functionParams: [
+            ":userAddress",   // _signer
+            ":messageHash",   // _hash
+            ":signature"      // _signature
+          ],
           functionAbi: {
             inputs: [
               {
                 internalType: "address",
-                name: "account",
-                type: "address",
+                name: "_signer",
+                type: "address"
               },
               {
-                internalType: "uint256",
-                name: "tokenId",
-                type: "uint256",
+                internalType: "bytes32",
+                name: "_hash",
+                type: "bytes32"
               },
+              {
+                internalType: "bytes",
+                name: "_signature",
+                type: "bytes"
+              }
             ],
-            name: "isOnAllowlist",
+            name: "isValidSignature",
             outputs: [
               {
                 internalType: "bool",
-                name: "",
-                type: "bool",
-              },
+                name: "isValid",
+                type: "bool"
+              }
             ],
-            stateMutability: "view",
-            type: "function",
+            stateMutability: "pure",
+            type: "function"
           },
+          chain: "yellowstone",
           returnValueTest: {
-            key: "0",
+            key: "",
             comparator: "=",
             value: "true",
           },
