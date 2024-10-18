@@ -6,7 +6,7 @@ describe("Running example", () => {
     this.timeout(120_000);
   });
 
-  it("should successfully execute the Bitcoin transaction or indicate if the block height is even", async () => {
+  it("should successfully execute the Bitcoin transaction", async () => {
     const result = await executeBtcSigning();
     expect(result).to.be.a("string");
     expect(result).to.match(/^[a-fA-F0-9]{64}$/);
