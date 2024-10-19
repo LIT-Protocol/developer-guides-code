@@ -18,7 +18,7 @@ import { ethers } from "ethers";
     return wallet.privateKey;
   });
 
-  console.log("Hakuna Matata")
+  console.log("Hakuna Matata!")
 
   Lit.Actions.setResponse({
     response: JSON.stringify({

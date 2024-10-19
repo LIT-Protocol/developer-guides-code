@@ -69,9 +69,10 @@ const wrapIIFEInStringPlugin = {
         // IMPORTANT: if minify is enabled, we need to:
         // 1. remove var t=o(\"ethers\");
         // 2. replace t.ethers to ethers
+        // TODO: This is not working - must fix soon.
         content = content
-          .replace(/var t=o\("ethers"\);/g, "")
-          .replace(/t\.ethers/g, "ethers");
+          .replace(/var [a-zA-Z]=o\("ethers"\);/g, "")
+          .replace(/[a-zA-Z]\.ethers/g, "ethers");
 
         // Use JSON.stringify to safely encode the content
         const wrappedContent = `/**
@@ -98,7 +99,7 @@ const promises = configs.map((config) => {
   return esbuild.build({
     entryPoints: [config.entryPoint],
     bundle: true,
-    minify: true,
+    minify: false, // TODO: Only turn this on fix replacing is working
     treeShaking: true,
     outdir: "./src/lit-actions/dist",
     external: ["ethers"],
