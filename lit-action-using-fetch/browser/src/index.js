@@ -1,5 +1,8 @@
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import { LitNetwork } from "@lit-protocol/constants";
+// import { importer } from "ipfs-unixfs-importer";
+// import { Buffer } from "buffer";
+import Hash from "ipfs-only-hash";
 import {
   createSiweMessageWithRecaps,
   generateAuthSig,
@@ -10,12 +13,17 @@ import {
 import { LitContracts } from "@lit-protocol/contracts-sdk";
 import { disconnectWeb3 } from "@lit-protocol/auth-browser";
 import * as ethers from "ethers";
+import { AuthMethodScope, AuthMethodType } from "@lit-protocol/constants";
 
 import { litActionCode } from "./litAction";
 
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("myButton").addEventListener("click", buttonClick);
 });
+
+function stringToIpfsHash(input) {
+  return Hash.of(input);
+}
 
 async function buttonClick() {
   try {
@@ -26,27 +34,23 @@ async function buttonClick() {
     const ethersSigner = provider.getSigner();
     console.log("Connected account:", await ethersSigner.getAddress());
 
+    const pkpPublicKey = await mintPkp(ethersSigner);
+
     const litNodeClient = await getLitNodeClient();
 
     const sessionSigs = await getSessionSigs(litNodeClient, ethersSigner);
     console.log("Got Session Signatures!");
 
-    const message = new Uint8Array(
-      await crypto.subtle.digest(
-        "SHA-256",
-        new TextEncoder().encode("Hello world")
-      )
-    );
-    const litActionSignatures = await litNodeClient.executeJs({
+    const response = await litNodeClient.executeJs({
       sessionSigs,
       code: litActionCode,
       jsParams: {
-        toSign: message,
-        publicKey: await getPkpPublicKey(),
+        publicKey: pkpPublicKey,
         sigName: "sig",
       },
     });
-    console.log("litActionSignatures: ", litActionSignatures);
+    const sig = response.signatures.sig;
+    console.log("Got Lit Action Response signature!", sig);
   } catch (error) {
     console.error(error);
   } finally {
@@ -66,18 +70,6 @@ async function getLitNodeClient() {
   return litNodeClient;
 }
 
-async function getPkpPublicKey(ethersSigner) {
-  if (
-    process.env.PKP_PUBLIC_KEY !== undefined &&
-    process.env.PKP_PUBLIC_KEY !== ""
-  )
-    return process.env.PKP_PUBLIC_KEY;
-
-  const pkp = await mintPkp(ethersSigner);
-  console.log("Minted PKP!", pkp);
-  return pkp.publicKey;
-}
-
 async function mintPkp(ethersSigner) {
   console.log("Minting new PKP...");
   const litContracts = new LitContracts({
@@ -87,7 +79,49 @@ async function mintPkp(ethersSigner) {
 
   await litContracts.connect();
 
-  return (await litContracts.pkpNftContractUtils.write.mint()).pkp;
+  const ipfsHash = await stringToIpfsHash(litActionCode);
+  // get mint cost
+  const mintCost = await litContracts.pkpNftContract.read.mintCost();
+  console.log("Mint cost:", mintCost);
+
+  /*
+      function mintNextAndAddAuthMethods(
+        uint256 keyType,
+        uint256[] memory permittedAuthMethodTypes,
+        bytes[] memory permittedAuthMethodIds,
+        bytes[] memory permittedAuthMethodPubkeys,
+        uint256[][] memory permittedAuthMethodScopes,
+        bool addPkpEthAddressAsPermittedAddress,
+        bool sendPkpToItself
+        */
+
+  const txn =
+    await litContracts.pkpHelperContract.write.mintNextAndAddAuthMethods(
+      2,
+      [AuthMethodType.LitAction],
+      [ethers.utils.base58.decode(ipfsHash)],
+      ["0x"],
+      [[AuthMethodScope.SignAnything, AuthMethodScope.PersonalSign]],
+      false,
+      true,
+      { value: mintCost, gasLimit: 4000000000 }
+    );
+  const receipt = await txn.wait();
+  console.log("Minted!", receipt);
+
+  // get the pkp public key from the mint event
+  const pkpId = receipt.logs[0].topics[1];
+  const pkpInfo = await litContracts.pubkeyRouterContract.read.pubkeys(
+    ethers.BigNumber.from(pkpId)
+  );
+  console.log("PKP Info:", pkpInfo);
+  const pkpPublicKey = pkpInfo.pubkey;
+
+  console.log("PKP Public Key:", pkpPublicKey);
+
+  return pkpPublicKey.slice(2);
+
+  // return (await litContracts.pkpNftContractUtils.write.mint()).pkp;
 }
 
 async function getSessionSigs(litNodeClient, ethersSigner) {

@@ -14,7 +14,10 @@
     "@lit-protocol/constants": "^6.2.2",
     "@lit-protocol/contracts-sdk": "^6.2.2",
     "@lit-protocol/lit-node-client": "^6.2.2",
-    "ethers": "5.7.2"
+    "buffer": "^6.0.3",
+    "ethers": "5.7.2",
+    "ipfs-only-hash": "^4.0.0",
+    "ipfs-unixfs-importer": "^12.0.1"
   },
   "devDependencies": {
     "parcel-bundler": "^1.12.5"
