@@ -98,7 +98,7 @@ const promises = configs.map((config) => {
   return esbuild.build({
     entryPoints: [config.entryPoint],
     bundle: true,
-    minify: false, // TODO: Only turn this on fix replacing is working
+    minify: false, // Up to user to turn it on/off. Default off.
     treeShaking: true,
     outdir: "./src/lit-actions/dist",
     external: ["ethers"],
