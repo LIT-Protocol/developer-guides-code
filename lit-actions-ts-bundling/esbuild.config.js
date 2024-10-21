@@ -69,9 +69,8 @@ const wrapIIFEInStringPlugin = {
         // IMPORTANT: if minify is enabled, we need to:
         // 1. remove var t=o(\"ethers\");
         // 2. replace t.ethers to ethers
-        // TODO: This is not working - must fix soon.
         content = content
-          .replace(/var [a-zA-Z]=o\("ethers"\);/g, "")
+          .replace(/var\s+\w+=\w+\("ethers"\);/g, '')
           .replace(/[a-zA-Z]\.ethers/g, "ethers");
 
         // Use JSON.stringify to safely encode the content
