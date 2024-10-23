@@ -34,8 +34,7 @@
     "install:all": "yarn workspaces focus --all",
     "upgrade:all": "yarn workspaces foreach --all exec yarn up \"@lit-protocol/*@latest\"",
     "upgrade:all:alpha": "yarn workspaces foreach --all exec yarn up \"@lit-protocol/*@alpha\"",
-    "clean": "rimraf node_modules && yarn workspaces foreach exec rimraf node_modules",
-    "update:workspaces": "node update-workspaces.mjs"
+    "clean": "rimraf node_modules && yarn workspaces foreach exec rimraf node_modules"
   },
   "devDependencies": {
     "rimraf": "^6.0.1"
