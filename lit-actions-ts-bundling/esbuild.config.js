@@ -59,19 +59,21 @@ const wrapIIFEInStringPlugin = {
       result.outputFiles.forEach((outputFile) => {
         let content = outputFile.text;
 
-        // IMPORTANT: if minify is disabled, we need to:
-        // 1. remove var import_ethers = __require("ethers");
-        // 2. remove import_ethers.
-        content = content
-          .replace(/var import_ethers = __require\("ethers"\);/g, "")
-          .replace(/import_ethers\./g, "");
+        // Leaving this in for now, but not needed if we find a better
+        // solution for the global ethers object.
+        // // IMPORTANT: if minify is disabled, we need to:
+        // // 1. remove var import_ethers = __require("ethers");
+        // // 2. remove import_ethers.
+        // content = content
+        //   .replace(/var import_ethers = __require\("ethers"\);/g, "")
+        //   .replace(/import_ethers\./g, "");
 
-        // IMPORTANT: if minify is enabled, we need to:
-        // 1. remove var t=o(\"ethers\");
-        // 2. replace t.ethers to ethers
-        content = content
-          .replace(/var\s+\w+=\w+\("ethers"\);/g, '')
-          .replace(/[a-zA-Z]\.ethers/g, "ethers");
+        // // IMPORTANT: if minify is enabled, we need to:
+        // // 1. remove var t=o(\"ethers\");
+        // // 2. replace t.ethers to ethers
+        // content = content
+        //   .replace(/var\s+\w+=\w+\("ethers"\);/g, '')
+        //   .replace(/[a-zA-Z]\.ethers/g, "ethers");
 
         // Use JSON.stringify to safely encode the content
         const wrappedContent = `/**

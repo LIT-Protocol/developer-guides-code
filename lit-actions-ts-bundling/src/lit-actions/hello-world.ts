@@ -1,10 +1,3 @@
-/**
- * The global ethers library (5.7.0) is available on Lit Action (Unbundled)
- * 
- * inject ./buffer.shim.js
- */
-import { ethers } from "ethers";
-
 (async () => {
 
   const res = await Lit.Actions.runOnce({

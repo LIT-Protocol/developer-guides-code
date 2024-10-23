@@ -1,3 +1,5 @@
+import { ethers as Ethers } from 'ethers';
+
 declare global {
   export declare namespace Lit {
     export namespace Actions {
@@ -380,6 +382,9 @@ declare global {
       const customAuthResource: string | `"\\(true,${string})\\"`;
     }
   }
+
+  export type ethers = Ethers;
+  export const ethers: typeof Ethers;
 }
 
 export { };
