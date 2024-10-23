@@ -1,0 +1,17 @@
+{
+  "name": "lit-actions-ts-bundling",
+  "version": "1.0.0",
+  "main": "./src/index.ts",
+  "scripts": {
+    "build": "node esbuild.config.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "esbuild": "^0.24.0"
+  },
+  "dependencies": {
+    "ethers": "^5.7.2"
+  }
+}
