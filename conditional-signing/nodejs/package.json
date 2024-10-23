@@ -1,5 +1,5 @@
 {
-  "name": "conditional-signing-in-nodejs",
+  "name": "conditional-signing-nodejs",
   "version": "0.1.0",
   "description": "Example of conditional signing within a Lit Action using Node.js",
   "main": "index.js",

@@ -1,5 +1,5 @@
 {
-  "name": "btc-trigger-example",
+  "name": "btc-trigger-nodejs",
   "version": "0.1.0",
   "description": "Example of triggering a Bitcoin transaction with Lit Protocol",
   "type": "module",
