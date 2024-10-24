@@ -1,5 +1,5 @@
 {
-  "name": "custom-auth",
+  "name": "custom-auth-browser",
   "version": "6.0.0",
   "description": "Example of using custom authentication, auths that Lit doesn't support",
   "main": "index.js",

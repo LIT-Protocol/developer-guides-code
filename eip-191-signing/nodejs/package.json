@@ -1,5 +1,5 @@
 {
-  "name": "generating-eip-191-sigs-in-nodejs",
+  "name": "eip-191-signing-nodejs",
   "version": "0.1.0",
   "description": "Example of generating an EIP-191 signature using a Lit Action",
   "main": "index.js",
