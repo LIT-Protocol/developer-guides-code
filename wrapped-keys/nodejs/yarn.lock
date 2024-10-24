@@ -645,11 +645,7 @@
   dependencies:
     ajv "^8.12.0"
 
-<<<<<<< HEAD
 "@lit-protocol/auth-browser@6.6.0", "@lit-protocol/auth-browser@^6.6.0":
-=======
-"@lit-protocol/auth-browser@6.6.0", "@lit-protocol/auth-browser@^6.4.10":
->>>>>>> 9fbcb26 (ci: extended support for nx)
   version "6.6.0"
   resolved "https://registry.yarnpkg.com/@lit-protocol/auth-browser/-/auth-browser-6.6.0.tgz#74615620eaedd4a1029a205c34a613c3049ed567"
   integrity sha512-uV6tnvHdTAyc3ZcdoHzySN02bJmGrtpZ5hykMApOzvZ/mb1/SCypDtFq7bo08+ygwVsph8EQSHlMJyZQ0sxaOQ==
@@ -675,11 +671,7 @@
     tslib "1.14.1"
     uint8arrays "^4.0.3"
 
-<<<<<<< HEAD
 "@lit-protocol/auth-helpers@6.6.0", "@lit-protocol/auth-helpers@^6.6.0":
-=======
-"@lit-protocol/auth-helpers@6.6.0", "@lit-protocol/auth-helpers@^6.4.10":
->>>>>>> 9fbcb26 (ci: extended support for nx)
   version "6.6.0"
   resolved "https://registry.yarnpkg.com/@lit-protocol/auth-helpers/-/auth-helpers-6.6.0.tgz#b661c4e34a31406f81585740c08068c8db07f501"
   integrity sha512-1nQxIcllpl9O64rrviMKsc3G42BfwDQO8knwLnqhjLBmRZiYoUi+rb8TJujv0F9FTW7SDcDc6F6GOIfuITOJ5A==
@@ -713,11 +705,7 @@
     tslib "1.14.1"
     util "0.12.5"
 
-<<<<<<< HEAD
 "@lit-protocol/constants@6.6.0", "@lit-protocol/constants@^6.6.0":
-=======
-"@lit-protocol/constants@6.6.0", "@lit-protocol/constants@^6.4.10":
->>>>>>> 9fbcb26 (ci: extended support for nx)
   version "6.6.0"
   resolved "https://registry.yarnpkg.com/@lit-protocol/constants/-/constants-6.6.0.tgz#165f600a03d313c06ea45d6c0c55e74146eb765c"
   integrity sha512-Mu+Hosi0Im4I19mnzpWWowe1UcOb2yqNAyf9BstAJXf6oiKCJgTogaxkKWRfUQbH7+ilTRAouKQbW4CMBph8Og==
@@ -731,11 +719,7 @@
     siwe "^2.0.5"
     tslib "1.14.1"
 
-<<<<<<< HEAD
 "@lit-protocol/contracts-sdk@6.6.0", "@lit-protocol/contracts-sdk@^6.6.0":
-=======
-"@lit-protocol/contracts-sdk@6.6.0", "@lit-protocol/contracts-sdk@^6.4.10":
->>>>>>> 9fbcb26 (ci: extended support for nx)
   version "6.6.0"
   resolved "https://registry.yarnpkg.com/@lit-protocol/contracts-sdk/-/contracts-sdk-6.6.0.tgz#4b77bd60063b807e41015253afcad8da358f7f61"
   integrity sha512-5g1H+anXFsNKBbfezISN6yFNuTM6BTyNhFt6wjMGNV73XE8qylUxJbjint2HunMe9EhpR7v62894FTyKJZnmVA==
@@ -882,11 +866,7 @@
     uint8arrays "^4.0.3"
     util "0.12.5"
 
-<<<<<<< HEAD
 "@lit-protocol/lit-auth-client@^6.6.0":
-=======
-"@lit-protocol/lit-auth-client@^6.4.10":
->>>>>>> 9fbcb26 (ci: extended support for nx)
   version "6.6.0"
   resolved "https://registry.yarnpkg.com/@lit-protocol/lit-auth-client/-/lit-auth-client-6.6.0.tgz#61d8c770953479fd3bc716b5f991767195b8fd6b"
   integrity sha512-kPtCjFj6bSInOQifTPtNrHhyO9peooFTe9OzkxTJ57ByK4r1ZMK603Z7V+3NN1J+6rkfj4HqmBj+EVwvZdOLUQ==
@@ -996,11 +976,7 @@
     uint8arrays "^4.0.3"
     util "0.12.5"
 
-<<<<<<< HEAD
 "@lit-protocol/lit-node-client@6.6.0", "@lit-protocol/lit-node-client@^6.6.0":
-=======
-"@lit-protocol/lit-node-client@6.6.0", "@lit-protocol/lit-node-client@^6.4.10":
->>>>>>> 9fbcb26 (ci: extended support for nx)
   version "6.6.0"
   resolved "https://registry.yarnpkg.com/@lit-protocol/lit-node-client/-/lit-node-client-6.6.0.tgz#de37fc2588f8708e32d5ae8f35fb4bd88553fec4"
   integrity sha512-cbLGIEm3Y7AQy7Oao79j+Bgvm1zs0DOLxw3AZ91HTPafY251EMvwz4/jZVXZbLzMj8JRnqHH19A+oe7tKuK4hw==
@@ -1152,11 +1128,7 @@
     siwe "^2.0.5"
     tslib "1.14.1"
 
-<<<<<<< HEAD
 "@lit-protocol/wrapped-keys@^6.6.0":
-=======
-"@lit-protocol/wrapped-keys@^6.4.10":
->>>>>>> 9fbcb26 (ci: extended support for nx)
   version "6.6.0"
   resolved "https://registry.yarnpkg.com/@lit-protocol/wrapped-keys/-/wrapped-keys-6.6.0.tgz#17f3e7cdd32cfe4b1375e69e80f93e4702e30bf1"
   integrity sha512-w15lNa2/BBX9kr2N+3z8I051QM8HufzixUupKtfzg9RV5mmbhghPu5BiEq7QohsNvRbokGUw/VRNwhC6aabEUA==
@@ -4248,7 +4220,16 @@ strict-uri-encode@^2.0.0:
   resolved "https://registry.yarnpkg.com/strict-uri-encode/-/strict-uri-encode-2.0.0.tgz#b9c7330c7042862f6b142dc274bbcc5866ce3546"
   integrity sha512-QwiXZgpRcKkhTj2Scnn++4PKtWsH0kpzZ62L2R6c/LUVYv7hVnZqcg2+sMuT6R7Jusu1vviK/MFsu6kNJfWlEQ==
 
-"string-width-cjs@npm:string-width@^4.2.0", string-width@^4.1.0, string-width@^4.2.0:
+"string-width-cjs@npm:string-width@^4.2.0":
+  version "4.2.3"
+  resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
+  integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
+  dependencies:
+    emoji-regex "^8.0.0"
+    is-fullwidth-code-point "^3.0.0"
+    strip-ansi "^6.0.1"
+
+string-width@^4.1.0, string-width@^4.2.0:
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
@@ -4280,7 +4261,14 @@ string_decoder@~1.1.1:
   dependencies:
     safe-buffer "~5.1.0"
 
-"strip-ansi-cjs@npm:strip-ansi@^6.0.1", strip-ansi@^6.0.0, strip-ansi@^6.0.1:
+"strip-ansi-cjs@npm:strip-ansi@^6.0.1":
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
+  integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
+  dependencies:
+    ansi-regex "^5.0.1"
+
+strip-ansi@^6.0.0, strip-ansi@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
   integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
@@ -4650,7 +4638,7 @@ workerpool@^6.5.1:
   resolved "https://registry.yarnpkg.com/workerpool/-/workerpool-6.5.1.tgz#060f73b39d0caf97c6db64da004cd01b4c099544"
   integrity sha512-Fs4dNYcsdpYSAfVxhnl1L5zTksjvOJxtC5hzMNl+1t9B8hTJTdKDyZ5ju7ztgPy+ft9tBFXoOlDNiOT9WUXZlA==
 
-"wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
+"wrap-ansi-cjs@npm:wrap-ansi@^7.0.0":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
@@ -4663,6 +4651,15 @@ wrap-ansi@^6.2.0:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-6.2.0.tgz#e9393ba07102e6c91a3b221478f0257cd2856e53"
   integrity sha512-r6lPcBGxZXlIcymEu7InxDMhdW0KDxpLgoFLcguasxCaJ/SOIZwINatK9KY/tf+ZrlywOKU0UDj3ATXUBfxJXA==
+  dependencies:
+    ansi-styles "^4.0.0"
+    string-width "^4.1.0"
+    strip-ansi "^6.0.0"
+
+wrap-ansi@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
+  integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
   dependencies:
     ansi-styles "^4.0.0"
     string-width "^4.1.0"
