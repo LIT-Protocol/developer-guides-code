@@ -10,10 +10,17 @@
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^0.37.1",
+<<<<<<< HEAD
     "@lit-protocol/auth-helpers": "^6.5.1",
     "@lit-protocol/constants": "^6.5.1",
     "@lit-protocol/contracts-sdk": "^6.5.1",
     "@lit-protocol/lit-node-client": "^6.5.1",
+=======
+    "@lit-protocol/auth-helpers": "^6.4.10",
+    "@lit-protocol/constants": "^6.4.10",
+    "@lit-protocol/contracts-sdk": "^6.4.10",
+    "@lit-protocol/lit-node-client-nodejs": "^6.4.10",
+>>>>>>> 8cb285d (fix: update-lit command to not make script executable each time)
     "ethers": "5.7.2"
   },
   "devDependencies": {

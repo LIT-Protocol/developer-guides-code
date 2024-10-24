@@ -1,0 +1,18 @@
+{
+    "name": "getSessionSigs-nodejs",
+    "root": "session-signatures/getSessionSigs",
+    "targets": {
+        "test-lit": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "cd session-signatures/getSessionSigs && yarn && yarn test"
+            }
+        },
+        "update-lit": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "cd session-signatures/getSessionSigs && ../../scripts/update-lit.sh"
+            }
+        }
+    }
+}

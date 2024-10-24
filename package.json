@@ -1,0 +1,13 @@
+{
+  "name": "developer-guides-code",
+  "version": "1.0.0",
+  "description": "These examples are designed to help you get started building with Lit!",
+  "main": "index.js",
+  "scripts": {
+    "test-lit": "nx run-many --target=test-lit --all --parallel=1",
+    "update-lit": "chmod +x ./scripts/update-lit.sh && nx run-many --target=update-lit --all --parallel"
+  },
+  "devDependencies": {
+    "nx": "19.6.3"
+  }
+}
