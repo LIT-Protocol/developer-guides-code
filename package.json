@@ -53,7 +53,7 @@
   "description": "These examples are designed to help you get started building with Lit!",
   "main": "index.js",
   "scripts": {
-    "test-lit": "nx run-many --target=test-lit --all --parallel=1 --exclude=pkp-migration-nodejs,sign-and-combine-ecdsa-nodejs,wrapped-keys-nodejs",
+    "test-lit": "nx run-many --target=test-lit --all --parallel=1",
     "update-lit": "chmod +x ./scripts/update-lit.sh && nx run-many --target=update-lit --all --parallel"
   },
   "devDependencies": {

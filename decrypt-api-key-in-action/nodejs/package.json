@@ -1,10 +1,5 @@
 {
-<<<<<<< HEAD
-  "name": "decrypt-api-key-in-action-nodejs",
-=======
-<<<<<<< HEAD
   "name": "decryption-in-lit-action",
->>>>>>> c651de5 (merge)
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -30,25 +25,5 @@
     "@lit-protocol/constants": "^6.4.10",
     "@lit-protocol/contracts-sdk": "^6.4.10",
     "@lit-protocol/lit-node-client": "^6.4.10"
-=======
-  "name": "action-plus-examples",
-  "version": "1.0.0",
-  "main": "index.js",
-  "type": "module",
-  "license": "MIT",
-  "dependencies": {
-    "@lit-protocol/auth-helpers": "^6.4.10",
-    "@lit-protocol/lit-auth-client": "^6.4.10",
-    "@lit-protocol/lit-node-client": "^6.4.10",
-    "@lit-protocol/types": "^6.4.10",
-    "@types/node": "^20.12.8",
-    "ethers": "^5.7.1",
-    "siwe": "^2.0.0",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.1.6"
-  },
-  "scripts": {
-    "start": "node --loader ts-node/esm src/index.ts"
->>>>>>> 314a19b (refactor: changed dir structure for decrypt-api-key-in-action as per templates)
   }
 }

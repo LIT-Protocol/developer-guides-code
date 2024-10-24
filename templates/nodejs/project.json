@@ -1,17 +1,17 @@
 {
-    "name": "conditional-signing-nodejs",
-    "root": "conditional-signing/nodejs",
+    "name": "wrapped-keys-nodejs",
+    "root": "wrapped-keys/nodejs",
     "targets": {
         "test-lit": {
             "executor": "nx:run-commands",
             "options": {
-                "command": "cd conditional-signing/nodejs && yarn && yarn test"
+                "command": "cd wrapped-keys/nodejs && yarn && yarn test"
             }
         },
         "update-lit": {
             "executor": "nx:run-commands",
             "options": {
-                "command": "cd conditional-signing/nodejs && ../../scripts/update-lit.sh"
+                "command": "cd wrapped-keys/nodejs && ../../scripts/update-lit.sh"
             }
         }
     }
