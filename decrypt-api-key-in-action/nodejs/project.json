@@ -2,7 +2,6 @@
     "name": "decrypt-api-key-in-action-nodejs",
     "root": "decrypt-api-key-in-action/nodejs",
     "targets": {
-<<<<<<< HEAD
         "test-lit": {
             "executor": "nx:run-commands",
             "options": {
@@ -17,13 +16,3 @@
         }
     }
 }
-=======
-        "update-lit": {
-            "executor": "nx:run-commands",
-            "options": {
-                "command": "cd decrypt-api-key-in-action/nodejs && ../../scripts/update-lit.sh"
-            }
-        }
-    }
-}
->>>>>>> 1e8b871 (refactor: changed dir structure for decrypt-api-key-in-action as per templates)
