@@ -1,0 +1,12 @@
+{
+    "name": "starter-guides-browser",
+    "root": "starter-guides/browser",
+    "targets": {
+        "update-lit": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "cd starter-guides/browser && ../../scripts/update-lit.sh"
+            }
+        }
+    }
+}

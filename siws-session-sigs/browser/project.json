@@ -1,0 +1,12 @@
+{
+    "name": "siws-session-sigs-browser",
+    "root": "siws-session-sigs/browser",
+    "targets": {
+        "update-lit": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "cd siws-session-sigs/browser && ../../scripts/update-lit.sh"
+            }
+        }
+    }
+}
