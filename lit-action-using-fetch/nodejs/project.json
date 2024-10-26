@@ -1,0 +1,18 @@
+{
+    "name": "lit-action-using-fetch-node",
+    "root": "lit-action-using-fetch/nodejs",
+    "targets": {
+        "test-lit": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "cd lit-action-using-fetch/nodejs && yarn test"
+            }
+        },
+        "update-lit": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "cd lit-action-using-fetch/nodejs && LATEST_VERSION=$(npm show @lit-protocol/lit-node-client version) && npm pkg set dependencies.@lit-protocol/lit-node-client=^$LATEST_VERSION"
+            }
+        }
+    }
+}
