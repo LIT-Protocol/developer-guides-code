@@ -3,9 +3,9 @@ import chaiJsonSchema from "chai-json-schema";
 import { MintCapacityCreditsRes } from "@lit-protocol/types";
 import ethers from "ethers";
 
-import { delegateCapacityCredit } from "../src/delegateCapacityCredit";
-import { mintCapacityCredit } from "../src/mintCapacityCredit";
-import { getEnv } from "../src/utils";
+import { delegateCapacityCredit } from "../delegateCapacityCredit";
+import { mintCapacityCredit } from "../mintCapacityCredit";
+import { getEnv } from "../utils";
 
 use(chaiJsonSchema);
 

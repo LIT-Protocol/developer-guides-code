@@ -1,0 +1,18 @@
+{
+    "name": "paying-for-lit-nodejs",
+    "root": "paying-for-lit/nodejs",
+    "targets": {
+        "test-lit": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "cd paying-for-lit/nodejs && yarn && yarn test"
+            }
+        },
+        "update-lit": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "cd paying-for-lit/nodejs && LATEST_VERSION=$(npm show @lit-protocol/lit-node-client version) && npm pkg set dependencies.@lit-protocol/lit-node-client=^$LATEST_VERSION"
+            }
+        }
+    }
+}

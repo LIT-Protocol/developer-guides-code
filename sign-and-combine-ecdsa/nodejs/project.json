@@ -1,0 +1,18 @@
+{
+    "name": "sign-and-combine-ecdsa-nodejs",
+    "root": "sign-and-combine-ecdsa/nodejs",
+    "targets": {
+        "test-lit": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "cd sign-and-combine-ecdsa/nodejs && yarn && yarn test"
+            }
+        },
+        "update-lit": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "cd sign-and-combine-ecdsa/nodejs && LATEST_VERSION=$(npm show @lit-protocol/lit-node-client version) && npm pkg set dependencies.@lit-protocol/lit-node-client=^$LATEST_VERSION"
+            }
+        }
+    }
+}

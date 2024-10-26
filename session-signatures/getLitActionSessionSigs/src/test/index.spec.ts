@@ -1,11 +1,11 @@
 import { expect, use } from "chai";
 import chaiJsonSchema from "chai-json-schema";
 
-import { getSessionSigsPKP } from "../src";
+import { getSessionSigsLitAction } from "..";
 
 use(chaiJsonSchema);
 
-describe("getSessionSigsPKP", () => {
+describe("getSessionSigsLitAction", () => {
   const sessionSigResponseSchema = {
     type: "object",
     patternProperties: {
@@ -25,7 +25,7 @@ describe("getSessionSigsPKP", () => {
   };
 
   it("Attempting to get session signatures...", async () => {
-    const sessionSignatures = await getSessionSigsPKP();
+    const sessionSignatures = await getSessionSigsLitAction();
     expect(sessionSignatures).to.be.jsonSchema(sessionSigResponseSchema);
   }).timeout(120_000);
 });
