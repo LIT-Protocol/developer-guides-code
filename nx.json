@@ -9,7 +9,5 @@
         ]
       }
     }
-  },
-  "defaultBase": "master",
-  "nxCloudAccessToken": ""
+  }
 }

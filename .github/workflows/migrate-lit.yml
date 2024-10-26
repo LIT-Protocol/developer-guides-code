@@ -23,7 +23,7 @@ jobs:
         run: yarn install
 
       - name: Run package migration
-        run: yarn update-lit
+        run: yarn upgrade:all
 
       - name: Create 
         id: commit-changes
