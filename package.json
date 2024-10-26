@@ -12,6 +12,7 @@
     "lit-action-claim-key/nodejs",
     "lit-action-using-fetch/browser",
     "lit-action-using-fetch/nodejs",
+    "lit-relayer/mintPKPThroughRelayer/browser",
     "paying-for-lit/nodejs",
     "payment-delegation-db-relayer/nodejs",
     "pkp-migration/nodejs",

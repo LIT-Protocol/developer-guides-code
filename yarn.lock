@@ -3935,6 +3935,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-oauth/google@npm:^0.12.1":
+  version: 0.12.1
+  resolution: "@react-oauth/google@npm:0.12.1"
+  peerDependencies:
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: 10c0/fe23e3c0a4d0b9999fcd7b932b1a42bf94fdab526473931d780d08742455b8861fc647857b3b491e258ecef4a407dbf7321440c0d00890e23059d487795f92fb
+  languageName: node
+  linkType: hard
+
 "@rollup/plugin-inject@npm:^5.0.4, @rollup/plugin-inject@npm:^5.0.5":
   version: 5.0.5
   resolution: "@rollup/plugin-inject@npm:5.0.5"
@@ -13426,6 +13436,35 @@ __metadata:
   checksum: 10c0/90057dee050803823ac884c1355b0213ab8c05fbe2ec63943c694b61aade5d36272068f3925f45a312835e504f9c9784738ef797009f0a756a750351eafb52d5
   languageName: node
   linkType: hard
+
+"lit-relayer-mintPKPThroughRelayer-nodejs@workspace:lit-relayer/mintPKPThroughRelayer/browser":
+  version: 0.0.0-use.local
+  resolution: "lit-relayer-mintPKPThroughRelayer-nodejs@workspace:lit-relayer/mintPKPThroughRelayer/browser"
+  dependencies:
+    "@esbuild-plugins/node-globals-polyfill": "npm:^0.2.3"
+    "@esbuild-plugins/node-modules-polyfill": "npm:^0.2.2"
+    "@lit-protocol/constants": "npm:^6.11.0"
+    "@lit-protocol/lit-auth-client": "npm:^6.11.0"
+    "@react-oauth/google": "npm:^0.12.1"
+    "@simplewebauthn/browser": "npm:^10.0.0"
+    "@types/react": "npm:^18.3.3"
+    "@types/react-dom": "npm:^18.3.0"
+    "@typescript-eslint/eslint-plugin": "npm:^7.13.1"
+    "@typescript-eslint/parser": "npm:^7.13.1"
+    "@vitejs/plugin-react": "npm:^4.3.1"
+    "@vitejs/plugin-react-swc": "npm:^3.7.0"
+    eslint: "npm:^8.57.0"
+    eslint-plugin-react-hooks: "npm:^4.6.2"
+    eslint-plugin-react-refresh: "npm:^0.4.7"
+    ethers: "npm:v5"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
+    rollup-plugin-polyfill-node: "npm:^0.13.0"
+    typescript: "npm:^5.5.3"
+    vite: "npm:^5.3.1"
+    vite-plugin-node-polyfills: "npm:^0.22.0"
+  languageName: unknown
+  linkType: soft
 
 "lit@npm:2.7.6":
   version: 2.7.6
