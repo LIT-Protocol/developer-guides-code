@@ -20,8 +20,8 @@ yarn test-lit
 Reports the versions of dependencies starting with `@lit-protocol`
 
 ```
-node ./report.mjs --tag=latest
-node ./report.mjs --tag=datil-dev
+node ./scripts/report.mjs --tag=latest
+node ./scripts/report.mjs --tag=datil-dev
 ```
 
 Update lit sdk on a specific subdirectory
