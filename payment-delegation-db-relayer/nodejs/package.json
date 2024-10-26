@@ -23,9 +23,9 @@
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^0.44.1",
-    "@lit-protocol/auth-helpers": "^6.4.10",
-    "@lit-protocol/lit-node-client": "^6.4.10",
-    "@lit-protocol/types": "^6.4.10",
+    "@lit-protocol/auth-helpers": "^6.11.0",
+    "@lit-protocol/lit-node-client": "^6.11.0",
+    "@lit-protocol/types": "^6.11.0",
     "ethers": "v5"
   }
 }
