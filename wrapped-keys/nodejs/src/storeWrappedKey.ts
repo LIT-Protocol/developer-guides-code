@@ -1,7 +1,8 @@
 import * as ethers from "ethers";
-import { LitNodeClient, encryptString } from "@lit-protocol/lit-node-client";
-import { LIT_RPC, LitNetwork } from "@lit-protocol/constants";
-import { LitAbility, LitActionResource } from "@lit-protocol/auth-helpers";
+import { LitNodeClient } from "@lit-protocol/lit-node-client";
+import { encryptString } from '@lit-protocol/encryption';
+import { LIT_RPC, LIT_NETWORK, LIT_ABILITY } from "@lit-protocol/constants";
+import { LitActionResource } from "@lit-protocol/auth-helpers";
 import { EthWalletProvider } from "@lit-protocol/lit-auth-client";
 import { api } from "@lit-protocol/wrapped-keys";
 
@@ -29,7 +30,7 @@ export const storeWrappedKey = async (
 
     console.log("🔄 Connecting to Lit network...");
     litNodeClient = new LitNodeClient({
-      litNetwork: LitNetwork.DatilDev,
+      litNetwork: LIT_NETWORK.DatilDev,
       debug: false,
     });
     await litNodeClient.connect();
@@ -48,7 +49,7 @@ export const storeWrappedKey = async (
       resourceAbilityRequests: [
         {
           resource: new LitActionResource("*"),
-          ability: LitAbility.LitActionExecution,
+          ability: LIT_ABILITY.LitActionExecution,
         },
       ],
       expiration: new Date(Date.now() + 1000 * 60 * 10).toISOString(), // 10 minutes

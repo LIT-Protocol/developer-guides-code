@@ -13,7 +13,7 @@
     "parcel-bundler": "^1.12.5"
   },
   "dependencies": {
-    "@lit-protocol/lit-node-client": "^6.11.0",
+    "@lit-protocol/lit-node-client": "^7.0.0-alpha.9",
     "ipfs-helpers": "^0.0.5"
   }
 }

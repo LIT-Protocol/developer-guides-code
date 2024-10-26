@@ -1,8 +1,7 @@
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
-import { LitNetwork, LIT_RPC, AuthMethodScope } from "@lit-protocol/constants";
+import { LIT_NETWORK, LIT_RPC, LIT_ABILITY, AUTH_METHOD_SCOPE } from "@lit-protocol/constants";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
 import {
-  LitAbility,
   LitActionResource,
   LitPKPResource,
 } from "@lit-protocol/auth-helpers";
@@ -31,7 +30,7 @@ export const getSessionSigsLitAction = async (
 
     console.log("🔄 Connecting LitNodeClient to Lit network...");
     litNodeClient = new LitNodeClient({
-      litNetwork: LitNetwork.DatilTest,
+      litNetwork: LIT_NETWORK.DatilTest,
       debug: false,
     });
     await litNodeClient.connect();
@@ -40,7 +39,7 @@ export const getSessionSigsLitAction = async (
     console.log("🔄 Connecting LitContracts client to network...");
     const litContracts = new LitContracts({
       signer: ethersSigner,
-      network: LitNetwork.DatilTest,
+      network: LIT_NETWORK.DatilTest,
       debug: false,
     });
     await litContracts.connect();
@@ -88,7 +87,7 @@ export const getSessionSigsLitAction = async (
     await litContracts.addPermittedAction({
       ipfsId: litActionCodeIpfsCid,
       pkpTokenId: pkp.tokenId,
-      authMethodScopes: [AuthMethodScope.SignAnything],
+      authMethodScopes: [AUTH_METHOD_SCOPE.SignAnything],
     });
     console.log("✅ Example Lit Action permissions added to the PKP");
 
@@ -100,11 +99,11 @@ export const getSessionSigsLitAction = async (
       resourceAbilityRequests: [
         {
           resource: new LitPKPResource("*"),
-          ability: LitAbility.PKPSigning,
+          ability: LIT_ABILITY.PKPSigning,
         },
         {
           resource: new LitActionResource("*"),
-          ability: LitAbility.LitActionExecution,
+          ability: LIT_ABILITY.LitActionExecution,
         },
       ],
       // With this setup you could use either the litActionIpfsId or the litActionCode property

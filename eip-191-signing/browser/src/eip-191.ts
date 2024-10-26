@@ -1,9 +1,8 @@
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
-import { LitNetwork } from "@lit-protocol/constants";
+import { LIT_NETWORK, LIT_ABILITY } from "@lit-protocol/constants";
 import {
   createSiweMessageWithRecaps,
   generateAuthSig,
-  LitAbility,
   LitActionResource,
   LitPKPResource,
 } from "@lit-protocol/auth-helpers";
@@ -14,7 +13,7 @@ import { litActionCode } from "./litAction";
 
 const LIT_PKP_PUBLIC_KEY = import.meta.env["VITE_LIT_PKP_PUBLIC_KEY"];
 const LIT_CAPACITY_CREDIT_TOKEN_ID = import.meta.env["VITE_LIT_CAPACITY_CREDIT_TOKEN_ID"];
-const LIT_NETWORK = LitNetwork.DatilTest;
+const SELECTED_LIT_NETWORK = LIT_NETWORK.DatilTest;
 
 export async function signEIP191() {
   let litNodeClient: LitNodeClient;
@@ -33,7 +32,7 @@ export async function signEIP191() {
 
     console.log("🔄 Connecting to the Lit network...");
     litNodeClient = new LitNodeClient({
-      litNetwork: LIT_NETWORK,
+      litNetwork: SELECTED_LIT_NETWORK,
       debug: false,
     });
     await litNodeClient.connect();
@@ -42,7 +41,7 @@ export async function signEIP191() {
     console.log("🔄 Connecting LitContracts client to network...");
     const litContracts = new LitContracts({
       signer: ethersSigner,
-      network: LIT_NETWORK,
+      network: SELECTED_LIT_NETWORK,
       debug: false,
     });
     await litContracts.connect();
@@ -97,11 +96,11 @@ export async function signEIP191() {
       resourceAbilityRequests: [
         {
           resource: new LitPKPResource("*"),
-          ability: LitAbility.PKPSigning,
+          ability: LIT_ABILITY.PKPSigning,
         },
         {
           resource: new LitActionResource("*"),
-          ability: LitAbility.LitActionExecution,
+          ability: LIT_ABILITY.LitActionExecution,
         },
       ],
       authNeededCallback: async ({

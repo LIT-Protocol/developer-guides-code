@@ -1,5 +1,5 @@
 import ethers from "ethers";
-import { LIT_RPC, LitNetwork } from "@lit-protocol/constants";
+import { LIT_RPC, LIT_NETWORK } from "@lit-protocol/constants";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
 
 import { getEnv } from "./utils";
@@ -20,7 +20,7 @@ export const delegateCapacityCredit = async (
 
     console.log("🔄 Connecting to Lit network...");
     litNodeClient = new LitNodeClient({
-      litNetwork: LitNetwork.DatilDev,
+      litNetwork: LIT_NETWORK.DatilDev,
       debug: false,
     });
     await litNodeClient.connect();

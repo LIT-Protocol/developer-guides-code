@@ -1,12 +1,12 @@
-import { LitNetwork, LIT_RPC } from "@lit-protocol/constants";
+import { LIT_NETWORK, LIT_RPC, LIT_ABILITY } from "@lit-protocol/constants";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
 import {
-  LitAbility,
   LitAccessControlConditionResource,
   createSiweMessage,
   generateAuthSig,
 } from "@lit-protocol/auth-helpers";
+import {} from "@lit-protocol/constants"
 import * as ethers from "ethers";
 
 import { getEnv } from "./utils";
@@ -24,7 +24,7 @@ export const getSessionSigsViaAuthSig = async (capacityTokenId?: string) => {
 
     console.log("🔄 Connecting LitNodeClient to Lit network...");
     litNodeClient = new LitNodeClient({
-      litNetwork: LitNetwork.DatilTest,
+      litNetwork: LIT_NETWORK.DatilTest,
       debug: false,
     });
     await litNodeClient.connect();
@@ -33,7 +33,7 @@ export const getSessionSigsViaAuthSig = async (capacityTokenId?: string) => {
     console.log("🔄 Connecting LitContracts client to network...");
     const litContracts = new LitContracts({
       signer: ethersSigner,
-      network: LitNetwork.DatilTest,
+      network: LIT_NETWORK.DatilTest,
       debug: false,
     });
     await litContracts.connect();
@@ -68,7 +68,7 @@ export const getSessionSigsViaAuthSig = async (capacityTokenId?: string) => {
       resourceAbilityRequests: [
         {
           resource: new LitAccessControlConditionResource("*"),
-          ability: LitAbility.AccessControlConditionDecryption,
+          ability: LIT_ABILITY.AccessControlConditionDecryption,
         },
       ],
       authNeededCallback: async ({

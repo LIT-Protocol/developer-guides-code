@@ -36,7 +36,7 @@
     "upgrade:all": "yarn workspaces foreach --all exec yarn up \"@lit-protocol/*@latest\"",
     "upgrade:all:alpha": "yarn workspaces foreach --all exec yarn up \"@lit-protocol/*@alpha\"",
     "clean": "yarn workspaces foreach --all exec rimraf node_modules && yarn rimraf node_modules",
-    "test-lit": "nx run-many --target=test-lit --all --parallel=1 --exclude=templates-nodejs,pkp-migration-nodejs,btc-trigger-nodejs,starter-guides-nodejs",
+    "test-lit": "nx run-many --target=test-lit --all --parallel=1 --exclude=templates-nodejs,starter-guides-nodejs",
     "update-lit": "chmod +x ./scripts/update-lit.sh && yarn nx run-many --target=update-lit --all --parallel"
   },
   "devDependencies": {

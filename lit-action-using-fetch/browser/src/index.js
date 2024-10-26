@@ -1,9 +1,8 @@
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
-import { LitNetwork } from "@lit-protocol/constants";
+import { LIT_NETWORK, LIT_ABILITY } from "@lit-protocol/constants";
 import {
   createSiweMessageWithRecaps,
   generateAuthSig,
-  LitAbility,
   LitActionResource,
   LitPKPResource,
 } from "@lit-protocol/auth-helpers";
@@ -56,7 +55,7 @@ async function buttonClick() {
 
 async function getLitNodeClient() {
   const litNodeClient = new LitNodeClient({
-    litNetwork: LitNetwork.DatilDev,
+    litNetwork: LIT_NETWORK.DatilDev,
   });
 
   console.log("Connecting litNodeClient to network...");
@@ -82,7 +81,7 @@ async function mintPkp(ethersSigner) {
   console.log("Minting new PKP...");
   const litContracts = new LitContracts({
     signer: ethersSigner,
-    network: LitNetwork.DatilDev,
+    network: LIT_NETWORK.DatilDev,
   });
 
   await litContracts.connect();
@@ -98,11 +97,11 @@ async function getSessionSigs(litNodeClient, ethersSigner) {
     resourceAbilityRequests: [
       {
         resource: new LitActionResource("*"),
-        ability: LitAbility.LitActionExecution,
+        ability: LIT_ABILITY.LitActionExecution,
       },
       {
         resource: new LitPKPResource("*"),
-        ability: LitAbility.PKPSigning,
+        ability: LIT_ABILITY.PKPSigning,
       },
     ],
     authNeededCallback: getAuthNeededCallback(litNodeClient, ethersSigner),

@@ -1,9 +1,8 @@
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
-import { LitNetwork, LIT_RPC,  } from "@lit-protocol/constants";
+import { LIT_NETWORK, LIT_RPC, LIT_ABILITY } from "@lit-protocol/constants";
 import {
   createSiweMessageWithRecaps,
   generateAuthSig,
-  LitAbility,
   LitActionResource,
   LitPKPResource,
 } from "@lit-protocol/auth-helpers";
@@ -26,7 +25,7 @@ const PKP_PUBLIC_KEY = getEnv("PKP_PUBLIC_KEY");
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 const BTC_DESTINATION_ADDRESS = getEnv("BTC_DESTINATION_ADDRESS");
 const BROADCAST_URL = getEnv("BROADCAST_URL");
-const LIT_NETWORK = process.env["LIT_NETWORK"] as LIT_NETWORKS_KEYS || LitNetwork.Datil;
+const SELECTED_LIT_NETWORK = process.env["LIT_NETWORK"] as LIT_NETWORKS_KEYS || LIT_NETWORK.Datil;
 const LIT_CAPACITY_CREDIT_TOKEN_ID = process.env["LIT_CAPACITY_CREDIT_TOKEN_ID"];
 
 const ethersWallet = new ethers.Wallet(
@@ -44,14 +43,14 @@ export const executeBtcSigning = async () => {
 
   try {
     litNodeClient = new LitNodeClient({
-      litNetwork: LIT_NETWORK,
+      litNetwork: SELECTED_LIT_NETWORK,
       debug: false,
     });
     await litNodeClient.connect();
 
     const litContracts = new LitContracts({
       signer: ethersWallet,
-      network: LIT_NETWORK,
+      network: SELECTED_LIT_NETWORK,
       debug: false,
     });
     await litContracts.connect();
@@ -87,11 +86,11 @@ export const executeBtcSigning = async () => {
       resourceAbilityRequests: [
         {
           resource: new LitPKPResource("*"),
-          ability: LitAbility.PKPSigning,
+          ability: LIT_ABILITY.PKPSigning,
         },
         {
           resource: new LitActionResource("*"),
-          ability: LitAbility.LitActionExecution,
+          ability: LIT_ABILITY.LitActionExecution,
         },
       ],
       authNeededCallback: async ({
