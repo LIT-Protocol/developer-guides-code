@@ -7,7 +7,6 @@ import { encryptFileWithContractConditions } from "../src/encryptFile";
 use(require("chai-json-schema"));
 
 const FILE_TO_ENCRYPT_PATH = path.join(__dirname, "fileToEncrypt.txt");
-const FAKE_TOKEN_ID = 42;
 
 describe("Encrypting a file with EVM contract conditions", () => {
   let toEncryptFileBuffer: string;

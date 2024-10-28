@@ -1,4 +1,4 @@
-import { EvmContractConditions } from "@lit-protocol/types";
+import { EvmContractConditions, UnifiedAccessControlConditions } from "@lit-protocol/types";
 import { LIT_RPC } from "@lit-protocol/constants";
 import { expect, use } from "chai";
 import * as ethers from "ethers";
@@ -38,6 +38,7 @@ describe("Decrypting a file with EVM contract conditions", () => {
 
     evmContractConditions = [
       {
+        conditionType: "evmContract",
         contractAddress: '0xec989963a17a6801A8A1cEc8DF195121B02e0d0B',
         functionName: "isValidSignature",
         functionParams: [
@@ -91,7 +92,7 @@ describe("Decrypting a file with EVM contract conditions", () => {
     const { ciphertext, dataToEncryptHash } =
       await encryptFileWithContractConditions(
         new Blob([toEncryptFileBuffer], { type: "text/plain" }),
-        evmContractConditions as EvmContractConditions
+        evmContractConditions
       );
     _ciphertext = ciphertext;
     _dataToEncryptHash = dataToEncryptHash;
@@ -101,7 +102,7 @@ describe("Decrypting a file with EVM contract conditions", () => {
     const decryptionResult = await decryptFileWithContractConditions(
       _ciphertext,
       _dataToEncryptHash,
-      evmContractConditions as EvmContractConditions
+      evmContractConditions
     );
     console.log(Buffer.from(decryptionResult!).toString("utf8"));
   }).timeout(30_000);

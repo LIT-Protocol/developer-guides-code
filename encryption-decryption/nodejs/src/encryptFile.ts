@@ -24,7 +24,7 @@ export const encryptFileWithContractConditions = async (
     const { ciphertext, dataToEncryptHash } = await encryptFile(
       {
         file: toEncryptFileBlob,
-        chain: "ethereum",
+        chain: "yellowstone",
         evmContractConditions,
       },
       litNodeClient

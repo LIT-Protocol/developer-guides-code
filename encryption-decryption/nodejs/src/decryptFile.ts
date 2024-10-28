@@ -2,16 +2,18 @@ import * as ethers from "ethers";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
 import { LitNetwork, LIT_RPC } from "@lit-protocol/constants";
-import { EvmContractConditions } from "@lit-protocol/types";
+import { EvmContractConditions, UnifiedAccessControlConditions } from "@lit-protocol/types";
 import { decryptToFile } from "@lit-protocol/encryption";
 import {
   LitAbility,
   LitAccessControlConditionResource,
   createSiweMessageWithRecaps,
   generateAuthSig,
+  LitActionResource
 } from "@lit-protocol/auth-helpers";
 
 import { getEnv } from "./utils";
+import { litActionCode } from "./litAction";
 
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 const LIT_CAPACITY_CREDIT_TOKEN_ID = process.env.LIT_CAPACITY_CREDIT_TOKEN_ID;
@@ -71,7 +73,7 @@ export const decryptFileWithContractConditions = async (
 
     console.log("🔄 Getting EOA Session Sigs...");
     const sessionSigs = await litNodeClient.getSessionSigs({
-      chain: "ethereum",
+      chain: "yellowstone",
       expiration: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(), // 24 hours
       capabilityAuthSigs: [capacityDelegationAuthSig],
       resourceAbilityRequests: [
@@ -79,6 +81,10 @@ export const decryptFileWithContractConditions = async (
           resource: new LitAccessControlConditionResource("*"),
           ability: LitAbility.AccessControlConditionDecryption,
         },
+        {
+          resource: new LitActionResource("*"),
+          ability: LitAbility.LitActionExecution,
+        }
       ],
       authNeededCallback: async ({
         resourceAbilityRequests,
@@ -102,18 +108,30 @@ export const decryptFileWithContractConditions = async (
     });
     console.log("✅ Got EOA Session Sigs");
 
-    console.log("🔄 Decrypting to file...");
+    console.log("🔄 Decrypting to file with Lit Action...");
+    const response = await litNodeClient.executeJs({
+      sessionSigs,
+      code: litActionCode,
+      jsParams: {
+        evmContractConditions,
+        ciphertext,
+        dataToEncryptHash,
+      },
+    });
+    console.log("✅ Lit Action response:", response);
+
+    console.log("🔄 Decrypting to file with decryptToFile...");
     const decryptedFileBuffer = await decryptToFile(
       {
         ciphertext,
         dataToEncryptHash,
-        chain: "yellowstone",
+        chain: "yellowstone", // works even when changed
         sessionSigs,
         evmContractConditions,
       },
       litNodeClient
     );
-    console.log("✅ Decrypted file");
+    console.log("✅ Decrypted file:", Buffer.from(decryptedFileBuffer).toString("utf8"));
 
     return decryptedFileBuffer;
   } catch (error) {
