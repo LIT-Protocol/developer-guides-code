@@ -2,11 +2,5 @@
     "name": "siws-accs-browser",
     "root": "siws-accs/browser",
     "targets": {
-        "update-lit": {
-            "executor": "nx:run-commands",
-            "options": {
-                "command": "cd siws-accs/browser && ../../scripts/update-lit.sh"
-            }
-        }
     }
 }

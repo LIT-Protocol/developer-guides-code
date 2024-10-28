@@ -1,11 +1,11 @@
-import { LitAuthClient } from "@lit-protocol/lit-auth-client";
 import {
-  AuthMethodType,
-  LIT_RPC,
-  LitNetwork,
-  ProviderType,
+  AUTH_METHOD_TYPE,
+  LIT_NETWORK,
 } from "@lit-protocol/constants";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
+import { LitRelay, GoogleProvider } from '@lit-protocol/lit-auth-client';
+
+
 
 export const mintPkpUsingGoogleAndLitRelayer = async (credentialResponse: {
   credential: string;
@@ -16,25 +16,21 @@ export const mintPkpUsingGoogleAndLitRelayer = async (credentialResponse: {
   try {
     console.log("🔄 Connecting to Lit network...");
     litNodeClient = new LitNodeClient({
-      litNetwork: LitNetwork.DatilDev,
+      litNetwork: LIT_NETWORK.DatilDev,
       debug: true,
     });
     await litNodeClient.connect();
     console.log("✅ Connected to Lit network");
 
-    const litAuthClient = new LitAuthClient({
-      debug: false,
-      litRelayConfig: {
-        relayApiKey: import.meta.env.VITE_LIT_RELAYER_API_KEY,
-      },
-      rpcUrl: LIT_RPC.CHRONICLE_YELLOWSTONE,
-      litNodeClient,
+    const relay = new LitRelay({ 
+      relayApiKey: import.meta.env.VITE_LIT_RELAYER_API_KEY 
     });
-    const googleProvider = litAuthClient.initProvider(ProviderType.Google);
+
+    const googleProvider = new GoogleProvider({ relay, litNodeClient });
 
     console.log("🔄 Minting PKP through Lit Relayer...");
     const txHash = await googleProvider.mintPKPThroughRelayer({
-      authMethodType: AuthMethodType.Google,
+      authMethodType: AUTH_METHOD_TYPE.Google,
       accessToken: credentialResponse.credential,
     });
     const result = await googleProvider.relay.pollRequestUntilTerminalState(

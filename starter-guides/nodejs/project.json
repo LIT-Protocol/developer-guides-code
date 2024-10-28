@@ -7,12 +7,6 @@
             "options": {
                 "command": "cd starter-guides/nodejs && yarn && yarn test"
             }
-        },
-        "update-lit": {
-            "executor": "nx:run-commands",
-            "options": {
-                "command": "cd starter-guides/nodejs && ../../scripts/update-lit.sh"
-            }
         }
     }
 }

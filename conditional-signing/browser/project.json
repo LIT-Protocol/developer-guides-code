@@ -2,11 +2,5 @@
     "name": "conditional-signing-browser",
     "root": "conditional-signing/browser",
     "targets": {
-        "update-lit": {
-            "executor": "nx:run-commands",
-            "options": {
-                "command": "cd conditional-signing/browser && ../../scripts/update-lit.sh"
-            }
-        }
     }
 }

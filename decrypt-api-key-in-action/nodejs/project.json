@@ -7,12 +7,6 @@
             "options": {
                 "command": "cd decrypt-api-key-in-action/nodejs && yarn && yarn test"
             }
-        },
-        "update-lit": {
-            "executor": "nx:run-commands",
-            "options": {
-                "command": "cd decrypt-api-key-in-action/nodejs && ../../scripts/update-lit.sh"
-            }
         }
     }
 }

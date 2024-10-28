@@ -2,11 +2,5 @@
     "name": "lit-action-using-fetch-browser",
     "root": "lit-action-using-fetch/browser",
     "targets": {
-        "update-lit": {
-            "executor": "nx:run-commands",
-            "options": {
-                "command": "cd lit-action-using-fetch/browser && ../../scripts/update-lit.sh"
-            }
-        }
     }
 }

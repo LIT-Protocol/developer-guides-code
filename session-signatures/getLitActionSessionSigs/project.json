@@ -7,12 +7,6 @@
             "options": {
                 "command": "cd session-signatures/getLitActionSessionSigs && yarn && yarn test"
             }
-        },
-        "update-lit": {
-            "executor": "nx:run-commands",
-            "options": {
-                "command": "cd session-signatures/getLitActionSessionSigs && ../../scripts/update-lit.sh"
-            }
         }
     }
 }

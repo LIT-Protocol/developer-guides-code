@@ -2,11 +2,5 @@
     "name": "lit-relayer-mintPKPThroughRelayer-browser",
     "root": "lit-relayer/mintPKPThroughRelayer/browser",
     "targets": {
-        "update-lit": {
-            "executor": "nx:run-commands",
-            "options": {
-                "command": "cd lit-relayer/mintPKPThroughRelayer/browser && ../../../scripts/update-lit.sh"
-            }
-        }
     }
 }

@@ -7,12 +7,6 @@
             "options": {
                 "command": "cd pkp-migration/nodejs && yarn && yarn test"
             }
-        },
-        "update-lit": {
-            "executor": "nx:run-commands",
-            "options": {
-                "command": "cd pkp-migration/nodejs && ../../scripts/update-lit.sh"
-            }
         }
     }
 }

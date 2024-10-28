@@ -7,12 +7,6 @@
             "options": {
                 "command": "cd sign-and-combine-ecdsa/nodejs && yarn && yarn test"
             }
-        },
-        "update-lit": {
-            "executor": "nx:run-commands",
-            "options": {
-                "command": "cd sign-and-combine-ecdsa/nodejs && ../../scripts/update-lit.sh"
-            }
         }
     }
 }

@@ -7,12 +7,6 @@
             "options": {
                 "command": "cd payment-delegation-db-relayer/nodejs && yarn && yarn test"
             }
-        },
-        "update-lit": {
-            "executor": "nx:run-commands",
-            "options": {
-                "command": "cd payment-delegation-db-relayer/nodejs && ../../scripts/update-lit.sh"
-            }
         }
     }
 }

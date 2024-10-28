@@ -2,11 +2,5 @@
     "name": "templates-browser",
     "root": "templates/browser",
     "targets": {
-        "update-lit": {
-            "executor": "nx:run-commands",
-            "options": {
-                "command": "cd templates/browser && ../../scripts/update-lit.sh"
-            }
-        }
     }
 }

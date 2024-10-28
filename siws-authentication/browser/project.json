@@ -2,11 +2,5 @@
     "name": "siws-authentication-browser",
     "root": "siws-authentication/browser",
     "targets": {
-        "update-lit": {
-            "executor": "nx:run-commands",
-            "options": {
-                "command": "cd siws-authentication/browser && ../../scripts/update-lit.sh"
-            }
-        }
     }
 }

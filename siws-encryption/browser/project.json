@@ -2,11 +2,5 @@
     "name": "siws-encryption-browser",
     "root": "siws-encryption/browser",
     "targets": {
-        "update-lit": {
-            "executor": "nx:run-commands",
-            "options": {
-                "command": "cd siws-encryption/browser && ../../scripts/update-lit.sh"
-            }
-        }
     }
 }
