@@ -46,20 +46,21 @@ describe("Decrypting a file with EVM contract conditions", () => {
           messageHash,   // _hash
           signature,   // _signature
         ],
+        // Remove `internalType` as it causes discrepancies in `hashOfConditions` due to the SDK removing it in `canonicalAbiParams()`, while nodes include it during hashing
         functionAbi: {
           inputs: [
             {
-              internalType: "address",
+              // internalType: "address",
               name: "_signer",
               type: "address"
             },
             {
-              internalType: "bytes32",
+              // internalType: "bytes32",
               name: "_hash",
               type: "bytes32"
             },
             {
-              internalType: "bytes",
+              // internalType: "bytes",
               name: "_signature",
               type: "bytes"
             }
@@ -67,7 +68,7 @@ describe("Decrypting a file with EVM contract conditions", () => {
           name: "isValidSignature",
           outputs: [
             {
-              internalType: "bool",
+              // internalType: "bool",
               name: "isValid",
               type: "bool"
             }

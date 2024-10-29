@@ -2,7 +2,7 @@ import * as ethers from "ethers";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
 import { LitNetwork, LIT_RPC } from "@lit-protocol/constants";
-import { EvmContractConditions, UnifiedAccessControlConditions } from "@lit-protocol/types";
+import { EvmContractConditions } from "@lit-protocol/types";
 import { decryptToFile } from "@lit-protocol/encryption";
 import {
   LitAbility,
@@ -73,7 +73,8 @@ export const decryptFileWithContractConditions = async (
 
     console.log("🔄 Getting EOA Session Sigs...");
     const sessionSigs = await litNodeClient.getSessionSigs({
-      chain: "yellowstone",
+      // chain: "yellowstone",
+      chain: "ethereum", // We get sessionSigs on `ethereum` but I don't think it makes a difference
       expiration: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(), // 24 hours
       capabilityAuthSigs: [capacityDelegationAuthSig],
       resourceAbilityRequests: [
