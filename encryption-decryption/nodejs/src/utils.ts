@@ -16,7 +16,7 @@ export const mintCapacityCredit = async (ethersSigner: ethers.Wallet) => {
     console.log("Connecting LitContracts client to the network...");
     const litContracts = new LitContracts({
       signer: ethersSigner,
-      network: LitNetwork.Habanero,
+      network: LitNetwork.DatilTest,
     });
     console.log("Connected LitContracts client to the network");
 

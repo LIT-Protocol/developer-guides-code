@@ -1,19 +1,12 @@
-import { EvmContractConditions, UnifiedAccessControlConditions } from "@lit-protocol/types";
-import { LIT_RPC } from "@lit-protocol/constants";
+import { EvmContractConditions } from "@lit-protocol/types";
 import { expect, use } from "chai";
-import * as ethers from "ethers";
 import { readFileSync } from "fs";
-import path from "path";
 
-import { getEnv } from "../src/utils";
 
 import { encryptFileWithContractConditions } from "../src/encryptFile";
 import { decryptFileWithContractConditions } from "../src/decryptFile";
 
 use(require("chai-json-schema"));
-
-const FILE_TO_ENCRYPT_PATH = path.join(__dirname, "fileToEncrypt.txt");
-const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 
 describe("Decrypting a file with EVM contract conditions", () => {
 
@@ -25,58 +18,29 @@ describe("Decrypting a file with EVM contract conditions", () => {
   before(async function () {
     this.timeout(60_000);
 
-    const ethersSigner = new ethers.Wallet(
-      ETHEREUM_PRIVATE_KEY,
-      new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE)
-    );
-
-    const message = "Hello, Ethereum!";
-    const signature = await ethersSigner.signMessage(message);
-    console.log(`Signature: ${signature}`);
-    const messageHash = ethers.utils.hashMessage(message);
-    console.log(`Signature hash: ${messageHash}`);
-
     evmContractConditions = [
       {
-        conditionType: "evmContract",
-        contractAddress: '0xec989963a17a6801A8A1cEc8DF195121B02e0d0B',
-        functionName: "isValidSignature",
-        functionParams: [
-          ":userAddress",   // _signer
-          messageHash,   // _hash
-          signature,   // _signature
-        ],
-        // Remove `internalType` as it causes discrepancies in `hashOfConditions` due to the SDK removing it in `canonicalAbiParams()`, while nodes include it during hashing
+        contractAddress: "0x1e1947c7E9761E922d6995EDb8BA59C5471e558F",
+        functionName: "hasActiveSubscription",
+        functionParams: [":userAddress"],
         functionAbi: {
           inputs: [
             {
-              // internalType: "address",
-              name: "_signer",
-              type: "address"
+              name: "user",
+              type: "address",
             },
-            {
-              // internalType: "bytes32",
-              name: "_hash",
-              type: "bytes32"
-            },
-            {
-              // internalType: "bytes",
-              name: "_signature",
-              type: "bytes"
-            }
           ],
-          name: "isValidSignature",
+          name: "hasActiveSubscription",
           outputs: [
             {
-              // internalType: "bool",
-              name: "isValid",
-              type: "bool"
-            }
+              name: "",
+              type: "bool",
+            },
           ],
-          stateMutability: "pure",
-          type: "function"
+          stateMutability: "view",
+          type: "function",
         },
-        chain: "yellowstone",
+        chain: "sepolia",
         returnValueTest: {
           key: "",
           comparator: "=",
@@ -85,14 +49,9 @@ describe("Decrypting a file with EVM contract conditions", () => {
       },
     ];
 
-    console.log(`🔄 Reading file: ${FILE_TO_ENCRYPT_PATH}...`);
-    toEncryptFileBuffer = readFileSync(FILE_TO_ENCRYPT_PATH, "utf8");
-    console.log("✅ Read file");
-
     // @ts-ignore
     const { ciphertext, dataToEncryptHash } =
       await encryptFileWithContractConditions(
-        new Blob([toEncryptFileBuffer], { type: "text/plain" }),
         evmContractConditions
       );
     _ciphertext = ciphertext;
@@ -105,6 +64,6 @@ describe("Decrypting a file with EVM contract conditions", () => {
       _dataToEncryptHash,
       evmContractConditions
     );
-    console.log(Buffer.from(decryptionResult!).toString("utf8"));
+    console.log("✅ Decrypted file:", decryptionResult);
   }).timeout(30_000);
 });

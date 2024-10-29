@@ -1,12 +1,11 @@
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import { LitNetwork } from "@lit-protocol/constants";
 import { EvmContractConditions } from "@lit-protocol/types";
-import { encryptFile } from "@lit-protocol/encryption";
+import { encryptString } from "@lit-protocol/encryption";
 
 const LIT_NETWORK = LitNetwork.DatilTest;
 
 export const encryptFileWithContractConditions = async (
-  toEncryptFileBlob: Blob,
   evmContractConditions: EvmContractConditions
 ) => {
   let litNodeClient: LitNodeClient;
@@ -21,10 +20,9 @@ export const encryptFileWithContractConditions = async (
     console.log("✅ Connected to Lit network");
 
     console.log("🔄 Encrypting file...");
-    const { ciphertext, dataToEncryptHash } = await encryptFile(
+    const { ciphertext, dataToEncryptHash } = await encryptString(
       {
-        file: toEncryptFileBlob,
-        chain: "yellowstone",
+        dataToEncrypt: "The answer to the universe is 42",
         evmContractConditions,
       },
       litNodeClient

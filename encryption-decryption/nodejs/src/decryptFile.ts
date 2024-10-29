@@ -3,7 +3,6 @@ import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
 import { LitNetwork, LIT_RPC } from "@lit-protocol/constants";
 import { EvmContractConditions } from "@lit-protocol/types";
-import { decryptToFile } from "@lit-protocol/encryption";
 import {
   LitAbility,
   LitAccessControlConditionResource,
@@ -121,20 +120,7 @@ export const decryptFileWithContractConditions = async (
     });
     console.log("✅ Lit Action response:", response);
 
-    console.log("🔄 Decrypting to file with decryptToFile...");
-    const decryptedFileBuffer = await decryptToFile(
-      {
-        ciphertext,
-        dataToEncryptHash,
-        chain: "yellowstone", // works even when changed
-        sessionSigs,
-        evmContractConditions,
-      },
-      litNodeClient
-    );
-    console.log("✅ Decrypted file:", Buffer.from(decryptedFileBuffer).toString("utf8"));
-
-    return decryptedFileBuffer;
+    return response.response;
   } catch (error) {
     console.error(error);
   } finally {
