@@ -1,0 +1,22 @@
+{
+  "name": "lit-action-using-fetch-browser",
+  "version": "0.1.0",
+  "description": "Example of executing a Lit Action that makes a API request using Fetch",
+  "source": "src/index.html",
+  "license": "MIT",
+  "scripts": {
+    "start": "parcel ./src/index.html"
+  },
+  "dependencies": {
+    "@dotenvx/dotenvx": "^0.37.1",
+    "@lit-protocol/auth-browser": "^6.2.2",
+    "@lit-protocol/auth-helpers": "^6.2.2",
+    "@lit-protocol/constants": "^6.2.2",
+    "@lit-protocol/contracts-sdk": "^6.2.2",
+    "@lit-protocol/lit-node-client": "^6.2.2",
+    "ethers": "5.7.2"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.5"
+  }
+}
