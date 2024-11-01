@@ -31,16 +31,38 @@ async function buttonClick() {
     const sessionSigs = await getSessionSigs(litNodeClient, ethersSigner);
     console.log("Got Session Signatures!");
 
+    const pkpPublicKey = await getPkpPublicKey(ethersSigner);
+
     const litActionSignatures = await litNodeClient.executeJs({
       sessionSigs,
       code: litActionCode,
       jsParams: {
         url: "https://api.weather.gov/gridpoints/TOP/31,80/forecast",
-        publicKey: await getPkpPublicKey(),
+        publicKey: pkpPublicKey,
         sigName: "sig",
       },
     });
     console.log("litActionSignatures: ", litActionSignatures);
+
+    // verify the signature
+    console.log("Verifying signature...");
+    const sig = litActionSignatures.signatures.sig.signature;
+    const messageSigned = JSON.stringify(
+      litActionSignatures.response.messageSigned
+    );
+    // calculate the hash of the message
+    // just like in the lit action
+    const messageHash = ethers.utils.arrayify(
+      ethers.utils.keccak256(ethers.utils.toUtf8Bytes(messageSigned))
+    );
+    const verified = ethers.utils.recoverPublicKey(messageHash, sig);
+    console.log("verified: ", verified);
+    console.log("sessionSigs.publicKey: ", "0x" + pkpPublicKey);
+    if (verified === "0x" + pkpPublicKey) {
+      console.log("Signature verified!");
+    } else {
+      console.log("Signature verification failed!");
+    }
   } catch (error) {
     console.error(error);
   } finally {

@@ -80,6 +80,27 @@ export const runExample = async (pkpPublicKey: string) => {
     });
     console.log("✅ Executed Lit Action");
 
+    // verify the signature
+    console.log("Verifying signature...");
+    const sig = litActionSignatures.signatures.sig.signature;
+    const messageSigned = JSON.stringify(
+      // @ts-ignore
+      litActionSignatures.response.messageSigned
+    );
+    // calculate the hash of the message
+    // just like in the lit action
+    const messageHash = ethers.utils.arrayify(
+      ethers.utils.keccak256(ethers.utils.toUtf8Bytes(messageSigned))
+    );
+    const verified = ethers.utils.recoverPublicKey(messageHash, sig);
+    console.log("verified: ", verified);
+    console.log("sessionSigs.publicKey: ", "0x" + pkpPublicKey);
+    if (verified === "0x" + pkpPublicKey) {
+      console.log("Signature verified!");
+    } else {
+      console.log("Signature verification failed!");
+    }
+
     return litActionSignatures;
   } catch (error) {
     console.error(error);

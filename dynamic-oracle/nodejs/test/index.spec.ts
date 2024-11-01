@@ -56,7 +56,7 @@ describe("Testing specific functionality", () => {
           },
           required: ["sig"],
         },
-        response: { type: "string" },
+        response: { type: "object" },
         logs: { type: "string" },
       },
       required: ["claims", "signatures", "response", "logs"],
