@@ -7,12 +7,12 @@ This code example demonstrates how an OpenAI API key can be used to generate a r
 - **An Ethereum private key**
   - This private key will be used to:
     - Own the PKP we mint. The minted PKP will be used to create new Wrapped Keys.
-    - In order to pay for this, the corresponding Ethereum account must have Lit Test Tokens. If you do not have any, you can get some from [the faucet](https://chronicle-yellowstone-faucet.getlit.dev/)
+    - In order to pay for this, the corresponding Ethereum account must have Lit Test Tokens. If you do not have any, you can get some from [the faucet](https://chronicle-yellowstone-faucet.getlit.dev/).
 - **An OpenAI API key**
     - We will use this to make a request to OpenAI with our query to generate a response.
-    - This example currently uses the GPT-4o-mini model, please enable this model on your API key or change it in the code if needed
+    - This example currently uses the GPT-4o-mini model, please enable this model on your API key or change it in the code if needed.
 - **Node.js and Yarn**
-    - Please have these installed before running the example
+    - Please have these installed before running the example.
 
 ## Installation and Setup
 
@@ -20,9 +20,11 @@ This code example demonstrates how an OpenAI API key can be used to generate a r
 2. `cd` into the code example directory: `cd solana-openai/nodejs`
 3. Install the dependencies: `yarn`
 4. Create and fill in the `.env` file: `cp .env.example .env`
-   - `ETHEREUM_PRIVATE_KEY`: **Required** This is the Ethereum private key that will be used to mint a PKP if one is not provided
-   - `OPENAI_API_KEY`: **Required** This is the OpenAI API key that will be used to make a request within our Lit Action
-   - `LIT_PKP_PUBLIC_KEY`: **Optional** You can also provide your own PKP for this example, but please make sure the PKP is owned by the provided Ethereum wallet
+    -  **Required**:
+        - `ETHEREUM_PRIVATE_KEY`: This is the Ethereum private key that will be used to mint a PKP if one is not provided
+        - `OPENAI_API_KEY`: This is the OpenAI API key that will be used to make a request within our Lit Action
+    - **Optional**:
+    - `LIT_PKP_PUBLIC_KEY`: You can also provide your own PKP for this example, but please make sure the PKP is owned by the provided Ethereum wallet
 5. Test the example: `yarn test`
 
 ## Executing the Example
@@ -34,12 +36,12 @@ Here's an overview of how the code example works:
 1. Using an imported Ethereum private key, connect the wallet to the Lit RPC endpoint `Chronicle Yellowstone`
 2. Connect to the Lit network using the `LitNodeClient` on the `datil-dev` network
 3. Connect the `LitContracts` client to the Lit network (`datil-dev` in this case)
-4. **If PKP idnot provided in the .env file**: Mint a new PKP.
+4. **If a PKP is not provided in the .env file**: Mint a new PKP.
 5. Use your Ethereum wallet to create an AuthMethod.
 6. Use the created AuthMethod for authentication in generating session signatures for our PKP.
 7. Generate a new Solana Wrapped Key.
-8. Retrieve the encrypted metadata of our Wrapped Key.
-9. Set up Access Control Conditions (ACCs) to encrypt our OpenAI API key. This ensures it is not revealed at any point. The ACCs are the same ones used to encrypt the Wrapped Key metadata.
+8. Retrieve the encrypted private key of our Wrapped Key.
+9. Set up Access Control Conditions (ACCs) to encrypt our OpenAI API key. This ensures it is not revealed at any point. The ACCs are the same ones that were used to encrypt the Wrapped Key.
 10. Write a simple prompt for the AI to answer.
 11. Run the Lit Action, providing our encrypted Solana Wrapped Key and OpenAI API key metadata, as well as our prompt.
 
