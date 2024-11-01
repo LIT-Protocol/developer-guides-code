@@ -90,7 +90,6 @@ import nacl from "tweetnacl";
       LitActions.setResponse({ response: "false" });
     }
 
-
     LitActions.setResponse({ response: `Signed message. Is signature valid: ${isValid}` });
   } catch (e) {
     LitActions.setResponse({ response: e.message });

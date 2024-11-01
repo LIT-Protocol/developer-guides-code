@@ -8,21 +8,21 @@ import {
 import { LitContracts } from "@lit-protocol/contracts-sdk";
 import { AccessControlConditions } from "@lit-protocol/types";
 import { EthWalletProvider } from "@lit-protocol/lit-auth-client";
+import { LIT_NETWORKS_KEYS } from "@lit-protocol/types";
 import { api } from "@lit-protocol/wrapped-keys";
+import { getEncryptedKey } from "@lit-protocol/wrapped-keys/src/lib/api";
 import fs from "node:fs";
 import * as ethers from "ethers";
 
-const litActionCode = fs.readFileSync("src/litAction.bundle.js", "utf8");
 import { getEnv, mintPkp } from "./utils";
-import { getEncryptedKey } from "@lit-protocol/wrapped-keys/src/lib/api";
+const litActionCode = fs.readFileSync("src/litAction.bundle.js", "utf8");
 
 const { generatePrivateKey } = api;
 
-const LIT_NETWORK = LitNetwork.DatilDev;
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 const OPENAI_API_KEY = getEnv("OPENAI_API_KEY");
 const LIT_PKP_PUBLIC_KEY = process.env["LIT_PKP_PUBLIC_KEY"];
-//const LIT_CAPACITY_CREDIT_TOKEN_ID = process.env["LIT_CAPACITY_CREDIT_TOKEN_ID"];
+const LIT_NETWORK = process.env["LIT_NETWORK"] as LIT_NETWORKS_KEYS || LitNetwork.DatilDev;
 
 export const solanaOpenAI = async () => {
   let litNodeClient: LitNodeClient;
@@ -57,13 +57,6 @@ export const solanaOpenAI = async () => {
     await litContracts.connect();
     console.log("✅ Connected LitContracts client to network");
 
-    console.log("🔄 Creating AuthMethod using the ethersSigner...");
-    const authMethod = await EthWalletProvider.authenticate({
-      signer: ethersWallet,
-      litNodeClient,
-    });
-    console.log("✅ Finished creating the AuthMethod");
-
     if (LIT_PKP_PUBLIC_KEY === undefined || LIT_PKP_PUBLIC_KEY === "") {
       console.log("🔄 PKP wasn't provided, minting a new one...");
       pkpInfo = (await mintPkp(ethersWallet)) as {
@@ -83,39 +76,18 @@ export const solanaOpenAI = async () => {
       };
     }
 
-    /*
-    let capacityTokenId = LIT_CAPACITY_CREDIT_TOKEN_ID;
-    if (capacityTokenId === "" || capacityTokenId === undefined) {
-      console.log("🔄 No Capacity Credit provided, minting a new one...");
-      capacityTokenId = (
-        await litContracts.mintCapacityCreditsNFT({
-          requestsPerKilosecond: 10,
-          daysUntilUTCMidnightExpiration: 1,
-        })
-      ).capacityTokenIdStr;
-      console.log(`✅ Minted new Capacity Credit with ID: ${capacityTokenId}`);
-    } else {
-      console.log(
-        `ℹ️  Using provided Capacity Credit with ID: ${LIT_CAPACITY_CREDIT_TOKEN_ID}`
-      );
-    }
-
-    console.log("🔄 Creating capacityDelegationAuthSig...");
-    const { capacityDelegationAuthSig } =
-      await litNodeClient.createCapacityDelegationAuthSig({
-        dAppOwnerWallet: ethersWallet,
-        capacityTokenId,
-        delegateeAddresses: [ethersWallet.address],
-        uses: "1",
-      });
-    console.log("✅ Capacity Delegation Auth Sig created");*/
+    console.log("🔄 Creating AuthMethod using the ethersSigner...");
+    const authMethod = await EthWalletProvider.authenticate({
+      signer: ethersWallet,
+      litNodeClient,
+    });
+    console.log("✅ Finished creating the AuthMethod");
 
     console.log("🔄 Getting the Session Signatures...");
     const pkpSessionSigs = await litNodeClient.getPkpSessionSigs({
       pkpPublicKey: pkpInfo.publicKey!,
       chain: "ethereum",
       authMethods: [authMethod],
-      //capabilityAuthSigs: [capacityDelegationAuthSig],
       expiration: new Date(Date.now() + 1000 * 60 * 10).toISOString(), // 10 minutes
       resourceAbilityRequests: [
         {
@@ -137,9 +109,7 @@ export const solanaOpenAI = async () => {
       memo: "This is a Dev Guide code example testing Solana key",
       litNodeClient,
     });
-    console.log(
-      `✅ Generated wrapped key with id: ${response.id} and public key: ${response.generatedPublicKey}`
-    );
+    console.log(`✅ Generated wrapped key with id: ${response.id} and public key: ${response.generatedPublicKey}`);
 
     const {
       ciphertext: solanaCipherText,

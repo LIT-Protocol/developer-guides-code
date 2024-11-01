@@ -1,8 +1,9 @@
-import * as ethers from "ethers";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
 import { LitNetwork } from "@lit-protocol/constants";
+import { LIT_NETWORKS_KEYS } from "@lit-protocol/types";
+import * as ethers from "ethers";
 
-const LIT_NETWORK = LitNetwork.DatilDev;
+const LIT_NETWORK = process.env["LIT_NETWORK"] as LIT_NETWORKS_KEYS || LitNetwork.DatilDev;
 
 export const getEnv = (name: string): string => {
   const env = process.env[name];
