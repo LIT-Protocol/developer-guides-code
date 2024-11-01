@@ -1,16 +1,18 @@
 # Solana + OpenAI Example within a Lit Action
 
-This code example demonstrates how an OpenAI API key can be used to generate a response to be signed by a Lit Solana Wrapped Key, all within the confines of Lit's Trusted Execution Environment (TEE).
+This code example demonstrates how an OpenAI API key can be used to generate a response, which is then signed by a Lit Solana Wrapped Key—all within the confines of Lit's Trusted Execution Environment (TEE).
 
 ## Prerequisites
 
-- An Ethereum private key
+- **An Ethereum private key**
   - This private key will be used to:
     - Own the PKP we mint. The minted PKP will be used to create new Wrapped Keys.
     - In order to pay for this, the corresponding Ethereum account must have Lit Test Tokens. If you do not have any, you can get some from [the faucet](https://chronicle-yellowstone-faucet.getlit.dev/)
-- An OpenAI API key. We will use this to make a quest to OpenAI with our query to generate a response.
-    - This example currently used the GPT-4o-mini model, please enable this model on your API key or change it if needed.
-- This code example uses Node.js and Yarn. Please have these installed before running the example
+- **An OpenAI API key**
+    - We will use this to make a request to OpenAI with our query to generate a response.
+    - This example currently uses the GPT-4o-mini model, please enable this model on your API key or change it in the code if needed
+- **Node.js and Yarn**
+    - Please have these installed before running the example
 
 ## Installation and Setup
 
@@ -32,30 +34,29 @@ Here's an overview of how the code example works:
 1. Using an imported Ethereum private key, connect the wallet to the Lit RPC endpoint `Chronicle Yellowstone`
 2. Connect to the Lit network using the `LitNodeClient` on the `datil-dev` network
 3. Connect the `LitContracts` client to the Lit network (`datil-dev` in this case)
-4. **If not provided in the .env file**: Mint a PKP
-5. Create an AuthMethod using our Ethereum wallet
-6. Use the created AuthMethod to be the authentication in generating Session Signatures for our PKP
-7. Create a new Solana Wrapped Key
-8. Fetch the encrypted metadata of our Wrapped Key
-9. Define Access Control Conditions to encrypt our OpenAI API key with. This will ensure it is not revealed at any point. The ACCs are the same ones used to encrypt the Wrapped Key metadata.
-10. Write a simple prompt for our AI to answer
-11. Execute the Lit Action, providing our encrypted Solana Wrapped Key and OpenAI API key metadata, as well as our prompt.
+4. **If PKP idnot provided in the .env file**: Mint a new PKP.
+5. Use your Ethereum wallet to create an AuthMethod.
+6. Use the created AuthMethod for authentication in generating session signatures for our PKP.
+7. Generate a new Solana Wrapped Key.
+8. Retrieve the encrypted metadata of our Wrapped Key.
+9. Set up Access Control Conditions (ACCs) to encrypt our OpenAI API key. This ensures it is not revealed at any point. The ACCs are the same ones used to encrypt the Wrapped Key metadata.
+10. Write a simple prompt for the AI to answer.
+11. Run the Lit Action, providing our encrypted Solana Wrapped Key and OpenAI API key metadata, as well as our prompt.
 
 ### Lit Action Overview
 
 Within the Lit Action:
 
-1. Decrypt the Solana Wrapped Key and OpenAI API key
-2. Remove the salt from the decrypted Solana private key
-3. Query OpenAI for a response to the prompt
-4. Create a Solana keypair from the decrypted private key
-5. Use the Solana keypair to sign the OpenAI response
-6. Verify the signature
+1. Decrypt the Solana Wrapped Key and OpenAI API key.
+2. Remove the salt from the decrypted Solana private key.
+3. Send the prompt to OpenAI and receive a response.
+4. Generate a Solana keypair from the decrypted private key.
+5. Use the Solana keypair to sign the OpenAI response.
+6. Ensure the signature is valid.
 
 ### Expected Output
 
 After running the test, the end of the output in the console should appear similar to:
-
 
 ```ts
 ✅ Executed the Lit Action
@@ -79,7 +80,7 @@ After running the test, the end of the output in the console should appear simil
 
 ## Specific Files to Reference
 
-- [./src/index.ts](./src/index.ts): Contains the logic for the example
+- [./src/index.ts](./src/index.ts): Contains the core logic for the example
 - [./src/litAction.js](./src/litAction.js): Contains the Lit Action code that will be bundled
 - [./src/litAction.bundle.js](./src/litAction.bundle.js): Contains the bundled Lit Action code
 - [./src/utils.ts](./src/utils.ts): Contains the code for minting a new PKP and ensuring the required environment variables are set
