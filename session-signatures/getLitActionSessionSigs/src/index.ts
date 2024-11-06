@@ -102,7 +102,7 @@ export const getSessionSigsLitAction = async (
       ],
       litActionIpfsId: litActionIpfsCid,
       jsParams: {
-        magicNumber: 41,
+        magicNumber: 45,
       },
     });
     console.log("✅ Got Session Sigs");
