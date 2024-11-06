@@ -7,7 +7,6 @@ import {
   LitPKPResource,
 } from "@lit-protocol/auth-helpers";
 import * as ethers from "ethers";
-import Hash from "typestub-ipfs-only-hash";
 
 import { getEnv } from "./utils";
 
@@ -76,17 +75,11 @@ export const getSessionSigsLitAction = async (
     console.log(`✅ Created the capacityDelegationAuthSig`);
 
     console.log("🔄 Adding example permitted Lit Action to the PKP");
-    const litActionCode = `(() => {
-    if (magicNumber >= 42) {
-        LitActions.setResponse({ response:"true" });
-    } else {
-        LitActions.setResponse({ response: "false" });
-    }
-})();`;
-    const litActionCodeIpfsCid = await Hash.of(litActionCode);
+
+    const litActionIpfsCid = "QmVopr9mYHqZgm7Y5fyWpYvh6zhJdTAREz2qCb91yyFrqX";
 
     await litContracts.addPermittedAction({
-      ipfsId: litActionCodeIpfsCid,
+      ipfsId: litActionIpfsCid,
       pkpTokenId: pkp.tokenId,
       authMethodScopes: [AuthMethodScope.SignAnything],
     });
@@ -107,11 +100,9 @@ export const getSessionSigsLitAction = async (
           ability: LitAbility.LitActionExecution,
         },
       ],
-      // With this setup you could use either the litActionIpfsId or the litActionCode property
-      //litActionIpfsId: litActionCodeIpfsCid,
-      litActionCode: Buffer.from(litActionCode).toString("base64"),
+      litActionIpfsId: litActionIpfsCid,
       jsParams: {
-        magicNumber: 42,
+        magicNumber: 41,
       },
     });
     console.log("✅ Got Session Sigs");
