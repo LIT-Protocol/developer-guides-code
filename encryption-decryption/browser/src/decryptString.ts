@@ -1,4 +1,4 @@
-import { LitNodeClient, decryptFromJson, decryptToString } from "@lit-protocol/lit-node-client";
+import { LitNodeClient, decryptFromJson } from "@lit-protocol/lit-node-client";
 import { LitNetwork } from "@lit-protocol/constants";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
 import { ethers } from "ethers";
@@ -9,8 +9,7 @@ import {
   generateAuthSig,
 } from "@lit-protocol/auth-helpers";
 
-const LIT_CAPACITY_CREDIT_TOKEN_ID = import.meta.env.VITE_CAPACITY_CREDIT_TOKEN_ID;
-const LIT_NETWORK = LitNetwork.DatilTest;
+const LIT_NETWORK = LitNetwork.DatilDev;
 
 export const decryptString = async (
   encryptedJson: string
@@ -39,37 +38,10 @@ export const decryptString = async (
     await litContracts.connect();
     console.log("✅ Connected LitContracts client to the network");
 
-    let capacityTokenId = LIT_CAPACITY_CREDIT_TOKEN_ID;
-    if (capacityTokenId === "" || capacityTokenId === undefined) {
-      console.log("🔄 No Capacity Credit provided, minting a new one...");
-      capacityTokenId = (
-        await litContracts.mintCapacityCreditsNFT({
-          requestsPerKilosecond: 10,
-          daysUntilUTCMidnightExpiration: 1,
-        })
-      ).capacityTokenIdStr;
-      console.log(`✅ Minted new Capacity Credit with ID: ${capacityTokenId}`);
-    } else {
-      console.log(
-        `ℹ️  Using provided Capacity Credit with ID: ${LIT_CAPACITY_CREDIT_TOKEN_ID}`
-      );
-    }
-
-    console.log("🔄 Creating capacityDelegationAuthSig...");
-    const { capacityDelegationAuthSig } =
-      await litNodeClient.createCapacityDelegationAuthSig({
-        dAppOwnerWallet: ethersSigner,
-        capacityTokenId,
-        delegateeAddresses: [await ethersSigner.getAddress()],
-        uses: "1",
-      });
-    console.log("✅ Capacity Delegation Auth Sig created");
-
     console.log("🔄 Getting EOA Session Sigs...");
     const sessionSigs = await litNodeClient.getSessionSigs({
       chain: "ethereum",
       expiration: new Date(Date.now() + 1000 * 60 * 15).toISOString(), // 15 minutes
-      capabilityAuthSigs: [capacityDelegationAuthSig],
       resourceAbilityRequests: [
         {
           resource: new LitAccessControlConditionResource("*"),
@@ -106,7 +78,8 @@ export const decryptString = async (
         parsedJsonData: JSON.parse(encryptedJson),
       },
     );
-    console.log(`✅ Decrypted string: ${decryptionResult}`);
+    const decryptedString = new TextDecoder().decode(decryptionResult)
+    console.log(`✅ Decrypted string: ${decryptedString}`);
   } catch (error: any) {
     console.error(error.message);
   } finally {

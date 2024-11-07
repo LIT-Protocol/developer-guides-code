@@ -2,7 +2,7 @@ import { LitNodeClient, encryptToJson } from "@lit-protocol/lit-node-client";
 import { LitNetwork } from "@lit-protocol/constants";
 import * as ethers from "ethers";
 
-const LIT_NETWORK = LitNetwork.DatilTest;
+const LIT_NETWORK = LitNetwork.DatilDev;
 
 export const encryptToString = async () => {
   let litNodeClient: LitNodeClient;
@@ -25,31 +25,28 @@ export const encryptToString = async () => {
     console.log("🔄 Encoding and encrypting string...");
     const accessControlConditions = [
       {
-          contractAddress: "",
-          standardContractType: "",
-          chain: "base",
-          method: "eth_getBalance",
-          parameters: [":userAddress", "latest"],
-          returnValueTest: {
-              comparator: ">=",
-              value: "0", // 0.000001 ETH
-          },
-      },
-  ];
-  
-
-  const sampleString = "Hello, this is a test file content!";
-  const toEncryptFileBuffer = new TextEncoder().encode(sampleString);  
-  const file = new Blob([toEncryptFileBuffer], { type: "text/plain" })
-
-    const encryptedJson = await encryptToJson(
-      {
-        accessControlConditions,
+        contractAddress: "",
+        standardContractType: "",
         chain: "base",
-        litNodeClient,
-        file
+        method: "eth_getBalance",
+        parameters: [":userAddress", "latest"],
+        returnValueTest: {
+          comparator: ">=",
+          value: "0", // 0.000001 ETH
+        },
       },
-    );
+    ];
+
+    const sampleString = "Hello, this is a test file content!";
+    const toEncryptFileBuffer = new TextEncoder().encode(sampleString);
+    const file = new Blob([toEncryptFileBuffer], { type: "text/plain" });
+
+    const encryptedJson = await encryptToJson({
+      accessControlConditions,
+      chain: "base",
+      litNodeClient,
+      file,
+    });
     console.log("✅ Encrypted string");
 
     console.log(encryptedJson);

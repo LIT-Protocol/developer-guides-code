@@ -4,11 +4,6 @@ import { decryptString } from "./decryptString";
 
 function App() {
   const [encryptedResult, setEncryptedResult] = useState("");
-  const [toEncrypt, setToEncrypt] = useState("");
-
-  const handleInputChange = (e: any) => {
-    setToEncrypt(e.target.value);
-  };
 
   const handleEncrypt = async () => {
     try {
@@ -23,15 +18,8 @@ function App() {
     <>
       <div className="card">
         <hr />
-        <h3>Encrypt a String</h3>
-        <label htmlFor="input">Enter a string to encrypt:</label>
+        <h3>Encrypt the JSON</h3>
         <br></br>
-        <input
-          type="text"
-          id="input"
-          value={toEncrypt}
-          onChange={handleInputChange}
-        ></input>
         <br></br>
         <button onClick={async () => await handleEncrypt()}>
           Encrypt String
@@ -42,7 +30,7 @@ function App() {
 
       <div className="card">
         <hr />
-        <h3>Decrypt a String</h3>
+        <h3>Decrypt the JSON</h3>
         <button
           onClick={async () =>
             await decryptString(
