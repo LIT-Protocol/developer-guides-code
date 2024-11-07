@@ -1,4 +1,4 @@
-import { LitNodeClient, decryptToString } from "@lit-protocol/lit-node-client";
+import { LitNodeClient, decryptFromJson, decryptToString } from "@lit-protocol/lit-node-client";
 import { LitNetwork } from "@lit-protocol/constants";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
 import { ethers } from "ethers";
@@ -13,8 +13,7 @@ const LIT_CAPACITY_CREDIT_TOKEN_ID = import.meta.env.VITE_CAPACITY_CREDIT_TOKEN_
 const LIT_NETWORK = LitNetwork.DatilTest;
 
 export const decryptString = async (
-  ciphertext: string,
-  dataToEncryptHash: string,
+  encryptedJson: string
 ) => {
   let litNodeClient: LitNodeClient;
 
@@ -66,20 +65,6 @@ export const decryptString = async (
       });
     console.log("✅ Capacity Delegation Auth Sig created");
 
-    const accessControlConditions = [
-      {
-        contractAddress: "",
-        standardContractType: "",
-        chain: "ethereum",
-        method: "",
-        parameters: [":userAddress"],
-        returnValueTest: {
-          comparator: "=",
-          value: address,
-        },
-      },
-    ];
-
     console.log("🔄 Getting EOA Session Sigs...");
     const sessionSigs = await litNodeClient.getSessionSigs({
       chain: "ethereum",
@@ -87,12 +72,7 @@ export const decryptString = async (
       capabilityAuthSigs: [capacityDelegationAuthSig],
       resourceAbilityRequests: [
         {
-          resource: new LitAccessControlConditionResource(
-            await LitAccessControlConditionResource.generateResourceString(
-              accessControlConditions,
-              dataToEncryptHash
-            )
-          ),
+          resource: new LitAccessControlConditionResource("*"),
           ability: LitAbility.AccessControlConditionDecryption,
         },
       ],
@@ -119,15 +99,12 @@ export const decryptString = async (
     console.log("✅ Got EOA Session Sigs");
 
     console.log("🔄 Decrypting string...");
-    const decryptionResult = await decryptToString(
+    const decryptionResult = await decryptFromJson(
       {
-        chain: "ethereum",
-        ciphertext,
-        dataToEncryptHash,
-        accessControlConditions,
+        litNodeClient,
         sessionSigs,
+        parsedJsonData: JSON.parse(encryptedJson),
       },
-      litNodeClient
     );
     console.log(`✅ Decrypted string: ${decryptionResult}`);
   } catch (error: any) {

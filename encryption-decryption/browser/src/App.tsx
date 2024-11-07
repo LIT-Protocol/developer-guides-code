@@ -3,10 +3,7 @@ import { encryptToString } from "./encryptString";
 import { decryptString } from "./decryptString";
 
 function App() {
-  const [encryptedResult, setEncryptedResult] = useState<{
-    ciphertext: string;
-    dataToEncryptHash: string;
-  }>();
+  const [encryptedResult, setEncryptedResult] = useState("");
   const [toEncrypt, setToEncrypt] = useState("");
 
   const handleInputChange = (e: any) => {
@@ -15,8 +12,8 @@ function App() {
 
   const handleEncrypt = async () => {
     try {
-      const result = await encryptToString(toEncrypt);
-      setEncryptedResult(result);
+      const result = await encryptToString();
+      setEncryptedResult(result!);
     } catch (error) {
       console.error("Encryption failed:", error);
     }
@@ -49,8 +46,7 @@ function App() {
         <button
           onClick={async () =>
             await decryptString(
-              encryptedResult!.ciphertext,
-              encryptedResult!.dataToEncryptHash
+              encryptedResult
             )
           }
         >

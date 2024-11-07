@@ -1,10 +1,10 @@
-import { LitNodeClient, encryptString } from "@lit-protocol/lit-node-client";
+import { LitNodeClient, encryptToJson } from "@lit-protocol/lit-node-client";
 import { LitNetwork } from "@lit-protocol/constants";
 import * as ethers from "ethers";
 
 const LIT_NETWORK = LitNetwork.DatilTest;
 
-export const encryptToString = async (toEncrypt: string) => {
+export const encryptToString = async () => {
   let litNodeClient: LitNodeClient;
 
   try {
@@ -12,7 +12,7 @@ export const encryptToString = async (toEncrypt: string) => {
     await provider.send("eth_requestAccounts", []);
     const ethersSigner = provider.getSigner();
     const address = await ethersSigner.getAddress();
-    console.log("Connected account:", await ethersSigner.getAddress());
+    console.log("Connected account:", address);
 
     console.log("🔄 Connecting to Lit network...");
     litNodeClient = new LitNodeClient({
@@ -25,29 +25,35 @@ export const encryptToString = async (toEncrypt: string) => {
     console.log("🔄 Encoding and encrypting string...");
     const accessControlConditions = [
       {
-        contractAddress: "",
-        standardContractType: "",
-        chain: "ethereum",
-        method: "",
-        parameters: [":userAddress"],
-        returnValueTest: {
-          comparator: "=",
-          value: address,
-        },
+          contractAddress: "",
+          standardContractType: "",
+          chain: "base",
+          method: "eth_getBalance",
+          parameters: [":userAddress", "latest"],
+          returnValueTest: {
+              comparator: ">=",
+              value: "0", // 0.000001 ETH
+          },
       },
-    ];
+  ];
+  
 
-    const { ciphertext, dataToEncryptHash } = await encryptString(
+  const sampleString = "Hello, this is a test file content!";
+  const toEncryptFileBuffer = new TextEncoder().encode(sampleString);  
+  const file = new Blob([toEncryptFileBuffer], { type: "text/plain" })
+
+    const encryptedJson = await encryptToJson(
       {
         accessControlConditions,
-        dataToEncrypt: toEncrypt,
+        chain: "base",
+        litNodeClient,
+        file
       },
-      litNodeClient
     );
     console.log("✅ Encrypted string");
 
-    console.log({ ciphertext, dataToEncryptHash });
-    return { ciphertext, dataToEncryptHash };
+    console.log(encryptedJson);
+    return encryptedJson;
   } catch (error) {
     console.error(error);
   } finally {
