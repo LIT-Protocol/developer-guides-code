@@ -1,4 +1,4 @@
-import { conditionalSigning } from "./conditionalSigning";
+import { register, authenticate } from "./litWebAuthn";
 
 function App() {
 
@@ -6,9 +6,12 @@ function App() {
     <>
       <div className="card">
       <hr />
-        <h3>Conditional Signing Example</h3>
-        <button onClick={async () => await conditionalSigning()}>
-        Run the Lit Action
+        <h3>Passkey Example</h3>
+        <button onClick={async () => await register()}>
+          Register a Passkey
+        </button>
+        <button onClick={async () => await authenticate()}>
+          Authenticate a Passkey
         </button>
         <h5> Check the browser console! </h5>
         <hr />

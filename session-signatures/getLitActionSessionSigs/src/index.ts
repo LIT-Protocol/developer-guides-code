@@ -106,6 +106,7 @@ export const getSessionSigsLitAction = async (
       },
     });
     console.log("✅ Got Session Sigs");
+    console.log(sessionSignatures);
     return sessionSignatures;
   } catch (error) {
     console.error(error);
