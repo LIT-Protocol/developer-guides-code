@@ -36,13 +36,14 @@ export const register = async () => {
     console.log("✅ Registered WebAuthnProvider");
 
     console.log("🔄 Registering a Passkey...");
-    const options = await webAuthnProvider.register(); // register a new passkey
+    const options = await webAuthnProvider.register();
     console.log("✅ Registered a Passkey");
 
     console.log("🔄 Minting PKP...");
-    const txHash = await webAuthnProvider.verifyAndMintPKPThroughRelayer(options, { permittedAuthMethodTypes: [AUTH_METHOD_TYPE.WebAuthn]}); // Issue, new options, authMethod from old passkey
+    const txHash = await webAuthnProvider.verifyAndMintPKPThroughRelayer(options);
     console.log("✅ Minted PKP:", txHash);
 
+    /*
     const authMethod = await webAuthnProvider.authenticate();
     const authMethodId = await webAuthnProvider.getAuthMethodId(authMethod);
 
@@ -77,25 +78,7 @@ export const register = async () => {
         publicKey: pkp.publicKey.slice(2),
       }
     })
-    console.log(litActionResponse);
-    /*
-    const { startRegistration } = await import('@simplewebauthn/browser');
-    const attResp = await startRegistration(options);
-    console.log("accessToken", authMethod.accessToken);
-    const webauthnpub = WebAuthnProvider.getPublicKeyFromRegistration(attResp)
-    console.log("Web Authn Pub", webauthnpub);
-
-    const receipt = await litContracts.addPermittedAuthMethod({
-      pkpTokenId: pkp.tokenId,
-      authMethodType: 3,
-      authMethodId,
-      authMethodScopes: [AUTH_METHOD_SCOPE.SignAnything],
-      webAuthnPubkey: WebAuthnProvider.getPublicKeyFromRegistration(
-        JSON.parse(authMethod.accessToken)
-      ),
-    });
-    console.log(receipt);
-    */
+    console.log(litActionResponse); */
   } catch (error) {
     console.error(error);
   } 
@@ -126,25 +109,11 @@ export const authenticate = async () => {
       litNodeClient,
     });
     const authMethod = await webAuthnProvider.authenticate();
-    console.log(webAuthnProvider);
-    console.log(authMethod);
-    console.log(await webAuthnProvider.computePublicKeyFromAuthMethod(authMethod));
     console.log("✅ Authenticated WebAuthnProvider");
 
     const authMethodId = await webAuthnProvider.getAuthMethodId(authMethod);
     const pkps = await webAuthnProvider.getPKPsForAuthMethod({authMethodId, authMethodType: AUTH_METHOD_TYPE.WebAuthn});
     const pkp = pkps[0];
-
-    /*
-    const receipt = await litContracts.addPermittedAuthMethod({
-      pkpTokenId: pkp.tokenId,
-      authMethodType: 3,
-      authMethodId,
-      authMethodScopes: [AUTH_METHOD_SCOPE.SignAnything],
-     webAuthnPubkey: pkp.publicKey//"0x" + await webAuthnProvider.computePublicKeyFromAuthMethod(authMethod),
-    });
-    console.log(receipt);
-    */
 
     const sessionSigs = await litNodeClient.getPkpSessionSigs({
       pkpPublicKey: pkp.publicKey,
