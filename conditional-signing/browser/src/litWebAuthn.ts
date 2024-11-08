@@ -1,8 +1,8 @@
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
-import { LIT_NETWORK, LIT_ABILITY } from "@lit-protocol/constants";
+import { LIT_NETWORK, LIT_ABILITY, AUTH_METHOD_SCOPE, AUTH_METHOD_TYPE, LIT_RPC} from "@lit-protocol/constants";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
 import { LitRelay, WebAuthnProvider } from "@lit-protocol/lit-auth-client";
-import { AuthMethod } from "@lit-protocol/types";
+import { AuthMethod  } from "@lit-protocol/types";
 import { LitPKPResource, LitActionResource } from "@lit-protocol/auth-helpers";
 import * as ethers from "ethers";
 
@@ -23,6 +23,12 @@ export const register = async () => {
     await litNodeClient.connect();
     console.log("✅ Connected LitNodeClient to Lit network");
 
+    const litContracts = new LitContracts({
+      network: LIT_NET,
+      debug: false,
+    });
+    await litContracts.connect();
+
     console.log("🔄 Connecting LitRelay...");
     const litRelay = new LitRelay({
       relayUrl: LitRelay.getRelayUrl(LIT_NET),
@@ -38,12 +44,42 @@ export const register = async () => {
     console.log("✅ Registered WebAuthnProvider");
 
     console.log("🔄 Registering a Passkey...");
-    const options = await webAuthnProvider.register();
+    const options = await webAuthnProvider.register(); // register a new passkey
     console.log("✅ Registered a Passkey");
 
     console.log("🔄 Minting PKP...");
-    const txHash = await webAuthnProvider.verifyAndMintPKPThroughRelayer(options);
+    const txHash = await webAuthnProvider.verifyAndMintPKPThroughRelayer(options); // Issue, new options, authMethod from old passkey
     console.log("✅ Minted PKP:", txHash);
+    const authMethod = await webAuthnProvider.authenticate();
+    const authMethodId = await webAuthnProvider.getAuthMethodId(authMethod);
+    const pkps = await webAuthnProvider.getPKPsForAuthMethod({authMethodId, authMethodType: AUTH_METHOD_TYPE.WebAuthn});
+    const pkp = pkps[0];
+    const receipt = await litContracts.addPermittedAuthMethod({
+      pkpTokenId: pkp.tokenId,
+      authMethodType: 3,
+      authMethodId,
+      authMethodScopes: [AUTH_METHOD_SCOPE.SignAnything],
+     webAuthnPubkey: pkp.publicKey//"0x" + await webAuthnProvider.computePublicKeyFromAuthMethod(authMethod),
+    });
+    console.log(receipt); 
+    /*
+    const { startRegistration } = await import('@simplewebauthn/browser');
+    const attResp = await startRegistration(options);
+    console.log("accessToken", authMethod.accessToken);
+    const webauthnpub = WebAuthnProvider.getPublicKeyFromRegistration(attResp)
+    console.log("Web Authn Pub", webauthnpub);
+
+    const receipt = await litContracts.addPermittedAuthMethod({
+      pkpTokenId: pkp.tokenId,
+      authMethodType: 3,
+      authMethodId,
+      authMethodScopes: [AUTH_METHOD_SCOPE.SignAnything],
+      webAuthnPubkey: WebAuthnProvider.getPublicKeyFromRegistration(
+        JSON.parse(authMethod.accessToken)
+      ),
+    });
+    console.log(receipt);
+    */
   } catch (error) {
     console.error(error);
   } 
@@ -61,6 +97,14 @@ export const authenticate = async () => {
     await litNodeClient.connect();
     console.log("✅ Connected LitNodeClient to Lit network");
 
+    const ethersSigner = new ethers.Wallet("key here", new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE));
+    const litContracts = new LitContracts({
+      signer: ethersSigner,
+      network: LIT_NET,
+      debug: false,
+    });
+    await litContracts.connect();
+
     console.log("🔄 Connecting LitRelay...");
     const litRelay = new LitRelay({
       relayUrl: LitRelay.getRelayUrl(LIT_NET),
@@ -74,10 +118,29 @@ export const authenticate = async () => {
       litNodeClient,
     });
     const authMethod = await webAuthnProvider.authenticate();
+    console.log(webAuthnProvider);
+    console.log(authMethod);
+    console.log(await webAuthnProvider.computePublicKeyFromAuthMethod(authMethod));
     console.log("✅ Authenticated WebAuthnProvider");
-    const pkps = await webAuthnProvider.fetchPKPs(authMethod);
+
+    const authMethodId = await webAuthnProvider.getAuthMethodId(authMethod);
+    const pkps = await webAuthnProvider.getPKPsForAuthMethod({authMethodId, authMethodType: AUTH_METHOD_TYPE.WebAuthn});
     const pkp = pkps[0];
-    const pkpSessionSigs = await litNodeClient.getPkpSessionSigs({
+
+    console.log("pkp", pkp.tokenId);
+    console.log("authMethodId", authMethodId);
+    console.log("publicKey", await webAuthnProvider.computePublicKeyFromAuthMethod(authMethod));
+    
+    const receipt = await litContracts.addPermittedAuthMethod({
+      pkpTokenId: pkp.tokenId,
+      authMethodType: 3,
+      authMethodId,
+      authMethodScopes: [AUTH_METHOD_SCOPE.SignAnything],
+     webAuthnPubkey: pkp.publicKey//"0x" + await webAuthnProvider.computePublicKeyFromAuthMethod(authMethod),
+    });
+    console.log(receipt); 
+
+    const sessionSigs = await litNodeClient.getPkpSessionSigs({
       pkpPublicKey: pkp.publicKey,
       authMethods: [authMethod],
       resourceAbilityRequests: [
@@ -92,18 +155,16 @@ export const authenticate = async () => {
       ],
       expiration: new Date(Date.now() + 1000 * 60 * 10).toISOString(), // 10 minutes
     });
-    console.log("✅ Got PKP Session Sigs", pkpSessionSigs);
+    console.log("✅ Got PKP Session Sigs", sessionSigs);
+
+    const toSign = ethers.utils.arrayify(ethers.utils.keccak256(ethers.utils.toUtf8Bytes("The answer to the universe is 42.")));
 
     const litActionResponse = await litNodeClient.executeJs({
       code: litActionCode,
-      sessionSigs: pkpSessionSigs,
+      sessionSigs,
       jsParams: {
-        toSign: ethers.utils.arrayify(
-          ethers.utils.keccak256(
-            ethers.utils.toUtf8Bytes("The answer to the universe is 42.")
-          )
-        ),
-        publicKey: pkp.publicKey,
+        toSign,
+        publicKey: pkp.publicKey.slice(2),
       }
     })
     console.log(litActionResponse);

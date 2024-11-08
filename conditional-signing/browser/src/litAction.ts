@@ -2,7 +2,7 @@
 
 const _litActionCode = async () => {
   try {
-    const sigShare = await LitActions.signEcdsa({
+    const sigShare = await LitActions.signAndCombineEcdsa({
       toSign,
       publicKey,
       sigName: "sig",
