@@ -1,4 +1,4 @@
-import { LitNodeClient } from "@lit-protocol/lit-node-client";
+import { LitNodeClient, disconnectWeb3 } from "@lit-protocol/lit-node-client";
 import { LIT_NETWORK, LIT_ABILITY, AUTH_METHOD_TYPE } from "@lit-protocol/constants";
 import { LitRelay, WebAuthnProvider } from "@lit-protocol/lit-auth-client";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
@@ -42,6 +42,10 @@ export const register = async () => {
     console.log("🔄 Minting PKP...");
     const txHash = await webAuthnProvider.verifyAndMintPKPThroughRelayer(options);
     console.log("✅ Minted PKP:", txHash);
+
+    console.log("🔄 Removing Saved AuthSigs from browser storage...");
+    disconnectWeb3();
+    console.log("✅ Removed Saved AuthSigs from browser storage");
   } catch (error) {
     console.error(error);
   } 
@@ -111,6 +115,10 @@ export const authenticate = async () => {
     })
     console.log("✅ Executed LitAction");
     console.log("Lit Action Response:", litActionResponse);
+
+    console.log("🔄 Removing Saved AuthSigs from browser storage...");
+    disconnectWeb3();
+    console.log("✅ Removed Saved AuthSigs from browser storage");
 
   } catch (error) {
     console.error(error);
