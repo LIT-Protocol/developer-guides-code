@@ -12,7 +12,11 @@
   "dependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
-    "@lit-protocol/lit-node-client": "^6.4.10",
+    "@lit-protocol/constants": "^7.0.0-alpha.9",
+    "@lit-protocol/contracts-sdk": "^7.0.0-alpha.9",
+    "@lit-protocol/lit-auth-client": "^7.0.0-alpha.9",
+    "@lit-protocol/lit-node-client": "^7.0.0-alpha.9",
+    "@lit-protocol/types": "^7.0.0-alpha.9",
     "@simplewebauthn/browser": "^10.0.0",
     "@vitejs/plugin-react-swc": "^3.7.0",
     "react": "^18.3.1",
