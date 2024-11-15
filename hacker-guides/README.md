@@ -23,11 +23,11 @@ This guide is organized into several directories, each focusing on a different a
   - Generating an authenticated session to enable interaction with a Lit Network
 - [Encryption](./encryption/README.md)
   - Client-side encryption/decryption
-  - Encryption/decryption within a Lit Action
+  <!-- - Decryption within a Lit Action -->
   - Access Control Conditions for encryption
-- [Decentralized Serverless Functions (Lit Actions)](./decentralized-serverless-functions/README.md)
+<!-- - [Decentralized Serverless Functions (Lit Actions)](./decentralized-serverless-functions/README.md)
   - Deploying a Lit Action to IPFS
   - Importing libraries into a Lit Action
 - [Signing with decentralized keys (Programmable Key Pairs)](./signing/README.md)
   - Minting a Programmable Key Pair
-  - Signing data with a Programmable Key Pair in a Lit Action
+  - Signing data with a Programmable Key Pair in a Lit Action -->
