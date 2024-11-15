@@ -18,6 +18,7 @@ The [code example](./src/index.ts) is written in TypeScript and uses the `LitNod
 1. `yarn` to install the dependencies
 2. `yarn test` to run the code example
 
+### Expected Output
 After running the code example, you should see output in your terminal indicating that the `LitNodeClient` was successfully connected to the `DatilDev` network:
 
 ```bash

@@ -3,7 +3,10 @@
 
 The Lit SDK is a set of libraries that enable various functionalities of the Lit Protocol. Each package is available on npm, and can be installed with your preferred JavaScript package manager.
 
-- [Documentation](#documentation)
+<!-- omit in toc -->
+## Table of Contents
+
+- [Lit Documentation](#lit-documentation)
 - [Core Terminology](#core-terminology)
   - [Lit Node Client](#lit-node-client)
   - [Lit Network](#lit-network)
@@ -20,7 +23,7 @@ The Lit SDK is a set of libraries that enable various functionalities of the Lit
 - [Next Steps](#next-steps)
 
 
-## Documentation
+## Lit Documentation
 
 - [Lit Documentation](https://developer.litprotocol.com)
   - This is the main source of information for the Lit Protocol. It contains guides, reference documentation, and other resources for developers.
