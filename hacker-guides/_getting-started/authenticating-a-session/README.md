@@ -20,6 +20,7 @@ As covered [here](../README.md#session-signatures) in the Getting Started `READM
 - [Understanding the Code](#understanding-the-code)
   - [Creating an Ethers Signer](#creating-an-ethers-signer)
   - [Requesting Session Signatures](#requesting-session-signatures)
+- [Next Steps](#next-steps)
 
 
 ## Prerequisites
@@ -123,3 +124,11 @@ Upon receiving the request, each Lit node in the network will independently auth
 If a node determines that the Authentication Signature is valid and authorized to delegate the `resourceAbilityRequests` to the session, it will generate a Session Signature indicating that the session is authenticated and authorized to use the specified Lit Resources and abilities.
 
 After a threshold of nodes have generated Session Signatures, the Lit Network will send the Session Signatures back to your client. You will then use these Session Signatures to interact with the Lit Network, as we'll cover in other code examples in this guide.
+
+## Next Steps
+
+Now that you've learned how to authenticate a session with Lit, you can proceed to one of the following code examples to learn how to use a Session Signature to interact with a Lit Resource:
+
+- [Encrypting and Decrypting Data](../../encryption/README.md)
+- [Signing data with a PKP](../../signing/README.md)
+- [Executing a Lit Action](../../decentralized-serverless-functions/README.md)

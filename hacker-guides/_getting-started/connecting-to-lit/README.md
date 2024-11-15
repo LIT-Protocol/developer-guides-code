@@ -66,3 +66,7 @@ To disconnect from the Lit Network, you can call the `disconnect()` method on th
 ```typescript
 litNodeClient!.disconnect();
 ```
+
+## Next Steps
+
+Now that you've connected to the Lit Network, you can proceed to the next code example to learn how to [authenticate a session with Lit](../authenticating-a-session/README.md).
