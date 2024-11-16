@@ -44,7 +44,7 @@ export const solanaOpenAI = async () => {
     console.log("🔄 Connecting to the Lit network...");
     litNodeClient = new LitNodeClient({
       litNetwork: LIT_NETWORK,
-      debug: true,
+      debug: false,
     });
     await litNodeClient.connect();
     console.log("✅ Connected to the Lit network");
@@ -161,8 +161,6 @@ export const solanaOpenAI = async () => {
         apiKeyCipherText,
         apiKeyDataToEncryptHash,
         prompt,
-        publicKey: pkpInfo.publicKey!,
-        apiKey: OPENAI_API_KEY,
       },
     });
     console.log("✅ Executed the Lit Action");
