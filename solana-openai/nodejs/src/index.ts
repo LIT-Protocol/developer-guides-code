@@ -22,7 +22,8 @@ const { generatePrivateKey } = api;
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 const OPENAI_API_KEY = getEnv("OPENAI_API_KEY");
 const LIT_PKP_PUBLIC_KEY = process.env["LIT_PKP_PUBLIC_KEY"];
-const LIT_NETWORK = process.env["LIT_NETWORK"] as LIT_NETWORKS_KEYS || LitNetwork.DatilDev;
+const LIT_NETWORK =
+  (process.env["LIT_NETWORK"] as LIT_NETWORKS_KEYS) || LitNetwork.DatilDev;
 
 export const solanaOpenAI = async () => {
   let litNodeClient: LitNodeClient;
@@ -43,7 +44,7 @@ export const solanaOpenAI = async () => {
     console.log("🔄 Connecting to the Lit network...");
     litNodeClient = new LitNodeClient({
       litNetwork: LIT_NETWORK,
-      debug: false,
+      debug: true,
     });
     await litNodeClient.connect();
     console.log("✅ Connected to the Lit network");
@@ -109,7 +110,9 @@ export const solanaOpenAI = async () => {
       memo: "This is a Dev Guide code example testing Solana key",
       litNodeClient,
     });
-    console.log(`✅ Generated wrapped key with id: ${response.id} and public key: ${response.generatedPublicKey}`);
+    console.log(
+      `✅ Generated wrapped key with id: ${response.id} and public key: ${response.generatedPublicKey}`
+    );
 
     const {
       ciphertext: solanaCipherText,
@@ -157,7 +160,9 @@ export const solanaOpenAI = async () => {
         solanaDataToEncryptHash,
         apiKeyCipherText,
         apiKeyDataToEncryptHash,
-        prompt
+        prompt,
+        publicKey: pkpInfo.publicKey!,
+        apiKey: OPENAI_API_KEY,
       },
     });
     console.log("✅ Executed the Lit Action");
