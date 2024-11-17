@@ -166,3 +166,5 @@ console.log(`ℹ️  Decrypted content saved to: ${outputPath}`);
 ```
 
 ## Next Steps
+
+- If the file you want to encrypt is larger than `1.5MB`, checkout the [Encrypting a Large File](./encrypt-large-file/README.md) guide.
