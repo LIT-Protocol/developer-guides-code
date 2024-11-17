@@ -1,4 +1,4 @@
-import { litGoogleOAuth } from "./connect";
+import { litGoogleOAuth } from "./litCode";
 
 function App() {
 

@@ -28,13 +28,13 @@ export const litWebAuthnOAuth = async () => {
     const options = await webAuthnProvider.register();
     console.log("✅ Acquired passkey options");
 
-    console.log("🔄 Minting PKP...");
+    console.log("🔄 Creating passkey and minting PKP...");
     const txHash = await webAuthnProvider.verifyAndMintPKPThroughRelayer(options);
-    console.log("✅ Minted PKP:", txHash);
+    console.log("✅ Created passkey and minted PKP:", txHash);
 
-    console.log("🔄 Authenticating with WebAuthn...");
+    console.log("🔄 Authenticating with passkey...");
     const authMethod = await webAuthnProvider.authenticate();
-    console.log("✅ Authenticated with WebAuthn");
+    console.log("✅ Authenticated with passkey");
 
     console.log("**LOGGING FOR DEBUGGING PURPOSES, DO NOT EXPOSE**", authMethod);
   } catch (error) {

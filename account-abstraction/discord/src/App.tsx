@@ -1,4 +1,4 @@
-import { litDiscordOAuth } from "./connect";
+import { litDiscordOAuth } from "./litCode";
 
 function App() {
 

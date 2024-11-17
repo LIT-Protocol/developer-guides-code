@@ -1,26 +1,33 @@
-# Getting Started with a Lit SDK Browser Implementation
+# Discord OAuth
 
-This is a very simple example repository for getting started with a browser implementation of the Lit SDK. All it will do is connect an instance of the `LitNodeClient` to the Lit Network. If you are searching for more developed uses of Lit, check out the other guides in this repository. 
+The `@lit-protocol/lit-auth-client` package simplifies the implementation of social login in your web applications. It provides a `LitAuthClient` class, which you can use to initialize a provider for each supported social login method.
 
-## Using This Repository
+By default, Lit's social login providers use Lit's OAuth project. If you prefer to use your own OAuth project, you can pass a callback to the `signIn()` method to modify the URL as needed.
 
-After downloading this repository, you will need to install the necessary dependencies and run the environment setup with the following commands:
+For more information about customization options, refer to our API documentation. The [LitAuthClient](https://v6-api-doc-lit-js-sdk.vercel.app/classes/lit_auth_client_src.LitAuthClient.html) and [DiscordProvider](https://v6-api-doc-lit-js-sdk.vercel.app/classes/lit_auth_client_src.DiscordProvider.html) classes are most relevant for this guide.
 
-```
-yarn install
-```
-```
-yarn run dev
-```
+## Code Example
 
-Afterward, your terminal should inform you that the application is being displayed at `http://localhost:5173/`. Clicking the `Connect` button will send a log to your browser, informing you of the connection to the Lit Network.
+This directory contains a code example demonstrating how to implement Discord OAuth in your web application. This example:
 
-# Other Frameworks
+1. Connects to the Lit network.
+2. Initializes the `LitAuthClient` and `DiscordProvider`.
+3. Checks if the user is already authenticated with Discord.
+4. If not, it calls the `signIn()` method to begin the authentication flow.
+5. Authenticates the user by calling the `authenticate()` method, which returns an `AuthMethod` object.
 
-If you would like to use frameworks other than React, a repository similar to this one can be setup using the steps below:
-1. `yarn create vite`
-2. Choose project name, framework, and configuration of choice.
-3. `yarn add @lit-protocol/lit-node-client`
-4. Be sure to use Polyfills since this is a browser implementation. Make your `vite.config` file similar to the one in this repository.
+### Running the Example
 
+You can run the example by first installing the dependencies with `yarn install` and then running `yarn dev` to start the Vite development server. The example will be available at `http://localhost:5173/`.
 
+### Specific Files to Reference
+
+- `src/litCode.ts`: Contains the main logic for connecting to the Lit network, initializing the `LitAuthClient` and `DiscordProvider`, and authenticating the user.
+
+## Additional Notes
+
+The Lit Relay Server allows you to mint Programmable Key Pairs (PKPs) without incurring gas fees. You can also use your own relay server or mint PKPs directly using Lit's contracts.
+
+With the `AuthMethod` object, you can mint or fetch PKPs associated with the authenticated Discord account. You can find these methods in the [DiscordProvider](https://v6-api-doc-lit-js-sdk.vercel.app/classes/lit_auth_client_src.DiscordProvider.html) API documentation.
+
+If you are using the Lit Relay Server, you will need to request an API key [here](https://docs.google.com/forms/d/e/1FAIpQLSeVraHsp1evK_9j-8LpUBiEJWFn4G5VKjOWBmHFjxFRJZJdrg/viewform).

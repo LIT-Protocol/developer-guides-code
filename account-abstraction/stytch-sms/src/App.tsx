@@ -1,4 +1,4 @@
-import { stytchSmsAuth } from "./connect";
+import { stytchSmsAuth } from "./litCode";
 
 function App() {
 

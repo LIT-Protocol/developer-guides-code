@@ -1,4 +1,4 @@
-import { stytchEmailAuth } from "./connect";
+import { stytchEmailAuth } from "./litCode";
 
 function App() {
 

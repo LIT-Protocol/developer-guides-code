@@ -1,26 +1,38 @@
-# Getting Started with a Lit SDK Browser Implementation
+# Custom AuthMethods
 
-This is a very simple example repository for getting started with a browser implementation of the Lit SDK. All it will do is connect an instance of the `LitNodeClient` to the Lit Network. If you are searching for more developed uses of Lit, check out the other guides in this repository. 
+If you'd like further customization than what Lit natively supports for AuthMethods, you can define your own. 
 
-## Using This Repository
+This scenario includes minting a PKP, adding a custom `AuthMethod` to it, and creating a custom LitAction for the verification process of the `AuthMethod`.
 
-After downloading this repository, you will need to install the necessary dependencies and run the environment setup with the following commands:
+Next we'll describe the difference between authentication and authorization, and how Lit uses them.
 
-```
-yarn install
-```
-```
-yarn run dev
-```
+## Authentication and Authorization
 
-Afterward, your terminal should inform you that the application is being displayed at `http://localhost:5173/`. Clicking the `Connect` button will send a log to your browser, informing you of the connection to the Lit Network.
+Authentication refers to confirming a user's identity. This involves resolving some kind of authentication material (i.e. JWT, AuthToken).
 
-# Other Frameworks
+Authorization refers to the process of granting permission to a user to access a resource. In our case, the resource is a PKP.
 
-If you would like to use frameworks other than React, a repository similar to this one can be setup using the steps below:
-1. `yarn create vite`
-2. Choose project name, framework, and configuration of choice.
-3. `yarn add @lit-protocol/lit-node-client`
-4. Be sure to use Polyfills since this is a browser implementation. Make your `vite.config` file similar to the one in this repository.
+When creating a custom `AuthMethod`, you are responsible for the authentication process. After the user owns a PKP, you should add the custom `AuthMethod` to the PKP only after verifying the user's identity. Past this, Lit will handle the authorization process on the Lit network through Session Signatures.
 
+## Code Example
 
+This directory contains a code example demonstrating how to implement Custom `AuthMethods` in your web application. This example:
+
+1. Get an Ethereum signer from your browser wallet.
+2. Connects to the Lit network (`LitNodeClient`) and `LitContracts`.
+3. Requests your browser wallet to mint a PKP.
+4. Defines a custom `AuthMethod`.
+5. Adds the custom `AuthMethod` to the PKP.
+6. Showcases methods for retrieving permitted `AuthMethods` and checking whether the custom `AuthMethod` is permitted for the PKP.
+7. Adds a custom LitAction to the PKP for the verification process of the custom `AuthMethod`.
+8. Generates Session Signatures for the PKP to interact with the Lit network, using the custom LitAction as authentication.
+9. Signs a message with the PKP.
+
+### Running the Example
+
+You can run the example by first installing the dependencies with `yarn install` and then running `yarn dev` to start the Vite development server. The example will be available at `http://localhost:5173/`.
+
+### Specific Files to Reference
+
+- `src/litCode.ts`: Contains the main logic for minting a PKP, adding a custom `AuthMethod`, adding a custom LitAction, and generating Session Signatures.
+- `src/litAction.ts`: Contains the custom LitAction code.

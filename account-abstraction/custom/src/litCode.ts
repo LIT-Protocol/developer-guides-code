@@ -1,4 +1,4 @@
-import { LitNodeClient } from "@lit-protocol/lit-node-client";
+import { LitNodeClient, disconnectWeb3 } from "@lit-protocol/lit-node-client";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
 import { LitNetwork, AuthMethodScope } from "@lit-protocol/constants";
 import { LitPKPResource, LitActionResource } from "@lit-protocol/auth-helpers";
@@ -8,7 +8,7 @@ import * as ethers from "ethers";
 
 import { litActionCode } from "./litAction";
 
-export const litGoogleOAuth = async () => {
+export const litCustomAuth = async () => {
   try {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     await provider.send("eth_requestAccounts", []);
@@ -35,12 +35,10 @@ export const litGoogleOAuth = async () => {
     const pkp = (await litContracts.pkpNftContractUtils.write.mint()).pkp;
     console.log("✅ Minted a PKP");
 
-    console.log("🔄 Defining custom AuthMethod schema...");
     const customAuthMethod = {
       authMethodType: 321123,
       authMethodId: "appName-userID"
     }
-    console.log("✅ Defined custom AuthMethod schema");
 
     console.log("🔄 Adding custom AuthMethod schema to PKP...");
     await litContracts.addPermittedAuthMethod({
@@ -63,14 +61,15 @@ export const litGoogleOAuth = async () => {
 
     console.log("🔄 Adding permitted action to PKP...");
     const ipfsHash = await ipfsHelpers.stringToCidV0(litActionCode);
-    const receipt = await litContracts.addPermittedAction({
+    await litContracts.addPermittedAction({
       ipfsId: ipfsHash,
       pkpTokenId: pkp.tokenId,
       authMethodScopes: [AuthMethodScope.SignAnything],
     });
     console.log("✅ Added permitted action to PKP");
 
-    const pkpSessionSigs = await litNodeClient.getPkpSessionSigs({
+    console.log("🔄 Getting Session Signatures...");
+    const sessionSigs = await litNodeClient.getLitActionSessionSigs({
       pkpPublicKey: pkp.publicKey,
       resourceAbilityRequests: [
         {
@@ -82,7 +81,7 @@ export const litGoogleOAuth = async () => {
           ability: LitAbility.LitActionExecution
         }
       ],
-      litActionCode,
+      litActionCode: Buffer.from(litActionCode).toString("base64"),
       jsParams: {
         pkpPublicKey: pkp.publicKey,
         customAuthMethod: {
@@ -94,9 +93,11 @@ export const litGoogleOAuth = async () => {
         sigName: "custom-auth-sig",
       },
     })
+    console.log("✅ Got Session Signatures");
 
+    console.log("🔄 Signing message with PKP...");
     const signingResponse = await litNodeClient.pkpSign({
-      sessionSigs: pkpSessionSigs,
+      sessionSigs: sessionSigs,
       pubKey: pkp.publicKey,
       toSign: ethers.utils.arrayify(ethers.utils.keccak256(ethers.utils.toUtf8Bytes("Hello, world!")))
     })
@@ -104,5 +105,7 @@ export const litGoogleOAuth = async () => {
 
   } catch (error) {
     console.error("Failed to connect to Lit Network:", error);
+  } finally {
+    disconnectWeb3();
   }
 };

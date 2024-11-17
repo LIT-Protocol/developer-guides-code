@@ -14,7 +14,7 @@ const STYTCH_PROJECT_ID = getEnv("VITE_STYTCH_PROJECT_ID");
 const stytchSmsAuth = async () => {
   const client = new StytchUIClient(STYTCH_PUBLIC_TOKEN);
 
-  const phoneNumber = prompt("Enter your phone number");
+  const phoneNumber = prompt("Enter your phone number (format: +12345678910):");
 
   console.log("🔄 Requesting SMS OTP from Stytch...");
   const stytchResponse = await client.otps.sms.loginOrCreate(phoneNumber!);

@@ -1,4 +1,4 @@
-import { litWebAuthnOAuth } from "./connect";
+import { litWebAuthnOAuth } from "./litCode";
 
 function App() {
 

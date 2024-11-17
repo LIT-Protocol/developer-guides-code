@@ -1,26 +1,56 @@
-# Getting Started with a Lit SDK Browser Implementation
+# Stytch SMS OTP
 
-This is a very simple example repository for getting started with a browser implementation of the Lit SDK. All it will do is connect an instance of the `LitNodeClient` to the Lit Network. If you are searching for more developed uses of Lit, check out the other guides in this repository. 
+The `@lit-protocol/lit-auth-client` package simplifies the implementation of OTP login in your web applications. It provides a `LitAuthClient` class, which you can use to initialize a provider for the supported OTP login methods.
 
-## Using This Repository
+For more information about customization options, refer to our API documentation. The [LitAuthClient](https://v6-api-doc-lit-js-sdk.vercel.app/classes/lit_auth_client_src.LitAuthClient.html) and [StytchOtpProvider](https://v6-api-doc-lit-js-sdk.vercel.app/classes/lit_auth_client_src.StytchOtpProvider.html) classes are most relevant for this guide.
 
-After downloading this repository, you will need to install the necessary dependencies and run the environment setup with the following commands:
+## Code Example
+
+This directory contains a code example demonstrating how to implement Stytch SMS OTP in your web application. This example:
+
+1. Prompts the webpage user to enter their phone number.
+2. Requests an SMS OTP from Stytch.
+3. Prompts the webpage user to enter the code sent to their phone.
+4. Authenticates with Stytch.
+5. Connects to the Lit network.
+6. Initializes the `LitAuthClient` and `StytchOtpProvider`.
+7. Authenticates the user by calling the `authenticate()` method, which returns an `AuthMethod` object.
+
+### Running the Example
+
+This example requires a Stytch account and project. You can sign up for a free account [here](https://stytch.com/dashboard/create-account?redirect=%2Fdashboard%2F). Once you have an account, you can create a new project and obtain your `public token` and `project ID` from the [Stytch Dashboard](https://stytch.com/dashboard).
+
+
+#### Install the Dependencies
+
+In this directory, `account-abstraction/stytch-sms`, run `yarn` to install the project dependencies.
+
+#### Setting up the `.env` File
+
+Make a copy of the provided `.env.example` file and name it `.env`:
 
 ```
-yarn install
-```
-```
-yarn run dev
+cp .env.example .env
 ```
 
-Afterward, your terminal should inform you that the application is being displayed at `http://localhost:5173/`. Clicking the `Connect` button will send a log to your browser, informing you of the connection to the Lit Network.
+Within the `.env` there is the ENV:
 
-# Other Frameworks
+- `VITE_STYTCH_PUBLIC_TOKEN`: Your Stytch public token.
+- `VITE_STYTCH_PROJECT_ID`: Your Stytch project ID.
 
-If you would like to use frameworks other than React, a repository similar to this one can be setup using the steps below:
-1. `yarn create vite`
-2. Choose project name, framework, and configuration of choice.
-3. `yarn add @lit-protocol/lit-node-client`
-4. Be sure to use Polyfills since this is a browser implementation. Make your `vite.config` file similar to the one in this repository.
+#### Running the Example
 
+You can run the example by first installing the dependencies with `yarn install` and then running `yarn dev` to start the Vite development server. The example will be available at `http://localhost:5173/`.
 
+### Specific Files to Reference
+
+- `src/litCode.ts`: Contains the main logic for Stytch SMS OTP, connecting to the Lit network, initializing the `LitAuthClient` and `StytchOtpProvider`, and authenticating the user.
+- `src/utils.ts`: Contains a utility function for getting environment variables and ensuring they are set.
+
+## Additional Notes
+
+The Lit Relay Server allows you to mint Programmable Key Pairs (PKPs) without incurring gas fees. You can also use your own relay server or mint PKPs directly using Lit's contracts.
+
+With the `AuthMethod` object, you can mint or fetch PKPs associated with the authenticated phone number. You can find these methods in the [StytchOtpProvider](https://v6-api-doc-lit-js-sdk.vercel.app/classes/lit_auth_client_src.StytchOtpProvider.html) API documentation.
+
+If you are using the Lit Relay Server, you will need to request an API key [here](https://docs.google.com/forms/d/e/1FAIpQLSeVraHsp1evK_9j-8LpUBiEJWFn4G5VKjOWBmHFjxFRJZJdrg/viewform).

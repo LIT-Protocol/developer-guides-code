@@ -5,7 +5,7 @@ const _litActionCode = async () => {
         const tokenId = await Lit.Actions.pubkeyToTokenId({ publicKey: pkpPublicKey });
         const permittedAuthMethods = await Lit.Actions.getPermittedAuthMethods({ tokenId });
         const isPermitted = permittedAuthMethods.some((permittedAuthMethod) => {
-            if (permittedAuthMethod["auth_method_type"] === "0x4E663" && 
+            if (permittedAuthMethod["auth_method_type"] === "0x4e663" && 
                 permittedAuthMethod["id"] === customAuthMethod.authMethodId) {
                 return true;
             }
