@@ -33,3 +33,4 @@ Now that you have an overview of encrypting data with Lit, you can continue on t
 
 - [Encrypting a String](./encrypt-string/README.md)
 - [Encrypting a File](./encrypt-file/README.md)
+- [Encrypting a Large File](./encrypt-large-file/README.md)
