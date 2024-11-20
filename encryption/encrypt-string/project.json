@@ -1,0 +1,8 @@
+{
+  "name": "encrypt-string",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "encryption/encrypt-string/src",
+  "// targets": "to see all targets run: nx show project encrypt-string --web",
+  "targets": {}
+}
