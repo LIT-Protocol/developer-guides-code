@@ -1,7 +1,5 @@
-import ethers from "ethers";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
-import { LIT_RPC, LitNetwork } from "@lit-protocol/constants";
-import { LitContracts } from "@lit-protocol/contracts-sdk";
+import { LitNetwork } from "@lit-protocol/constants";
 import {
   createSiweMessageWithRecaps,
   generateAuthSig,
@@ -9,13 +7,13 @@ import {
   LitActionResource,
   LitPKPResource,
 } from "@lit-protocol/auth-helpers";
+import { LitContracts } from "@lit-protocol/contracts-sdk";
+import * as ethers from "ethers";
 
-import { getEnv } from "./utils";
 import { litActionCode } from "./litAction";
 
-const LIT_PKP_PUBLIC_KEY = process.env.LIT_PKP_PUBLIC_KEY;
-const LIT_CAPACITY_CREDIT_TOKEN_ID = process.env.LIT_CAPACITY_CREDIT_TOKEN_ID;
-const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
+const LIT_PKP_PUBLIC_KEY = import.meta.env["VITE_LIT_PKP_PUBLIC_KEY"];
+const LIT_CAPACITY_CREDIT_TOKEN_ID = import.meta.env["VITE_LIT_CAPACITY_CREDIT_TOKEN_ID"];
 const LIT_NETWORK = LitNetwork.DatilTest;
 
 export const fetchLitAction = async () => {
@@ -29,10 +27,10 @@ export const fetchLitAction = async () => {
   };
 
   try {
-    const ethersWallet = new ethers.Wallet(
-      ETHEREUM_PRIVATE_KEY,
-      new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE)
-    );
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    await provider.send("eth_requestAccounts", []);
+    const ethersSigner = provider.getSigner();
+    const address = await ethersSigner.getAddress();
 
     console.log("🔄 Connecting to Lit network...");
     litNodeClient = new LitNodeClient({
@@ -44,7 +42,7 @@ export const fetchLitAction = async () => {
 
     console.log("🔄 Connecting LitContracts client to network...");
     const litContracts = new LitContracts({
-      signer: ethersWallet,
+      signer: ethersSigner,
       network: LIT_NETWORK,
       debug: false,
     });
@@ -85,9 +83,9 @@ export const fetchLitAction = async () => {
     console.log("🔄 Creating capacityDelegationAuthSig...");
     const { capacityDelegationAuthSig } =
       await litNodeClient.createCapacityDelegationAuthSig({
-        dAppOwnerWallet: ethersWallet,
+        dAppOwnerWallet: ethersSigner,
         capacityTokenId,
-        delegateeAddresses: [ethersWallet.address],
+        delegateeAddresses: [address],
         uses: "1",
       });
     console.log("✅ Capacity Delegation Auth Sig created");
@@ -116,13 +114,13 @@ export const fetchLitAction = async () => {
           uri: uri!,
           expiration: expiration!,
           resources: resourceAbilityRequests!,
-          walletAddress: ethersWallet.address,
+          walletAddress: address,
           nonce: await litNodeClient.getLatestBlockhash(),
           litNodeClient,
         });
 
         return await generateAuthSig({
-          signer: ethersWallet,
+          signer: ethersSigner,
           toSign,
         });
       },
