@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/schema",
+  "$id": "Nodejs",
+  "title": "",
+  "type": "object",
+  "properties": {
+    "category": {
+      "type": "string",
+      "description": "Select the category for this example",
+      "x-prompt": {
+        "message": "Which category would you like to use?",
+        "type": "list",
+        "items": [
+          {
+            "value": "getting-started",
+            "label": "Getting Started"
+          },
+          {
+            "value": "capacity-credits",
+            "label": "Capacity Credits"
+          },
+          {
+            "value": "payment-delegation-db",
+            "label": "Payment Delegation Database"
+          },
+          {
+            "value": "session-signatures",
+            "label": "Session Signatures"
+          },
+          {
+            "value": "programmable-key-pairs",
+            "label": "Programmable Key Pairs (PKPs)"
+          },
+          {
+            "value": "wrapped-keys",
+            "label": "Wrapped Keys"
+          },
+          {
+            "value": "encryption",
+            "label": "Encryption"
+          },
+          {
+            "value": "access-control",
+            "label": "Access Control"
+          },
+          {
+            "value": "lit-actions",
+            "label": "Lit Actions"
+          }
+        ]
+      }
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the new example",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What would you like to name this example?"
+    }
+  },
+  "required": ["category", "name"]
+}

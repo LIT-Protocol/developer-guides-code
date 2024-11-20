@@ -1,0 +1,9 @@
+{
+  "generators": {
+    "nodejs": {
+      "factory": "./src/generators/nodejs/generator",
+      "schema": "./src/generators/nodejs/schema.json",
+      "description": "nodejs generator"
+    }
+  }
+}
