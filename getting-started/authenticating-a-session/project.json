@@ -1,0 +1,8 @@
+{
+  "name": "authenticating-a-session",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "getting-started/authenticating-a-session/src",
+  "// targets": "to see all targets run: nx show project authenticating-a-session --web",
+  "targets": {}
+}
