@@ -1,0 +1,8 @@
+{
+  "name": "encrypt-file",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "encryption/encrypt-file/src",
+  "// targets": "to see all targets run: nx show project encrypt-file --web",
+  "targets": {}
+}
