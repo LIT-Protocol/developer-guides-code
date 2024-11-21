@@ -1,5 +1,5 @@
 {
-  "name": "nodejs",
+  "name": "sign-and-combine-ecdsa-nodejs",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",

@@ -1,0 +1,42 @@
+{
+  "name": "lit-developer-guides-code",
+  "private": true,
+  "workspaces": [
+    "btc-trigger/nodejs",
+    "conditional-signing/browser",
+    "conditional-signing/nodejs",
+    "custom-auth/browser",
+    "decrypt-api-key-in-action/nodejs",
+    "eip-191-signing/browser",
+    "eip-191-signing/nodejs",
+    "lit-action-claim-key/nodejs",
+    "lit-action-using-fetch/browser",
+    "lit-action-using-fetch/nodejs",
+    "paying-for-lit/nodejs",
+    "payment-delegation-db-relayer/nodejs",
+    "pkp-migration/nodejs",
+    "session-signatures/getLitActionSessionSigs",
+    "session-signatures/getPkpSessionSigs",
+    "session-signatures/getSessionSigs",
+    "sign-and-combine-ecdsa/nodejs",
+    "siws-accs/browser",
+    "siws-authentication/browser",
+    "siws-encryption/browser",
+    "siws-session-sigs/browser",
+    "starter-guides/browser",
+    "starter-guides/nodejs",
+    "templates/browser",
+    "templates/nodejs",
+    "wrapped-keys/eip-712/nodejs",
+    "wrapped-keys/nodejs"
+  ],
+  "scripts": {
+    "install:all": "yarn workspaces focus --all",
+    "upgrade:all": "yarn workspaces foreach --all exec yarn up \"@lit-protocol/*@latest\"",
+    "upgrade:all:alpha": "yarn workspaces foreach --all exec yarn up \"@lit-protocol/*@alpha\"",
+    "clean": "yarn workspaces foreach --all exec rimraf node_modules && yarn rimraf node_modules"
+  },
+  "devDependencies": {
+    "rimraf": "^6.0.1"
+  }
+}
