@@ -1,0 +1,27 @@
+{
+  "name": "via-contracts-sdk",
+  "version": "0.1.0",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "test": "dotenvx run -- mocha test/**/*.spec.ts"
+  },
+  "dependencies": {
+    "@dotenvx/dotenvx": "^0.44.1",
+    "@lit-protocol/constants": "^6.4.0",
+    "@lit-protocol/contracts-sdk": "^6.4.0",
+    "ethers": "v5"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.3.16",
+    "@types/chai-json-schema": "^1.4.10",
+    "@types/mocha": "^10.0.6",
+    "chai": "^5.1.1",
+    "chai-json-schema": "^1.5.1",
+    "mocha": "^10.4.0",
+    "tsc": "^2.0.4",
+    "tsx": "^4.12.0",
+    "typescript": "^5.4.5"
+  }
+}

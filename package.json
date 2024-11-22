@@ -2,15 +2,15 @@
   "name": "root",
   "private": true,
   "workspaces": [
-    "access-control/*",
-    "capacity-credits/*",
-    "encryption/*",
-    "getting-started/*",
-    "lit-actions/*",
-    "payment-delegation-db/*",
-    "programmable-key-pairs/*",
-    "session-signatures/*",
-    "wrapped-keys/*"
+    "access-control/**/*",
+    "capacity-credits/**/*",
+    "encryption/**/*",
+    "getting-started/**/*",
+    "lit-actions/**/*",
+    "payment-delegation-db/**/*",
+    "programmable-key-pairs/**/*",
+    "session-signatures/**/*",
+    "wrapped-keys/**/*"
   ],
   "devDependencies": {
     "@eslint/js": "^9.8.0",

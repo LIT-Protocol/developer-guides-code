@@ -3,14 +3,14 @@
   "version": "independent",
   "npmClient": "yarn",
   "packages": [
-    "access-control/*",
-    "capacity-credits/*",
-    "encryption/*",
-    "getting-started/*",
-    "lit-actions/*",
-    "payment-delegation-db/*",
-    "programmable-key-pairs/*",
-    "session-signatures/*",
-    "wrapped-keys/*"
+    "access-control/**/*",
+    "capacity-credits/**/*",
+    "encryption/**/*",
+    "getting-started/**/*",
+    "lit-actions/**/*",
+    "payment-delegation-db/**/*",
+    "programmable-key-pairs/**/*",
+    "session-signatures/**/*",
+    "wrapped-keys/**/*"
   ]
 }
