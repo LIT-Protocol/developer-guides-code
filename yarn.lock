@@ -2193,7 +2193,7 @@
     tslib "1.14.1"
     util "0.12.5"
 
-"@lit-protocol/constants@6.11.2", "@lit-protocol/constants@^6.11.0":
+"@lit-protocol/constants@6.11.2", "@lit-protocol/constants@^6.11.0", "@lit-protocol/constants@^6.4.0":
   version "6.11.2"
   resolved "https://registry.yarnpkg.com/@lit-protocol/constants/-/constants-6.11.2.tgz#b888fcaddcc153f6b00a476500cd59a17d5f8f1c"
   integrity sha512-rcOrHikdJ/SdEL6dT/uRKWZNTYPPgQO4xbHweLMZocsIqofaU5Zpn/jLQ6xabVkx8YaW3quYMI2VT15r3u6CGw==
@@ -2221,7 +2221,7 @@
     siwe "^2.3.2"
     tslib "1.14.1"
 
-"@lit-protocol/contracts-sdk@6.11.2":
+"@lit-protocol/contracts-sdk@6.11.2", "@lit-protocol/contracts-sdk@^6.4.0":
   version "6.11.2"
   resolved "https://registry.yarnpkg.com/@lit-protocol/contracts-sdk/-/contracts-sdk-6.11.2.tgz#ed939fb3053bfc289ce8328c8be744a6a16658eb"
   integrity sha512-vfM+AqjHXAzkwjpFPM2JBCgPQmMCHIGrk12upfb1klvvjHqU4BU7fLl7Q6l2SHC0rwQEj5xNGVFY6mDY0DK6VQ==
@@ -11324,6 +11324,14 @@ varuint-bitcoin@^1.1.2:
   integrity sha512-4EVb+w4rx+YfVM32HQX42AbbT7/1f5zwAYhIujKXKk8NQK+JfRVl3pqT3hjNn/L+RstigmGGKVwHA/P0wgITZw==
   dependencies:
     safe-buffer "^5.1.1"
+
+"via-contracts-sdk@file:capacity-credits/minting/via-contracts-sdk":
+  version "0.1.0"
+  dependencies:
+    "@dotenvx/dotenvx" "^0.44.1"
+    "@lit-protocol/constants" "^6.4.0"
+    "@lit-protocol/contracts-sdk" "^6.4.0"
+    ethers v5
 
 w3c-xmlserializer@^4.0.0:
   version "4.0.0"
