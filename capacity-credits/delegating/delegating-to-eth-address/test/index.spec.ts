@@ -50,7 +50,7 @@ describe('Testing delegating Capacity Credit', () => {
 
     const delegationAuthSig = await runExample(
       mintedCapacityCredit.capacityTokenIdStr,
-      delegateeEthersSigner.address
+      [delegateeEthersSigner.address]
     );
     expect(delegationAuthSig).to.be.jsonSchema(expectedDelegationAuthSigSchema);
   }).timeout(120_000);

@@ -8,7 +8,7 @@ const ETHEREUM_PRIVATE_KEY = getEnv('ETHEREUM_PRIVATE_KEY');
 
 export const runExample = async (
   capacityTokenId: string,
-  delegateeAddress: string
+  delegateeAddresses: string[]
 ) => {
   let litNodeClient: LitNodeClient;
 
@@ -31,7 +31,7 @@ export const runExample = async (
       await litNodeClient.createCapacityDelegationAuthSig({
         dAppOwnerWallet: ethersSigner,
         capacityTokenId,
-        delegateeAddresses: [delegateeAddress],
+        delegateeAddresses,
         uses: '1',
         expiration: new Date(Date.now() + 1000 * 60 * 10).toISOString(), // 10 minutes
       });
