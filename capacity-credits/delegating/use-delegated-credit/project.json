@@ -1,0 +1,8 @@
+{
+  "name": "delegating/use-delegated-credit",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "capacity-credits/delegating/use-delegated-credit/src",
+  "// targets": "to see all targets run: nx show project delegating/use-delegated-credit --web",
+  "targets": {}
+}

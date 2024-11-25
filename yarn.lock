@@ -11325,14 +11325,6 @@ varuint-bitcoin@^1.1.2:
   dependencies:
     safe-buffer "^5.1.1"
 
-"via-contracts-sdk@file:capacity-credits/minting/via-contracts-sdk":
-  version "0.1.0"
-  dependencies:
-    "@dotenvx/dotenvx" "^0.44.1"
-    "@lit-protocol/constants" "^6.4.0"
-    "@lit-protocol/contracts-sdk" "^6.4.0"
-    ethers v5
-
 w3c-xmlserializer@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/w3c-xmlserializer/-/w3c-xmlserializer-4.0.0.tgz#aebdc84920d806222936e3cdce408e32488a3073"
