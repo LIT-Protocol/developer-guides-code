@@ -21,7 +21,7 @@ export const runExample = async (
     console.log('🔄 Connecting to Lit network...');
     litNodeClient = new LitNodeClient({
       litNetwork: LIT_NETWORK.DatilDev,
-      debug: false,
+      debug: true,
     });
     await litNodeClient.connect();
     console.log('✅ Connected to Lit network');
