@@ -15,9 +15,9 @@ export const litWebAuthnOAuth = async () => {
     console.log("🔄 Initializing LitAuthClient and WebAuthnProvider...");
     const litAuthClient = new LitAuthClient({
       litRelayConfig: {
-        // Request a Lit Relay Server API key here: https://forms.gle/RNZYtGYTY9BcD9MEA
         relayApiKey: "<Your Lit Relay Server API Key>",
       },
+      litNodeClient,
     });
     const webAuthnProvider = litAuthClient.initProvider<WebAuthnProvider>(
       ProviderType.WebAuthn

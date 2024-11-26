@@ -34,6 +34,8 @@ describe("Signing an Ethereum transaction using generateWrappedKey and signTrans
   let ethersSigner: ethers.Wallet;
   let mintedPkp;
   let generateWrappedKeyResponse: GeneratePrivateKeyResult;
+  let generateKeyTime: number;
+  let signTransactionTime: number;
 
   before(async function () {
     this.timeout(120_000);
@@ -44,11 +46,15 @@ describe("Signing an Ethereum transaction using generateWrappedKey and signTrans
 
     mintedPkp = await mintPkp(ethersSigner);
 
+    // Time the generateWrappedKey operation
+    const startGenerate = performance.now();
     generateWrappedKeyResponse = (await generateWrappedKey(
       mintedPkp!.publicKey,
       "evm",
       "This is a Dev Guide code example testing Ethereum key"
     )) as GeneratePrivateKeyResult;
+    generateKeyTime = performance.now() - startGenerate;
+    console.log(`⏱️ generateWrappedKey took ${generateKeyTime.toFixed(2)}ms`);
   });
 
   it("should sign an Ethereum transaction", async () => {
@@ -57,11 +63,11 @@ describe("Signing an Ethereum transaction using generateWrappedKey and signTrans
       chain: "chronicleTestnet",
       toAddress: ethersSigner.address,
       value: "0.0001",
-      // Manually specifying because the generated private key doesn't hold a balance and ethers
-      // fails to estimate gas since the tx simulation fails with insufficient balance error
       gasLimit: 21_000,
     };
 
+    // Time just the signing operation
+    const startSign = performance.now();
     const signedTransaction = await signTransactionWithWrappedKey(
       mintedPkp!.publicKey,
       "evm",
@@ -69,6 +75,8 @@ describe("Signing an Ethereum transaction using generateWrappedKey and signTrans
       litTransaction,
       false
     );
+    signTransactionTime = performance.now() - startSign;
+    console.log(`⏱️ signTransactionWithEncryptedKey took ${signTransactionTime.toFixed(2)}ms`);
 
     expect(signedTransaction).to.match(RegExp("^0x[a-fA-F0-9]"));
   }).timeout(120_000);
@@ -105,6 +113,7 @@ describe("Signing an Ethereum transaction using generateWrappedKey and signTrans
       gasLimit: 21_000,
     };
 
+    const startSign = performance.now();
     const transactionHash = await signTransactionWithWrappedKey(
       mintedPkp!.publicKey,
       "evm",
@@ -112,6 +121,8 @@ describe("Signing an Ethereum transaction using generateWrappedKey and signTrans
       litTransaction,
       true
     );
+    const signTime = performance.now() - startSign;
+    console.log(`⏱️ signTransactionWithEncryptedKey (with broadcast) took ${signTime.toFixed(2)}ms`);
 
     expect(transactionHash).to.match(RegExp("^0x[a-fA-F0-9]"));
 
@@ -126,6 +137,7 @@ describe("Signing a Solana transaction using generateWrappedKey and signTransact
   let mintedPkp;
   let generatedSolanaPublicKey: PublicKey;
   let generateWrappedKeyResponse: GeneratePrivateKeyResult;
+  let generateKeyTime: number;
 
   before(async function () {
     this.timeout(120_000);
@@ -136,11 +148,14 @@ describe("Signing a Solana transaction using generateWrappedKey and signTransact
 
     mintedPkp = await mintPkp(ethersSigner);
 
+    const startGenerate = performance.now();
     generateWrappedKeyResponse = (await generateWrappedKey(
       mintedPkp!.publicKey,
       "solana",
       "This is a Dev Guide code example testing Solana key"
     )) as GeneratePrivateKeyResult;
+    generateKeyTime = performance.now() - startGenerate;
+    console.log(`⏱️ generateWrappedKey (Solana) took ${generateKeyTime.toFixed(2)}ms`);
 
     generatedSolanaPublicKey = new PublicKey(
       generateWrappedKeyResponse.generatedPublicKey
@@ -177,6 +192,7 @@ describe("Signing a Solana transaction using generateWrappedKey and signTransact
       chain: "devnet",
     };
 
+    const startSign = performance.now();
     const signedTransaction = await signTransactionWithWrappedKey(
       mintedPkp!.publicKey,
       "solana",
@@ -184,6 +200,8 @@ describe("Signing a Solana transaction using generateWrappedKey and signTransact
       litTransaction,
       false
     );
+    const signTime = performance.now() - startSign;
+    console.log(`⏱️ signTransactionWithEncryptedKey (Solana) took ${signTime.toFixed(2)}ms`);
 
     expect(signedTransaction).to.match(RegExp("^[A-Za-z0-9+/]+={0,2}$"));
   }).timeout(120_000);
@@ -242,6 +260,8 @@ describe("Signing a Solana transaction using generateWrappedKey and signTransact
       serializedTransaction,
       chain: "devnet",
     };
+
+    const startSign = performance.now();
     const signedTransaction = await signTransactionWithWrappedKey(
       mintedPkp!.publicKey,
       "solana",
@@ -249,6 +269,8 @@ describe("Signing a Solana transaction using generateWrappedKey and signTransact
       litTransaction,
       true
     );
+    const signTime = performance.now() - startSign;
+    console.log(`⏱️ signTransactionWithEncryptedKey (Solana with broadcast) took ${signTime.toFixed(2)}ms`);
 
     expect(signedTransaction).to.match(RegExp("^[A-Za-z0-9+/]+={0,2}$"));
 
@@ -315,6 +337,8 @@ describe("Signing a Solana transaction using generateWrappedKey and signTransact
       serializedTransaction,
       chain: "devnet",
     };
+
+    const startSign = performance.now();
     const signedTransaction = await signTransactionWithWrappedKey(
       mintedPkp!.publicKey,
       "solana",
@@ -322,6 +346,8 @@ describe("Signing a Solana transaction using generateWrappedKey and signTransact
       litTransaction,
       false
     );
+    const signTime = performance.now() - startSign;
+    console.log(`⏱️ signTransactionWithEncryptedKey (Solana manual) took ${signTime.toFixed(2)}ms`);
 
     expect(signedTransaction).to.match(RegExp("^[A-Za-z0-9+/]+={0,2}$"));
 

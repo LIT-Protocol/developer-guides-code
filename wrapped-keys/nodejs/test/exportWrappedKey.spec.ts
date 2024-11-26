@@ -78,7 +78,7 @@ describe("Exporting a wrapped Ethereum key using exportPrivateKey", () => {
           const: NEW_ETHEREUM_KEYPAIR_WALLET.publicKey,
         },
         litNetwork: {
-          const: "datil-dev",
+          const: "datil",
         },
       },
       additionalProperties: false,
@@ -156,7 +156,7 @@ describe("Exporting a wrapped Solana key using exportPrivateKey", () => {
           const: solanaKeypair.publicKey.toString(),
         },
         litNetwork: {
-          const: "datil-dev",
+          const: "datil",
         },
       },
       additionalProperties: false,

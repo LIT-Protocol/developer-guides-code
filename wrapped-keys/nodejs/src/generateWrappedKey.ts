@@ -4,6 +4,7 @@ import { LIT_RPC, LitNetwork } from "@lit-protocol/constants";
 import { LitAbility, LitActionResource } from "@lit-protocol/auth-helpers";
 import { EthWalletProvider } from "@lit-protocol/lit-auth-client";
 import { api } from "@lit-protocol/wrapped-keys";
+import { LitContracts } from "@lit-protocol/contracts-sdk";
 
 const { generatePrivateKey } = api;
 
@@ -26,15 +27,47 @@ export const generateWrappedKey = async (
 
     console.log("🔄 Connecting to Lit network...");
     litNodeClient = new LitNodeClient({
-      litNetwork: LitNetwork.DatilDev,
+      litNetwork: LitNetwork.Datil,
       debug: false,
     });
     await litNodeClient.connect();
     console.log("✅ Connected to Lit network");
 
+    console.log("🔄 Connecting LitContracts client to network...");
+    const litContracts = new LitContracts({
+      signer: ethersSigner,
+      network: LitNetwork.Datil,
+      debug: false,
+    });
+    await litContracts.connect();
+    console.log("✅ Connected LitContracts client to network");
+
+    let capacityTokenId;
+    if (capacityTokenId === "" || capacityTokenId === undefined) {
+      console.log("🔄 No Capacity Credit provided, minting a new one...");
+      capacityTokenId = (
+        await litContracts.mintCapacityCreditsNFT({
+          requestsPerKilosecond: 10,
+          daysUntilUTCMidnightExpiration: 1,
+        })
+      ).capacityTokenIdStr;
+      console.log(`✅ Minted new Capacity Credit with ID: ${capacityTokenId}`);
+    } 
+
+    console.log("🔄 Creating capacityDelegationAuthSig...");
+    const { capacityDelegationAuthSig } =
+      await litNodeClient.createCapacityDelegationAuthSig({
+        dAppOwnerWallet: ethersSigner,
+        capacityTokenId,
+        delegateeAddresses: [await ethersSigner.getAddress(), ethers.utils.computeAddress('0x' + pkpPublicKey)],
+        uses: "1",
+      });
+    console.log("✅ Capacity Delegation Auth Sig created");
+
     console.log("🔄 Getting PKP Session Sigs...");
     const pkpSessionSigs = await litNodeClient.getPkpSessionSigs({
       pkpPublicKey,
+      capabilityAuthSigs: [capacityDelegationAuthSig],
       authMethods: [
         await EthWalletProvider.authenticate({
           signer: ethersSigner,
@@ -59,12 +92,14 @@ export const generateWrappedKey = async (
       memo,
       litNodeClient,
     });
+    console.log("Response:",response);
     console.log(
       `✅ Generated wrapped key with id: ${response.id} and public key: ${response.generatedPublicKey}`
     );
     return response;
   } catch (error) {
-    console.error;
+    console.error("Error generating wrapped key:", error);
+    throw error;
   } finally {
     litNodeClient!.disconnect();
   }

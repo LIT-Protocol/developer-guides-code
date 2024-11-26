@@ -13,6 +13,7 @@ const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 
 describe("Generating an Ethereum Wrapped Key using generatePrivateKey", () => {
   let mintedPkp;
+  let executionTime: number;
 
   before(async function () {
     this.timeout(120_000);
@@ -48,17 +49,22 @@ describe("Generating an Ethereum Wrapped Key using generatePrivateKey", () => {
       additionalProperties: false,
     };
 
+    const startTime = performance.now();
     const response = (await generateWrappedKey(
       mintedPkp!.publicKey,
       "evm",
       "This is a Dev Guide code example testing Ethereum key"
     )) as GeneratePrivateKeyResult;
+    executionTime = performance.now() - startTime;
+    
+    console.log(`⏱️ generatePrivateKey took ${executionTime.toFixed(2)}ms`);
     expect(response).to.be.jsonSchema(responseSchema);
   }).timeout(120_000);
 });
 
 describe("Generating a Solana Wrapped Key using generatePrivateKey", () => {
   let mintedPkp;
+  let executionTime: number;
 
   before(async function () {
     this.timeout(120_000);
@@ -94,12 +100,15 @@ describe("Generating a Solana Wrapped Key using generatePrivateKey", () => {
       additionalProperties: false,
     };
 
+    const startTime = performance.now();
     const response = (await generateWrappedKey(
       mintedPkp!.publicKey,
       "solana",
       "This is a Dev Guide code example testing Solana key"
     )) as GeneratePrivateKeyResult;
-
+    executionTime = performance.now() - startTime;
+    
+    console.log(`⏱️ generatePrivateKey (Solana) took ${executionTime.toFixed(2)}ms`);
     expect(response).to.be.jsonSchema(responseSchema);
   }).timeout(120_000);
 });

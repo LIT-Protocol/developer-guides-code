@@ -12,17 +12,20 @@
   "dependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
-    "@lit-protocol/constants": "^6.11.0",
-    "@lit-protocol/lit-auth-client": "^6.11.0",
+    "@lit-protocol/constants": "^6.11.2",
+    "@lit-protocol/lit-auth-client": "^6.11.2",
     "@lit-protocol/lit-node-client": "^6.11.0",
     "@simplewebauthn/browser": "^10.0.0",
     "@vitejs/plugin-react-swc": "^3.7.0",
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "rollup-plugin-polyfill-node": "^0.13.0",
     "vite-plugin-node-polyfills": "^0.22.0"
   },
   "devDependencies": {
+    "@types/node": "^22.9.1",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.13.1",

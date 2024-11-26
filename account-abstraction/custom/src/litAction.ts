@@ -12,6 +12,7 @@ const _litActionCode = async () => {
             return false;
         });
         LitActions.setResponse({ response: isPermitted ? "true" : "false" });
+        return "hahahahaa";
     } catch (error) {
         LitActions.setResponse({ response: error.message });
     }

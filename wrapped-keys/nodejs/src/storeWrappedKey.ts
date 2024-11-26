@@ -29,7 +29,7 @@ export const storeWrappedKey = async (
 
     console.log("🔄 Connecting to Lit network...");
     litNodeClient = new LitNodeClient({
-      litNetwork: LitNetwork.DatilDev,
+      litNetwork: LitNetwork.Datil,
       debug: false,
     });
     await litNodeClient.connect();

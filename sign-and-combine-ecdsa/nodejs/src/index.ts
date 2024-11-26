@@ -1,33 +1,30 @@
 import * as ethers from "ethers";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
-import { LitNetwork, LIT_RPC, LIT_CHAINS } from "@lit-protocol/constants";
+import {
+  LIT_RPC,
+  LIT_CHAINS,
+  LIT_ABILITY,
+  LIT_NETWORK,
+} from "@lit-protocol/constants";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import {
-  LitAbility,
   LitActionResource,
   LitPKPResource,
   createSiweMessageWithRecaps,
   generateAuthSig,
 } from "@lit-protocol/auth-helpers";
+import { EthWalletProvider } from "@lit-protocol/lit-auth-client";
 
 import { getChainInfo, getEnv } from "./utils";
 import { litActionCode } from "./litAction";
 
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
-const LIT_NETWORK = LitNetwork.Datil;
-const LIT_CAPACITY_CREDIT_TOKEN_ID = getEnv("LIT_CAPACITY_CREDIT_TOKEN_ID");
+const LIT_NET = LIT_NETWORK.DatilDev;
 const LIT_PKP_PUBLIC_KEY = getEnv("LIT_PKP_PUBLIC_KEY");
 const CHAIN_TO_SEND_TX_ON = getEnv("CHAIN_TO_SEND_TX_ON");
 
 export const signAndCombineAndSendTx = async () => {
   let litNodeClient: LitNodeClient;
-  let pkpInfo: {
-    tokenId?: string;
-    publicKey?: string;
-    ethAddress?: string;
-  } = {
-    publicKey: LIT_PKP_PUBLIC_KEY,
-  };
 
   try {
     const chainInfo = getChainInfo(CHAIN_TO_SEND_TX_ON);
@@ -35,10 +32,6 @@ export const signAndCombineAndSendTx = async () => {
     const ethersWallet = new ethers.Wallet(
       ETHEREUM_PRIVATE_KEY,
       new ethers.providers.JsonRpcProvider(chainInfo.rpcUrl)
-    );
-
-    const ethersProvider = new ethers.providers.JsonRpcProvider(
-      chainInfo.rpcUrl
     );
 
     const yellowstoneEthersWallet = new ethers.Wallet(
@@ -49,152 +42,184 @@ export const signAndCombineAndSendTx = async () => {
     console.log("🔄 Connecting LitContracts client to network...");
     const litContracts = new LitContracts({
       signer: yellowstoneEthersWallet,
-      network: LIT_NETWORK,
+      network: LIT_NET,
     });
     await litContracts.connect();
     console.log("✅ Connected LitContracts client to network");
 
-    if (LIT_PKP_PUBLIC_KEY === undefined || LIT_PKP_PUBLIC_KEY === "") {
-      console.log("🔄 PKP wasn't provided, minting a new one...");
-      pkpInfo = (await litContracts.pkpNftContractUtils.write.mint()).pkp;
-      console.log("✅ PKP successfully minted");
-      console.log(`ℹ️  PKP token ID: ${pkpInfo.tokenId}`);
-      console.log(`ℹ️  PKP public key: ${pkpInfo.publicKey}`);
-      console.log(`ℹ️  PKP ETH address: ${pkpInfo.ethAddress}`);
-    } else {
-      console.log(`ℹ️  Using provided PKP: ${LIT_PKP_PUBLIC_KEY}`);
-      pkpInfo = {
-        publicKey: LIT_PKP_PUBLIC_KEY,
-        ethAddress: ethers.utils.computeAddress(`0x${LIT_PKP_PUBLIC_KEY}`),
-      };
-    }
-
-    console.log(`🔄 Checking PKP balance...`);
-    let bal = await ethersProvider.getBalance(pkpInfo.ethAddress!);
-    let formattedBal = ethers.utils.formatEther(bal);
-
-    if (Number(formattedBal) < Number(ethers.utils.formatEther(25_000))) {
-      console.log(
-        `ℹ️  PKP balance: ${formattedBal} is insufficient to run example`
-      );
-      console.log(`🔄 Funding PKP...`);
-
-      const fundingTx = {
-        to: pkpInfo.ethAddress!,
-        value: ethers.utils.parseEther("0.001"),
-        gasLimit: 21_000,
-        gasPrice: (await ethersWallet.getGasPrice()).toHexString(),
-        nonce: await ethersProvider.getTransactionCount(ethersWallet.address),
-        chainId: chainInfo.chainId,
-      };
-
-      const fundingTxPromise = await ethersWallet.sendTransaction(fundingTx);
-      const fundingTxReceipt = await fundingTxPromise.wait();
-
-      console.log(
-        `✅ PKP funded. Transaction hash: ${fundingTxReceipt.transactionHash}`
-      );
-    } else {
-      console.log(`✅ PKP has a sufficient balance of: ${formattedBal}`);
-    }
-
     console.log("🔄 Initializing connection to the Lit network...");
     litNodeClient = new LitNodeClient({
-      litNetwork: LIT_NETWORK,
+      litNetwork: LIT_NET,
       debug: false,
     });
     await litNodeClient.connect();
     console.log("✅ Successfully connected to the Lit network");
 
-    console.log("🔄 Creating and serializing unsigned transaction...");
-    const unsignedTransaction = {
-      to: ethersWallet.address,
-      value: 1,
-      gasLimit: 21_000,
-      gasPrice: (await ethersWallet.getGasPrice()).toHexString(),
-      nonce: await ethersProvider.getTransactionCount(pkpInfo.ethAddress!),
-      chainId: chainInfo.chainId,
-    };
-
-    const unsignedTransactionHash = ethers.utils.keccak256(
-      ethers.utils.serializeTransaction(unsignedTransaction)
-    );
     console.log("✅ Transaction created and serialized");
 
-    let capacityTokenId = LIT_CAPACITY_CREDIT_TOKEN_ID;
-    if (capacityTokenId === "" || capacityTokenId === undefined) {
-      console.log("🔄 No Capacity Credit provided, minting a new one...");
-      capacityTokenId = (
-        await litContracts.mintCapacityCreditsNFT({
-          requestsPerKilosecond: 10,
-          daysUntilUTCMidnightExpiration: 1,
-        })
-      ).capacityTokenIdStr;
-      console.log(`✅ Minted new Capacity Credit with ID: ${capacityTokenId}`);
-    } else {
-      console.log(
-        `ℹ️  Using provided Capacity Credit with ID: ${LIT_CAPACITY_CREDIT_TOKEN_ID}`
-      );
-    }
-
-    console.log("🔄 Creating capacityDelegationAuthSig...");
-    const { capacityDelegationAuthSig } =
-      await litNodeClient.createCapacityDelegationAuthSig({
-        dAppOwnerWallet: ethersWallet,
-        capacityTokenId,
-        delegateeAddresses: [ethersWallet.address],
-        uses: "1",
-      });
-    console.log("✅ Capacity Delegation Auth Sig created");
-
-    console.log("🔄 Attempting to execute the Lit Action code...");
-    const result = await litNodeClient.executeJs({
-      sessionSigs: await litNodeClient.getSessionSigs({
-        chain: CHAIN_TO_SEND_TX_ON,
-        capabilityAuthSigs: [capacityDelegationAuthSig],
-        expiration: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(), // 24 hours
-        resourceAbilityRequests: [
-          {
-            resource: new LitPKPResource("*"),
-            ability: LitAbility.PKPSigning,
-          },
-          {
-            resource: new LitActionResource("*"),
-            ability: LitAbility.LitActionExecution,
-          },
-        ],
-        authNeededCallback: async ({
-          resourceAbilityRequests,
-          expiration,
-          uri,
-        }) => {
-          const toSign = await createSiweMessageWithRecaps({
-            uri: uri!,
-            expiration: expiration!,
-            resources: resourceAbilityRequests!,
-            walletAddress: ethersWallet.address,
-            nonce: await litNodeClient.getLatestBlockhash(),
-            litNodeClient,
-          });
-
-          return await generateAuthSig({
-            signer: ethersWallet,
-            toSign,
-          });
-        },
-      }),
-      code: litActionCode,
-      jsParams: {
-        toSign: ethers.utils.arrayify(unsignedTransactionHash),
-        publicKey: pkpInfo.publicKey!,
-        sigName: "signedTransaction",
-        chain: CHAIN_TO_SEND_TX_ON,
-        unsignedTransaction,
-      },
+    const authMethod = await EthWalletProvider.authenticate({
+      signer: ethersWallet,
+      litNodeClient,
     });
+
+    const sessionSigs = await litNodeClient.getPkpSessionSigs({
+      pkpPublicKey: LIT_PKP_PUBLIC_KEY,
+      authMethods: [authMethod],
+      resourceAbilityRequests: [
+        {
+          resource: new LitPKPResource("*"),
+          ability: LIT_ABILITY.PKPSigning,
+        },
+        {
+          resource: new LitActionResource("*"),
+          ability: LIT_ABILITY.LitActionExecution,
+        },
+      ],
+      expiration: new Date(Date.now() + 1000 * 60 * 10).toISOString(), // 10 minutes
+    });
+
+    console.log("🔄 Executing Lit Action...");
+
+    const routerAddress = "0x2626664c2603336E57B271c5C0b26F421741e481";
+    const USDC = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913";
+    const WETH = "0x4200000000000000000000000000000000000006";
+    const fee = 5000;
+    
+    // Compute PKP address
+    console.log("PKP Public Key:", LIT_PKP_PUBLIC_KEY);
+    const pkpAddress = ethers.utils.computeAddress(`0x${LIT_PKP_PUBLIC_KEY}`);
+    console.log("PKP Address:", pkpAddress);
+
+    
+ 
+    // Setup contracts
+    const provider = new ethers.providers.JsonRpcProvider("https://mainnet.base.org");
+    const swapRouter = new ethers.Contract(routerAddress, [
+        "function exactInput(tuple(bytes path, address recipient, uint256 deadline, uint256 amountIn, uint256 amountOutMinimum)) external payable returns (uint256 amountOut)",
+    ], provider);
+    const USDCContract = new ethers.Contract(USDC, [
+        "function approve(address spender, uint256 amount) external returns (bool)",
+    ], provider);
+ 
+    console.log("Contracts initialized");
+
+    const pkpBalance = await provider.getBalance(pkpAddress);
+    console.log("PKP Balance:", ethers.utils.formatEther(pkpBalance), "ETH");
+ 
+        // Prepare swap parameters
+        const amountIn = ethers.utils.parseUnits("5", 6);
+        const path = ethers.utils.solidityPack(
+            ["address", "uint24", "address"],
+            [USDC, fee, WETH]
+        );
+        console.log("Swap amount:", ethers.utils.formatUnits(amountIn, 6), "USDC");
+ 
+        // Build approval transaction
+        const gasPrice = await provider.getGasPrice();
+        console.log("Current gas price:", ethers.utils.formatUnits(gasPrice, "gwei"), "gwei");
+        
+        const nonce = await provider.getTransactionCount(pkpAddress);
+        console.log("Current nonce:", nonce);
+ 
+        const unsignedApprovalTx = {
+            to: USDC,
+            data: USDCContract.interface.encodeFunctionData("approve", [routerAddress, amountIn]),
+            gasLimit: ethers.utils.hexlify(75000),
+            gasPrice: ethers.utils.hexlify(gasPrice),
+            nonce: nonce,
+            chainId: 8453,
+            value: 0
+        };
+        console.log("Approval transaction created");
+ 
+        // Sign approval
+        const approvalToSign = ethers.utils.arrayify(ethers.utils.keccak256(
+            ethers.utils.serializeTransaction(unsignedApprovalTx)
+        ));
+        console.log("Approval hash created, signing with PKP...");
+ 
+        const signedApprovalTx = await litNodeClient.pkpSign({
+            sessionSigs,
+            pubKey: LIT_PKP_PUBLIC_KEY,
+            toSign: approvalToSign
+        });
+        console.log("Approval signed by PKP");
+ 
+        // Format approval signature
+        const approvalSig = {
+          r: '0x' + signedApprovalTx.signature.substring(2, 66), // Skip the first '0x'
+          s: '0x' + signedApprovalTx.signature.substring(66, 130),
+          v: parseInt(signedApprovalTx.signature.substring(130, 132), 16)
+      };
+        console.log("Approval signature formatted");
+        console.log("Approval signature:", approvalSig);
+ 
+        // Send approval
+        const approvalFullTx = ethers.utils.serializeTransaction(unsignedApprovalTx, approvalSig);
+        console.log("Sending approval transaction...");
+        const approvalReceipt = await provider.sendTransaction(approvalFullTx);
+        console.log("Approval transaction sent:", approvalReceipt.hash);
+        
+        console.log("Waiting for approval confirmation...");
+        await approvalReceipt.wait();
+        console.log("Approval confirmed");
+ 
+        // Build swap transaction
+        const unsignedSwapTx = {
+          to: routerAddress,
+          data: swapRouter.interface.encodeFunctionData("exactInput", [{
+              path: path,
+              recipient: "0x93907a09Fd77D4914Aa8bDDE57Bb678B427591D8", // Your PKP address
+              deadline: Math.floor(Date.now() / 1000) + 60 * 20,
+              amountIn: amountIn,
+              amountOutMinimum: 0
+          }]),
+          gasLimit: ethers.utils.hexlify(300000), // Increased gas limit
+          gasPrice: ethers.utils.hexlify(await provider.getGasPrice()),
+          nonce: await provider.getTransactionCount(pkpAddress),
+          chainId: 8453,
+          value: 0
+      };
+      
+      // Let's also add debug logging
+      console.log("Swap Parameters:", {
+          path: path,
+          recipient: pkpAddress,
+          deadline: Math.floor(Date.now() / 1000) + 60 * 20,
+          amountIn: amountIn.toString(),
+          amountOutMinimum: 0
+      });
+      
+ 
+        // Sign swap
+        const swapToSign = ethers.utils.arrayify(ethers.utils.keccak256(
+            ethers.utils.serializeTransaction(unsignedSwapTx)
+        ));
+        console.log("Swap hash created, signing with PKP...");
+ 
+        const signedSwapTx = await litNodeClient.pkpSign({
+            sessionSigs,
+            pubKey: LIT_PKP_PUBLIC_KEY,
+            toSign: swapToSign
+        });
+        console.log("Swap signed by PKP");
+ 
+        // Format swap signature
+        const swapSig = {
+            r: '0x' + signedSwapTx.signature.substring(2, 66),
+            s: '0x' + signedSwapTx.signature.substring(66, 130),
+            v: parseInt(signedSwapTx.signature.substring(130, 132), 16)
+        };
+        console.log("Swap signature formatted");
+ 
+        // Send swap
+        const swapFullTx = ethers.utils.serializeTransaction(unsignedSwapTx, swapSig);
+        console.log("Sending swap transaction...");
+        const swapReceipt = await provider.sendTransaction(swapFullTx);
+        console.log("Swap transaction sent:", swapReceipt.hash);
+
     console.log("✅ Lit Action code executed successfully");
-    console.log(result);
-    return result;
+    return swapReceipt;
   } catch (error) {
     console.error(error);
   } finally {

@@ -33,30 +33,41 @@ export const signTransactionWithWrappedKey = async (
 
     console.log("🔄 Connecting to Lit network...");
     litNodeClient = new LitNodeClient({
-      litNetwork: LitNetwork.DatilDev,
+      litNetwork: LitNetwork.Datil,
       debug: false,
     });
     await litNodeClient.connect();
     console.log("✅ Connected to Lit network");
 
+    console.log("🔄 Creating capacityDelegationAuthSig...");
+    const { capacityDelegationAuthSig } =
+      await litNodeClient.createCapacityDelegationAuthSig({
+        dAppOwnerWallet: ethersSigner,
+        capacityTokenId: '59133',
+        delegateeAddresses: [await ethersSigner.getAddress(), ethers.utils.computeAddress('0x' + pkpPublicKey)],
+        uses: "1",
+      });
+    console.log("✅ Capacity Delegation Auth Sig created");
+
     console.log("🔄 Getting PKP Session Sigs...");
     const pkpSessionSigs = await litNodeClient.getPkpSessionSigs({
       pkpPublicKey,
-      authMethods: [
-        await EthWalletProvider.authenticate({
-          signer: ethersSigner,
-          litNodeClient,
-          expiration: new Date(Date.now() + 1000 * 60 * 10).toISOString(), // 10 minutes
-        }),
-      ],
-      resourceAbilityRequests: [
-        {
-          resource: new LitActionResource("*"),
-          ability: LitAbility.LitActionExecution,
-        },
-      ],
-      expiration: new Date(Date.now() + 1000 * 60 * 10).toISOString(), // 10 minutes
-    });
+        capabilityAuthSigs: [capacityDelegationAuthSig],
+        authMethods: [
+          await EthWalletProvider.authenticate({
+            signer: ethersSigner,
+            litNodeClient,
+            expiration: new Date(Date.now() + 1000 * 60 * 10).toISOString(), // 10 minutes
+          }),
+        ],
+        resourceAbilityRequests: [
+          {
+            resource: new LitActionResource("*"),
+            ability: LitAbility.LitActionExecution,
+          },
+        ],
+        expiration: new Date(Date.now() + 1000 * 60 * 10).toISOString(), // 10 minutes
+      });
     console.log("✅ Got PKP Session Sigs");
 
     console.log("🔄 Signing transaction with Wrapped Key...");

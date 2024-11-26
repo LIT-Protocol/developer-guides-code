@@ -10,11 +10,10 @@ For more information about customization options, refer to our API documentation
 
 This directory contains a code example demonstrating how to implement Google OAuth in your web application. This example:
 
-1. Connects to the Lit network.
-2. Initializes the `LitAuthClient` and `GoogleProvider`.
-3. Checks if the user is already authenticated with Google.
-4. If not, it calls the `signIn()` method to begin the authentication flow.
-5. Authenticates the user by calling the `authenticate()` method, which returns an `AuthMethod` object.
+1. Initializes the `LitAuthClient` and `GoogleProvider`.
+2. Checks if the user is already authenticated with Google.
+3. If not, it calls the `signIn()` method to begin the authentication flow.
+4. Authenticates the user by calling the `authenticate()` method, which returns an `AuthMethod` object.
 
 ### Running the Example
 
@@ -22,7 +21,7 @@ You can run the example by first installing the dependencies with `yarn install`
 
 ### Specific Files to Reference
 
-- `src/litCode.ts`: Contains the main logic for connecting to the Lit network, initializing the `LitAuthClient` and `GoogleProvider`, and authenticating the user.
+- `src/litCode.ts`: Contains the main logic for initializing the `LitAuthClient` and `GoogleProvider` and authenticating the user.
 
 ## Additional Notes
 

@@ -77,7 +77,7 @@ describe("Getting Wrapped Key metadata for Ethereum Wrapped Key using getEncrypt
         },
         litNetwork: {
           type: "string",
-          const: "datil-dev",
+          const: "datil",
         },
       },
       additionalProperties: false,
@@ -160,7 +160,7 @@ describe("Getting Wrapped Key metadata for Solana Wrapped Key using getEncrypted
         },
         litNetwork: {
           type: "string",
-          const: "datil-dev",
+          const: "datil",
         },
       },
       additionalProperties: false,
