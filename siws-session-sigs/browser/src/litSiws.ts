@@ -1,10 +1,11 @@
-import { LitAbility, SessionSigs } from "@lit-protocol/types";
+import { SessionSigs } from "@lit-protocol/types";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import {
-  AuthMethodScope,
-  AuthMethodType,
+  AUTH_METHOD_SCOPE,
+  AUTH_METHOD_TYPE,
   LIT_RPC,
-  LitNetwork,
+  LIT_NETWORK,
+  LIT_ABILITY
 } from "@lit-protocol/constants";
 import { ethers } from "ethers";
 import {
@@ -21,7 +22,7 @@ import litActionSessionSigs from "./dist/litActionSessionSigs.js?raw";
 const ETHEREUM_PRIVATE_KEY = import.meta.env.VITE_ETHEREUM_PRIVATE_KEY;
 const LIT_CAPACITY_CREDIT_TOKEN_ID =
   import.meta.env.VITE_LIT_CAPACITY_CREDIT_TOKEN_ID || undefined;
-const LIT_NETWORK = import.meta.env.VITE_LIT_NETWORK || LitNetwork.DatilTest;
+const SELECTED_LIT_NETWORK = import.meta.env.VITE_LIT_NETWORK || LIT_NETWORK.DatilTest;
 const LIT_PKP_PUBLIC_KEY = import.meta.env.VITE_LIT_PKP_PUBLIC_KEY || undefined;
 const LIT_PKP_TOKEN_ID = import.meta.env.VITE_LIT_PKP_TOKEN_ID || undefined;
 
@@ -29,7 +30,7 @@ const mintLitCapacityCredit = async (ethersSigner: ethers.Wallet) => {
   console.log("🔄  Connecting LitContracts client to network...");
   const litContracts = new LitContracts({
     signer: ethersSigner,
-    network: LIT_NETWORK,
+    network: SELECTED_LIT_NETWORK,
     debug: false,
   });
   await litContracts.connect();
@@ -103,7 +104,7 @@ const mintPkpAndAddPermittedAuthMethods = async (
   console.log("🔄 Connecting to Lit Contracts Client...");
   const litContractsClient = new LitContracts({
     signer: ethersSigner,
-    network: LIT_NETWORK,
+    network: SELECTED_LIT_NETWORK,
     debug: false,
   });
   await litContractsClient.connect();
@@ -120,8 +121,8 @@ const mintPkpAndAddPermittedAuthMethods = async (
   console.log("🔄 Minting PKP...");
   const tx =
     await litContractsClient.pkpHelperContract.write.mintNextAndAddAuthMethods(
-      AuthMethodType.LitAction, // keyType
-      [AuthMethodType.LitAction, authMethodType], // permittedAuthMethodTypes
+      AUTH_METHOD_TYPE.LitAction, // keyType
+      [AUTH_METHOD_TYPE.LitAction, authMethodType], // permittedAuthMethodTypes
       [
         `0x${Buffer.from(
           ethers.utils.base58.decode(
@@ -131,7 +132,7 @@ const mintPkpAndAddPermittedAuthMethods = async (
         authMethodId,
       ], // permittedAuthMethodIds
       ["0x", "0x"], // permittedAuthMethodPubkeys
-      [[AuthMethodScope.SignAnything], [AuthMethodScope.NoPermissions]], // permittedAuthMethodScopes
+      [[AUTH_METHOD_SCOPE.SignAnything], [AUTH_METHOD_SCOPE.NoPermissions]], // permittedAuthMethodScopes
       true, // addPkpEthAddressAsPermittedAddress
       true, // sendPkpToItself
       { value: await litContractsClient.pkpNftContract.read.mintCost() }
@@ -154,7 +155,7 @@ export const getSiwsSessionSigs = async (
   try {
     console.log("🔄 Connecting to Lit Node Client...");
     litNodeClient = new LitNodeClient({
-      litNetwork: LIT_NETWORK,
+      litNetwork: SELECTED_LIT_NETWORK,
       debug: false,
     });
     await litNodeClient.connect();
@@ -206,15 +207,15 @@ export const getSiwsSessionSigs = async (
       resourceAbilityRequests: [
         {
           resource: new LitPKPResource("*"),
-          ability: LitAbility.PKPSigning,
+          ability: LIT_ABILITY.PKPSigning,
         },
         {
           resource: new LitActionResource("*"),
-          ability: LitAbility.LitActionExecution,
+          ability: LIT_ABILITY.LitActionExecution,
         },
         {
           resource: new LitAccessControlConditionResource("*"),
-          ability: LitAbility.AccessControlConditionDecryption,
+          ability: LIT_ABILITY.AccessControlConditionDecryption,
         },
       ],
       jsParams: {

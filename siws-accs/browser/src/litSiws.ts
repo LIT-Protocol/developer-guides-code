@@ -1,6 +1,6 @@
-import { LitAbility, SolRpcConditions } from "@lit-protocol/types";
+import { SolRpcConditions } from "@lit-protocol/types";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
-import { LIT_RPC, LitNetwork } from "@lit-protocol/constants";
+import { LIT_RPC, LIT_NETWORK, LIT_ABILITY } from "@lit-protocol/constants";
 import { ethers } from "ethers";
 import {
   createSiweMessage,
@@ -14,13 +14,13 @@ import litActionSiws from "./dist/litActionSiws.js?raw";
 const ETHEREUM_PRIVATE_KEY = import.meta.env.VITE_ETHEREUM_PRIVATE_KEY;
 const LIT_CAPACITY_CREDIT_TOKEN_ID =
   import.meta.env.VITE_LIT_CAPACITY_CREDIT_TOKEN_ID || undefined;
-const LIT_NETWORK = import.meta.env.VITE_LIT_NETWORK || LitNetwork.DatilTest;
+const SELECTED_LIT_NETWORK = import.meta.env.VITE_LIT_NETWORK || LIT_NETWORK.DatilTest;
 
 const mintLitCapacityCredit = async (ethersSigner: ethers.Wallet) => {
   console.log("🔄  Connecting LitContracts client to network...");
   const litContracts = new LitContracts({
     signer: ethersSigner,
-    network: LIT_NETWORK,
+    network: SELECTED_LIT_NETWORK,
     debug: false,
   });
   await litContracts.connect();
@@ -80,7 +80,7 @@ const getSessionSigs = async (
     resourceAbilityRequests: [
       {
         resource: new LitActionResource("*"),
-        ability: LitAbility.LitActionExecution,
+        ability: LIT_ABILITY.LitActionExecution,
       },
     ],
     authNeededCallback: async ({
@@ -137,7 +137,7 @@ export const litSiws = async (
 
     console.log("🔄 Connecting to Lit Node Client...");
     litNodeClient = new LitNodeClient({
-      litNetwork: LIT_NETWORK,
+      litNetwork: SELECTED_LIT_NETWORK,
       debug: false,
     });
     await litNodeClient.connect();

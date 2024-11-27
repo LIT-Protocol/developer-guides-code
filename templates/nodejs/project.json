@@ -1,0 +1,12 @@
+{
+    "name": "templates-nodejs",
+    "root": "templates/nodejs",
+    "targets": {
+        "test-lit": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "cd templates/nodejs && yarn && yarn test"
+            }
+        }
+    }
+}

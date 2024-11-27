@@ -1,10 +1,9 @@
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import { ethers } from "ethers";
-import { LIT_RPC, LitNetwork } from "@lit-protocol/constants";
+import { LIT_RPC, LIT_NETWORK, LIT_ABILITY } from "@lit-protocol/constants";
 import {
   createSiweMessage,
   generateAuthSig,
-  LitAbility,
   LitActionResource,
 } from "@lit-protocol/auth-helpers";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
@@ -14,7 +13,7 @@ import { litActionCode } from "./litAction";
 
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 const LIT_CAPACITY_CREDIT_TOKEN_ID = process.env["LIT_CAPACITY_CREDIT_TOKEN_ID"];
-const LIT_NETWORK = LitNetwork.DatilTest;
+const SELECTED_LIT_NETWORK = LIT_NETWORK.DatilTest;
 
 export const runExample = async () => {
   let litNodeClient: LitNodeClient;
@@ -26,7 +25,7 @@ export const runExample = async () => {
 
     console.log("🔄 Connecting LitNodeClient to Lit network...");
     litNodeClient = new LitNodeClient({
-      litNetwork: LIT_NETWORK,
+      litNetwork: SELECTED_LIT_NETWORK,
       debug: false,
     });
     await litNodeClient.connect();
@@ -35,7 +34,7 @@ export const runExample = async () => {
     console.log("🔄 Connecting to Lit network...");
     const litContracts = new LitContracts({
       signer: ethersSigner,
-      network: LIT_NETWORK,
+      network: SELECTED_LIT_NETWORK,
     });
     await litContracts.connect();
     console.log("✅ Connected to Lit network");
@@ -74,7 +73,7 @@ export const runExample = async () => {
       resourceAbilityRequests: [
         {
           resource: new LitActionResource("*"),
-          ability: LitAbility.LitActionExecution,
+          ability: LIT_ABILITY.LitActionExecution,
         },
       ],
       authNeededCallback: async ({

@@ -1,0 +1,18 @@
+{
+    "name": "wrapped-keys-nodejs",
+    "root": "wrapped-keys/nodejs",
+    "targets": {
+        "test-lit": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "cd wrapped-keys/nodejs && yarn && yarn test"
+            }
+        },
+        "update-lit": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "cd wrapped-keys/nodejs && ../../scripts/update-lit.sh"
+            }
+        }
+    }
+}

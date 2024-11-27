@@ -1,0 +1,12 @@
+{
+    "name": "decrypt-api-key-in-action-nodejs",
+    "root": "decrypt-api-key-in-action/nodejs",
+    "targets": {
+        "test-lit": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "cd decrypt-api-key-in-action/nodejs && yarn && yarn test"
+            }
+        }
+    }
+}

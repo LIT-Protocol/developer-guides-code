@@ -1,0 +1,6 @@
+{
+    "name": "eip-191-signing-browser",
+    "root": "eip-191-signing/browser",
+    "targets": {
+    }
+}

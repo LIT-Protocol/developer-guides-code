@@ -1,5 +1,5 @@
 {
-  "name": "nodejs",
+  "name": "wrapped-keys-eip-712-nodejs",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -9,12 +9,12 @@
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^0.44.1",
-    "@lit-protocol/constants": "^6.9.0",
-    "@lit-protocol/contracts-sdk": "^6.9.0",
-    "@lit-protocol/lit-auth-client": "^6.9.0",
-    "@lit-protocol/lit-node-client": "^6.9.0",
-    "@lit-protocol/types": "^6.9.0",
-    "@lit-protocol/wrapped-keys": "^6.9.0",
+    "@lit-protocol/constants": "^7.0.0-alpha.9",
+    "@lit-protocol/contracts-sdk": "^7.0.0-alpha.9",
+    "@lit-protocol/lit-auth-client": "^7.0.0-alpha.9",
+    "@lit-protocol/lit-node-client": "^7.0.0-alpha.9",
+    "@lit-protocol/types": "^7.0.0-alpha.9",
+    "@lit-protocol/wrapped-keys": "^7.0.0-alpha.9",
     "ethers": "v5"
   },
   "devDependencies": {

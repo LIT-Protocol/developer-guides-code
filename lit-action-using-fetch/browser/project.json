@@ -1,0 +1,6 @@
+{
+    "name": "lit-action-using-fetch-browser",
+    "root": "lit-action-using-fetch/browser",
+    "targets": {
+    }
+}

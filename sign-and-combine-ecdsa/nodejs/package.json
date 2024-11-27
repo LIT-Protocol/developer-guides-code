@@ -1,5 +1,5 @@
 {
-  "name": "nodejs",
+  "name": "sign-and-combine-ecdsa-nodejs",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -19,9 +19,9 @@
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^0.44.1",
-    "@lit-protocol/auth-helpers": "^6.4.10",
-    "@lit-protocol/constants": "^6.4.10",
-    "@lit-protocol/contracts-sdk": "^6.4.10",
-    "@lit-protocol/lit-node-client": "^6.4.10"
+    "@lit-protocol/auth-helpers": "^7.0.0-alpha.9",
+    "@lit-protocol/constants": "^7.0.0-alpha.9",
+    "@lit-protocol/contracts-sdk": "^7.0.0-alpha.9",
+    "@lit-protocol/lit-node-client": "^7.0.0-alpha.9"
   }
 }

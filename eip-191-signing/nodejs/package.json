@@ -1,5 +1,5 @@
 {
-  "name": "generating-eip-191-sigs-in-nodejs",
+  "name": "eip-191-signing-nodejs",
   "version": "0.1.0",
   "description": "Example of generating an EIP-191 signature using a Lit Action",
   "main": "index.js",
@@ -10,10 +10,10 @@
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^0.37.1",
-    "@lit-protocol/auth-helpers": "^6.5.1",
-    "@lit-protocol/constants": "^6.5.1",
-    "@lit-protocol/contracts-sdk": "^6.5.1",
-    "@lit-protocol/lit-node-client": "^6.5.1",
+    "@lit-protocol/auth-helpers": "^7.0.0-alpha.9",
+    "@lit-protocol/constants": "^7.0.0-alpha.9",
+    "@lit-protocol/contracts-sdk": "^7.0.0-alpha.9",
+    "@lit-protocol/lit-node-client": "^7.0.0-alpha.9",
     "ethers": "5.7.2"
   },
   "devDependencies": {

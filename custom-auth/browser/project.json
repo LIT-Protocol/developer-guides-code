@@ -1,0 +1,6 @@
+{
+    "name": "custom-auth-browser",
+    "root": "custom-auth/browser",
+    "targets": {
+    }
+}

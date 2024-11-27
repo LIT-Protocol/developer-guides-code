@@ -1,5 +1,5 @@
 import ethers from "ethers";
-import { LitNetwork, LIT_RPC } from "@lit-protocol/constants";
+import { LIT_NETWORK, LIT_RPC } from "@lit-protocol/constants";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
 
 import { getEnv } from "./utils";
@@ -16,7 +16,7 @@ export const mintCapacityCredit = async () => {
     console.log("🔄 Connecting to Lit network...");
     const litContractClient = new LitContracts({
       signer: ethersSigner,
-      network: LitNetwork.DatilTest,
+      network: LIT_NETWORK.DatilTest,
     });
     await litContractClient.connect();
     console.log("✅ Connected to Lit network");

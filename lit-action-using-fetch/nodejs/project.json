@@ -1,0 +1,12 @@
+{
+    "name": "lit-action-using-fetch-nodejs",
+    "root": "lit-action-using-fetch/nodejs",
+    "targets": {
+        "test-lit": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "cd lit-action-using-fetch/nodejs && yarn && yarn test"
+            }
+        }
+    }
+}

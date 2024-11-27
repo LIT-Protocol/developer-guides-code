@@ -1,0 +1,12 @@
+{
+    "name": "payment-delegation-db-relayer-nodejs",
+    "root": "payment-delegation-db-relayer/nodejs",
+    "targets": {
+        "test-lit": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "cd payment-delegation-db-relayer/nodejs && yarn && yarn test"
+            }
+        }
+    }
+}

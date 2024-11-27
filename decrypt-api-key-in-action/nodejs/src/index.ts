@@ -1,8 +1,8 @@
-import { LitNodeClient, encryptString } from "@lit-protocol/lit-node-client";
-import { LitNetwork, LIT_RPC } from "@lit-protocol/constants";
+import { LitNodeClient } from "@lit-protocol/lit-node-client";
+import { encryptString } from '@lit-protocol/encryption';
+import { LIT_NETWORK, LIT_RPC, LIT_ABILITY } from "@lit-protocol/constants";
 import {
   createSiweMessage,
-  LitAbility,
   LitAccessControlConditionResource,
   LitActionResource,
   generateAuthSig,
@@ -14,7 +14,6 @@ import * as ethers from "ethers";
 import { litActionCode } from "./litAction";
 import { getEnv } from "./utils";
 
-const LIT_NETWORK = LitNetwork.DatilTest;
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 const LIT_CAPACITY_CREDIT_TOKEN_ID =
   process.env["LIT_CAPACITY_CREDIT_TOKEN_ID"];
@@ -30,7 +29,7 @@ export const decryptApiKey = async (alchemyUrl: string, key: string) => {
 
     console.log("🔄 Connecting to the Lit network...");
     litNodeClient = new LitNodeClient({
-      litNetwork: LIT_NETWORK,
+      litNetwork: LIT_NETWORK.DatilTest,
       debug: false,
     });
     await litNodeClient.connect();
@@ -39,7 +38,7 @@ export const decryptApiKey = async (alchemyUrl: string, key: string) => {
     console.log("🔄 Connecting LitContracts client to network...");
     const litContracts = new LitContracts({
       signer: ethersWallet,
-      network: LIT_NETWORK,
+      network: LIT_NETWORK.DatilTest,
       debug: false,
     });
     await litContracts.connect();
@@ -116,11 +115,11 @@ export const decryptApiKey = async (alchemyUrl: string, key: string) => {
       resourceAbilityRequests: [
         {
           resource: new LitAccessControlConditionResource(accsResourceString),
-          ability: LitAbility.AccessControlConditionDecryption,
+          ability: LIT_ABILITY.AccessControlConditionDecryption,
         },
         {
           resource: new LitActionResource("*"),
-          ability: LitAbility.LitActionExecution,
+          ability: LIT_ABILITY.LitActionExecution,
         },
       ],
       authNeededCallback: async ({

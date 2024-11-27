@@ -1,5 +1,5 @@
 {
-  "name": "nodejs",
+  "name": "lit-action-using-fetch-nodejs",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -9,10 +9,10 @@
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^0.44.1",
-    "@lit-protocol/auth-helpers": "^6.3.0",
-    "@lit-protocol/constants": "^6.3.0",
-    "@lit-protocol/contracts-sdk": "^6.3.0",
-    "@lit-protocol/lit-node-client": "^6.3.0",
+    "@lit-protocol/auth-helpers": "^7.0.0-alpha.9",
+    "@lit-protocol/constants": "^7.0.0-alpha.9",
+    "@lit-protocol/contracts-sdk": "^7.0.0-alpha.9",
+    "@lit-protocol/lit-node-client": "^7.0.0-alpha.9",
     "ethers": "v5"
   },
   "devDependencies": {

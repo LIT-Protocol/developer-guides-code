@@ -1,9 +1,9 @@
-import { LIT_RPC, LitNetwork } from "@lit-protocol/constants";
+import { LIT_RPC, LIT_NETWORK, LIT_ABILITY } from "@lit-protocol/constants";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
-import { LitAbility } from "@lit-protocol/types";
 import { ethers } from "ethers";
 import { api } from "@lit-protocol/wrapped-keys";
 import { LitActionResource } from "@lit-protocol/auth-helpers";
+import { LIT_NETWORKS_KEYS } from "@lit-protocol/types";
 
 import {
   generateWrappedKey,
@@ -23,8 +23,8 @@ const { getEncryptedKey } = api;
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 const CAPACITY_CREDIT_TOKEN_ID =
   process.env.CAPACITY_CREDIT_TOKEN_ID || undefined;
-const LIT_NETWORK =
-  (process.env.LIT_NETWORK as LitNetwork) || LitNetwork.DatilTest;
+const SELECTED_LIT_NETWORK =
+  (process.env.LIT_NETWORK as LIT_NETWORKS_KEYS) || LIT_NETWORK.DatilTest;
 
 export const runExample = async (
   messageToSign: string,
@@ -38,8 +38,8 @@ export const runExample = async (
       new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE)
     );
 
-    litNodeClient = await getLitNodeClient(LIT_NETWORK);
-    const litContracts = await getLitContracts(ethersSigner, LIT_NETWORK);
+    litNodeClient = await getLitNodeClient(SELECTED_LIT_NETWORK);
+    const litContracts = await getLitContracts(ethersSigner, SELECTED_LIT_NETWORK);
 
     let _capacityCreditTokenId = CAPACITY_CREDIT_TOKEN_ID;
     if (_capacityCreditTokenId === undefined) {
@@ -69,7 +69,7 @@ export const runExample = async (
       [
         {
           resource: new LitActionResource("*"),
-          ability: LitAbility.LitActionExecution,
+          ability: LIT_ABILITY.LitActionExecution,
         },
       ]
     );

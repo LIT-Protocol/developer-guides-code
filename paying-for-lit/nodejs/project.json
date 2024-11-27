@@ -1,0 +1,12 @@
+{
+    "name": "paying-for-lit-nodejs",
+    "root": "paying-for-lit/nodejs",
+    "targets": {
+        "test-lit": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "cd paying-for-lit/nodejs && yarn && yarn test"
+            }
+        }
+    }
+}

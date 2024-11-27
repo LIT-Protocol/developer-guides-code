@@ -1,16 +1,13 @@
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
-import { LitNetwork } from "@lit-protocol/constants";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
 import { ethers } from "ethers";
 import {
   AuthSig,
-  createSiweMessage,
-  generateAuthSig,
   LitResourceAbilityRequest,
 } from "@lit-protocol/auth-helpers";
 import { EthWalletProvider } from "@lit-protocol/lit-auth-client";
 import { api } from "@lit-protocol/wrapped-keys";
-import { AccsDefaultParams, SessionSigsMap } from "@lit-protocol/types";
+import { AccsDefaultParams, LIT_NETWORKS_KEYS, SessionSigsMap } from "@lit-protocol/types";
 
 const { generatePrivateKey } = api;
 
@@ -23,7 +20,7 @@ export const getEnv = (name: string): string => {
   return env;
 };
 
-export const getLitNodeClient = async (litNetwork: LitNetwork) => {
+export const getLitNodeClient = async (litNetwork: LIT_NETWORKS_KEYS) => {
   console.log("🔄 Connecting LitNodeClient to Lit network...");
   const litNodeClient = new LitNodeClient({
     litNetwork,
@@ -37,7 +34,7 @@ export const getLitNodeClient = async (litNetwork: LitNetwork) => {
 
 export const getLitContracts = async (
   ethersSigner: ethers.Wallet,
-  litNetwork: LitNetwork
+  litNetwork: LIT_NETWORKS_KEYS
 ) => {
   console.log("🔄 Connecting LitContracts client to network...");
   const litContracts = new LitContracts({

@@ -1,0 +1,6 @@
+{
+    "name": "siws-session-sigs-browser",
+    "root": "siws-session-sigs/browser",
+    "targets": {
+    }
+}

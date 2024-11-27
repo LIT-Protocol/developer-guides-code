@@ -1,0 +1,6 @@
+{
+    "name": "templates-browser",
+    "root": "templates/browser",
+    "targets": {
+    }
+}

@@ -1,11 +1,10 @@
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
-import { LitNetwork } from "@lit-protocol/constants";
+import { LIT_NETWORK } from "@lit-protocol/constants";
 import { logStep, getOutputData } from "./utils/state-manager";
 import { ethers } from "ethers";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
-import { AuthMethodScope, LIT_RPC } from "@lit-protocol/constants";
+import { AUTH_METHOD_SCOPE, LIT_RPC, LIT_ABILITY } from "@lit-protocol/constants";
 import { LitPKPResource, LitActionResource } from "@lit-protocol/auth-helpers";
-import { LitAbility } from "@lit-protocol/types";
 import { ipfsHelpers } from "ipfs-helpers";
 
 export const EOA_PRIVATE_KEY =
@@ -13,7 +12,7 @@ export const EOA_PRIVATE_KEY =
 
 export const connectLitNodeClientToDatilDev = async (step: number) => {
   const config = {
-    litNetwork: LitNetwork.DatilDev,
+    litNetwork: LIT_NETWORK.DatilDev,
     debug: true,
   };
 
@@ -39,7 +38,7 @@ export const connectLitNodeClientToDatilDev = async (step: number) => {
 export const connectLitContractsToDatilDev = async (step: number) => {
   logStep({
     step,
-    input: `Configuring the signer using a EOA private key, connecting it to the provider at ${LIT_RPC.CHRONICLE_YELLOWSTONE}, and setting the network to ${LitNetwork.DatilDev}.`,
+    input: `Configuring the signer using a EOA private key, connecting it to the provider at ${LIT_RPC.CHRONICLE_YELLOWSTONE}, and setting the network to ${LIT_NETWORK.DatilDev}.`,
     output: "Loading...",
   });
 
@@ -49,7 +48,7 @@ export const connectLitContractsToDatilDev = async (step: number) => {
       new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE)
     ),
     debug: false,
-    network: LitNetwork.DatilDev,
+    network: LIT_NETWORK.DatilDev,
   });
 
   await litContracts.connect();
@@ -152,7 +151,7 @@ export const addPermittedAuthMethodToPkp = async (step: number) => {
       pkpTokenId: pkp.tokenId,
       authMethodType: customAuthMethod.authMethodType,
       authMethodId: customAuthMethod.authMethodId,
-      authMethodScopes: [AuthMethodScope.SignAnything],
+      authMethodScopes: [AUTH_METHOD_SCOPE.SignAnything],
     });
 
     logStep({
@@ -222,7 +221,7 @@ export const permitLitActionToUsePkp = async (step: number) => {
       {
         ipfsId: ipfsHash,
         pkpTokenId: pkp.tokenId,
-        authMethodScopes: [AuthMethodScope.SignAnything],
+        authMethodScopes: [AUTH_METHOD_SCOPE.SignAnything],
       },
       null,
       2
@@ -235,7 +234,7 @@ export const permitLitActionToUsePkp = async (step: number) => {
     const receipt = await litContracts.addPermittedAction({
       ipfsId: ipfsHash,
       pkpTokenId: pkp.tokenId,
-      authMethodScopes: [AuthMethodScope.SignAnything],
+      authMethodScopes: [AUTH_METHOD_SCOPE.SignAnything],
     });
 
     logStep({
@@ -284,10 +283,10 @@ export const getSessionSigsUsingPkpPubKeyAndCustomAuth = async (
   const litActionSessionSigs = await litNodeClient!.getLitActionSessionSigs({
     pkpPublicKey: pkp.publicKey,
     resourceAbilityRequests: [
-      { resource: new LitPKPResource("*"), ability: LitAbility.PKPSigning },
+      { resource: new LitPKPResource("*"), ability: LIT_ABILITY.PKPSigning },
       {
         resource: new LitActionResource("*"),
-        ability: LitAbility.LitActionExecution,
+        ability: LIT_ABILITY.LitActionExecution,
       },
     ],
     litActionCode: Buffer.from(litActionCode).toString("base64"),

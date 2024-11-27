@@ -1,12 +1,12 @@
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import { LIT_NETWORKS_KEYS } from "@lit-protocol/types";
+import { LIT_ABILITY } from "@lit-protocol/constants";
 import ethers from "ethers";
 
 import { getEnv } from "./utils";
 import {
   createSiweMessageWithRecaps,
   generateAuthSig,
-  LitAbility,
   LitActionResource,
   LitPKPResource,
 } from "@lit-protocol/auth-helpers";
@@ -33,11 +33,11 @@ export const runSimpleLitAction = async (ethersSigner: ethers.Wallet) => {
       resourceAbilityRequests: [
         {
           resource: new LitPKPResource("*"),
-          ability: LitAbility.PKPSigning,
+          ability: LIT_ABILITY.PKPSigning,
         },
         {
           resource: new LitActionResource("*"),
-          ability: LitAbility.LitActionExecution,
+          ability: LIT_ABILITY.LitActionExecution,
         },
       ],
       authNeededCallback: async ({

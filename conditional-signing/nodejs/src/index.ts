@@ -1,9 +1,8 @@
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
-import { LitNetwork, LIT_RPC } from "@lit-protocol/constants";
+import { LIT_NETWORK, LIT_RPC, LIT_ABILITY } from "@lit-protocol/constants";
 import {
   createSiweMessage,
   generateAuthSig,
-  LitAbility,
   LitActionResource,
 } from "@lit-protocol/auth-helpers";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
@@ -16,7 +15,6 @@ const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 const CHAIN_TO_CHECK_CONDITION_ON = getEnv("CHAIN_TO_CHECK_CONDITION_ON");
 const LIT_PKP_PUBLIC_KEY = process.env["LIT_PKP_PUBLIC_KEY"];
 const LIT_CAPACITY_CREDIT_TOKEN_ID = process.env["LIT_CAPACITY_CREDIT_TOKEN_ID"];
-const LIT_NETWORK = LitNetwork.DatilTest;
 
 export const conditionalSigning = async () => {
   let litNodeClient: LitNodeClient;
@@ -36,7 +34,7 @@ export const conditionalSigning = async () => {
 
     console.log("🔄 Connecting to the Lit network...");
     litNodeClient = new LitNodeClient({
-      litNetwork: LIT_NETWORK,
+      litNetwork: LIT_NETWORK.DatilTest,
       debug: false,
     });
     await litNodeClient.connect();
@@ -45,7 +43,7 @@ export const conditionalSigning = async () => {
     console.log("🔄 Connecting LitContracts client to network...");
     const litContracts = new LitContracts({
       signer: ethersWallet,
-      network: LIT_NETWORK,
+      network: LIT_NETWORK.DatilTest,
       debug: false,
     });
     await litContracts.connect();
@@ -101,7 +99,7 @@ export const conditionalSigning = async () => {
         resourceAbilityRequests: [
           {
             resource: new LitActionResource("*"),
-            ability: LitAbility.LitActionExecution,
+            ability: LIT_ABILITY.LitActionExecution,
           },
         ],
         authNeededCallback: async ({
@@ -149,7 +147,7 @@ export const conditionalSigning = async () => {
             resources: [
               {
                 resource: new LitActionResource("*"),
-                ability: LitAbility.LitActionExecution,
+                ability: LIT_ABILITY.LitActionExecution,
               },
             ],
             litNodeClient: litNodeClient,

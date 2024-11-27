@@ -1,5 +1,5 @@
 {
-  "name": "siws-authentication",
+  "name": "siws-authentication-browser",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -13,11 +13,11 @@
   "dependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
-    "@lit-protocol/auth-browser": "^6.7.0",
-    "@lit-protocol/auth-helpers": "^6.5.3",
-    "@lit-protocol/constants": "^6.5.3",
-    "@lit-protocol/contracts-sdk": "^6.8.1",
-    "@lit-protocol/lit-node-client": "^6.5.3",
+    "@lit-protocol/auth-browser": "^7.0.0-alpha.9",
+    "@lit-protocol/auth-helpers": "^7.0.0-alpha.9",
+    "@lit-protocol/constants": "^7.0.0-alpha.9",
+    "@lit-protocol/contracts-sdk": "^7.0.0-alpha.9",
+    "@lit-protocol/lit-node-client": "^7.0.0-alpha.9",
     "@simplewebauthn/browser": "^10.0.0",
     "@solana/wallet-adapter-base": "^0.9.23",
     "@solana/wallet-adapter-react": "^0.15.35",
@@ -35,7 +35,7 @@
     "vite-plugin-node-polyfills": "^0.22.0"
   },
   "devDependencies": {
-    "@lit-protocol/types": "^6.6.0",
+    "@lit-protocol/types": "^7.0.0-alpha.9",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.13.1",

@@ -1,0 +1,6 @@
+{
+    "name": "conditional-signing-browser",
+    "root": "conditional-signing/browser",
+    "targets": {
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "name": "sign-and-combine-ecdsa-nodejs",
+    "root": "sign-and-combine-ecdsa/nodejs",
+    "targets": {
+        "test-lit": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "cd sign-and-combine-ecdsa/nodejs && yarn && yarn test"
+            }
+        }
+    }
+}

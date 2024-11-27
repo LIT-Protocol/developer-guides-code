@@ -1,6 +1,6 @@
 import * as ethers from "ethers";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
-import { LitNetwork } from "@lit-protocol/constants";
+import { LIT_NETWORK } from "@lit-protocol/constants";
 
 export const getEnv = (name: string): string => {
   const env = process.env[name];
@@ -16,7 +16,7 @@ export const mintPkp = async (ethersSigner: ethers.Wallet) => {
     console.log("🔄 Connecting LitContracts client to network...");
     const litContracts = new LitContracts({
       signer: ethersSigner,
-      network: LitNetwork.DatilDev,
+      network: LIT_NETWORK.DatilDev,
     });
     await litContracts.connect();
     console.log("✅ Connected LitContracts client to network");

@@ -1,5 +1,5 @@
 {
-  "name": "pkp-migration",
+  "name": "pkp-migration-nodejs",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -21,9 +21,9 @@
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^0.44.1",
-    "@lit-protocol/contracts-sdk": "^6.1.0-beta.2",
-    "@lit-protocol/lit-auth-client": "^6.1.0-beta.2",
-    "@lit-protocol/types": "^6.1.0-beta.2",
+    "@lit-protocol/contracts-sdk": "^6.11.0",
+    "@lit-protocol/lit-auth-client": "^6.11.0",
+    "@lit-protocol/types": "^6.11.0",
     "ethers": "v5"
   }
 }

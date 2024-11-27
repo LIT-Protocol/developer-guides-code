@@ -1,5 +1,5 @@
 {
-  "name": "btc-trigger-example",
+  "name": "btc-trigger-nodejs",
   "version": "0.1.0",
   "description": "Example of triggering a Bitcoin transaction with Lit Protocol",
   "type": "module",
@@ -7,8 +7,8 @@
     "test": "npx @dotenvx/dotenvx run -- mocha test/**/*.spec.ts"
   },
   "dependencies": {
-    "@lit-protocol/constants": "^6.6.0",
-    "@lit-protocol/lit-node-client": "^6.6.0",
+    "@lit-protocol/constants": "^7.0.0-alpha.9",
+    "@lit-protocol/lit-node-client": "^7.0.0-alpha.9",
     "@mempool/mempool.js": "^2.3.0",
     "@simplewebauthn/browser": "^10.0.0",
     "@types/elliptic": "^6.4.18",

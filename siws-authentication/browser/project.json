@@ -1,0 +1,6 @@
+{
+    "name": "siws-authentication-browser",
+    "root": "siws-authentication/browser",
+    "targets": {
+    }
+}

@@ -1,2 +1,10 @@
 /**/*/node_modules
 /**/*/.env
+/**/**/.yarn
+/**/*/.yarnrc.yml
+
+node_modules
+.nx
+.secrets
+.pnp.*
+

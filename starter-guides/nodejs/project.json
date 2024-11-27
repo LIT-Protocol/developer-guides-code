@@ -1,0 +1,12 @@
+{
+    "name": "starter-guides-nodejs",
+    "root": "starter-guides/nodejs",
+    "targets": {
+        "test-lit": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "cd starter-guides/nodejs && yarn && yarn test"
+            }
+        }
+    }
+}

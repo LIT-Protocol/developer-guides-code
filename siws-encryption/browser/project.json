@@ -1,0 +1,6 @@
+{
+    "name": "siws-encryption-browser",
+    "root": "siws-encryption/browser",
+    "targets": {
+    }
+}
