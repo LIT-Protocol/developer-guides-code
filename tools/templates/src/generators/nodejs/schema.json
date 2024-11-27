@@ -50,6 +50,36 @@
         ]
       }
     },
+    "subcategoryOption": {
+      "type": "string",
+      "description": "How would you like to handle subcategories?",
+      "x-prompt": {
+        "message": "Would you like to use a subcategory?",
+        "type": "list",
+        "items": [
+          {
+            "value": "none",
+            "label": "No subcategory"
+          },
+          {
+            "value": "existing",
+            "label": "Use existing subcategory"
+          },
+          {
+            "value": "new",
+            "label": "Create new subcategory"
+          }
+        ]
+      }
+    },
+    "subcategory": {
+      "type": "string",
+      "description": "Select or enter subcategory name",
+      "x-prompt": {
+        "message": "Enter subcategory name:",
+        "when": "subcategoryOption !== 'none'"
+      }
+    },
     "name": {
       "type": "string",
       "description": "Name of the new example",
@@ -60,5 +90,5 @@
       "x-prompt": "What would you like to name this example?"
     }
   },
-  "required": ["category", "name"]
+  "required": ["category", "subcategoryOption", "name"]
 }
