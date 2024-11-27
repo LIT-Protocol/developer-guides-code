@@ -2,8 +2,8 @@
 	path = custom-auth-telegram-example
 	url = https://github.com/LIT-Protocol/custom-auth-telegram-example.git
 [submodule "evm-evm-swap"]
-	path = evm-swap-example
-	url = https://github.com/LIT-Protocol/evm-swap-example.git
+	path = evm-evm-swap
+	url = https://github.com/LIT-Protocol/evm-evm-swap-example
 [submodule "telegram-miniapp-example"]
 	path = telegram-miniapp-example
 	url = https://github.com/LIT-Protocol/telegram-miniapp-example.git
