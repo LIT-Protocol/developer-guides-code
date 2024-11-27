@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "declaration": true,
+    "strict": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "strictPropertyInitialization": false,
+    "skipLibCheck": true,
+    "noImplicitAny": false,
+    "esModuleInterop": true,
+  },
+  "include": [
+    "./src/**/*",
+    "./global.d.ts"
+  ]
+}
