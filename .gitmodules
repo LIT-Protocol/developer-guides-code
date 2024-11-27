@@ -7,3 +7,6 @@
 [submodule "telegram-miniapp-example"]
 	path = telegram-miniapp-example
 	url = https://github.com/LIT-Protocol/telegram-miniapp-example.git
+[submodule "btc-evm-swap"]
+	path = btc-evm-swap
+	url = https://github.com/LIT-Protocol/btc-evm-swap-example
