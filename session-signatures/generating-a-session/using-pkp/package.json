@@ -9,9 +9,14 @@
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^0.44.1",
+    "@lit-protocol/auth-helpers": "^7.0.0",
+    "@lit-protocol/constants": "^7.0.0",
+    "@lit-protocol/lit-auth-client": "^7.0.0",
+    "@lit-protocol/lit-node-client": "^7.0.0",
     "ethers": "v5"
   },
   "devDependencies": {
+    "@lit-protocol/contracts-sdk": "^7.0.0",
     "@types/chai": "^4.3.16",
     "@types/chai-json-schema": "^1.4.10",
     "@types/mocha": "^10.0.6",
