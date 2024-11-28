@@ -1,5 +1,10 @@
 {
   "generators": {
+    "browser": {
+      "factory": "./src/generators/browser/generator",
+      "schema": "./src/generators/browser/schema.json",
+      "description": "browser generator"
+    },
     "nodejs": {
       "factory": "./src/generators/nodejs/generator",
       "schema": "./src/generators/nodejs/schema.json",

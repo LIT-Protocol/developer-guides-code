@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/schema",
+  "$id": "Browser",
+  "title": "",
+  "type": "object",
+  "properties": {
+    "category": {
+      "type": "string",
+      "description": "Select the category for this example",
+      "x-prompt": {
+        "message": "Which category would you like to use?",
+        "type": "list",
+        "items": [
+          {
+            "value": "getting-started",
+            "label": "Getting Started"
+          },
+          {
+            "value": "capacity-credits",
+            "label": "Capacity Credits"
+          },
+          {
+            "value": "payment-delegation-db",
+            "label": "Payment Delegation Database"
+          },
+          {
+            "value": "session-signatures",
+            "label": "Session Signatures"
+          },
+          {
+            "value": "programmable-key-pairs",
+            "label": "Programmable Key Pairs (PKPs)"
+          },
+          {
+            "value": "wrapped-keys",
+            "label": "Wrapped Keys"
+          },
+          {
+            "value": "encryption",
+            "label": "Encryption"
+          },
+          {
+            "value": "access-control",
+            "label": "Access Control"
+          },
+          {
+            "value": "lit-actions",
+            "label": "Lit Actions"
+          }
+        ]
+      }
+    },
+    "subcategoryOption": {
+      "type": "string",
+      "description": "How would you like to handle subcategories?",
+      "x-prompt": {
+        "message": "Would you like to use a subcategory?",
+        "type": "list",
+        "items": [
+          {
+            "value": "none",
+            "label": "No subcategory"
+          },
+          {
+            "value": "existing",
+            "label": "Use existing subcategory"
+          },
+          {
+            "value": "new",
+            "label": "Create new subcategory"
+          }
+        ]
+      }
+    },
+    "subcategory": {
+      "type": "string",
+      "description": "Select or enter subcategory name",
+      "x-prompt": {
+        "message": "Enter subcategory name:",
+        "when": "subcategoryOption !== 'none'"
+      }
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the new example",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What would you like to name this example?"
+    }
+  },
+  "required": ["category", "subcategoryOption", "name"]
+}
