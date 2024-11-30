@@ -28,7 +28,13 @@
     "templates/browser",
     "templates/nodejs",
     "wrapped-keys/eip-712/nodejs",
-    "wrapped-keys/nodejs"
+    "wrapped-keys/nodejs",
+    "lit-configuration-guides/lit",
+    "lit-configuration-guides/nextjs",
+    "lit-configuration-guides/preact",
+    "lit-configuration-guides/reactjs",
+    "lit-configuration-guides/vite-react",
+    "lit-configuration-guides/vuejs"
   ],
   "scripts": {
     "install:all": "yarn workspaces focus --all",
