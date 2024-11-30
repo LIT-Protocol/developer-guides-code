@@ -1,0 +1,26 @@
+{
+  "name": "lit",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@lit-protocol/lit-node-client": "^7.0.0",
+    "@walletconnect/modal": "^2.7.0",
+    "buffer": "^6.0.3",
+    "crypto-browserify": "^3.12.0",
+    "ethers": "^5.7.2",
+    "lit": "^3.1.4",
+    "stream-browserify": "^3.0.0",
+    "vite-plugin-node-polyfills": "^0.22.0",
+    "vm-browserify": "^1.1.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2",
+    "vite": "^5.3.4"
+  }
+}
