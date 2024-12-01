@@ -1,11 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
+import { useState } from "react";
 import { signAndCombineAndSendTx } from "../../../../sign-and-combine-ecdsa/nodejs/src/index";
 
 export default function Home() {
+    const [resF1, setResF1] = useState(false);
+
     async function callFunction1() {
         const result = await signAndCombineAndSendTx();
         console.log(result);
+        if (result?.success == true) {
+            setResF1(true);
+        }
     }
 
     return (
@@ -17,6 +23,7 @@ export default function Home() {
             >
                 Demonstrate signAndCombineEcdsa on a Lit Action
             </button>
+            {resF1 && <p>Operation Successful</p>}
         </div>
     );
 }

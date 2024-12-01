@@ -6,7 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "playwright test",
+    "test:debug": "playwright test --debug",
+    "test:sign-and-combine": "playwright test tests/sign-and-combine.spec.ts",
+    "test:session-sigs": "playwright test tests/session-sigs.spec.ts",
+    "test:wrapped-keys": "playwright test tests/wrapped-keys.spec.ts"
   },
   "dependencies": {
     "@solana/web3.js": "^1.95.5",
@@ -17,6 +22,7 @@
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@playwright/test": "^1.49.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
