@@ -1,29 +1,68 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-import { useState } from "react";
+import type { Operation } from "@/types/operation";
+import { useOperation } from "@/hooks/useOperation";
 import { signAndCombineAndSendTx } from "../../../../sign-and-combine-ecdsa/nodejs/src/index";
 
-export default function Home() {
-    const [resF1, setResF1] = useState(false);
+const OPERATIONS: Operation[] = [
+    {
+        id: "signAndCombine",
+        name: "Demonstrate signAndCombineEcdsa on a Lit Action",
+        handler: signAndCombineAndSendTx,
+    },
+];
 
-    async function callFunction1() {
-        const result = await signAndCombineAndSendTx();
-        console.log(result);
-        if (result?.success == true) {
-            setResF1(true);
-        }
-    }
+export default function SignAndCombine() {
+    const { state, executeOperation } = useOperation();
 
     return (
         <div className="flex flex-col items-center gap-[1.2rem]">
-            <p>Check console</p>
-            <button
-                onClick={callFunction1}
-                className="bg-gray-700 text-white font-bold py-2 px-4 rounded hover:bg-gray-600 focus:outline-none focus:shadow-outline"
-            >
-                Demonstrate signAndCombineEcdsa on a Lit Action
-            </button>
-            {resF1 && <p>Operation Successful</p>}
+            <h2 className="text-xl font-semibold mb-4">Sign and Combine</h2>
+
+            {OPERATIONS.map((operation) => (
+                <div key={operation.id} className="w-full max-w-md">
+                    <button
+                        onClick={() => executeOperation(operation.handler)}
+                        disabled={state.loading}
+                        data-testid={`button-${operation.id}`}
+                        className={`w-full bg-gray-700 text-white font-bold py-2 px-4 rounded
+                            ${
+                                state.loading
+                                    ? "opacity-50 cursor-not-allowed"
+                                    : "hover:bg-gray-600"
+                            } 
+                            focus:outline-none focus:shadow-outline`}
+                    >
+                        {state.loading ? "Processing..." : operation.name}
+                    </button>
+
+                    {state.loading && (
+                        <p
+                            data-testid={`loading-${operation.id}`}
+                            className="text-blue-500 mt-2"
+                        >
+                            Processing...
+                        </p>
+                    )}
+
+                    {state.success && (
+                        <p
+                            data-testid={`success-${operation.id}`}
+                            className="text-green-500 mt-2"
+                        >
+                            Operation Successful
+                        </p>
+                    )}
+
+                    {state.error && (
+                        <p
+                            data-testid={`error-${operation.id}`}
+                            className="text-red-500 mt-2"
+                        >
+                            {state.error}
+                        </p>
+                    )}
+                </div>
+            ))}
         </div>
     );
 }

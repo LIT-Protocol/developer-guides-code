@@ -1,194 +1,233 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-import * as ethers from "ethers";
+import { useState } from "react";
+import { ethers } from "ethers";
 import {
     Connection,
-    Keypair,
-    LAMPORTS_PER_SOL,
+    clusterApiUrl,
     PublicKey,
     SystemProgram,
     Transaction,
-    clusterApiUrl,
-    sendAndConfirmTransaction,
+    LAMPORTS_PER_SOL,
 } from "@solana/web3.js";
+import type { Operation } from "@/types/operation";
+import { useOperation } from "@/hooks/useOperation";
 import { runExample } from "../../../../wrapped-keys/eip-712/nodejs/src/index";
 import { mintPkp } from "../../../../wrapped-keys/nodejs/src/utils";
 import { generateWrappedKey } from "../../../../wrapped-keys/nodejs/src/generateWrappedKey";
 import { signTransactionWithWrappedKey } from "../../../../wrapped-keys/nodejs/src/signTransactionWithWrappedKey";
 
-export default function Home() {
-    async function callFunction1() {
-        console.log("EIP 712 Signing");
-        const domain = {
-            name: "Ether Mail",
-            version: "1",
-            chainId: 1,
-            verifyingContract: "0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC",
-        };
-        const types = {
-            Person: [
-                { name: "name", type: "string" },
-                { name: "wallet", type: "address" },
-            ],
-            Mail: [
-                { name: "from", type: "Person" },
-                { name: "to", type: "Person" },
-                { name: "contents", type: "string" },
-            ],
-        };
-        const message = {
-            from: {
-                name: "Alice",
-                wallet: "0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826",
-            },
-            to: {
-                name: "Bob",
-                wallet: "0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB",
-            },
-            contents: "Hello, Bob!",
-        };
-
-        const typedData = {
-            domain,
-            types,
-            primaryType: "Mail",
-            message,
-        };
-        const serializedEip712Message = JSON.stringify(typedData);
-        const response = await runExample(serializedEip712Message, true);
-        console.log(response);
+// Helper function to set up Ethereum signer
+const getEthersSigner = () => {
+    const ETHEREUM_PRIVATE_KEY = process.env.NEXT_PUBLIC_ETHEREUM_PRIVATE_KEY;
+    if (!ETHEREUM_PRIVATE_KEY) {
+        throw new Error("NEXT_PUBLIC_ETHEREUM_PRIVATE_KEY is not defined");
     }
+    return new ethers.Wallet(
+        ETHEREUM_PRIVATE_KEY,
+        new ethers.providers.JsonRpcProvider(
+            "https://yellowstone-rpc.litprotocol.com"
+        )
+    );
+};
 
-    async function callFunction2() {
-        console.log("Sign Transaction with Wrapped Key on Ethereum");
-        const ETHEREUM_PRIVATE_KEY =
-            process.env.NEXT_PUBLIC_ETHEREUM_PRIVATE_KEY;
-        if (!ETHEREUM_PRIVATE_KEY) {
-            throw new Error("NEXT_PUBLIC_ETHEREUM_PRIVATE_KEY is not defined");
-        }
-        const ethersSigner = new ethers.Wallet(
-            ETHEREUM_PRIVATE_KEY,
-            new ethers.providers.JsonRpcProvider(
-                `https://yellowstone-rpc.litprotocol.com`
-            )
-        );
-        const mintedPkp = await mintPkp(ethersSigner);
-        const generateWrappedKeyResponse = await generateWrappedKey(
-            mintedPkp!.publicKey,
-            "evm",
-            "This is a Dev Guide code example testing Ethereum key"
-        );
-        const litTransaction = {
-            chainId: 175177,
-            chain: "chronicleTestnet",
-            toAddress: ethersSigner.address,
-            value: "0.0001",
-            // Manually specifying because the generated private key doesn't hold a balance and ethers
-            // fails to estimate gas since the tx simulation fails with insufficient balance error
-            gasLimit: 21_000,
-        };
+const OPERATIONS: Operation[] = [
+    {
+        id: "eip712",
+        name: "Generate Wrapped Key and Sign a EIP 712 Message",
+        handler: async () => {
+            const domain = {
+                name: "Ether Mail",
+                version: "1",
+                chainId: 1,
+                verifyingContract: "0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC",
+            };
+            const types = {
+                Person: [
+                    { name: "name", type: "string" },
+                    { name: "wallet", type: "address" },
+                ],
+                Mail: [
+                    { name: "from", type: "Person" },
+                    { name: "to", type: "Person" },
+                    { name: "contents", type: "string" },
+                ],
+            };
+            const message = {
+                from: {
+                    name: "Alice",
+                    wallet: "0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826",
+                },
+                to: {
+                    name: "Bob",
+                    wallet: "0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB",
+                },
+                contents: "Hello, Bob!",
+            };
 
-        if (!generateWrappedKeyResponse) {
-            throw new Error("generateWrappedKeyResponse is undefined");
-        }
-        const signedTransaction = await signTransactionWithWrappedKey(
-            mintedPkp!.publicKey,
-            "evm",
-            generateWrappedKeyResponse.id,
-            litTransaction,
-            false
-        );
-        console.log(signedTransaction);
-    }
+            const typedData = { domain, types, primaryType: "Mail", message };
+            return runExample(JSON.stringify(typedData), true);
+        },
+    },
+    {
+        id: "ethereum",
+        name: "Generate Wrapped Key and Sign Ethereum Transaction",
+        handler: async () => {
+            const ethersSigner = getEthersSigner();
+            const mintedPkp = await mintPkp(ethersSigner);
+            if (!mintedPkp) throw new Error("Failed to mint PKP");
 
-    async function callFunction3() {
-        console.log("Sign Transaction with Wrapped Key on Solana");
-        const ETHEREUM_PRIVATE_KEY =
-            process.env.NEXT_PUBLIC_ETHEREUM_PRIVATE_KEY;
-        if (!ETHEREUM_PRIVATE_KEY) {
-            throw new Error("NEXT_PUBLIC_ETHEREUM_PRIVATE_KEY is not defined");
-        }
-        const ethersSigner = new ethers.Wallet(
-            ETHEREUM_PRIVATE_KEY,
-            new ethers.providers.JsonRpcProvider(
-                `https://yellowstone-rpc.litprotocol.com`
-            )
-        );
-        const mintedPkp = await mintPkp(ethersSigner);
+            const wrappedKeyResponse = await generateWrappedKey(
+                mintedPkp.publicKey,
+                "evm",
+                "This is a Dev Guide code example testing Ethereum key"
+            );
+            if (!wrappedKeyResponse)
+                throw new Error("Failed to generate wrapped key");
 
-        const generateWrappedKeyResponse = await generateWrappedKey(
-            mintedPkp!.publicKey,
-            "solana",
-            "This is a Dev Guide code example testing Solana key"
-        );
+            const litTransaction = {
+                chainId: 175177,
+                chain: "chronicleTestnet",
+                toAddress: ethersSigner.address,
+                value: "0.0001",
+                gasLimit: 21_000,
+            };
 
-        if (!generateWrappedKeyResponse) {
-            throw new Error("generateWrappedKeyResponse is undefined");
-        }
-        const generatedSolanaPublicKey = new PublicKey(
-            generateWrappedKeyResponse.generatedPublicKey
-        );
+            return signTransactionWithWrappedKey(
+                mintedPkp.publicKey,
+                "evm",
+                wrappedKeyResponse.id,
+                litTransaction,
+                false
+            );
+        },
+    },
+    {
+        id: "solana",
+        name: "Generate Wrapped Key and Sign Solana Transaction",
+        handler: async () => {
+            const ethersSigner = getEthersSigner();
+            const mintedPkp = await mintPkp(ethersSigner);
+            if (!mintedPkp) throw new Error("Failed to mint PKP");
 
-        const solanaTransaction = new Transaction();
-        solanaTransaction.add(
-            SystemProgram.transfer({
-                fromPubkey: generatedSolanaPublicKey,
-                toPubkey: generatedSolanaPublicKey,
-                lamports: LAMPORTS_PER_SOL / 100, // Transfer 0.01 SOL
-            })
-        );
-        solanaTransaction.feePayer = generatedSolanaPublicKey;
+            const wrappedKeyResponse = await generateWrappedKey(
+                mintedPkp.publicKey,
+                "solana",
+                "This is a Dev Guide code example testing Solana key"
+            );
+            if (!wrappedKeyResponse)
+                throw new Error("Failed to generate wrapped key");
 
-        const solanaConnection = new Connection(
-            clusterApiUrl("devnet"),
-            "confirmed"
-        );
-        const { blockhash } = await solanaConnection.getLatestBlockhash();
-        solanaTransaction.recentBlockhash = blockhash;
+            const generatedSolanaPublicKey = new PublicKey(
+                wrappedKeyResponse.generatedPublicKey
+            );
 
-        const serializedTransaction = solanaTransaction
-            .serialize({
-                requireAllSignatures: false, // should be false as we're not signing the message
-                verifySignatures: false, // should be false as we're not signing the message
-            })
-            .toString("base64");
+            const solanaTransaction = new Transaction();
+            solanaTransaction.add(
+                SystemProgram.transfer({
+                    fromPubkey: generatedSolanaPublicKey,
+                    toPubkey: generatedSolanaPublicKey,
+                    lamports: LAMPORTS_PER_SOL / 100,
+                })
+            );
+            solanaTransaction.feePayer = generatedSolanaPublicKey;
 
-        const litTransaction = {
-            serializedTransaction,
-            chain: "devnet",
-        };
+            const solanaConnection = new Connection(
+                clusterApiUrl("devnet"),
+                "confirmed"
+            );
+            const { blockhash } = await solanaConnection.getLatestBlockhash();
+            solanaTransaction.recentBlockhash = blockhash;
 
-        const signedTransaction = await signTransactionWithWrappedKey(
-            mintedPkp!.publicKey,
-            "solana",
-            generateWrappedKeyResponse.id,
-            litTransaction,
-            false
-        );
-        console.log(signedTransaction)
-    }
+            const serializedTransaction = solanaTransaction
+                .serialize({
+                    requireAllSignatures: false,
+                    verifySignatures: false,
+                })
+                .toString("base64");
+
+            const litTransaction = {
+                serializedTransaction,
+                chain: "devnet",
+            };
+
+            return signTransactionWithWrappedKey(
+                mintedPkp.publicKey,
+                "solana",
+                wrappedKeyResponse.id,
+                litTransaction,
+                false
+            );
+        },
+    },
+];
+
+export default function WrappedKeys() {
+    const [activeOperation, setActiveOperation] = useState<string | null>(null);
+    const { state, executeOperation } = useOperation();
+
+    const handleOperation = async (operation: Operation) => {
+        setActiveOperation(operation.id);
+        await executeOperation(operation.handler);
+    };
 
     return (
         <div className="flex flex-col items-center gap-[1.2rem]">
-            <p>Check console</p>
-            <button
-                onClick={callFunction1}
-                className="bg-gray-700 text-white font-bold py-2 px-4 rounded hover:bg-gray-600 focus:outline-none focus:shadow-outline"
-            >
-                Generate Wrapped Key and Sign a EIP 712 Message
-            </button>
-            <button
-                onClick={callFunction2}
-                className="bg-gray-700 text-white font-bold py-2 px-4 rounded hover:bg-gray-600 focus:outline-none focus:shadow-outline"
-            >
-                Generate Wrapped Key and Sign Ethereum Transaction
-            </button>
-            <button
-                onClick={callFunction3}
-                className="bg-gray-700 text-white font-bold py-2 px-4 rounded hover:bg-gray-600 focus:outline-none focus:shadow-outline"
-            >
-                Generate Wrapped Key and Sign Solana Transaction
-            </button>
+            <h2 className="text-xl font-semibold mb-4">
+                Wrapped Keys Operations
+            </h2>
+
+            {OPERATIONS.map((operation) => (
+                <div key={operation.id} className="w-full max-w-md">
+                    <button
+                        onClick={() => handleOperation(operation)}
+                        disabled={state.loading && activeOperation === operation.id}
+                        data-testid={`button-${operation.id}`}
+                        className={`w-full bg-gray-700 text-white font-bold py-2 px-4 rounded
+                            ${
+                                state.loading &&
+                                activeOperation === operation.id
+                                    ? "opacity-50 cursor-not-allowed"
+                                    : "hover:bg-gray-600"
+                            } 
+                            focus:outline-none focus:shadow-outline`}
+                    >
+                        {state.loading && activeOperation === operation.id
+                            ? "Processing..."
+                            : operation.name}
+                    </button>
+
+                    {activeOperation === operation.id && (
+                        <div className="mt-2">
+                            {state.loading && (
+                                <p
+                                    data-testid={`loading-${operation.id}`}
+                                    className="text-blue-500"
+                                >
+                                    Processing...
+                                </p>
+                            )}
+
+                            {state.success && (
+                                <p
+                                    data-testid={`success-${operation.id}`}
+                                    className="text-green-500"
+                                >
+                                    Operation Successful
+                                </p>
+                            )}
+
+                            {state.error && (
+                                <p
+                                    data-testid={`error-${operation.id}`}
+                                    className="text-red-500"
+                                >
+                                    {state.error}
+                                </p>
+                            )}
+                        </div>
+                    )}
+                </div>
+            ))}
         </div>
     );
 }

@@ -10,7 +10,6 @@ export const getEnv = (name: string): string => {
       'CHAIN_TO_SEND_TX_ON': process.env.NEXT_PUBLIC_CHAIN_TO_SEND_TX_ON,
     };
     const env = envMap[name];
-    console.log(env)
     if (!env) {
       throw new Error(`${name} ENV is not defined, please define it in the .env file`);
     }
