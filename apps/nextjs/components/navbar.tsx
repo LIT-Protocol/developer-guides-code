@@ -8,7 +8,7 @@ export default function Navbar() {
             <Link href="/" className="absolute left-4 hover:text-gray-600">
                 Home
             </Link>
-            <h1 className="text-2xl font-bold">Next with Lit</h1>
+            <h1 className="text-2xl font-bold">Lit SDK with NextJs</h1>
         </div>
     );
 }

@@ -5,6 +5,12 @@ import Link from "next/link";
 export default function Home() {
     return (
         <div className="flex flex-col items-center gap-[1.2rem]">
+            <Link href="/sign-and-combine">
+                <p className="flex items-center gap-2">
+                    <span>Sign and Combine</span>
+                    <ArrowRight className="w-4 h-4" />
+                </p>
+            </Link>
             <Link href="/sessionSigs">
                 <p className="flex items-center gap-2">
                     <span>Session Sigs</span>
