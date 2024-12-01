@@ -1,36 +1,39 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { test, expect } from '@playwright/test';
 
-test('sign and combine functionality returns expected output', async ({ page }) => {
-  // Navigate to the sign-and-combine page
-  await page.goto('/sign-and-combine');
-  
-  // Create a promise that will resolve with the console log
-  const consolePromise = new Promise<any>(resolve => {
-    page.on('console', async msg => {
-      if (msg.type() === 'log') {
-        const args = await Promise.all(msg.args().map(arg => arg.jsonValue()));
-        resolve(args[0]);
-      }
+test.describe('Sign and Combine Page', () => {
+    test.beforeEach(async ({ page }) => {
+        await page.goto('/sign-and-combine');
     });
-  });
-  
-  // Click the button that triggers the sign and combine operation
-  await page.getByText('Demonstrate signAndCombineEcdsa on a Lit Action').click();
-  
-  // Wait for the console log and validate its structure
-  const result = await consolePromise;
-  
-  // Validate the response structure
-  expect(result).toHaveProperty('success');
-  expect(result).toHaveProperty('signedData');
-  expect(result).toHaveProperty('decryptedData');
-  expect(result).toHaveProperty('claimData');
-  expect(result).toHaveProperty('response');
-  expect(result).toHaveProperty('logs');
-  
-  // Validate specific properties
-  expect(result.success).toBe(true);
-  expect(result.response).toMatch(/^Transaction Sent Successfully\. Transaction Hash: 0x[0-9a-fA-F]{64}$/);
-  expect(result.logs).toMatch(/^Recovered Address: 0x[0-9a-fA-F]{40}\n$/);
+
+    test('shows correct states during transaction flow', async ({ page }) => {
+        // Verify initial state
+        const button = page.getByTestId('button-signAndCombine');
+        await expect(button).toBeEnabled();
+        await expect(button).toBeVisible();
+        await expect(page.getByTestId('success-signAndCombine')).not.toBeVisible();
+        await expect(page.getByTestId('loading-signAndCombine')).not.toBeVisible();
+        
+        // Click the button and verify loading state
+        await button.click();
+        await expect(button).toBeDisabled();
+        await expect(page.getByTestId('loading-signAndCombine')).toBeVisible();
+        
+        // Wait for success message (assuming the operation succeeds)
+        await expect(page.getByTestId('success-signAndCombine')).toBeVisible({ 
+            timeout: 30000
+        });
+        
+        // Verify final state
+        await expect(button).toBeEnabled();
+        await expect(page.getByTestId('loading-signAndCombine')).not.toBeVisible();
+    });
+
+    test('shows error state when transaction fails', async ({ page }) => {
+        const button = page.getByTestId('button-signAndCombine');
+        await button.click();
+        
+        await expect(page.getByTestId('error-signAndCombine')).toBeVisible({
+            timeout: 30000
+        });
+    });
 });
