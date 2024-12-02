@@ -1,3 +1,4 @@
+// Filename: index.ts
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import { LIT_NETWORK, LIT_ABILITY, LIT_RPC } from "@lit-protocol/constants";
 import { LitActionResource, LitPKPResource } from "@lit-protocol/auth-helpers";
