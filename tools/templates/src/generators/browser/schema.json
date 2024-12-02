@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/schema",
-  "$id": "Nodejs",
+  "$id": "Browser",
   "title": "",
   "type": "object",
   "properties": {

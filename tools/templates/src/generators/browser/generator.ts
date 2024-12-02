@@ -6,7 +6,7 @@ import {
   Tree,
 } from '@nx/devkit';
 import * as path from 'path';
-import { NodejsExampleGeneratorSchema } from './schema';
+import { BrowserExampleGeneratorSchema } from './schema';
 import { readdirSync } from 'fs';
 
 export function getExistingSubcategories(category: string): string[] {
@@ -19,9 +19,9 @@ export function getExistingSubcategories(category: string): string[] {
   }
 }
 
-export async function nodejsExampleGenerator(
+export async function browserExampleGenerator(
   tree: Tree,
-  options: NodejsExampleGeneratorSchema
+  options: BrowserExampleGeneratorSchema
 ) {
   const resolvedOptions = {
     ...options,
@@ -62,4 +62,4 @@ export async function nodejsExampleGenerator(
   await formatFiles(tree);
 }
 
-export default nodejsExampleGenerator;
+export default browserExampleGenerator;
