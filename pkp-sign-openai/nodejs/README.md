@@ -23,7 +23,6 @@ This code example demonstrates how an OpenAI API key can be used to generate a r
     -  **Required**:
         - `ETHEREUM_PRIVATE_KEY`: This is the Ethereum private key that will be used to mint a PKP
         - `OPENAI_API_KEY`: This is the OpenAI API key that will be used to make a request within our Lit Action
-5. Test the example: `yarn test`
 
 ## Executing the Example
 
