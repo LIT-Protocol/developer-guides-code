@@ -1,0 +1,32 @@
+{
+  "name": "simple-pkp-sign-openai-example",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "test": "npx @dotenvx/dotenvx run -- mocha test/**/*.spec.ts"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.3.19",
+    "@types/chai-json-schema": "^1.4.10",
+    "@types/mocha": "^10.0.8",
+    "chai": "^5.1.1",
+    "chai-json-schema": "^1.5.1",
+    "mocha": "^10.7.3",
+    "ts-node": "^10.9.2",
+    "tsc": "^2.0.4",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.2"
+  },
+  "dependencies": {
+    "@dotenvx/dotenvx": "^0.44.1",
+    "@lit-protocol/auth-helpers": "^7.0.0",
+    "@lit-protocol/constants": "^7.0.0",
+    "@lit-protocol/contracts": "^0.0.74",
+    "@lit-protocol/contracts-sdk": "^7.0.0",
+    "@lit-protocol/lit-auth-client": "^7.0.0",
+    "@lit-protocol/lit-node-client": "^7.0.0",
+    "esbuild": "^0.24.0"
+  }
+}
