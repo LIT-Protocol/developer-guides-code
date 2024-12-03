@@ -53,6 +53,7 @@ export const signingOpenAI = async () => {
       code: litActionCode,
       jsParams: { publicKey: pkp.publicKey!, apiKey: OPENAI_API_KEY },
     });
+    
     console.log(result);
     return result;
   } catch (error) {
