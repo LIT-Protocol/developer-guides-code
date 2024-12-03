@@ -11,31 +11,47 @@ const { ETHEREUM_PRIVATE_KEY, OPENAI_API_KEY } = process.env;
 const NETWORK = LIT_NETWORK.DatilDev;
 
 export const signingOpenAI = async () => {
-  const litNodeClient = new LitNodeClient({ litNetwork: NETWORK, debug: false });
+  const litNodeClient = new LitNodeClient({
+    litNetwork: NETWORK,
+    debug: false,
+  });
   try {
-    const ethersWallet = new ethers.Wallet(ETHEREUM_PRIVATE_KEY!, new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE));
+    const ethersWallet = new ethers.Wallet(
+      ETHEREUM_PRIVATE_KEY!,
+      new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE)
+    );
     await litNodeClient.connect();
-    
-    const litContracts = new LitContracts({ signer: ethersWallet, network: NETWORK, debug: false });
+
+    const litContracts = new LitContracts({
+      signer: ethersWallet,
+      network: NETWORK,
+      debug: false,
+    });
     await litContracts.connect();
-    
+
     const pkp = (await litContracts.pkpNftContractUtils.write.mint()).pkp;
-    const authMethod = await EthWalletProvider.authenticate({ signer: ethersWallet, litNodeClient });
-    
+    const authMethod = await EthWalletProvider.authenticate({
+      signer: ethersWallet,
+      litNodeClient,
+    });
+
     const pkpSessionSigs = await litNodeClient.getPkpSessionSigs({
       pkpPublicKey: pkp.publicKey!,
       chain: "ethereum",
       authMethods: [authMethod],
       resourceAbilityRequests: [
-        { resource: new LitActionResource("*"), ability: LIT_ABILITY.LitActionExecution },
-        { resource: new LitPKPResource("*"), ability: LIT_ABILITY.PKPSigning }
-      ]
+        {
+          resource: new LitActionResource("*"),
+          ability: LIT_ABILITY.LitActionExecution,
+        },
+        { resource: new LitPKPResource("*"), ability: LIT_ABILITY.PKPSigning },
+      ],
     });
 
     const result = await litNodeClient.executeJs({
       sessionSigs: pkpSessionSigs,
       code: litActionCode,
-      jsParams: { publicKey: pkp.publicKey!, apiKey: OPENAI_API_KEY }
+      jsParams: { publicKey: pkp.publicKey!, apiKey: OPENAI_API_KEY },
     });
     console.log(result);
     return result;
