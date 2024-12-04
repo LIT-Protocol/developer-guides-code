@@ -21,7 +21,7 @@ const _litActionCode = async () => {
               "Content-Type": "application/json",
               Authorization: `Bearer ${apiKey}`,
             },
-            body: JSON.stringify({ model: "gpt-4", messages }),
+            body: JSON.stringify({ model: "gpt-4o-mini", messages }),
           }
         );
         return (await response.json()).choices[0].message.content
