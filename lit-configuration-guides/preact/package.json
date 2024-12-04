@@ -1,0 +1,27 @@
+{
+  "name": "preact",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@lit-protocol/lit-node-client": "^7.0.0",
+    "@rollup/plugin-inject": "^5.0.5",
+    "buffer": "^6.0.3",
+    "crypto-browserify": "^3.12.0",
+    "ethers": "^5.7.2",
+    "preact": "^10.22.1",
+    "stream-browserify": "^3.0.0",
+    "vite-plugin-node-polyfills": "^0.22.0",
+    "vm-browserify": "^1.1.2"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.8.3",
+    "typescript": "^5.2.2",
+    "vite": "^5.3.4"
+  }
+}
