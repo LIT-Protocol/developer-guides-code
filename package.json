@@ -38,6 +38,7 @@
     "test-lit": "nx run-many --target=test-lit --all --parallel=1 --exclude=templates-nodejs,starter-guides-nodejs"
   },
   "devDependencies": {
+    "node-gyp": "^11.0.0",
     "nx": "19.6.3",
     "rimraf": "^6.0.1"
   }
