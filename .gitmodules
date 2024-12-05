@@ -10,3 +10,6 @@
 [submodule "btc-evm-swap"]
 	path = btc-evm-swap
 	url = https://github.com/LIT-Protocol/btc-evm-swap-example
+[submodule "custom-auth-github-example"]
+	path = custom-auth-github-example
+	url = https://github.com/LIT-Protocol/custom-auth-github-example.git
