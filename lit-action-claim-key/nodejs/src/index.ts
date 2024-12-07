@@ -1,6 +1,6 @@
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
-import { ethers } from "ethers";
-import { LIT_RPC, LIT_NETWORK, LIT_ABILITY } from "@lit-protocol/constants";
+import { ethers, BigNumber, utils } from "ethers";
+import { LIT_RPC, LIT_NETWORK, LIT_ABILITY, AUTH_METHOD_TYPE, AUTH_METHOD_SCOPE } from "@lit-protocol/constants";
 import {
   createSiweMessage,
   generateAuthSig,
@@ -99,7 +99,6 @@ export const runExample = async () => {
     console.log("✅ Got Session Sigs via an Auth Sig");
 
     console.log("🔄 Running Lit Action to derive public key using userId...");
-    // Adding a Date timestamp because each userId needs to be unique
     const userId = `thisCanBeAnythingYouWant_${Date.now()}`;
     const result = await litNodeClient.executeJs({
       sessionSigs,
@@ -114,30 +113,36 @@ export const runExample = async () => {
       }`}`
     );
 
+    const claim = result.claims![userId];
+    const derivedKeyId = `0x${claim.derivedKeyId}`;
+
     console.log("🔄 Getting public key for derived key id...");
     const publicKey =
       await litContracts.pubkeyRouterContract.read.getDerivedPubkey(
         litContracts.stakingContract.read.address,
-        `0x${result.claims![userId].derivedKeyId}`
+        derivedKeyId
       );
     console.log(`✅ Derived public key: ${publicKey}`);
     console.log(
       `ℹ️  Derived ETH address: ${ethers.utils.computeAddress(publicKey)}`
     );
 
+    const CUSTOM_AUTH_TYPE = "custom-auth-type";
+    const ipfsHash = "QmExample";
+    const keyId = `${ipfsHash}_${userId}`;
+
     console.log("🔄 Getting PKP mint cost...");
-    const pkpMintCost = await litContracts.pkpNftContract.read.mintCost();
+    const mintCost = await litContracts.pkpNftContract.read.mintCost();
     console.log("✅ Got PKP mint cost");
 
-    const claimTx = await litContracts.pkpNftContract.write.claimAndMint(
-      2, // keyType,
-      `0x${result.claims![userId].derivedKeyId}`, // derivedKeyId
-      result.claims![userId].signatures, // signatures
+    console.log("🔄 Claiming and minting PKP...");
+    const { tx, res: claimTxReceipt } = await litContracts.pkpNftContractUtils.write.claimAndMint(
+      derivedKeyId,
+      claim.signatures,
       {
-        value: pkpMintCost,
+        value: mintCost,
       }
     );
-    const claimTxReceipt = await claimTx.wait();
 
     const pkpInfo = await getPkpInfoFromMintReceipt(
       claimTxReceipt,
@@ -146,6 +151,25 @@ export const runExample = async () => {
     console.log(`ℹ️  PKP Public Key: ${pkpInfo.publicKey}`);
     console.log(`ℹ️  PKP Token ID: ${pkpInfo.tokenId}`);
     console.log(`ℹ️  PKP ETH Address: ${pkpInfo.ethAddress}`);
+
+
+    await litContracts.addPermittedAuthMethod({
+      pkpTokenId: pkpInfo.tokenId,
+      authMethodId: "anything",
+      authMethodType: 101,
+      authMethodScopes: [AUTH_METHOD_SCOPE.SignAnything],
+    });
+
+    await litContracts.addPermittedAuthMethod({
+      pkpTokenId: pkpInfo.tokenId,
+      authMethodId: "anything",
+      authMethodType: 102,
+      authMethodScopes: [AUTH_METHOD_SCOPE.SignAnything],
+    });
+
+    const permittedAuthMethods = await litContracts.pkpPermissionsContract.read.getPermittedAuthMethods(pkpInfo.tokenId);
+    console.log("✅ Retrieved permitted AuthMethods for PKP", permittedAuthMethods);
+
 
     return pkpInfo;
   } catch (error) {
