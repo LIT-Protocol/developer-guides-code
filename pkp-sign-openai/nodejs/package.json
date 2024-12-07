@@ -5,19 +5,38 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "test": "npx @dotenvx/dotenvx run -- mocha test/**/*.spec.ts"
+    "test": "npx @dotenvx/dotenvx run -- mocha test/**/*.spec.ts",
+    "compile": "hardhat compile",
+    "clean": "hardhat clean",
+    "deploy": "hardhat run scripts/deploy.ts --network sepolia",
+    "verify": "hardhat verify --network sepolia"
   },
   "devDependencies": {
+    "@nomicfoundation/hardhat-chai-matchers": "^2.0.0",
+    "@nomicfoundation/hardhat-ethers": "^3.0.0",
+    "@nomicfoundation/hardhat-ignition": "^0.15.8",
+    "@nomicfoundation/hardhat-ignition-ethers": "^0.15.0",
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.0",
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@nomicfoundation/hardhat-verify": "^2.0.0",
+    "@nomicfoundation/ignition-core": "^0.15.8",
+    "@typechain/ethers-v6": "^0.5.0",
+    "@typechain/hardhat": "^9.0.0",
     "@types/chai": "^4.3.19",
     "@types/chai-json-schema": "^1.4.10",
     "@types/mocha": "^10.0.8",
-    "chai": "^5.1.1",
+    "@types/node": "^22.10.1",
+    "chai": "^4.3.7",
     "chai-json-schema": "^1.5.1",
+    "hardhat": "^2.22.17",
+    "hardhat-gas-reporter": "^1.0.8",
     "mocha": "^10.7.3",
+    "solidity-coverage": "^0.8.1",
     "ts-node": "^10.9.2",
     "tsc": "^2.0.4",
     "tsx": "^4.19.1",
-    "typescript": "^5.6.2"
+    "typechain": "^8.3.0",
+    "typescript": "^5.7.2"
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^0.44.1",
@@ -27,6 +46,11 @@
     "@lit-protocol/contracts-sdk": "^7.0.0",
     "@lit-protocol/lit-auth-client": "^7.0.0",
     "@lit-protocol/lit-node-client": "^7.0.0",
-    "esbuild": "^0.24.0"
+    "@safe-global/protocol-kit": "^5.0.4",
+    "@safe-global/safe-core-sdk": "^3.3.5",
+    "@safe-global/safe-ethers-lib": "^1.9.4",
+    "@safe-global/sdk-starter-kit": "^1.0.4",
+    "esbuild": "^0.24.0",
+    "openai": "^4.76.0"
   }
 }

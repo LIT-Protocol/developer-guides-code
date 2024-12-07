@@ -1,0 +1,41 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "C:\\Users\\Andrew\\Desktop\\Lit\\12-5\\developer-guides-code\\pkp-sign-openai\\nodejs\\contracts\\PKPPermissions.sol": {
+      "lastModificationDate": 1733526573736,
+      "contentHash": "f23aa40ffb50567d220a13667327e3e2",
+      "sourceName": "contracts/PKPPermissions.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "PKPPermissions"
+      ]
+    }
+  }
+}

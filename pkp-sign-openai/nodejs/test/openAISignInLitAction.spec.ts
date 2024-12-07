@@ -3,11 +3,11 @@ import chaiJsonSchema from "chai-json-schema";
 
 use(chaiJsonSchema);
 
-import { signingOpenAI } from "../src/index.js";
+import { createSafePKP } from "../src/index.js";
 
-describe("signingOpenAI", () => {
+describe("createSafePKP", () => {
   it("should run the function successfully", async () => {
-    const result = await signingOpenAI();
+    const result = await createSafePKP();
     const expectedSchema = {
       type: "object",
       required: ["claims", "signatures", "response", "logs"],

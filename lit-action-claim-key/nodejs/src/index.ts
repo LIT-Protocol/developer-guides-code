@@ -170,7 +170,6 @@ export const runExample = async () => {
     const permittedAuthMethods = await litContracts.pkpPermissionsContract.read.getPermittedAuthMethods(pkpInfo.tokenId);
     console.log("✅ Retrieved permitted AuthMethods for PKP", permittedAuthMethods);
 
-
     return pkpInfo;
   } catch (error) {
     console.error(error);
