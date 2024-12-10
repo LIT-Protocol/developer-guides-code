@@ -53,7 +53,7 @@ export const signAndCombineAndSendTx = async () => {
     await litContracts.connect();
     console.log("✅ Connected LitContracts client to network");
 
-    if (LIT_PKP_PUBLIC_KEY === undefined || LIT_PKP_PUBLIC_KEY === "" || LIT_PKP_PUBLIC_KEY === "undefined") {
+    if (LIT_PKP_PUBLIC_KEY === undefined || LIT_PKP_PUBLIC_KEY === "") {
       console.log("🔄 PKP wasn't provided, minting a new one...");
       pkpInfo = (await litContracts.pkpNftContractUtils.write.mint()).pkp;
       console.log("✅ PKP successfully minted");
@@ -121,7 +121,7 @@ export const signAndCombineAndSendTx = async () => {
     console.log("✅ Transaction created and serialized");
 
     let capacityTokenId = LIT_CAPACITY_CREDIT_TOKEN_ID;
-    if (capacityTokenId === "" || capacityTokenId === undefined || capacityTokenId === "undefined") {
+    if (capacityTokenId === "" || capacityTokenId === undefined) {
       console.log("🔄 No Capacity Credit provided, minting a new one...");
       capacityTokenId = (
         await litContracts.mintCapacityCreditsNFT({
