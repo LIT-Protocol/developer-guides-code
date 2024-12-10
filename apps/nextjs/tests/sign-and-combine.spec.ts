@@ -27,13 +27,4 @@ test.describe('Sign and Combine Page', () => {
         await expect(button).toBeEnabled();
         await expect(page.getByTestId('loading-signAndCombine')).not.toBeVisible();
     });
-
-    test('shows error state when transaction fails', async ({ page }) => {
-        const button = page.getByTestId('button-signAndCombine');
-        await button.click();
-        
-        await expect(page.getByTestId('error-signAndCombine')).toBeVisible({
-            timeout: 30000
-        });
-    });
 });

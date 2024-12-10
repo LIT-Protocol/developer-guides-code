@@ -13,5 +13,5 @@ export type OperationResult = {
 export type Operation = {
   id: string;
   name: string;
-  handler: () => Promise<OperationResult>;
+  handler: () => any;
 };
