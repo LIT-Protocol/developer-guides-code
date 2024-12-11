@@ -11,13 +11,13 @@ export default function Home() {
                     <ArrowRight className="w-4 h-4" />
                 </p>
             </Link>
-            <Link href="/sessionSigs">
+            <Link href="/session-signatures">
                 <p className="flex items-center gap-2">
                     <span>Session Sigs</span>
                     <ArrowRight className="w-4 h-4" />
                 </p>
             </Link>
-            <Link href="/wrappedKeys">
+            <Link href="/wrapped-keys">
                 <p className="flex items-center gap-2">
                     <span>Wrapped Keys</span>
                     <ArrowRight className="w-4 h-4" />
