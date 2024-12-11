@@ -2,7 +2,7 @@ import { LIT_CHAINS } from "@lit-protocol/constants";
 
 export const getEnv = (name: string): string => {
   // Browser environment
-  if (typeof window !== 'undefined') {
+  if (typeof globalThis !== 'undefined' && 'window' in globalThis) {
     const envMap: Record<string, string | undefined> = {
       'ETHEREUM_PRIVATE_KEY': process.env.NEXT_PUBLIC_ETHEREUM_PRIVATE_KEY,
       'LIT_PKP_PUBLIC_KEY': process.env.NEXT_PUBLIC_LIT_PKP_PUBLIC_KEY,
