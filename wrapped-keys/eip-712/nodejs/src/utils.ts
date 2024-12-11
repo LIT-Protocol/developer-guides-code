@@ -11,11 +11,9 @@ import { AccsDefaultParams, LIT_NETWORKS_KEYS, SessionSigsMap } from "@lit-proto
 
 const { generatePrivateKey } = api;
 
-const window: any = globalThis;
-
 export const getEnv = (name: string): string => {
   // Browser environment
-  if (typeof window !== 'undefined') {
+  if (typeof globalThis !== 'undefined' && 'window' in globalThis) {
     const envMap: Record<string, string | undefined> = {
       'ETHEREUM_PRIVATE_KEY': process.env.NEXT_PUBLIC_ETHEREUM_PRIVATE_KEY,
       'SOLANA_PRIVATE_KEY': process.env.NEXT_PUBLIC_SOLANA_PRIVATE_KEY,
