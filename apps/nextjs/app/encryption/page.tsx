@@ -1,21 +1,21 @@
 "use client";
 import type { Operation } from "@/types/operation";
 import { useOperation } from "@/hooks/useOperation";
-import { encryptFile } from "../../../../hacker-guides/encryption/encrypt-file/src/index";
-import { encryptLargeFile } from "../../../../hacker-guides/encryption/encrypt-large-file/src/index";
+// import { encryptFile } from "../../../../hacker-guides/encryption/encrypt-file/src/index";
+// import { encryptLargeFile } from "../../../../hacker-guides/encryption/encrypt-large-file/src/index";
 import { encryptString } from "../../../../hacker-guides/encryption/encrypt-string/src/index";
 
 const OPERATIONS: Operation[] = [
-    {
-        id: "encryption-files",
-        name: "Encrypt and Decrypt Files",
-        handler: encryptFile,
-    },
-    {
-        id: "encryption-large-files",
-        name: "Encrypt and Decrypt Files",
-        handler: encryptLargeFile,
-    },
+    // {
+    //     id: "encryption-files",
+    //     name: "Encrypt and Decrypt Files",
+    //     handler: encryptFile,
+    // },
+    // {
+    //     id: "encryption-large-files",
+    //     name: "Encrypt and Decrypt Files",
+    //     handler: encryptLargeFile,
+    // },
     {
         id: "encryption-string",
         name: "Encrypt and Decrypt Files",
