@@ -87,7 +87,7 @@ async function decryptFile(
   return outputPath;
 }
 
-export const runExample = async () => {
+export const encryptLargeFile = async () => {
   let litNodeClient: LitNodeClient;
 
   try {

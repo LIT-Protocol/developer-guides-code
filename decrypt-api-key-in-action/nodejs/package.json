@@ -25,6 +25,7 @@
     "@lit-protocol/auth-helpers": "^7.0.0-alpha.9",
     "@lit-protocol/constants": "^7.0.0-alpha.9",
     "@lit-protocol/contracts-sdk": "^7.0.0-alpha.9",
+    "@lit-protocol/encryption": "^6.11.3",
     "@lit-protocol/lit-node-client": "^7.0.0-alpha.9"
   }
 }

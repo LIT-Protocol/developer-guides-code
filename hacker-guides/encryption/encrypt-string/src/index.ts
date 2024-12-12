@@ -11,7 +11,7 @@ import { getEnv, getEthersSigner, getLitNodeClient } from "./utils";
 
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 
-export const runExample = async () => {
+export const encryptString = async () => {
   let litNodeClient: LitNodeClient;
 
   try {
