@@ -1,6 +1,6 @@
 {
     "name": "encrypt-large-file-nodejs",
-    "root": "encrypt-large-file/nodejs",
+    "root": "hacker-guides/encryption/encrypt-large-file",
     "targets": {
         "test-lit": {
             "executor": "nx:run-commands",

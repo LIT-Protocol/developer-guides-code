@@ -1,5 +1,5 @@
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
-import { LIT_RPC, LitNetwork } from "@lit-protocol/constants";
+import { LIT_RPC, LIT_NETWORK } from "@lit-protocol/constants";
 import { ethers } from "ethers";
 
 export const getEnv = (name: string): string => {
@@ -20,7 +20,7 @@ export const getEthersSigner = (ethereumPrivateKey: string) => {
 
 export const getLitNodeClient = async () => {
   const litNodeClient = new LitNodeClient({
-    litNetwork: LitNetwork.DatilDev,
+    litNetwork: LIT_NETWORK.DatilDev,
     debug: true,
   });
   await litNodeClient.connect();
