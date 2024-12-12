@@ -1,6 +1,6 @@
 {
     "name": "encrypt-file-nodejs",
-    "root": "encrypt-file/nodejs",
+    "root": "hacker-guides/encryption/encrypt-file",
     "targets": {
         "test-lit": {
             "executor": "nx:run-commands",
