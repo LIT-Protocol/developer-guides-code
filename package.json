@@ -23,12 +23,16 @@
     "siws-authentication/browser",
     "siws-encryption/browser",
     "siws-session-sigs/browser",
+    "solana-openai/nodejs",
     "starter-guides/browser",
     "starter-guides/nodejs",
     "templates/browser",
     "templates/nodejs",
     "wrapped-keys/eip-712/nodejs",
-    "wrapped-keys/nodejs"
+    "wrapped-keys/nodejs",
+    "hacker-guides/encryption/encrypt-file",
+    "hacker-guides/encryption/encrypt-large-file",
+    "hacker-guides/encryption/encrypt-string"
   ],
   "scripts": {
     "install:all": "yarn workspaces focus --all",

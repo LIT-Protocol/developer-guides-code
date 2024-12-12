@@ -1,5 +1,5 @@
 {
-  "name": "nodejs",
+  "name": "encrypt-file-nodejs",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",

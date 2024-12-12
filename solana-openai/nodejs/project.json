@@ -1,0 +1,12 @@
+{
+    "name": "solana-openai-nodejs",
+    "root": "solana-openai/nodejs",
+    "targets": {
+        "test-lit": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "cd solana-openai/nodejs && yarn && yarn test"
+            }
+        }
+    }
+}
