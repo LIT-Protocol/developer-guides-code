@@ -8,7 +8,7 @@ import { getSessionSigsViaAuthSig } from "../../../../session-signatures/getSess
 
 const OPERATIONS: Operation[] = [
     {
-        id: "litAction",
+        id: "lit-action",
         name: "Get Session Sigs Lit Action",
         handler: getSessionSigsLitAction,
     },
@@ -18,7 +18,7 @@ const OPERATIONS: Operation[] = [
         handler: getSessionSigsPKP,
     },
     {
-        id: "authSig",
+        id: "auth-sig",
         name: "Get Session Sigs Via AuthSig",
         handler: getSessionSigsViaAuthSig,
     },

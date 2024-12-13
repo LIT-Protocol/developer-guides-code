@@ -5,7 +5,7 @@ import { signAndCombineAndSendTx } from "../../../../sign-and-combine-ecdsa/node
 
 const OPERATIONS: Operation[] = [
     {
-        id: "signAndCombine",
+        id: "sign-and-combine-ecdsa",
         name: "Demonstrate signAndCombineEcdsa on a Lit Action",
         handler: signAndCombineAndSendTx,
     },
