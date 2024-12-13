@@ -6,7 +6,7 @@ import { conditionalSigning } from "../../../../conditional-signing/nodejs/src/i
 const OPERATIONS: Operation[] = [
     {
         id: "conditional-signing",
-        name: "Demonstrate Conditional Signing on a Lit Action",
+        name: "Demonstrate a Lit Action to create signature if Lit.Actions.checkConditions is matched",
         handler: conditionalSigning,
     },
 ];

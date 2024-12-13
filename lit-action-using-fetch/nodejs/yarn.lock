@@ -2854,7 +2854,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ethers@npm:^5.7.1, ethers@npm:v5":
+"ethers@npm:5.7.2, ethers@npm:^5.7.1":
   version: 5.7.2
   resolution: "ethers@npm:5.7.2"
   dependencies:
@@ -3763,7 +3763,7 @@ __metadata:
     "@types/mocha": "npm:^10.0.6"
     chai: "npm:^5.1.1"
     chai-json-schema: "npm:^1.5.1"
-    ethers: "npm:v5"
+    ethers: "npm:5.7.2"
     mocha: "npm:^10.4.0"
     tsc: "npm:^2.0.4"
     tsx: "npm:^4.12.0"
