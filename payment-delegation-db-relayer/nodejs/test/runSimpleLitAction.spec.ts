@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import ethers from "ethers";
+import * as ethers from "ethers";
 
 import { registerPayer } from "../src/registerPayer";
 import { addUsers } from "../src/addUsers";

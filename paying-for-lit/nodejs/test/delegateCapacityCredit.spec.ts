@@ -1,7 +1,7 @@
 import { expect, use } from "chai";
 import chaiJsonSchema from "chai-json-schema";
 import { MintCapacityCreditsRes } from "@lit-protocol/types";
-import ethers from "ethers";
+import * as ethers from "ethers";
 
 import { delegateCapacityCredit } from "../src/delegateCapacityCredit";
 import { mintCapacityCredit } from "../src/mintCapacityCredit";

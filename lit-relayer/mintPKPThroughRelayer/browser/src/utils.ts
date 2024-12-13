@@ -1,6 +1,6 @@
 import * as ethers from "ethers";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
-import { LitNetwork } from "@lit-protocol/constants";
+import { LIT_NETWORK } from "@lit-protocol/constants";
 
 export const mintCapacityCredit = async (
   ethersSigner: ethers.providers.JsonRpcSigner
@@ -9,7 +9,7 @@ export const mintCapacityCredit = async (
     console.log("🔄 Connecting LitContracts client to the network...");
     const litContracts = new LitContracts({
       signer: ethersSigner,
-      network: LitNetwork.Habanero,
+      network: LIT_NETWORK.DatilTest,
     });
     await litContracts.connect();
     console.log("✅ Connected LitContracts client to the network");
