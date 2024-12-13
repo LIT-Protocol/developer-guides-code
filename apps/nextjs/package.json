@@ -9,8 +9,16 @@
     "lint": "next lint",
     "test": "playwright test --workers=1",
     "test:debug": "playwright test --debug",
-    "test:sign-and-combine-ecdsa": "playwright test tests/sign-and-combine-ecdsa.spec.ts",
+    "test:conditional-signing": "playwright test tests/conditional-signing.spec.ts",
+    "test:decrypt-api-key-in-action": "playwright test tests/decrypt-api-key-in-action.spec.ts",
+    "test:eip-191-signing": "playwright test tests/eip-191-signing.spec.ts",
+    "test:encryption": "playwright test tests/encryption.spec.ts",
+    "test:lit-action-claim-key": "playwright test tests/lit-action-claim-key.spec.ts",
+    "test:lit-action-using-fetch": "playwright test tests/lit-action-using-fetch.spec.ts",
+    "test:paying-for-lit": "playwright test tests/paying-for-lit.spec.ts",
     "test:session-signatures": "playwright test tests/session-signatures.spec.ts",
+    "test:sign-and-combine-ecdsa": "playwright test tests/sign-and-combine-ecdsa.spec.ts",
+    "test:solana-openai": "playwright test tests/solana-openai.spec.ts",
     "test:wrapped-keys": "playwright test tests/wrapped-keys.spec.ts"
   },
   "dependencies": {

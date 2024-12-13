@@ -9,12 +9,14 @@ const testPageName = fileName
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ") + " Page";
 
-test.describe.serial(`${testPageName}`, () => {
+const operationId = "encryption-string";
+
+test.describe(`${testPageName}`, () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto("/session-signatures");
+        await page.goto(`/encryption`);
     });
 
-    async function testOperationFlow(page: any, operationId: string) {
+    test(`shows correct states during transaction flow`, async ({ page }) => {
         // Verify initial state
         const button = page.getByTestId(`button-${operationId}`);
         await expect(button).toBeEnabled();
@@ -41,17 +43,5 @@ test.describe.serial(`${testPageName}`, () => {
         await expect(
             page.getByTestId(`loading-${operationId}`)
         ).not.toBeVisible();
-    }
-
-    test("Lit Action operation shows correct states", async ({ page }) => {
-        await testOperationFlow(page, "lit-action");
-    });
-
-    test("PKP operation shows correct states", async ({ page }) => {
-        await testOperationFlow(page, "pkp");
-    });
-
-    test("AuthSig operation shows correct states", async ({ page }) => {
-        await testOperationFlow(page, "auth-sig");
     });
 });

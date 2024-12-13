@@ -1,6 +1,15 @@
 import { test, expect } from "@playwright/test";
+import path from "path";
 
-test.describe.serial("Wrapped Keys Page", () => {
+const fileName = path.basename(__filename).replace(".spec.ts", "");
+
+// Convert kebab-case to Title Case for page name
+const testPageName = fileName
+    .split("-")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ") + " Page";
+    
+test.describe.serial(`${testPageName}`, () => {
     test.beforeEach(async ({ page }) => {
         await page.goto("/wrapped-keys");
     });
@@ -34,7 +43,7 @@ test.describe.serial("Wrapped Keys Page", () => {
     }
 
     test("EIP-712 signing operation shows correct states", async ({ page }) => {
-        await testOperationFlow(page, "eip712");
+        await testOperationFlow(page, "eip-712");
     });
 
     test("Ethereum transaction signing operation shows correct states", async ({

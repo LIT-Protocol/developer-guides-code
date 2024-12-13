@@ -32,7 +32,7 @@ const getEthersSigner = () => {
 
 const OPERATIONS: Operation[] = [
     {
-        id: "eip712",
+        id: "eip-712",
         name: "Generate Wrapped Key and Sign a EIP 712 Message",
         handler: async () => {
             const domain = {
