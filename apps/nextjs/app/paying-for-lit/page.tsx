@@ -4,22 +4,36 @@ import { useOperation } from "@/hooks/useOperation";
 import { delegateCapacityCredit } from "../../../../paying-for-lit/nodejs/src/delegateCapacityCredit";
 import { getSessionSigsWithCapacityCreditAuthSig } from "../../../../paying-for-lit/nodejs/src/getSessionSigsWithCapacityCreditAuthSig";
 import { mintCapacityCredit } from "../../../../paying-for-lit/nodejs/src/mintCapacityCredit";
+import * as ethers from "ethers";
 
 const OPERATIONS: Operation[] = [
     {
-        id: "solanaOpenAI",
-        name: "Solana OpenAI Example",
-        handler: delegateCapacityCredit,
-    },
-    {
-        id: "solanaOpenAI",
-        name: "Solana OpenAI Example",
-        handler: getSessionSigsWithCapacityCreditAuthSig,
-    },
-    {
-        id: "solanaOpenAI",
-        name: "Solana OpenAI Example",
-        handler: mintCapacityCredit,
+        id: "paying-for-lit",
+        name: "Demonstrate Paying For Lit Network Flow",
+        handler: async () => {
+            const delegateeEthersSigner = ethers.Wallet.createRandom();
+            const mintedCapacityCredit = await mintCapacityCredit();
+
+            if (!mintedCapacityCredit) {
+                throw new Error("Failed to mint capacity credit");
+            }
+            const delegationAuthSig = await delegateCapacityCredit(
+                mintedCapacityCredit.capacityTokenIdStr,
+                delegateeEthersSigner.address
+            );
+
+            if (!delegationAuthSig) {
+                throw new Error("Failed to delegate capacity credit");
+            }
+
+            const sessionSignature =
+                await getSessionSigsWithCapacityCreditAuthSig(
+                    delegationAuthSig,
+                    delegateeEthersSigner
+                );
+
+            return sessionSignature;
+        },
     },
 ];
 
@@ -28,7 +42,7 @@ export default function SignAndCombine() {
 
     return (
         <div className="flex flex-col items-center gap-[1.2rem]">
-            <h2 className="text-xl font-semibold mb-4">Solana OpenAI</h2>
+            <h2 className="text-xl font-semibold mb-4">Paying For Lit</h2>
 
             {OPERATIONS.map((operation) => (
                 <div key={operation.id} className="w-full max-w-md">

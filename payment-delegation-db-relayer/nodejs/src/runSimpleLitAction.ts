@@ -1,7 +1,7 @@
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import { LIT_NETWORKS_KEYS } from "@lit-protocol/types";
 import { LIT_ABILITY } from "@lit-protocol/constants";
-import ethers from "ethers";
+import * as ethers from "ethers";
 
 import { getEnv } from "./utils";
 import {

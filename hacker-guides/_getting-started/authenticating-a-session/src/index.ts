@@ -1,9 +1,8 @@
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
-import { LIT_RPC, LitNetwork } from "@lit-protocol/constants";
+import { LIT_RPC, LIT_NETWORK, LIT_ABILITY } from "@lit-protocol/constants";
 import {
   createSiweMessage,
   generateAuthSig,
-  LitAbility,
   LitAccessControlConditionResource,
 } from "@lit-protocol/auth-helpers";
 import { ethers } from "ethers";
@@ -22,7 +21,7 @@ export const runExample = async () => {
     );
 
     litNodeClient = new LitNodeClient({
-      litNetwork: LitNetwork.DatilDev,
+      litNetwork: LIT_NETWORK.DatilDev,
       debug: true,
     });
     await litNodeClient.connect();
@@ -33,7 +32,7 @@ export const runExample = async () => {
       resourceAbilityRequests: [
         {
           resource: new LitAccessControlConditionResource("*"),
-          ability: LitAbility.AccessControlConditionDecryption,
+          ability: LIT_ABILITY.AccessControlConditionDecryption,
         },
       ],
       authNeededCallback: async ({
