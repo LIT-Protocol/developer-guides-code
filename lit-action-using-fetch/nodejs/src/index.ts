@@ -1,4 +1,4 @@
-import ethers from "ethers";
+import * as ethers from "ethers";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import { LIT_RPC, LIT_NETWORK, LIT_ABILITY } from "@lit-protocol/constants";
 import {
@@ -8,19 +8,21 @@ import {
   LitPKPResource,
 } from "@lit-protocol/auth-helpers";
 
-import { getEnv } from "./utils";
+import { getEnv, mintPkp } from "./utils";
 import { litActionCode } from "./litAction";
 
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 
-export const runExample = async (pkpPublicKey: string) => {
+export const runExample = async () => {
   let litNodeClient: LitNodeClient;
-
+  
   try {
     const ethersSigner = new ethers.Wallet(
       ETHEREUM_PRIVATE_KEY,
       new ethers.providers.JsonRpcProvider(LIT_RPC.CHRONICLE_YELLOWSTONE)
     );
+
+    const pkpInfo = await mintPkp(ethersSigner);
 
     console.log("🔄 Connecting to Lit network...");
     litNodeClient = new LitNodeClient({
@@ -29,6 +31,8 @@ export const runExample = async (pkpPublicKey: string) => {
     });
     await litNodeClient.connect();
     console.log("✅ Connected to Lit network");
+
+
 
     console.log("🔄 Getting Session Signatures...");
     const sessionSigs = await litNodeClient.getSessionSigs({
@@ -78,7 +82,7 @@ export const runExample = async (pkpPublicKey: string) => {
       code: litActionCode,
       jsParams: {
         toSign: message,
-        publicKey: pkpPublicKey,
+        publicKey: pkpInfo?.publicKey,
         sigName: "sig",
       },
     });

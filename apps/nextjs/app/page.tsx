@@ -59,12 +59,12 @@ export default function Home() {
                     <ArrowRight className="w-4 h-4" />
                 </p>
             </Link>
-            <Link href="/solana-openai">
+            {/* <Link href="/solana-openai">
                 <p className="flex items-center gap-2">
                     <span>Solana Open AI</span>
                     <ArrowRight className="w-4 h-4" />
                 </p>
-            </Link>
+            </Link> */}
             <Link href="/wrapped-keys">
                 <p className="flex items-center gap-2">
                     <span>Wrapped Keys</span>
