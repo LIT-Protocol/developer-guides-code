@@ -8,7 +8,7 @@ declare global {
 const _litActionCode = async () => {
   // const GOOGLE_JWT_AUTH_METHOD_TYPE = 6;
   const GOOGLE_JWT_AUTH_METHOD_TYPE = ethers.utils.keccak256(
-    ethers.utils.toUtf8Bytes('Lit Developer Guide GitHub Auth Example')
+    ethers.utils.toUtf8Bytes('Lit Developer Guide Google Auth Example')
   );
 
   try {
