@@ -1,1 +1,0 @@
-export const mintPkp = async () => {};
