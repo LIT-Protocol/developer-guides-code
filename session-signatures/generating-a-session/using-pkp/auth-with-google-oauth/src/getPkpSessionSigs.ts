@@ -1,13 +1,11 @@
-import { LitNodeClient } from '@lit-protocol/lit-node-client';
-import {
-  LIT_NETWORK as _LIT_NETWORK,
-  LIT_ABILITY,
-} from '@lit-protocol/constants';
+import { disconnectWeb3, LitNodeClient } from '@lit-protocol/lit-node-client';
+import { LIT_NETWORK as _LIT_NETWORK } from '@lit-protocol/constants';
 import { LitPKPResource } from '@lit-protocol/auth-helpers';
 
 import type { MintedPkp } from './types';
 import { litActionCode } from './litAction';
 import { getCapacityCredit, getEthersSigner, getLitNodeClient } from './utils';
+import { LitAbility } from '@lit-protocol/types';
 
 const LIT_NETWORK =
   _LIT_NETWORK[import.meta.env.VITE_LIT_NETWORK as keyof typeof _LIT_NETWORK];
@@ -57,7 +55,7 @@ export const getPkpSessionSigs = async (
       resourceAbilityRequests: [
         {
           resource: new LitPKPResource('*'),
-          ability: LIT_ABILITY.PKPSigning,
+          ability: LitAbility.PKPSigning,
         },
       ],
       expiration: new Date(Date.now() + 1000 * 60 * 10).toISOString(), // 10 minutes
@@ -68,5 +66,8 @@ export const getPkpSessionSigs = async (
     return sessionSignatures;
   } catch (error) {
     console.error(error);
+  } finally {
+    disconnectWeb3();
+    litNodeClient!.disconnect();
   }
 };

@@ -6,6 +6,7 @@ import {
 } from '@react-oauth/google';
 import * as jwt_decode from 'jwt-decode';
 import type { SigResponse } from '@lit-protocol/types';
+import { ethers } from 'ethers';
 
 import './App.css';
 import { mintPkp } from './mintPkp';

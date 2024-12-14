@@ -1,11 +1,10 @@
 import {
   LIT_NETWORK as _LIT_NETWORK,
-  AUTH_METHOD_SCOPE,
-  AUTH_METHOD_TYPE,
+  AuthMethodScope,
+  AuthMethodType,
 } from '@lit-protocol/constants';
-import { ethers } from 'ethers';
 import bs58 from 'bs58';
-
+import { ethers } from 'ethers';
 import {
   getEthersSigner,
   getGoogleAuthMethodInfo,
@@ -27,16 +26,15 @@ export const mintPkp = async (googleUser: GoogleUser) => {
     const { authMethodType, authMethodId } =
       getGoogleAuthMethodInfo(googleUser);
 
+    const GOOGLE_JWT_AUTH_METHOD_TYPE = ethers.utils.keccak256(
+      ethers.utils.toUtf8Bytes('Lit Developer Guide Google Auth Example')
+    );
+
     console.log('🔄 Minting new PKP...');
     const tx =
       await litContracts.pkpHelperContract.write.mintNextAndAddAuthMethods(
-        AUTH_METHOD_TYPE.LitAction, // keyType
-        [
-          AUTH_METHOD_TYPE.LitAction,
-          ethers.utils.keccak256(
-            ethers.utils.toUtf8Bytes('Lit Developer Guide GitHub Auth Example')
-          ),
-        ], // permittedAuthMethodTypes
+        AuthMethodType.LitAction, // keyType
+        [AuthMethodType.LitAction, GOOGLE_JWT_AUTH_METHOD_TYPE], // permittedAuthMethodTypes
         [
           `0x${Buffer.from(
             bs58.decode(await getLitActionCodeIpfsCid())
@@ -44,7 +42,7 @@ export const mintPkp = async (googleUser: GoogleUser) => {
           authMethodId,
         ], // permittedAuthMethodIds
         ['0x', '0x'], // permittedAuthMethodPubkeys
-        [[AUTH_METHOD_SCOPE.SignAnything], [AUTH_METHOD_SCOPE.NoPermissions]], // permittedAuthMethodScopes
+        [[AuthMethodScope.SignAnything], [AuthMethodScope.NoPermissions]], // permittedAuthMethodScopes
         true, // addPkpEthAddressAsPermittedAddress
         true, // sendPkpToItself
         { value: pkpMintCost }

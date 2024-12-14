@@ -1,8 +1,11 @@
 import { ethers } from 'ethers';
 import { LitContracts } from '@lit-protocol/contracts-sdk';
-import { AUTH_METHOD_TYPE, LIT_NETWORK } from '@lit-protocol/constants';
+import { AuthMethodType, LIT_NETWORK } from '@lit-protocol/constants';
 import { LitNodeClient } from '@lit-protocol/lit-node-client';
-import * as IpfsHash from 'typestub-ipfs-only-hash';
+// import * as IpfsHash from 'typestub-ipfs-only-hash';
+// @ts-ignore
+import IpfsHash from 'ipfs-only-hash';
+import bs58 from 'bs58';
 
 import type { GoogleUser } from './types';
 import { litActionCode } from './litAction';
@@ -27,6 +30,7 @@ export const getLitNodeClient = async (
   if (litNodeClient === null) {
     console.log(`🔄 Connecting LitNode client to the ${litNetwork} network...`);
     litNodeClient = new LitNodeClient({
+      // @ts-ignore
       litNetwork,
       debug: Boolean(import.meta.env.VITE_LIT_DEBUG),
     });
@@ -46,6 +50,7 @@ export const getLitContractsClient = async (
     console.log('🔄 Connecting LitContracts client to the network...');
     litContractClient = new LitContracts({
       signer: ethersSigner,
+      // @ts-ignore
       network: litNetwork,
     });
     await litContractClient.connect();
@@ -58,7 +63,7 @@ export const getLitContractsClient = async (
 export const getGoogleAuthMethodInfo = (googleUser: GoogleUser) => {
   console.log('🔄 Generating Auth Method type and ID...');
   const authMethodInfo = {
-    authMethodType: AUTH_METHOD_TYPE.GoogleJwt,
+    authMethodType: AuthMethodType.GoogleJwt,
     // Taken from here:
     // https://github.com/LIT-Protocol/js-sdk/blob/806264ace642c4c3f4fe1dc4f4c1067cdf54ef27/packages/lit-auth-client/src/lib/providers/GoogleProvider.ts#L216C3-L224C4
     authMethodId: ethers.utils.keccak256(
@@ -78,10 +83,22 @@ export const getPkpMintCost = async (litContracts: LitContracts) => {
   return pkpMintCost;
 };
 
+// export const getLitActionCodeIpfsCid = async () => {
+//   console.log('🔄 Calculating the IPFS CID for Lit Action code string...');
+//   const litActionIpfsCid = await IpfsHash.of(litActionCode);
+//   console.log(`✅ Calculated IPFS CID: ${litActionIpfsCid}`);
+
+//   return litActionIpfsCid;
+// };
+
 export const getLitActionCodeIpfsCid = async () => {
   console.log('🔄 Calculating the IPFS CID for Lit Action code string...');
   const litActionIpfsCid = await IpfsHash.of(litActionCode);
-  console.log(`✅ Calculated IPFS CID: ${litActionIpfsCid}`);
+  console.log(
+    `✅ Calculated IPFS CID: ${litActionIpfsCid}. Hexlified version: 0x${Buffer.from(
+      bs58.decode(litActionIpfsCid)
+    ).toString('hex')}`
+  );
 
   return litActionIpfsCid;
 };

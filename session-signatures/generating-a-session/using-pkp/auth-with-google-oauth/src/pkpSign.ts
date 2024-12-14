@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import { LitNodeClient } from '@lit-protocol/lit-node-client';
+import { disconnectWeb3, LitNodeClient } from '@lit-protocol/lit-node-client';
 import { LIT_NETWORK as _LIT_NETWORK } from '@lit-protocol/constants';
 
 import { getLitNodeClient } from './utils';
@@ -17,8 +17,6 @@ export const pkpSign = async (
     console.log('🔄 Signing data with PKP...');
     litNodeClient = await getLitNodeClient(LIT_NETWORK);
 
-    console.log(litSessionSigs, pkpPublicKey, dataToSign);
-
     const res = await litNodeClient.pkpSign({
       pubKey: pkpPublicKey,
       sessionSigs: litSessionSigs,
@@ -30,5 +28,8 @@ export const pkpSign = async (
     return res;
   } catch (error) {
     console.error(error);
+  } finally {
+    disconnectWeb3();
+    litNodeClient!.disconnect();
   }
 };
