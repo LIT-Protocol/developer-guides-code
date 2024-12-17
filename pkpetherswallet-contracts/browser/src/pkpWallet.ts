@@ -143,23 +143,31 @@ export async function pkpWallet() {
           pkpEthersWallet
         );
 
-        const gasPrice = await pkpEthersWallet.getGasPrice();
-        console.log(
-          "Current gas price:",
-          ethers.utils.formatUnits(gasPrice, "gwei"),
-          "gwei"
-        );
+        console.log("amount:", await pkpEthersWallet.getBalance());
 
         contract = await factory.deploy({
-          gasLimit: 3000000,
-          gasPrice: gasPrice,
+          gasLimit: 300000000,
+          gasPrice: provider.getGasPrice(),
         });
 
         await contract.deployed();
         console.log("TestToken deployed to:", contract.address);
 
+        // Wait for deployment transaction to be mined
+        const deployTx = contract.deployTransaction;
+        console.log("Waiting for deployment confirmation...");
+        await deployTx.wait(2); // Wait for 2 block confirmations
+        
+        // Get updated balance after deployment
+        console.log("Updated balance:", ethers.utils.formatEther(await pkpEthersWallet.getBalance()));
+
+        // Reconnect contract with PKP wallet to ensure correct signer
+        contract = contract.connect(pkpEthersWallet);
+        
         console.log("Writing initial message...");
-        const tx = await contract.writeMessage("Hello from new deployment!");
+        const tx = await contract.writeMessage("Hello from new deployment!", {
+          gasLimit: 100000,  // Lower gas limit for message writing
+        });
         await tx.wait();
 
         localStorage.setItem(
