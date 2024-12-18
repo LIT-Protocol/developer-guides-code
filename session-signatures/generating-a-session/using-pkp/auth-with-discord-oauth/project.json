@@ -1,0 +1,8 @@
+{
+  "name": "using-pkp/auth-with-discord-oauth",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "session-signatures/generating-a-session/using-pkp/auth-with-discord-oauth/src",
+  "// targets": "to see all targets run: nx show project using-pkp/auth-with-discord-oauth --web",
+  "targets": {}
+}
