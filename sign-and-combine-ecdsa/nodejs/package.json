@@ -1,10 +1,10 @@
 {
-  "name": "sign-and-combine-ecdsa-nodejs",
+  "name": "simple-swap",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "test": "npx @dotenvx/dotenvx run -- mocha test/**/*.spec.ts"
+    "test": "dotenvx run -- tsx test/runTest.ts"
   },
   "devDependencies": {
     "@types/chai": "^4.3.16",
@@ -22,6 +22,7 @@
     "@lit-protocol/auth-helpers": "^7.0.0-alpha.9",
     "@lit-protocol/constants": "^7.0.0-alpha.9",
     "@lit-protocol/contracts-sdk": "^7.0.0-alpha.9",
+    "@lit-protocol/lit-agent-signer": "^0.1.0",
     "@lit-protocol/lit-node-client": "^7.0.0-alpha.9"
   }
 }
