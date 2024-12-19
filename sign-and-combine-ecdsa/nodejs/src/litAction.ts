@@ -197,8 +197,12 @@ const _litActionCode = async () => {
       }
     );
     
-    console.log("Gas data:", gasData);
     const parsedGasData = JSON.parse(gasData);
+    console.log("Gas data:", {
+      maxFeePerGas: ethers.utils.formatUnits(parsedGasData.maxFeePerGas, 'gwei'),
+      maxPriorityFeePerGas: ethers.utils.formatUnits(parsedGasData.maxPriorityFeePerGas, 'gwei'),
+      nonce: parsedGasData.nonce
+    });
     const maxFeePerGas = parsedGasData.maxFeePerGas;
     const maxPriorityFeePerGas = parsedGasData.maxPriorityFeePerGas;
     const totalGasCost = ethers.BigNumber.from(maxFeePerGas).add(ethers.BigNumber.from(maxPriorityFeePerGas));
@@ -215,10 +219,10 @@ const _litActionCode = async () => {
     console.log("ETH balance sufficient for gas costs", { time: Date.now() - startTime });
     
     console.log("Gas and nonce retrieved", { 
-        time: Date.now() - startTime,
-        maxFeePerGas,
-        maxPriorityFeePerGas,
-        nonce
+      time: Date.now() - startTime,
+      maxFeePerGas: ethers.utils.formatUnits(maxFeePerGas, 'gwei') + ' gwei',
+      maxPriorityFeePerGas: ethers.utils.formatUnits(maxPriorityFeePerGas, 'gwei') + ' gwei',
+      nonce
     });
     // -------------------------------------------------------------------------------------------
 
@@ -255,7 +259,12 @@ const _litActionCode = async () => {
     };
 
     console.log("Signing approval...", { time: Date.now() - startTime });
-    console.log("Approval transaction:", approvalTx);
+    console.log("Approval transaction:", {
+      ...approvalTx,
+      gasLimit: ethers.BigNumber.from(approvalTx.gasLimit).toString(),
+      maxFeePerGas: ethers.utils.formatUnits(approvalTx.maxFeePerGas, 'gwei') + ' gwei',
+      maxPriorityFeePerGas: ethers.utils.formatUnits(approvalTx.maxPriorityFeePerGas, 'gwei') + ' gwei',
+    });
     const approvalSig = await Lit.Actions.signAndCombineEcdsa({
       toSign: ethers.utils.arrayify(
         ethers.utils.keccak256(ethers.utils.serializeTransaction(approvalTx))
