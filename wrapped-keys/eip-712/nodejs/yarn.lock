@@ -688,20 +688,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lit-protocol/access-control-conditions@npm:7.0.1-alpha-0":
-  version: 7.0.1-alpha-0
-  resolution: "@lit-protocol/access-control-conditions@npm:7.0.1-alpha-0"
+"@lit-protocol/access-control-conditions@npm:7.0.4":
+  version: 7.0.4
+  resolution: "@lit-protocol/access-control-conditions@npm:7.0.4"
   dependencies:
     "@ethersproject/abstract-provider": "npm:5.7.0"
     "@ethersproject/contracts": "npm:5.7.0"
     "@ethersproject/providers": "npm:5.7.2"
-    "@lit-protocol/accs-schemas": "npm:^0.0.20"
-    "@lit-protocol/constants": "npm:7.0.1-alpha-0"
+    "@lit-protocol/accs-schemas": "npm:^0.0.22"
+    "@lit-protocol/constants": "npm:7.0.4"
     "@lit-protocol/contracts": "npm:^0.0.74"
-    "@lit-protocol/logger": "npm:7.0.1-alpha-0"
-    "@lit-protocol/misc": "npm:7.0.1-alpha-0"
-    "@lit-protocol/types": "npm:7.0.1-alpha-0"
-    "@lit-protocol/uint8arrays": "npm:7.0.1-alpha-0"
+    "@lit-protocol/logger": "npm:7.0.4"
+    "@lit-protocol/misc": "npm:7.0.4"
+    "@lit-protocol/types": "npm:7.0.4"
+    "@lit-protocol/uint8arrays": "npm:7.0.4"
     "@openagenda/verror": "npm:^3.1.4"
     ajv: "npm:^8.12.0"
     bech32: "npm:^2.0.0"
@@ -710,22 +710,22 @@ __metadata:
     siwe: "npm:^2.3.2"
     tslib: "npm:1.14.1"
     util: "npm:0.12.5"
-  checksum: 10c0/b7dc74573782ad5555833ccdbce48dd77e068604077557729ccda24b23ea5a627ff6a75a2c05a18b634fa248c184245d80d11eb0e75c8363fba2f2095c56a5c8
+  checksum: 10c0/75b3c76feedbd3bded3de96bd3889311df2008ea8bc56dcde6666ce549b8acd27902ba4c202572a9943c4348f47444bea936055a8e2b05a31185b9c6a62b5e28
   languageName: node
   linkType: hard
 
-"@lit-protocol/accs-schemas@npm:^0.0.20":
-  version: 0.0.20
-  resolution: "@lit-protocol/accs-schemas@npm:0.0.20"
+"@lit-protocol/accs-schemas@npm:^0.0.22":
+  version: 0.0.22
+  resolution: "@lit-protocol/accs-schemas@npm:0.0.22"
   dependencies:
     ajv: "npm:^8.12.0"
-  checksum: 10c0/a7360cba6daef49ade76426cffa67cd4d58ff2b6fefa91b1ff4778725bd5ace6ccaa20da7062f71f1e0f79bf547036d5843c6dfe42a08f6d6c3f6181ee38eef9
+  checksum: 10c0/0236deeb210961009ab489c6b54faeba1c189689cf7e16c1ea2d05f92f0a545bb2e58e2441710e24140b43467db865368b3299a7d147e7d8bec4791eac4b8d05
   languageName: node
   linkType: hard
 
-"@lit-protocol/auth-browser@npm:7.0.1-alpha-0":
-  version: 7.0.1-alpha-0
-  resolution: "@lit-protocol/auth-browser@npm:7.0.1-alpha-0"
+"@lit-protocol/auth-browser@npm:7.0.4":
+  version: 7.0.4
+  resolution: "@lit-protocol/auth-browser@npm:7.0.4"
   dependencies:
     "@ethersproject/abstract-provider": "npm:5.7.0"
     "@ethersproject/bytes": "npm:5.7.0"
@@ -733,38 +733,38 @@ __metadata:
     "@ethersproject/providers": "npm:5.7.2"
     "@ethersproject/strings": "npm:5.7.0"
     "@ethersproject/wallet": "npm:5.7.0"
-    "@lit-protocol/accs-schemas": "npm:^0.0.20"
-    "@lit-protocol/constants": "npm:7.0.1-alpha-0"
-    "@lit-protocol/logger": "npm:7.0.1-alpha-0"
-    "@lit-protocol/misc": "npm:7.0.1-alpha-0"
-    "@lit-protocol/misc-browser": "npm:7.0.1-alpha-0"
-    "@lit-protocol/types": "npm:7.0.1-alpha-0"
-    "@lit-protocol/uint8arrays": "npm:7.0.1-alpha-0"
+    "@lit-protocol/accs-schemas": "npm:^0.0.22"
+    "@lit-protocol/constants": "npm:7.0.4"
+    "@lit-protocol/logger": "npm:7.0.4"
+    "@lit-protocol/misc": "npm:7.0.4"
+    "@lit-protocol/misc-browser": "npm:7.0.4"
+    "@lit-protocol/types": "npm:7.0.4"
+    "@lit-protocol/uint8arrays": "npm:7.0.4"
     "@openagenda/verror": "npm:^3.1.4"
     ajv: "npm:^8.12.0"
     bech32: "npm:^2.0.0"
     depd: "npm:^2.0.0"
     ethers: "npm:^5.7.1"
     tslib: "npm:1.14.1"
-  checksum: 10c0/028211c08aa0cc97c93921b3d9f446e09d5f9248b7b20c75e7183e2c48fd490f170fbaff50ffae788f5ba980112e9c5b328ec37a85b774933ed407519799b735
+  checksum: 10c0/c0de55d32550b5d061879ec1029106f5833bbd43784d913f8c9516cf8443fc196372f9a63da5052df9e36be7ce1feea0863be98f81539eaf82ebc800d0e2860f
   languageName: node
   linkType: hard
 
-"@lit-protocol/auth-helpers@npm:7.0.1-alpha-0":
-  version: 7.0.1-alpha-0
-  resolution: "@lit-protocol/auth-helpers@npm:7.0.1-alpha-0"
+"@lit-protocol/auth-helpers@npm:7.0.4":
+  version: 7.0.4
+  resolution: "@lit-protocol/auth-helpers@npm:7.0.4"
   dependencies:
     "@ethersproject/abstract-provider": "npm:5.7.0"
     "@ethersproject/contracts": "npm:5.7.0"
     "@ethersproject/providers": "npm:5.7.2"
-    "@lit-protocol/access-control-conditions": "npm:7.0.1-alpha-0"
-    "@lit-protocol/accs-schemas": "npm:^0.0.20"
-    "@lit-protocol/constants": "npm:7.0.1-alpha-0"
+    "@lit-protocol/access-control-conditions": "npm:7.0.4"
+    "@lit-protocol/accs-schemas": "npm:^0.0.22"
+    "@lit-protocol/constants": "npm:7.0.4"
     "@lit-protocol/contracts": "npm:^0.0.74"
-    "@lit-protocol/logger": "npm:7.0.1-alpha-0"
-    "@lit-protocol/misc": "npm:7.0.1-alpha-0"
-    "@lit-protocol/types": "npm:7.0.1-alpha-0"
-    "@lit-protocol/uint8arrays": "npm:7.0.1-alpha-0"
+    "@lit-protocol/logger": "npm:7.0.4"
+    "@lit-protocol/misc": "npm:7.0.4"
+    "@lit-protocol/types": "npm:7.0.4"
+    "@lit-protocol/uint8arrays": "npm:7.0.4"
     "@openagenda/verror": "npm:^3.1.4"
     ajv: "npm:^8.12.0"
     bech32: "npm:^2.0.0"
@@ -774,41 +774,41 @@ __metadata:
     siwe-recap: "npm:0.0.2-alpha.0"
     tslib: "npm:1.14.1"
     util: "npm:0.12.5"
-  checksum: 10c0/f6f33d22f253e70b0abf673ab19a47940bddee09328353590bc062b3447f4d3dc6298f36af460936723ce51a177d1c0ec3b572b7355b2da8f4b9663468401a05
+  checksum: 10c0/1abad1c5d396655075ae444587842a1e135cc64beb42085e5834841350f0ef0de2fa45268c04297b13cdafc837e6563d328c478c6c85210df688e3c2eab43475
   languageName: node
   linkType: hard
 
-"@lit-protocol/constants@npm:7.0.1-alpha-0":
-  version: 7.0.1-alpha-0
-  resolution: "@lit-protocol/constants@npm:7.0.1-alpha-0"
+"@lit-protocol/constants@npm:7.0.4, @lit-protocol/constants@npm:^7.0.4":
+  version: 7.0.4
+  resolution: "@lit-protocol/constants@npm:7.0.4"
   dependencies:
     "@ethersproject/abstract-provider": "npm:5.7.0"
-    "@lit-protocol/accs-schemas": "npm:^0.0.20"
+    "@lit-protocol/accs-schemas": "npm:^0.0.22"
     "@lit-protocol/contracts": "npm:^0.0.74"
-    "@lit-protocol/types": "npm:7.0.1-alpha-0"
+    "@lit-protocol/types": "npm:7.0.4"
     "@openagenda/verror": "npm:^3.1.4"
     depd: "npm:^2.0.0"
     ethers: "npm:^5.7.1"
     siwe: "npm:^2.3.2"
     tslib: "npm:1.14.1"
-  checksum: 10c0/4edf0bd09209b6c1ebc7c54b6c1d107d87188045543a2e6dcf37916af93f382a43b44bf2cd1cf80e5e4256fc84f87872891c309a3175eb20f7a85184a28c4106
+  checksum: 10c0/4420623a6ddffce272d149fb5a5a47742494e5ae30d1301cca7f6897d23320984a1cef78ce9fa9d030b2b075eee80595e2f940d6987810c9c8f8d61bf84742eb
   languageName: node
   linkType: hard
 
-"@lit-protocol/contracts-sdk@npm:7.0.1-alpha-0":
-  version: 7.0.1-alpha-0
-  resolution: "@lit-protocol/contracts-sdk@npm:7.0.1-alpha-0"
+"@lit-protocol/contracts-sdk@npm:7.0.4, @lit-protocol/contracts-sdk@npm:^7.0.4":
+  version: 7.0.4
+  resolution: "@lit-protocol/contracts-sdk@npm:7.0.4"
   dependencies:
     "@ethersproject/abi": "npm:5.7.0"
     "@ethersproject/abstract-provider": "npm:5.7.0"
     "@ethersproject/contracts": "npm:5.7.0"
     "@ethersproject/providers": "npm:5.7.2"
-    "@lit-protocol/accs-schemas": "npm:^0.0.20"
-    "@lit-protocol/constants": "npm:7.0.1-alpha-0"
+    "@lit-protocol/accs-schemas": "npm:^0.0.22"
+    "@lit-protocol/constants": "npm:7.0.4"
     "@lit-protocol/contracts": "npm:^0.0.74"
-    "@lit-protocol/logger": "npm:7.0.1-alpha-0"
-    "@lit-protocol/misc": "npm:7.0.1-alpha-0"
-    "@lit-protocol/types": "npm:7.0.1-alpha-0"
+    "@lit-protocol/logger": "npm:7.0.4"
+    "@lit-protocol/misc": "npm:7.0.4"
+    "@lit-protocol/types": "npm:7.0.4"
     "@openagenda/verror": "npm:^3.1.4"
     ajv: "npm:^8.12.0"
     bech32: "npm:^2.0.0"
@@ -819,7 +819,7 @@ __metadata:
     siwe: "npm:^2.3.2"
     tslib: "npm:1.14.1"
     util: "npm:0.12.5"
-  checksum: 10c0/543f105da534ad41abaf40943e4199e525944230b00cdaedadd559a4cdf86bd5b59f36ca7a6e5e1594c383b4acc61275886f59e2e5b5b7b967168f597d2e1073
+  checksum: 10c0/c336261151671128656b550f5a7b11fd5c276d6ed39e04fcede9ab3764af6c85cae990414aa264f55daaeea1c7bb09d452bc1251a5a3114eae8ba6c7783fb9e6
   languageName: node
   linkType: hard
 
@@ -832,26 +832,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lit-protocol/core@npm:7.0.1-alpha-0":
-  version: 7.0.1-alpha-0
-  resolution: "@lit-protocol/core@npm:7.0.1-alpha-0"
+"@lit-protocol/core@npm:7.0.4":
+  version: 7.0.4
+  resolution: "@lit-protocol/core@npm:7.0.4"
   dependencies:
     "@ethersproject/abi": "npm:5.7.0"
     "@ethersproject/abstract-provider": "npm:5.7.0"
     "@ethersproject/contracts": "npm:5.7.0"
     "@ethersproject/providers": "npm:5.7.2"
-    "@lit-protocol/access-control-conditions": "npm:7.0.1-alpha-0"
-    "@lit-protocol/accs-schemas": "npm:^0.0.20"
-    "@lit-protocol/constants": "npm:7.0.1-alpha-0"
+    "@lit-protocol/access-control-conditions": "npm:7.0.4"
+    "@lit-protocol/accs-schemas": "npm:^0.0.22"
+    "@lit-protocol/constants": "npm:7.0.4"
     "@lit-protocol/contracts": "npm:^0.0.74"
-    "@lit-protocol/contracts-sdk": "npm:7.0.1-alpha-0"
-    "@lit-protocol/crypto": "npm:7.0.1-alpha-0"
-    "@lit-protocol/logger": "npm:7.0.1-alpha-0"
-    "@lit-protocol/misc": "npm:7.0.1-alpha-0"
-    "@lit-protocol/nacl": "npm:7.0.1-alpha-0"
-    "@lit-protocol/types": "npm:7.0.1-alpha-0"
-    "@lit-protocol/uint8arrays": "npm:7.0.1-alpha-0"
-    "@lit-protocol/wasm": "npm:7.0.1-alpha-0"
+    "@lit-protocol/contracts-sdk": "npm:7.0.4"
+    "@lit-protocol/crypto": "npm:7.0.4"
+    "@lit-protocol/logger": "npm:7.0.4"
+    "@lit-protocol/misc": "npm:7.0.4"
+    "@lit-protocol/nacl": "npm:7.0.4"
+    "@lit-protocol/types": "npm:7.0.4"
+    "@lit-protocol/uint8arrays": "npm:7.0.4"
+    "@lit-protocol/wasm": "npm:7.0.4"
     "@openagenda/verror": "npm:^3.1.4"
     ajv: "npm:^8.12.0"
     bech32: "npm:^2.0.0"
@@ -865,26 +865,26 @@ __metadata:
     siwe: "npm:^2.3.2"
     tslib: "npm:1.14.1"
     util: "npm:0.12.5"
-  checksum: 10c0/72dc2629de1ef7662761de908dc28a031798347ba094c205cedd5cc0012dba2bebae22626f10a44a167c8995ea0a2dc66b7fdd1ec6b1535853417c563b526805
+  checksum: 10c0/334e63fa9430a45f175c461f98434cac79c0b5f9d5f022707d6605f36fdf1be61ea730bdaae89275f824758608987378cd10e4f13d513fcb169599e75a8b07cd
   languageName: node
   linkType: hard
 
-"@lit-protocol/crypto@npm:7.0.1-alpha-0":
-  version: 7.0.1-alpha-0
-  resolution: "@lit-protocol/crypto@npm:7.0.1-alpha-0"
+"@lit-protocol/crypto@npm:7.0.4":
+  version: 7.0.4
+  resolution: "@lit-protocol/crypto@npm:7.0.4"
   dependencies:
     "@ethersproject/abstract-provider": "npm:5.7.0"
     "@ethersproject/contracts": "npm:5.7.0"
     "@ethersproject/providers": "npm:5.7.2"
-    "@lit-protocol/accs-schemas": "npm:^0.0.20"
-    "@lit-protocol/constants": "npm:7.0.1-alpha-0"
+    "@lit-protocol/accs-schemas": "npm:^0.0.22"
+    "@lit-protocol/constants": "npm:7.0.4"
     "@lit-protocol/contracts": "npm:^0.0.74"
-    "@lit-protocol/logger": "npm:7.0.1-alpha-0"
-    "@lit-protocol/misc": "npm:7.0.1-alpha-0"
-    "@lit-protocol/nacl": "npm:7.0.1-alpha-0"
-    "@lit-protocol/types": "npm:7.0.1-alpha-0"
-    "@lit-protocol/uint8arrays": "npm:7.0.1-alpha-0"
-    "@lit-protocol/wasm": "npm:7.0.1-alpha-0"
+    "@lit-protocol/logger": "npm:7.0.4"
+    "@lit-protocol/misc": "npm:7.0.4"
+    "@lit-protocol/nacl": "npm:7.0.4"
+    "@lit-protocol/types": "npm:7.0.4"
+    "@lit-protocol/uint8arrays": "npm:7.0.4"
+    "@lit-protocol/wasm": "npm:7.0.4"
     "@openagenda/verror": "npm:^3.1.4"
     ajv: "npm:^8.12.0"
     bech32: "npm:^2.0.0"
@@ -894,24 +894,24 @@ __metadata:
     siwe: "npm:^2.3.2"
     tslib: "npm:1.14.1"
     util: "npm:0.12.5"
-  checksum: 10c0/1316c772c015340e959fe179309562e19d36a54d55dca8d5589a15b1bef5427f03e5ebebc39ef5780afd7dcc002c2804908b281ec21c5ea044302c9be51bc9eb
+  checksum: 10c0/243b1443f507a454e21d2e0df9a517c6c7745fbe84e49ccf243cde20f416a4d6581c5f534cd0d6085cbbd41074b9b4aabdba115f7570e99e226f52566c4734df
   languageName: node
   linkType: hard
 
-"@lit-protocol/encryption@npm:7.0.1-alpha-0":
-  version: 7.0.1-alpha-0
-  resolution: "@lit-protocol/encryption@npm:7.0.1-alpha-0"
+"@lit-protocol/encryption@npm:7.0.4":
+  version: 7.0.4
+  resolution: "@lit-protocol/encryption@npm:7.0.4"
   dependencies:
     "@ethersproject/abstract-provider": "npm:5.7.0"
     "@ethersproject/contracts": "npm:5.7.0"
     "@ethersproject/providers": "npm:5.7.2"
-    "@lit-protocol/accs-schemas": "npm:^0.0.20"
-    "@lit-protocol/constants": "npm:7.0.1-alpha-0"
+    "@lit-protocol/accs-schemas": "npm:^0.0.22"
+    "@lit-protocol/constants": "npm:7.0.4"
     "@lit-protocol/contracts": "npm:^0.0.74"
-    "@lit-protocol/logger": "npm:7.0.1-alpha-0"
-    "@lit-protocol/misc": "npm:7.0.1-alpha-0"
-    "@lit-protocol/types": "npm:7.0.1-alpha-0"
-    "@lit-protocol/uint8arrays": "npm:7.0.1-alpha-0"
+    "@lit-protocol/logger": "npm:7.0.4"
+    "@lit-protocol/misc": "npm:7.0.4"
+    "@lit-protocol/types": "npm:7.0.4"
+    "@lit-protocol/uint8arrays": "npm:7.0.4"
     "@openagenda/verror": "npm:^3.1.4"
     ajv: "npm:^8.12.0"
     bech32: "npm:^2.0.0"
@@ -920,13 +920,13 @@ __metadata:
     siwe: "npm:^2.3.2"
     tslib: "npm:1.14.1"
     util: "npm:0.12.5"
-  checksum: 10c0/301f9d2c5316daeb17612858456e25a4ce52848b124a3bdb3d537ecf6e173a9d9d8e9915c7541f3c1a524f37fce7b94b356820783b18c87ab9326d068bcfcd08
+  checksum: 10c0/92bd209a02820742ea701b81c1e57d658a74e2503f160aba407687a501a423d6071eb14d51817e6c63de459264be1b92011e358ef549b558b218bea71c807928
   languageName: node
   linkType: hard
 
-"@lit-protocol/lit-auth-client@npm:7.0.1-alpha-0":
-  version: 7.0.1-alpha-0
-  resolution: "@lit-protocol/lit-auth-client@npm:7.0.1-alpha-0"
+"@lit-protocol/lit-auth-client@npm:^7.0.4":
+  version: 7.0.4
+  resolution: "@lit-protocol/lit-auth-client@npm:7.0.4"
   dependencies:
     "@ethersproject/abi": "npm:5.7.0"
     "@ethersproject/abstract-provider": "npm:5.7.0"
@@ -936,24 +936,24 @@ __metadata:
     "@ethersproject/strings": "npm:5.7.0"
     "@ethersproject/transactions": "npm:5.7.0"
     "@ethersproject/wallet": "npm:5.7.0"
-    "@lit-protocol/access-control-conditions": "npm:7.0.1-alpha-0"
-    "@lit-protocol/accs-schemas": "npm:^0.0.20"
-    "@lit-protocol/auth-browser": "npm:7.0.1-alpha-0"
-    "@lit-protocol/auth-helpers": "npm:7.0.1-alpha-0"
-    "@lit-protocol/constants": "npm:7.0.1-alpha-0"
+    "@lit-protocol/access-control-conditions": "npm:7.0.4"
+    "@lit-protocol/accs-schemas": "npm:^0.0.22"
+    "@lit-protocol/auth-browser": "npm:7.0.4"
+    "@lit-protocol/auth-helpers": "npm:7.0.4"
+    "@lit-protocol/constants": "npm:7.0.4"
     "@lit-protocol/contracts": "npm:^0.0.74"
-    "@lit-protocol/contracts-sdk": "npm:7.0.1-alpha-0"
-    "@lit-protocol/core": "npm:7.0.1-alpha-0"
-    "@lit-protocol/crypto": "npm:7.0.1-alpha-0"
-    "@lit-protocol/lit-node-client": "npm:7.0.1-alpha-0"
-    "@lit-protocol/lit-node-client-nodejs": "npm:7.0.1-alpha-0"
-    "@lit-protocol/logger": "npm:7.0.1-alpha-0"
-    "@lit-protocol/misc": "npm:7.0.1-alpha-0"
-    "@lit-protocol/misc-browser": "npm:7.0.1-alpha-0"
-    "@lit-protocol/nacl": "npm:7.0.1-alpha-0"
-    "@lit-protocol/types": "npm:7.0.1-alpha-0"
-    "@lit-protocol/uint8arrays": "npm:7.0.1-alpha-0"
-    "@lit-protocol/wasm": "npm:7.0.1-alpha-0"
+    "@lit-protocol/contracts-sdk": "npm:7.0.4"
+    "@lit-protocol/core": "npm:7.0.4"
+    "@lit-protocol/crypto": "npm:7.0.4"
+    "@lit-protocol/lit-node-client": "npm:7.0.4"
+    "@lit-protocol/lit-node-client-nodejs": "npm:7.0.4"
+    "@lit-protocol/logger": "npm:7.0.4"
+    "@lit-protocol/misc": "npm:7.0.4"
+    "@lit-protocol/misc-browser": "npm:7.0.4"
+    "@lit-protocol/nacl": "npm:7.0.4"
+    "@lit-protocol/types": "npm:7.0.4"
+    "@lit-protocol/uint8arrays": "npm:7.0.4"
+    "@lit-protocol/wasm": "npm:7.0.4"
     "@openagenda/verror": "npm:^3.1.4"
     "@walletconnect/ethereum-provider": "npm:2.9.2"
     ajv: "npm:^8.12.0"
@@ -974,34 +974,34 @@ __metadata:
     tweetnacl: "npm:^1.0.3"
     tweetnacl-util: "npm:^0.15.1"
     util: "npm:0.12.5"
-  checksum: 10c0/45dac95a020b3ebfc8608b79bc71caeabefdba01d57083d7a2c37b0c9674a958af60e5b4d8bd8ec6c2b0414b051ffd38eb80ee1b31b104cd095ce8499b41b6e3
+  checksum: 10c0/3af7417e386be3cd599eba503140aa0a46b94ec079dada2ace52f4b58fa391feb1eb40cdc2dc1cffcb53f2f5a2ca2838f9122bfd00e3f079d55f0149a73774df
   languageName: node
   linkType: hard
 
-"@lit-protocol/lit-node-client-nodejs@npm:7.0.1-alpha-0":
-  version: 7.0.1-alpha-0
-  resolution: "@lit-protocol/lit-node-client-nodejs@npm:7.0.1-alpha-0"
+"@lit-protocol/lit-node-client-nodejs@npm:7.0.4":
+  version: 7.0.4
+  resolution: "@lit-protocol/lit-node-client-nodejs@npm:7.0.4"
   dependencies:
     "@ethersproject/abi": "npm:5.7.0"
     "@ethersproject/abstract-provider": "npm:5.7.0"
     "@ethersproject/contracts": "npm:5.7.0"
     "@ethersproject/providers": "npm:5.7.2"
     "@ethersproject/transactions": "npm:5.7.0"
-    "@lit-protocol/access-control-conditions": "npm:7.0.1-alpha-0"
-    "@lit-protocol/accs-schemas": "npm:^0.0.20"
-    "@lit-protocol/auth-helpers": "npm:7.0.1-alpha-0"
-    "@lit-protocol/constants": "npm:7.0.1-alpha-0"
+    "@lit-protocol/access-control-conditions": "npm:7.0.4"
+    "@lit-protocol/accs-schemas": "npm:^0.0.22"
+    "@lit-protocol/auth-helpers": "npm:7.0.4"
+    "@lit-protocol/constants": "npm:7.0.4"
     "@lit-protocol/contracts": "npm:^0.0.74"
-    "@lit-protocol/contracts-sdk": "npm:7.0.1-alpha-0"
-    "@lit-protocol/core": "npm:7.0.1-alpha-0"
-    "@lit-protocol/crypto": "npm:7.0.1-alpha-0"
-    "@lit-protocol/logger": "npm:7.0.1-alpha-0"
-    "@lit-protocol/misc": "npm:7.0.1-alpha-0"
-    "@lit-protocol/misc-browser": "npm:7.0.1-alpha-0"
-    "@lit-protocol/nacl": "npm:7.0.1-alpha-0"
-    "@lit-protocol/types": "npm:7.0.1-alpha-0"
-    "@lit-protocol/uint8arrays": "npm:7.0.1-alpha-0"
-    "@lit-protocol/wasm": "npm:7.0.1-alpha-0"
+    "@lit-protocol/contracts-sdk": "npm:7.0.4"
+    "@lit-protocol/core": "npm:7.0.4"
+    "@lit-protocol/crypto": "npm:7.0.4"
+    "@lit-protocol/logger": "npm:7.0.4"
+    "@lit-protocol/misc": "npm:7.0.4"
+    "@lit-protocol/misc-browser": "npm:7.0.4"
+    "@lit-protocol/nacl": "npm:7.0.4"
+    "@lit-protocol/types": "npm:7.0.4"
+    "@lit-protocol/uint8arrays": "npm:7.0.4"
+    "@lit-protocol/wasm": "npm:7.0.4"
     "@openagenda/verror": "npm:^3.1.4"
     ajv: "npm:^8.12.0"
     bech32: "npm:^2.0.0"
@@ -1017,13 +1017,13 @@ __metadata:
     siwe-recap: "npm:0.0.2-alpha.0"
     tslib: "npm:1.14.1"
     util: "npm:0.12.5"
-  checksum: 10c0/35e6c57cc8cf7c6e09e7df844c98c17b3601e2ffeefae2287507e0db06ed15d1a8f028afff28ed316c6d0e66f63b4382f4e202bc0497933344a24fb3e9a27281
+  checksum: 10c0/cf333b9b720b6752b0ebb558bbd3b052144ebc0b172a791949a83577f26a035ac0b40b2f2b068dae066cbe33062eec36f067b970baa56b6092094edf6aa2cc2f
   languageName: node
   linkType: hard
 
-"@lit-protocol/lit-node-client@npm:7.0.1-alpha-0":
-  version: 7.0.1-alpha-0
-  resolution: "@lit-protocol/lit-node-client@npm:7.0.1-alpha-0"
+"@lit-protocol/lit-node-client@npm:7.0.4, @lit-protocol/lit-node-client@npm:^7.0.4":
+  version: 7.0.4
+  resolution: "@lit-protocol/lit-node-client@npm:7.0.4"
   dependencies:
     "@ethersproject/abi": "npm:5.7.0"
     "@ethersproject/abstract-provider": "npm:5.7.0"
@@ -1033,23 +1033,23 @@ __metadata:
     "@ethersproject/strings": "npm:5.7.0"
     "@ethersproject/transactions": "npm:5.7.0"
     "@ethersproject/wallet": "npm:5.7.0"
-    "@lit-protocol/access-control-conditions": "npm:7.0.1-alpha-0"
-    "@lit-protocol/accs-schemas": "npm:^0.0.20"
-    "@lit-protocol/auth-browser": "npm:7.0.1-alpha-0"
-    "@lit-protocol/auth-helpers": "npm:7.0.1-alpha-0"
-    "@lit-protocol/constants": "npm:7.0.1-alpha-0"
+    "@lit-protocol/access-control-conditions": "npm:7.0.4"
+    "@lit-protocol/accs-schemas": "npm:^0.0.22"
+    "@lit-protocol/auth-browser": "npm:7.0.4"
+    "@lit-protocol/auth-helpers": "npm:7.0.4"
+    "@lit-protocol/constants": "npm:7.0.4"
     "@lit-protocol/contracts": "npm:^0.0.74"
-    "@lit-protocol/contracts-sdk": "npm:7.0.1-alpha-0"
-    "@lit-protocol/core": "npm:7.0.1-alpha-0"
-    "@lit-protocol/crypto": "npm:7.0.1-alpha-0"
-    "@lit-protocol/lit-node-client-nodejs": "npm:7.0.1-alpha-0"
-    "@lit-protocol/logger": "npm:7.0.1-alpha-0"
-    "@lit-protocol/misc": "npm:7.0.1-alpha-0"
-    "@lit-protocol/misc-browser": "npm:7.0.1-alpha-0"
-    "@lit-protocol/nacl": "npm:7.0.1-alpha-0"
-    "@lit-protocol/types": "npm:7.0.1-alpha-0"
-    "@lit-protocol/uint8arrays": "npm:7.0.1-alpha-0"
-    "@lit-protocol/wasm": "npm:7.0.1-alpha-0"
+    "@lit-protocol/contracts-sdk": "npm:7.0.4"
+    "@lit-protocol/core": "npm:7.0.4"
+    "@lit-protocol/crypto": "npm:7.0.4"
+    "@lit-protocol/lit-node-client-nodejs": "npm:7.0.4"
+    "@lit-protocol/logger": "npm:7.0.4"
+    "@lit-protocol/misc": "npm:7.0.4"
+    "@lit-protocol/misc-browser": "npm:7.0.4"
+    "@lit-protocol/nacl": "npm:7.0.4"
+    "@lit-protocol/types": "npm:7.0.4"
+    "@lit-protocol/uint8arrays": "npm:7.0.4"
+    "@lit-protocol/wasm": "npm:7.0.4"
     "@openagenda/verror": "npm:^3.1.4"
     "@walletconnect/ethereum-provider": "npm:2.9.2"
     ajv: "npm:^8.12.0"
@@ -1067,59 +1067,59 @@ __metadata:
     tweetnacl: "npm:^1.0.3"
     tweetnacl-util: "npm:^0.15.1"
     util: "npm:0.12.5"
-  checksum: 10c0/22a596f3daea678e535d7e71cf733ec1054428d4d2adf83101fee84a6a12bf5bc1e96437ac4f2a9667c8099e2528707bb5d1b3a95008e091f8a520e560593f33
+  checksum: 10c0/188aed65f771c120c052bb8f726090791117aae2215c71fc279b1346a3e3c8baf625f81c3badcfadcce1dd58c28a19a42c011a68a6e736ce950d16ce54730ea4
   languageName: node
   linkType: hard
 
-"@lit-protocol/logger@npm:7.0.1-alpha-0":
-  version: 7.0.1-alpha-0
-  resolution: "@lit-protocol/logger@npm:7.0.1-alpha-0"
+"@lit-protocol/logger@npm:7.0.4":
+  version: 7.0.4
+  resolution: "@lit-protocol/logger@npm:7.0.4"
   dependencies:
     "@ethersproject/abstract-provider": "npm:5.7.0"
-    "@lit-protocol/accs-schemas": "npm:^0.0.20"
-    "@lit-protocol/constants": "npm:7.0.1-alpha-0"
+    "@lit-protocol/accs-schemas": "npm:^0.0.22"
+    "@lit-protocol/constants": "npm:7.0.4"
     "@lit-protocol/contracts": "npm:^0.0.74"
-    "@lit-protocol/types": "npm:7.0.1-alpha-0"
+    "@lit-protocol/types": "npm:7.0.4"
     "@openagenda/verror": "npm:^3.1.4"
     depd: "npm:^2.0.0"
     ethers: "npm:^5.7.1"
     siwe: "npm:^2.3.2"
     tslib: "npm:1.14.1"
-  checksum: 10c0/72d3f4d292210b9a1ca6ca3aa69a910f2b89326aacb5819a3722233fdfc86248cad4254312719e8982c80d0d589ecd76aa2e81de09f8504fdbaa7b81520822b2
+  checksum: 10c0/a11dcd2e7339741c8416ea05651577dfcc7c696368faa3305bd6d0a75301d6e97637b6d4c715ea86b4c283a71ea633dab6c5c1534da531b83281a838e4994103
   languageName: node
   linkType: hard
 
-"@lit-protocol/misc-browser@npm:7.0.1-alpha-0":
-  version: 7.0.1-alpha-0
-  resolution: "@lit-protocol/misc-browser@npm:7.0.1-alpha-0"
+"@lit-protocol/misc-browser@npm:7.0.4":
+  version: 7.0.4
+  resolution: "@lit-protocol/misc-browser@npm:7.0.4"
   dependencies:
     "@ethersproject/abstract-provider": "npm:5.7.0"
-    "@lit-protocol/accs-schemas": "npm:^0.0.20"
-    "@lit-protocol/constants": "npm:7.0.1-alpha-0"
+    "@lit-protocol/accs-schemas": "npm:^0.0.22"
+    "@lit-protocol/constants": "npm:7.0.4"
     "@lit-protocol/contracts": "npm:^0.0.74"
-    "@lit-protocol/types": "npm:7.0.1-alpha-0"
-    "@lit-protocol/uint8arrays": "npm:7.0.1-alpha-0"
+    "@lit-protocol/types": "npm:7.0.4"
+    "@lit-protocol/uint8arrays": "npm:7.0.4"
     "@openagenda/verror": "npm:^3.1.4"
     depd: "npm:^2.0.0"
     ethers: "npm:^5.7.1"
     siwe: "npm:^2.3.2"
     tslib: "npm:1.14.1"
-  checksum: 10c0/61cec754250ce4b1ae147e1927bcea15e00851da5937c3653822431e85ff9355885322e81d89e9d610fc19b089460d4d16c01cfa7d92c1f28dfe4732fa83efbd
+  checksum: 10c0/8c2200f7edb49006f05c741817f4355928aef2b6fd63215566f68553c9a5d71dfa770c83807968663a34703a1e6231647a324aeb9a6be562918d38962e7960ae
   languageName: node
   linkType: hard
 
-"@lit-protocol/misc@npm:7.0.1-alpha-0":
-  version: 7.0.1-alpha-0
-  resolution: "@lit-protocol/misc@npm:7.0.1-alpha-0"
+"@lit-protocol/misc@npm:7.0.4":
+  version: 7.0.4
+  resolution: "@lit-protocol/misc@npm:7.0.4"
   dependencies:
     "@ethersproject/abstract-provider": "npm:5.7.0"
     "@ethersproject/contracts": "npm:5.7.0"
     "@ethersproject/providers": "npm:5.7.2"
-    "@lit-protocol/accs-schemas": "npm:^0.0.20"
-    "@lit-protocol/constants": "npm:7.0.1-alpha-0"
+    "@lit-protocol/accs-schemas": "npm:^0.0.22"
+    "@lit-protocol/constants": "npm:7.0.4"
     "@lit-protocol/contracts": "npm:^0.0.74"
-    "@lit-protocol/logger": "npm:7.0.1-alpha-0"
-    "@lit-protocol/types": "npm:7.0.1-alpha-0"
+    "@lit-protocol/logger": "npm:7.0.4"
+    "@lit-protocol/types": "npm:7.0.4"
     "@openagenda/verror": "npm:^3.1.4"
     ajv: "npm:^8.12.0"
     bech32: "npm:^2.0.0"
@@ -1128,77 +1128,77 @@ __metadata:
     siwe: "npm:^2.3.2"
     tslib: "npm:1.14.1"
     util: "npm:0.12.5"
-  checksum: 10c0/9590698c8e1dc747b5676a4d6702bf50463a5f8786f53d4fa85577ae708fc19e6299d60b11987e11dba2d7e30d6b8218b0d6ba08ca28f1e468b14013d138f9b9
+  checksum: 10c0/72d784d0a912a0625d6b50ffbf4ef4ce6b5cd466a782d87ca23b9934117c7a3a3e36884e506066b7f597d4ad286bdeee6ed424ff3273ab1fbc3881b7d87df40e
   languageName: node
   linkType: hard
 
-"@lit-protocol/nacl@npm:7.0.1-alpha-0":
-  version: 7.0.1-alpha-0
-  resolution: "@lit-protocol/nacl@npm:7.0.1-alpha-0"
+"@lit-protocol/nacl@npm:7.0.4":
+  version: 7.0.4
+  resolution: "@lit-protocol/nacl@npm:7.0.4"
   dependencies:
     tslib: "npm:1.14.1"
-  checksum: 10c0/c31210b6587cacb5c00435dbe905c6b2134ee7cdac26d5ba13d2b8df6550d11f47f9b4fb218170e48306120488434180acc83e7478a17aa85b2cac70b4a4e1ad
+  checksum: 10c0/cb1c041788fad4aade0143293dd925c0735427812ecc86080616bc1b56f612a8725906720b10b33704d4904de02ed161d7fc7f67c204aa3dfb5ceb729c84b0e2
   languageName: node
   linkType: hard
 
-"@lit-protocol/types@npm:7.0.1-alpha-0":
-  version: 7.0.1-alpha-0
-  resolution: "@lit-protocol/types@npm:7.0.1-alpha-0"
+"@lit-protocol/types@npm:7.0.4, @lit-protocol/types@npm:^7.0.4":
+  version: 7.0.4
+  resolution: "@lit-protocol/types@npm:7.0.4"
   dependencies:
     "@ethersproject/abstract-provider": "npm:5.7.0"
-    "@lit-protocol/accs-schemas": "npm:^0.0.20"
+    "@lit-protocol/accs-schemas": "npm:^0.0.22"
     depd: "npm:^2.0.0"
     ethers: "npm:^5.7.1"
     siwe: "npm:^2.3.2"
     tslib: "npm:1.14.1"
-  checksum: 10c0/4d3b28ea79634bf3ec14f015597afe3d58f04e46e3683c09548e11cc988e0b33ec9f12087b8ceda94bf74960744b268bfdee8072fe642dd112fd1c9e9a6bf015
+  checksum: 10c0/70ee91da8121421efcc86120bc7517f4718b8a239f1e9dd13c40b04a54c1997128049b4f605d54a590012c1275ebacd1549ecabc62e8515c687970d8729147d8
   languageName: node
   linkType: hard
 
-"@lit-protocol/uint8arrays@npm:7.0.1-alpha-0":
-  version: 7.0.1-alpha-0
-  resolution: "@lit-protocol/uint8arrays@npm:7.0.1-alpha-0"
+"@lit-protocol/uint8arrays@npm:7.0.4":
+  version: 7.0.4
+  resolution: "@lit-protocol/uint8arrays@npm:7.0.4"
   dependencies:
     "@ethersproject/abstract-provider": "npm:5.7.0"
-    "@lit-protocol/accs-schemas": "npm:^0.0.20"
-    "@lit-protocol/constants": "npm:7.0.1-alpha-0"
+    "@lit-protocol/accs-schemas": "npm:^0.0.22"
+    "@lit-protocol/constants": "npm:7.0.4"
     "@lit-protocol/contracts": "npm:^0.0.74"
-    "@lit-protocol/types": "npm:7.0.1-alpha-0"
+    "@lit-protocol/types": "npm:7.0.4"
     "@openagenda/verror": "npm:^3.1.4"
     depd: "npm:^2.0.0"
     ethers: "npm:^5.7.1"
     siwe: "npm:^2.3.2"
     tslib: "npm:1.14.1"
-  checksum: 10c0/5dabcd1f5d538e2a0e2a70d14aca19621bc6e1807e9bd5a3a736072f4131c9342b200b7aed2ce5a3b4a4b4d22098236a4e84926d3da4ccfb41962d9dc9ed40bb
+  checksum: 10c0/7556fd99a11d352e8213837ac5496b6b434c2bd69f19868447524ecfdfabcf77358f898860706721e4d4978f4decfe4fa6835c7abfdb61f368b9012943747ecb
   languageName: node
   linkType: hard
 
-"@lit-protocol/wasm@npm:7.0.1-alpha-0":
-  version: 7.0.1-alpha-0
-  resolution: "@lit-protocol/wasm@npm:7.0.1-alpha-0"
+"@lit-protocol/wasm@npm:7.0.4":
+  version: 7.0.4
+  resolution: "@lit-protocol/wasm@npm:7.0.4"
   dependencies:
     ethers: "npm:^5.7.1"
     pako: "npm:^2.1.0"
     tslib: "npm:1.14.1"
-  checksum: 10c0/fc791798a681dcb250f61d084c0604fb6049bb3ec143f78347f21389d44a70477ec1869ea2961c172b04a844369cbc256c9764bcb5b599ee0cf2e2d3a92256f1
+  checksum: 10c0/83e92ee488679fcee032ab2730d19c92fc397220991a1fbcf68afc3f1c28abb1246f6542aeb72107f99d046e423eabaf6acc12947fd2608078ffe725faeeb7d2
   languageName: node
   linkType: hard
 
-"@lit-protocol/wrapped-keys@npm:7.0.1-alpha-0":
-  version: 7.0.1-alpha-0
-  resolution: "@lit-protocol/wrapped-keys@npm:7.0.1-alpha-0"
+"@lit-protocol/wrapped-keys@npm:^7.0.4":
+  version: 7.0.4
+  resolution: "@lit-protocol/wrapped-keys@npm:7.0.4"
   dependencies:
     "@ethersproject/abstract-provider": "npm:5.7.0"
     "@ethersproject/contracts": "npm:5.7.0"
     "@ethersproject/providers": "npm:5.7.2"
-    "@lit-protocol/accs-schemas": "npm:^0.0.20"
-    "@lit-protocol/constants": "npm:7.0.1-alpha-0"
+    "@lit-protocol/accs-schemas": "npm:^0.0.22"
+    "@lit-protocol/constants": "npm:7.0.4"
     "@lit-protocol/contracts": "npm:^0.0.74"
-    "@lit-protocol/encryption": "npm:7.0.1-alpha-0"
-    "@lit-protocol/logger": "npm:7.0.1-alpha-0"
-    "@lit-protocol/misc": "npm:7.0.1-alpha-0"
-    "@lit-protocol/types": "npm:7.0.1-alpha-0"
-    "@lit-protocol/uint8arrays": "npm:7.0.1-alpha-0"
+    "@lit-protocol/encryption": "npm:7.0.4"
+    "@lit-protocol/logger": "npm:7.0.4"
+    "@lit-protocol/misc": "npm:7.0.4"
+    "@lit-protocol/types": "npm:7.0.4"
+    "@lit-protocol/uint8arrays": "npm:7.0.4"
     "@openagenda/verror": "npm:^3.1.4"
     ajv: "npm:^8.12.0"
     bech32: "npm:^2.0.0"
@@ -1207,7 +1207,7 @@ __metadata:
     siwe: "npm:^2.3.2"
     tslib: "npm:1.14.1"
     util: "npm:0.12.5"
-  checksum: 10c0/f249d6617012672cafd8149a4ed9cfce100e05e6fb733ba7d8a49089df78f6dca83684bf0d98c4af27eb65d996c2e0b002876b9811c3b25d634a9a2d82d5a83b
+  checksum: 10c0/1b473fccabe6695fe8afeda8c0edca6f550ff904a8d96ea68dffeeeb0bec3247051c817a40132bbc21f06e0e781f6cc2f7b6b2532d60ee78d602f06af343f8b5
   languageName: node
   linkType: hard
 
@@ -2152,13 +2152,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"assertion-error@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "assertion-error@npm:2.0.1"
-  checksum: 10c0/bbbcb117ac6480138f8c93cf7f535614282dea9dc828f540cdece85e3c665e8f78958b96afac52f29ff883c72638e6a87d469ecc9fe5bc902df03ed24a55dba8
-  languageName: node
-  linkType: hard
-
 "async@npm:^3.2.3":
   version: 3.2.6
   resolution: "async@npm:3.2.6"
@@ -2374,16 +2367,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chai@npm:^5.1.1":
-  version: 5.1.1
-  resolution: "chai@npm:5.1.1"
+"chai@npm:4.5.0":
+  version: 4.5.0
+  resolution: "chai@npm:4.5.0"
   dependencies:
-    assertion-error: "npm:^2.0.1"
-    check-error: "npm:^2.1.1"
-    deep-eql: "npm:^5.0.1"
-    loupe: "npm:^3.1.0"
-    pathval: "npm:^2.0.0"
-  checksum: 10c0/e7f00e5881e3d5224f08fe63966ed6566bd9fdde175863c7c16dd5240416de9b34c4a0dd925f4fd64ad56256ca6507d32cf6131c49e1db65c62578eb31d4566c
+    assertion-error: "npm:^1.1.0"
+    check-error: "npm:^1.0.3"
+    deep-eql: "npm:^4.1.3"
+    get-func-name: "npm:^2.0.2"
+    loupe: "npm:^2.3.6"
+    pathval: "npm:^1.1.1"
+    type-detect: "npm:^4.1.0"
+  checksum: 10c0/b8cb596bd1aece1aec659e41a6e479290c7d9bee5b3ad63d2898ad230064e5b47889a3bc367b20100a0853b62e026e2dc514acf25a3c9385f936aa3614d4ab4d
   languageName: node
   linkType: hard
 
@@ -2397,10 +2392,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"check-error@npm:^2.1.1":
-  version: 2.1.1
-  resolution: "check-error@npm:2.1.1"
-  checksum: 10c0/979f13eccab306cf1785fa10941a590b4e7ea9916ea2a4f8c87f0316fc3eab07eabefb6e587424ef0f88cbcd3805791f172ea739863ca3d7ce2afc54641c7f0e
+"check-error@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "check-error@npm:1.0.3"
+  dependencies:
+    get-func-name: "npm:^2.0.2"
+  checksum: 10c0/94aa37a7315c0e8a83d0112b5bfb5a8624f7f0f81057c73e4707729cdd8077166c6aefb3d8e2b92c63ee130d4a2ff94bad46d547e12f3238cc1d78342a973841
   languageName: node
   linkType: hard
 
@@ -2684,10 +2681,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"deep-eql@npm:^5.0.1":
-  version: 5.0.2
-  resolution: "deep-eql@npm:5.0.2"
-  checksum: 10c0/7102cf3b7bb719c6b9c0db2e19bf0aa9318d141581befe8c7ce8ccd39af9eaa4346e5e05adef7f9bd7015da0f13a3a25dcfe306ef79dc8668aedbecb658dd247
+"deep-eql@npm:^4.1.3":
+  version: 4.1.4
+  resolution: "deep-eql@npm:4.1.4"
+  dependencies:
+    type-detect: "npm:^4.0.0"
+  checksum: 10c0/264e0613493b43552fc908f4ff87b8b445c0e6e075656649600e1b8a17a57ee03e960156fce7177646e4d2ddaf8e5ee616d76bd79929ff593e5c79e4e5e6c517
   languageName: node
   linkType: hard
 
@@ -3260,6 +3259,13 @@ __metadata:
   version: 2.0.5
   resolution: "get-caller-file@npm:2.0.5"
   checksum: 10c0/c6c7b60271931fa752aeb92f2b47e355eac1af3a2673f47c9589e8f8a41adc74d45551c1bc57b5e66a80609f10ffb72b6f575e4370d61cc3f7f3aaff01757cde
+  languageName: node
+  linkType: hard
+
+"get-func-name@npm:^2.0.1, get-func-name@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "get-func-name@npm:2.0.2"
+  checksum: 10c0/89830fd07623fa73429a711b9daecdb304386d237c71268007f788f113505ef1d4cc2d0b9680e072c5082490aec9df5d7758bf5ac6f1c37062855e8e3dc0b9df
   languageName: node
   linkType: hard
 
@@ -3950,10 +3956,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"loupe@npm:^3.1.0":
-  version: 3.1.2
-  resolution: "loupe@npm:3.1.2"
-  checksum: 10c0/b13c02e3ddd6a9d5f8bf84133b3242de556512d824dddeea71cce2dbd6579c8f4d672381c4e742d45cf4423d0701765b4a6e5fbc24701def16bc2b40f8daa96a
+"loupe@npm:^2.3.6":
+  version: 2.3.7
+  resolution: "loupe@npm:2.3.7"
+  dependencies:
+    get-func-name: "npm:^2.0.1"
+  checksum: 10c0/71a781c8fc21527b99ed1062043f1f2bb30bdaf54fa4cf92463427e1718bc6567af2988300bc243c1f276e4f0876f29e3cbf7b58106fdc186915687456ce5bf4
   languageName: node
   linkType: hard
 
@@ -4548,10 +4556,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pathval@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "pathval@npm:2.0.0"
-  checksum: 10c0/602e4ee347fba8a599115af2ccd8179836a63c925c23e04bd056d0674a64b39e3a081b643cc7bc0b84390517df2d800a46fcc5598d42c155fe4977095c2f77c5
+"pathval@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "pathval@npm:1.1.1"
+  checksum: 10c0/f63e1bc1b33593cdf094ed6ff5c49c1c0dc5dc20a646ca9725cc7fe7cd9995002d51d5685b9b2ec6814342935748b711bafa840f84c0bb04e38ff40a335c94dc
   languageName: node
   linkType: hard
 
@@ -5214,6 +5222,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"type-detect@npm:^4.0.0, type-detect@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "type-detect@npm:4.1.0"
+  checksum: 10c0/df8157ca3f5d311edc22885abc134e18ff8ffbc93d6a9848af5b682730ca6a5a44499259750197250479c5331a8a75b5537529df5ec410622041650a7f293e2a
+  languageName: node
+  linkType: hard
+
 "type-fest@npm:^0.21.3":
   version: 0.21.3
   resolution: "type-fest@npm:0.21.3"
@@ -5562,16 +5577,16 @@ __metadata:
   resolution: "wrapped-keys-eip-712-nodejs@workspace:."
   dependencies:
     "@dotenvx/dotenvx": "npm:^0.44.1"
-    "@lit-protocol/constants": "npm:7.0.1-alpha-0"
-    "@lit-protocol/contracts-sdk": "npm:7.0.1-alpha-0"
-    "@lit-protocol/lit-auth-client": "npm:7.0.1-alpha-0"
-    "@lit-protocol/lit-node-client": "npm:7.0.1-alpha-0"
-    "@lit-protocol/types": "npm:7.0.1-alpha-0"
-    "@lit-protocol/wrapped-keys": "npm:7.0.1-alpha-0"
+    "@lit-protocol/constants": "npm:^7.0.4"
+    "@lit-protocol/contracts-sdk": "npm:^7.0.4"
+    "@lit-protocol/lit-auth-client": "npm:^7.0.4"
+    "@lit-protocol/lit-node-client": "npm:^7.0.4"
+    "@lit-protocol/types": "npm:^7.0.4"
+    "@lit-protocol/wrapped-keys": "npm:^7.0.4"
     "@types/chai": "npm:^4.3.16"
     "@types/chai-json-schema": "npm:^1.4.10"
     "@types/mocha": "npm:^10.0.6"
-    chai: "npm:^5.1.1"
+    chai: "npm:4.5.0"
     chai-json-schema: "npm:^1.5.1"
     ethers: "npm:v5"
     mocha: "npm:^10.4.0"

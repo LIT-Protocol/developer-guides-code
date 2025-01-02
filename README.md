@@ -6,9 +6,10 @@ Each example has instructions within its own README file!
 
 # Test
 
-Test the examples
+Run the tests for all examples
 
 ```
-yarn
-yarn test-lit
+yarn install
+yarn install:all
+yarn test-node
 ```

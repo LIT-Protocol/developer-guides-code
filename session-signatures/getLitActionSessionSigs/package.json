@@ -9,10 +9,10 @@
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^0.44.1",
-    "@lit-protocol/auth-helpers": "7.0.1-alpha-0",
-    "@lit-protocol/constants": "7.0.1-alpha-0",
-    "@lit-protocol/lit-auth-client": "7.0.1-alpha-0",
-    "@lit-protocol/lit-node-client": "7.0.1-alpha-0",
+    "@lit-protocol/auth-helpers": "^7.0.4",
+    "@lit-protocol/constants": "^7.0.4",
+    "@lit-protocol/lit-auth-client": "^7.0.4",
+    "@lit-protocol/lit-node-client": "^7.0.4",
     "ethers": "v5",
     "typestub-ipfs-only-hash": "^4.0.0"
   },
