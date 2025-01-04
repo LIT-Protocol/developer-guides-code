@@ -5,13 +5,6 @@ import Link from "next/link";
 export default function Home() {
     return (
         <div className="flex flex-col items-center gap-[1.2rem]">
-            {/* <Link href="/btc-trigger">
-                <p className="flex items-center gap-2">
-                    <span>BTC Trigger</span>
-                    <ArrowRight className="w-4 h-4" />
-                </p>
-            </Link> */}
-
             <Link href="/conditional-signing">
                 <p className="flex items-center gap-2">
                     <span>Conditional Signing</span>
@@ -60,18 +53,12 @@ export default function Home() {
                     <ArrowRight className="w-4 h-4" />
                 </p>
             </Link>
-            <Link href="/sign-and-combine">
+            <Link href="/sign-and-combine-ecdsa">
                 <p className="flex items-center gap-2">
-                    <span>Sign and Combine</span>
+                    <span>Sign and Combine ECDSA</span>
                     <ArrowRight className="w-4 h-4" />
                 </p>
             </Link>
-            {/* <Link href="/solana-openai">
-                <p className="flex items-center gap-2">
-                    <span>Solana Open AI</span>
-                    <ArrowRight className="w-4 h-4" />
-                </p>
-            </Link> */}
             <Link href="/wrapped-keys">
                 <p className="flex items-center gap-2">
                     <span>Wrapped Keys</span>

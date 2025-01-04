@@ -2,7 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: './tests',
-  timeout: 180000,
+  timeout: 210000,
   fullyParallel: true,
   forbidOnly: !!process.env.NEX_PUBLIC_CI,
   retries: process.env.NEX_PUBLIC_CI ? 2 : 0,

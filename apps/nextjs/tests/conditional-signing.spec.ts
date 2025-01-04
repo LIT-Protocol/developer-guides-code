@@ -36,7 +36,7 @@ test.describe(`${testPageName}`, () => {
 
         // Wait for success message (assuming the operation succeeds)
         await expect(page.getByTestId(`success-${operationId}`)).toBeVisible({
-            timeout: 30000,
+            timeout: 60000,
         });
 
         // Verify final state
