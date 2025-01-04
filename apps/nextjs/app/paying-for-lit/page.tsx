@@ -37,7 +37,7 @@ const OPERATIONS: Operation[] = [
     },
 ];
 
-export default function SignAndCombine() {
+export default function PayingForLit() {
     const { state, executeOperation } = useOperation();
 
     return (

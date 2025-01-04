@@ -11,7 +11,7 @@ const OPERATIONS: Operation[] = [
     },
 ];
 
-export default function SignAndCombine() {
+export default function SolanaOpenAI() {
     const { state, executeOperation } = useOperation();
 
     return (

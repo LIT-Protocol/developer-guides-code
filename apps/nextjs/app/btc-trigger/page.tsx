@@ -11,7 +11,7 @@ const OPERATIONS: Operation[] = [
     },
 ];
 
-export default function ConditionSigning() {
+export default function BtcTrigger() {
     const { state, executeOperation } = useOperation();
 
     return (

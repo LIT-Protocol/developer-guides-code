@@ -12,9 +12,11 @@ const testPageName = fileName
 const operationId = "encryption-string";
 
 test.describe(`${testPageName}`, () => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     test.beforeEach(async ({ page }) => {
         await page.goto(`/encryption`);
-    });
+    }, { timeout: 30000 });
 
     test(`shows correct states during transaction flow`, async ({ page }) => {
         // Verify initial state

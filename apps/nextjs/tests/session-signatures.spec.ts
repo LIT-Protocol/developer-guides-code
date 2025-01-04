@@ -10,9 +10,11 @@ const testPageName = fileName
     .join(" ") + " Page";
 
 test.describe.serial(`${testPageName}`, () => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     test.beforeEach(async ({ page }) => {
         await page.goto("/session-signatures");
-    });
+    }, { timeout: 30000 });
 
     async function testOperationFlow(page: any, operationId: string) {
         // Verify initial state

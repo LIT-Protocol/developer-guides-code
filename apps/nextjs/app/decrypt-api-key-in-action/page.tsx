@@ -15,7 +15,7 @@ const OPERATIONS: Operation[] = [
     },
 ];
 
-export default function ConditionSigning() {
+export default function DecryptApiKeyInAction() {
     const { state, executeOperation } = useOperation();
 
     return (

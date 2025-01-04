@@ -11,5 +11,5 @@ Run the tests for all examples
 ```
 yarn install
 yarn install:all
-yarn test-node
+yarn test:node
 ```

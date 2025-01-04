@@ -12,7 +12,7 @@ export const getEnv = (name: string): string => {
     const env = envMap[name];
     if (env === undefined || env === "")
       throw new Error(
-        `${name} ENV is not defined, please define it in the .env file`
+        `Browser: ${name} ENV is not defined, please define it in the .env file`
       );
     return env;
   }
@@ -21,7 +21,7 @@ export const getEnv = (name: string): string => {
   const env = process.env[name];
   if (env === undefined || env === "")
     throw new Error(
-      `${name} ENV is not defined, please define it in the .env file`
+      `Node: ${name} ENV is not defined, please define it in the .env file`
     );
   return env;
 };

@@ -39,9 +39,9 @@
     "upgrade:all": "yarn workspaces foreach --all exec yarn up \"@lit-protocol/*@latest\"",
     "upgrade:all:alpha": "yarn workspaces foreach --all exec yarn up \"@lit-protocol/*@alpha\"",
     "clean": "yarn workspaces foreach --all exec rimraf node_modules && yarn rimraf node_modules",
-    "test-node": "nx run-many --target=test-lit --all --parallel=1 --exclude=templates-nodejs,starter-guides-nodejs",
-    "test-browser": "cd apps/nextjs && npm run test",
-    "test": "run-p test-node test-browser"
+    "test:node": "nx run-many --target=test-lit --all --parallel=1 --exclude=templates-nodejs,starter-guides-nodejs",
+    "test:browser": "cd apps/nextjs && npm run test",
+    "test": "run-p test:node test:browser"
   },
   "devDependencies": {
     "node-gyp": "^11.0.0",
