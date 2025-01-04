@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  setup-and-test:
+  node-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -69,6 +69,6 @@ jobs:
         echo "ETHEREUM_PRIVATE_KEY=${{ secrets.ETHEREUM_PRIVATE_KEY }}" > $GITHUB_WORKSPACE/wrapped-keys/nodejs/.env
         echo "SOLANA_PRIVATE_KEY=${{ secrets.SOLANA_PRIVATE_KEY }}" >> $GITHUB_WORKSPACE/wrapped-keys/nodejs/.env
 
-    - name: Run Tests
-      run: yarn test-lit
+    - name: Run Tests in Node.js
+      run: yarn test:node
       continue-on-error: false
