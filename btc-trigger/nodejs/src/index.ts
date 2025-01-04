@@ -10,21 +10,20 @@ import { LitContracts } from "@lit-protocol/contracts-sdk";
 import { LIT_NETWORKS_KEYS } from "@lit-protocol/types";
 import BN from "bn.js";
 import mempoolJS from "@mempool/mempool.js";
-import fetch from "node-fetch";
 import elliptic from "elliptic";
 import * as bitcoin from "bitcoinjs-lib";
 import * as ethers from "ethers";
-import * as ecc from "tiny-secp256k1";
+import * as ecc from "@bitcoin-js/tiny-secp256k1-asmjs";
 import * as bip66 from "bip66";
 import * as crypto from "crypto";
 
 import { litActionCode } from "./litAction";
 import { getEnv } from "./utils";
 
-const PKP_PUBLIC_KEY = getEnv("PKP_PUBLIC_KEY");
+const PKP_PUBLIC_KEY = process.env.PKP_PUBLIC_KEY;
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 const BTC_DESTINATION_ADDRESS = getEnv("BTC_DESTINATION_ADDRESS");
-const BROADCAST_URL = getEnv("BROADCAST_URL");
+const BROADCAST_URL = process.env.BROADCAST_URL;
 const SELECTED_LIT_NETWORK = process.env["LIT_NETWORK"] as LIT_NETWORKS_KEYS || LIT_NETWORK.Datil;
 const LIT_CAPACITY_CREDIT_TOKEN_ID = process.env["LIT_CAPACITY_CREDIT_TOKEN_ID"];
 
@@ -40,7 +39,13 @@ bitcoin.initEccLib(ecc);
 
 export const executeBtcSigning = async () => {
   let litNodeClient: LitNodeClient;
-
+  let pkpInfo: {
+    tokenId?: string;
+    publicKey?: string;
+    ethAddress?: string;
+  } = {
+    publicKey: PKP_PUBLIC_KEY,
+  };
   try {
     litNodeClient = new LitNodeClient({
       litNetwork: SELECTED_LIT_NETWORK,
@@ -54,6 +59,21 @@ export const executeBtcSigning = async () => {
       debug: false,
     });
     await litContracts.connect();
+
+    if (PKP_PUBLIC_KEY === undefined || PKP_PUBLIC_KEY === "") {
+      console.log("🔄 PKP wasn't provided, minting a new one...");
+      pkpInfo = (await litContracts.pkpNftContractUtils.write.mint()).pkp;
+      console.log("✅ PKP successfully minted");
+      console.log(`ℹ️  PKP token ID: ${pkpInfo.tokenId}`);
+      console.log(`ℹ️  PKP public key: ${pkpInfo.publicKey}`);
+      console.log(`ℹ️  PKP ETH address: ${pkpInfo.ethAddress}`);
+    } else {
+      console.log(`ℹ️  Using provided PKP: ${PKP_PUBLIC_KEY}`);
+      pkpInfo = {
+        publicKey: PKP_PUBLIC_KEY,
+        ethAddress: ethers.utils.computeAddress(`0x${PKP_PUBLIC_KEY}`),
+      };
+    }
 
     let capacityTokenId = LIT_CAPACITY_CREDIT_TOKEN_ID;
     if (!capacityTokenId) {
@@ -116,7 +136,10 @@ export const executeBtcSigning = async () => {
     console.log("✅ Got Session Signatures");
 
     console.log("🔄 Deriving a BTC Base58 Address from the Public Key...");
-    const pubKeyBuffer = Buffer.from(PKP_PUBLIC_KEY, "hex");
+    if (!pkpInfo.publicKey) {
+      throw new Error("Public key is undefined");
+    }
+    const pubKeyBuffer = Buffer.from(pkpInfo.publicKey, "hex");
     const sha256Hash = crypto.createHash("sha256").update(pubKeyBuffer).digest();
     const ripemd160Hash = crypto
       .createHash("ripemd160")
@@ -169,7 +192,7 @@ export const executeBtcSigning = async () => {
       sessionSigs,
       jsParams: {
         toSign: sighash,
-        publicKey: PKP_PUBLIC_KEY,
+        publicKey: pkpInfo.publicKey,
       },
     });
     console.log("✅ Lit Action executed");
@@ -224,7 +247,7 @@ export const executeBtcSigning = async () => {
 
     const scriptSig = bitcoin.script.compile([
       signatureWithHashType,
-      Buffer.from(PKP_PUBLIC_KEY, "hex"),
+      Buffer.from(pkpInfo.publicKey, "hex"),
     ]);
 
     tx.setInputScript(0, scriptSig);
@@ -232,8 +255,12 @@ export const executeBtcSigning = async () => {
 
     const txHex = tx.toHex();
 
-    console.log("🔄 Broadcasting transaction...");
-    const broadcastTransaction = async (txHex: string) => {
+    let result;
+    if (BROADCAST_URL === undefined || BROADCAST_URL === "") {
+      result = txHex;
+    }
+    else {
+      console.log("🔄 Broadcasting transaction...");
       try {
         const response = await fetch(BROADCAST_URL, {
           method: "POST",
@@ -254,9 +281,8 @@ export const executeBtcSigning = async () => {
       } catch (error: any) {
         console.error(error.message);
       }
-    };
-
-    return broadcastTransaction(txHex);
+    }
+    return result;
   } catch (error) {
     console.error(error);
   } finally {

@@ -1,9 +1,9 @@
 import { expect, use } from "chai";
 import chaiJsonSchema from "chai-json-schema";
 import { MintCapacityCreditsRes, SessionSigsMap } from "@lit-protocol/types";
-import ethers from "ethers";
+import * as ethers from "ethers";
 import { AuthSig } from "@lit-protocol/auth-helpers";
-import { LitNetwork } from "@lit-protocol/constants";
+import { LIT_NETWORK } from "@lit-protocol/constants";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
 
 import { delegateCapacityCredit } from "../src/delegateCapacityCredit";
@@ -83,7 +83,7 @@ describe("Testing getting Session Signatures using delegation Auth Signature", (
     try {
       console.log("🔄 Connecting to Lit network...");
       litNodeClient = new LitNodeClient({
-        litNetwork: LitNetwork.DatilDev,
+        litNetwork: LIT_NETWORK.DatilDev,
         debug: false,
       });
       await litNodeClient.connect();

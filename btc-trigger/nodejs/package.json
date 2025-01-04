@@ -7,8 +7,9 @@
     "test": "npx @dotenvx/dotenvx run -- mocha test/**/*.spec.ts"
   },
   "dependencies": {
-    "@lit-protocol/constants": "^7.0.0-alpha.9",
-    "@lit-protocol/lit-node-client": "^7.0.0-alpha.9",
+    "@bitcoin-js/tiny-secp256k1-asmjs": "^2.2.3",
+    "@lit-protocol/constants": "^7.0.4",
+    "@lit-protocol/lit-node-client": "^7.0.4",
     "@mempool/mempool.js": "^2.3.0",
     "@simplewebauthn/browser": "^10.0.0",
     "@types/elliptic": "^6.4.18",

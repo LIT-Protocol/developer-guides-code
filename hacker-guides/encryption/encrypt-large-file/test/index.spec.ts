@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { promises as fs } from "fs";
 import { join } from "path";
 
-import { runExample } from "../src";
+import { encryptLargeFile } from "../src";
 
 describe("Encrypting and decrypting a file", () => {
   afterEach(async () => {
@@ -31,7 +31,7 @@ describe("Encrypting and decrypting a file", () => {
     const originalPath = join(process.cwd(), "src", "loremIpsum.txt");
     const originalContent = await fs.readFile(originalPath, "utf8");
 
-    await runExample();
+    await encryptLargeFile();
 
     const decryptedPath = join(
       process.cwd(),

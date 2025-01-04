@@ -23,13 +23,13 @@
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^0.44.1",
-    "@lit-protocol/auth-helpers": "^6.4.10",
-    "@lit-protocol/constants": "^6.4.10",
-    "@lit-protocol/contracts-sdk": "^6.4.10",
-    "@lit-protocol/lit-auth-client": "^6.11.0",
-    "@lit-protocol/lit-node-client": "^6.11.0",
-    "@lit-protocol/wrapped-keys": "^6.11.0",
-    "@solana/web3.js": "1.95.4",
+    "@lit-protocol/auth-helpers": "^7.0.4",
+    "@lit-protocol/constants": "^7.0.4",
+    "@lit-protocol/contracts-sdk": "^7.0.4",
+    "@lit-protocol/lit-auth-client": "^7.0.4",
+    "@lit-protocol/lit-node-client": "^7.0.4",
+    "@lit-protocol/wrapped-keys": "^7.0.4",
+    "@solana/web3.js": "^1.95.4",
     "esbuild": "^0.24.0"
   }
 }

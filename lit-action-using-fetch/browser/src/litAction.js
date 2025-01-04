@@ -6,8 +6,8 @@ export const litActionCode = `
 
   console.log(temp);
 
-  // only sign if the temperature is above 60. If it's below 60, exit.
-  if (temp < 60) {
+  // only sign if the temperature is above 10F. If it's below 10F, exit.
+  if (temp < 10) {
     return;
   }
 

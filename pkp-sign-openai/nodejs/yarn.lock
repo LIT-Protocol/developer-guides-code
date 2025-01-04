@@ -874,6 +874,7 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD:pkp-sign-openai/nodejs/yarn.lock
 "@jridgewell/resolve-uri@npm:^3.0.3":
   version: 3.1.2
   resolution: "@jridgewell/resolve-uri@npm:3.1.2"
@@ -901,16 +902,31 @@ __metadata:
 "@lit-protocol/access-control-conditions@npm:7.0.0":
   version: 7.0.0
   resolution: "@lit-protocol/access-control-conditions@npm:7.0.0"
+=======
+"@lit-protocol/access-control-conditions@npm:7.0.1-alpha-0":
+  version: 7.0.1-alpha-0
+  resolution: "@lit-protocol/access-control-conditions@npm:7.0.1-alpha-0"
+>>>>>>> 9fe50dd (migrating packages):wrapped-keys/nodejs/yarn.lock
   dependencies:
     "@ethersproject/abstract-provider": "npm:5.7.0"
     "@ethersproject/contracts": "npm:5.7.0"
     "@ethersproject/providers": "npm:5.7.2"
+<<<<<<< HEAD:pkp-sign-openai/nodejs/yarn.lock
     "@lit-protocol/accs-schemas": "npm:^0.0.15"
     "@lit-protocol/constants": "npm:7.0.0"
     "@lit-protocol/logger": "npm:7.0.0"
     "@lit-protocol/misc": "npm:7.0.0"
     "@lit-protocol/types": "npm:7.0.0"
     "@lit-protocol/uint8arrays": "npm:7.0.0"
+=======
+    "@lit-protocol/accs-schemas": "npm:^0.0.20"
+    "@lit-protocol/constants": "npm:7.0.1-alpha-0"
+    "@lit-protocol/contracts": "npm:^0.0.74"
+    "@lit-protocol/logger": "npm:7.0.1-alpha-0"
+    "@lit-protocol/misc": "npm:7.0.1-alpha-0"
+    "@lit-protocol/types": "npm:7.0.1-alpha-0"
+    "@lit-protocol/uint8arrays": "npm:7.0.1-alpha-0"
+>>>>>>> 9fe50dd (migrating packages):wrapped-keys/nodejs/yarn.lock
     "@openagenda/verror": "npm:^3.1.4"
     ajv: "npm:^8.12.0"
     bech32: "npm:^2.0.0"
@@ -919,22 +935,32 @@ __metadata:
     siwe: "npm:^2.3.2"
     tslib: "npm:1.14.1"
     util: "npm:0.12.5"
+<<<<<<< HEAD:pkp-sign-openai/nodejs/yarn.lock
   checksum: 10c0/4abdcbf5fb0e497f512f9d001f4f874173cd0592067fa9bcb1bf996e049dc84356c1623f5dfd2602b5238b6a0cab54d257b5896dd2a9b08dc9a37f5a82e80705
+=======
+  checksum: 10c0/b7dc74573782ad5555833ccdbce48dd77e068604077557729ccda24b23ea5a627ff6a75a2c05a18b634fa248c184245d80d11eb0e75c8363fba2f2095c56a5c8
+>>>>>>> 9fe50dd (migrating packages):wrapped-keys/nodejs/yarn.lock
   languageName: node
   linkType: hard
 
-"@lit-protocol/accs-schemas@npm:^0.0.15":
-  version: 0.0.15
-  resolution: "@lit-protocol/accs-schemas@npm:0.0.15"
+"@lit-protocol/accs-schemas@npm:^0.0.20":
+  version: 0.0.20
+  resolution: "@lit-protocol/accs-schemas@npm:0.0.20"
   dependencies:
     ajv: "npm:^8.12.0"
-  checksum: 10c0/086c12bdddfcc4e855c91572305a90a9d96d0d61d85576ba29e7f71707a9cec2ef5d20eaefa8a201124b6c7b782a0797415fdfda89a0d1b26f07dce1993ed6c8
+  checksum: 10c0/a7360cba6daef49ade76426cffa67cd4d58ff2b6fefa91b1ff4778725bd5ace6ccaa20da7062f71f1e0f79bf547036d5843c6dfe42a08f6d6c3f6181ee38eef9
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD:pkp-sign-openai/nodejs/yarn.lock
 "@lit-protocol/auth-browser@npm:7.0.0":
   version: 7.0.0
   resolution: "@lit-protocol/auth-browser@npm:7.0.0"
+=======
+"@lit-protocol/auth-browser@npm:7.0.1-alpha-0":
+  version: 7.0.1-alpha-0
+  resolution: "@lit-protocol/auth-browser@npm:7.0.1-alpha-0"
+>>>>>>> 9fe50dd (migrating packages):wrapped-keys/nodejs/yarn.lock
   dependencies:
     "@ethersproject/abstract-provider": "npm:5.7.0"
     "@ethersproject/bytes": "npm:5.7.0"
@@ -942,6 +968,7 @@ __metadata:
     "@ethersproject/providers": "npm:5.7.2"
     "@ethersproject/strings": "npm:5.7.0"
     "@ethersproject/wallet": "npm:5.7.0"
+<<<<<<< HEAD:pkp-sign-openai/nodejs/yarn.lock
     "@lit-protocol/accs-schemas": "npm:^0.0.15"
     "@lit-protocol/constants": "npm:7.0.0"
     "@lit-protocol/logger": "npm:7.0.0"
@@ -949,12 +976,22 @@ __metadata:
     "@lit-protocol/misc-browser": "npm:7.0.0"
     "@lit-protocol/types": "npm:7.0.0"
     "@lit-protocol/uint8arrays": "npm:7.0.0"
+=======
+    "@lit-protocol/accs-schemas": "npm:^0.0.20"
+    "@lit-protocol/constants": "npm:7.0.1-alpha-0"
+    "@lit-protocol/logger": "npm:7.0.1-alpha-0"
+    "@lit-protocol/misc": "npm:7.0.1-alpha-0"
+    "@lit-protocol/misc-browser": "npm:7.0.1-alpha-0"
+    "@lit-protocol/types": "npm:7.0.1-alpha-0"
+    "@lit-protocol/uint8arrays": "npm:7.0.1-alpha-0"
+>>>>>>> 9fe50dd (migrating packages):wrapped-keys/nodejs/yarn.lock
     "@openagenda/verror": "npm:^3.1.4"
     ajv: "npm:^8.12.0"
     bech32: "npm:^2.0.0"
     depd: "npm:^2.0.0"
     ethers: "npm:^5.7.1"
     tslib: "npm:1.14.1"
+<<<<<<< HEAD:pkp-sign-openai/nodejs/yarn.lock
   checksum: 10c0/05820820399a5a6881edff1b1c95105cc36301e66587cc2246b0e5c3babd873a8e3612dc87c241d3e7e61e7313f7c70ae93463b93bedeb884d5e7fd5f20a1921
   languageName: node
   linkType: hard
@@ -962,10 +999,20 @@ __metadata:
 "@lit-protocol/auth-helpers@npm:7.0.0, @lit-protocol/auth-helpers@npm:^7.0.0":
   version: 7.0.0
   resolution: "@lit-protocol/auth-helpers@npm:7.0.0"
+=======
+  checksum: 10c0/028211c08aa0cc97c93921b3d9f446e09d5f9248b7b20c75e7183e2c48fd490f170fbaff50ffae788f5ba980112e9c5b328ec37a85b774933ed407519799b735
+  languageName: node
+  linkType: hard
+
+"@lit-protocol/auth-helpers@npm:7.0.1-alpha-0":
+  version: 7.0.1-alpha-0
+  resolution: "@lit-protocol/auth-helpers@npm:7.0.1-alpha-0"
+>>>>>>> 9fe50dd (migrating packages):wrapped-keys/nodejs/yarn.lock
   dependencies:
     "@ethersproject/abstract-provider": "npm:5.7.0"
     "@ethersproject/contracts": "npm:5.7.0"
     "@ethersproject/providers": "npm:5.7.2"
+<<<<<<< HEAD:pkp-sign-openai/nodejs/yarn.lock
     "@lit-protocol/access-control-conditions": "npm:7.0.0"
     "@lit-protocol/accs-schemas": "npm:^0.0.15"
     "@lit-protocol/constants": "npm:7.0.0"
@@ -973,6 +1020,16 @@ __metadata:
     "@lit-protocol/misc": "npm:7.0.0"
     "@lit-protocol/types": "npm:7.0.0"
     "@lit-protocol/uint8arrays": "npm:7.0.0"
+=======
+    "@lit-protocol/access-control-conditions": "npm:7.0.1-alpha-0"
+    "@lit-protocol/accs-schemas": "npm:^0.0.20"
+    "@lit-protocol/constants": "npm:7.0.1-alpha-0"
+    "@lit-protocol/contracts": "npm:^0.0.74"
+    "@lit-protocol/logger": "npm:7.0.1-alpha-0"
+    "@lit-protocol/misc": "npm:7.0.1-alpha-0"
+    "@lit-protocol/types": "npm:7.0.1-alpha-0"
+    "@lit-protocol/uint8arrays": "npm:7.0.1-alpha-0"
+>>>>>>> 9fe50dd (migrating packages):wrapped-keys/nodejs/yarn.lock
     "@openagenda/verror": "npm:^3.1.4"
     ajv: "npm:^8.12.0"
     bech32: "npm:^2.0.0"
@@ -982,6 +1039,7 @@ __metadata:
     siwe-recap: "npm:0.0.2-alpha.0"
     tslib: "npm:1.14.1"
     util: "npm:0.12.5"
+<<<<<<< HEAD:pkp-sign-openai/nodejs/yarn.lock
   checksum: 10c0/b2b30f13ce562adfbdf11136d4c26928684f58912dd1eda10073609a4ba5db776ca041c71746ba09d91cd295a2264bd2246421cba58deddd9f7538543786751b
   languageName: node
   linkType: hard
@@ -993,11 +1051,26 @@ __metadata:
     "@ethersproject/abstract-provider": "npm:5.7.0"
     "@lit-protocol/accs-schemas": "npm:^0.0.15"
     "@lit-protocol/types": "npm:7.0.0"
+=======
+  checksum: 10c0/f6f33d22f253e70b0abf673ab19a47940bddee09328353590bc062b3447f4d3dc6298f36af460936723ce51a177d1c0ec3b572b7355b2da8f4b9663468401a05
+  languageName: node
+  linkType: hard
+
+"@lit-protocol/constants@npm:7.0.1-alpha-0":
+  version: 7.0.1-alpha-0
+  resolution: "@lit-protocol/constants@npm:7.0.1-alpha-0"
+  dependencies:
+    "@ethersproject/abstract-provider": "npm:5.7.0"
+    "@lit-protocol/accs-schemas": "npm:^0.0.20"
+    "@lit-protocol/contracts": "npm:^0.0.74"
+    "@lit-protocol/types": "npm:7.0.1-alpha-0"
+>>>>>>> 9fe50dd (migrating packages):wrapped-keys/nodejs/yarn.lock
     "@openagenda/verror": "npm:^3.1.4"
     depd: "npm:^2.0.0"
     ethers: "npm:^5.7.1"
     siwe: "npm:^2.3.2"
     tslib: "npm:1.14.1"
+<<<<<<< HEAD:pkp-sign-openai/nodejs/yarn.lock
   checksum: 10c0/a6095a9d59b394b5c87c2a99e658738e0b4e2d52081d5bf90f1973f342b793022e2e72b34bfa815a9796fdb3df70f30010b89bf9d84296a6f7b1c6d6874d5a69
   languageName: node
   linkType: hard
@@ -1005,16 +1078,34 @@ __metadata:
 "@lit-protocol/contracts-sdk@npm:7.0.0, @lit-protocol/contracts-sdk@npm:^7.0.0":
   version: 7.0.0
   resolution: "@lit-protocol/contracts-sdk@npm:7.0.0"
+=======
+  checksum: 10c0/4edf0bd09209b6c1ebc7c54b6c1d107d87188045543a2e6dcf37916af93f382a43b44bf2cd1cf80e5e4256fc84f87872891c309a3175eb20f7a85184a28c4106
+  languageName: node
+  linkType: hard
+
+"@lit-protocol/contracts-sdk@npm:7.0.1-alpha-0":
+  version: 7.0.1-alpha-0
+  resolution: "@lit-protocol/contracts-sdk@npm:7.0.1-alpha-0"
+>>>>>>> 9fe50dd (migrating packages):wrapped-keys/nodejs/yarn.lock
   dependencies:
     "@ethersproject/abi": "npm:5.7.0"
     "@ethersproject/abstract-provider": "npm:5.7.0"
     "@ethersproject/contracts": "npm:5.7.0"
     "@ethersproject/providers": "npm:5.7.2"
+<<<<<<< HEAD:pkp-sign-openai/nodejs/yarn.lock
     "@lit-protocol/accs-schemas": "npm:^0.0.15"
     "@lit-protocol/constants": "npm:7.0.0"
     "@lit-protocol/logger": "npm:7.0.0"
     "@lit-protocol/misc": "npm:7.0.0"
     "@lit-protocol/types": "npm:7.0.0"
+=======
+    "@lit-protocol/accs-schemas": "npm:^0.0.20"
+    "@lit-protocol/constants": "npm:7.0.1-alpha-0"
+    "@lit-protocol/contracts": "npm:^0.0.74"
+    "@lit-protocol/logger": "npm:7.0.1-alpha-0"
+    "@lit-protocol/misc": "npm:7.0.1-alpha-0"
+    "@lit-protocol/types": "npm:7.0.1-alpha-0"
+>>>>>>> 9fe50dd (migrating packages):wrapped-keys/nodejs/yarn.lock
     "@openagenda/verror": "npm:^3.1.4"
     ajv: "npm:^8.12.0"
     bech32: "npm:^2.0.0"
@@ -1025,7 +1116,11 @@ __metadata:
     siwe: "npm:^2.3.2"
     tslib: "npm:1.14.1"
     util: "npm:0.12.5"
+<<<<<<< HEAD:pkp-sign-openai/nodejs/yarn.lock
   checksum: 10c0/685d08c283b1046b1541c27804bb9cebc2b6808b3efbdb11f208cbdb3e688557cf19a0fbf53fe09ecff771148e4300ab04d4ab3f1e754c10aaae797a854e12a4
+=======
+  checksum: 10c0/543f105da534ad41abaf40943e4199e525944230b00cdaedadd559a4cdf86bd5b59f36ca7a6e5e1594c383b4acc61275886f59e2e5b5b7b967168f597d2e1073
+>>>>>>> 9fe50dd (migrating packages):wrapped-keys/nodejs/yarn.lock
   languageName: node
   linkType: hard
 
@@ -1038,14 +1133,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD:pkp-sign-openai/nodejs/yarn.lock
 "@lit-protocol/core@npm:7.0.0":
   version: 7.0.0
   resolution: "@lit-protocol/core@npm:7.0.0"
+=======
+"@lit-protocol/core@npm:7.0.1-alpha-0":
+  version: 7.0.1-alpha-0
+  resolution: "@lit-protocol/core@npm:7.0.1-alpha-0"
+>>>>>>> 9fe50dd (migrating packages):wrapped-keys/nodejs/yarn.lock
   dependencies:
     "@ethersproject/abi": "npm:5.7.0"
     "@ethersproject/abstract-provider": "npm:5.7.0"
     "@ethersproject/contracts": "npm:5.7.0"
     "@ethersproject/providers": "npm:5.7.2"
+<<<<<<< HEAD:pkp-sign-openai/nodejs/yarn.lock
     "@lit-protocol/access-control-conditions": "npm:7.0.0"
     "@lit-protocol/accs-schemas": "npm:^0.0.15"
     "@lit-protocol/constants": "npm:7.0.0"
@@ -1057,6 +1159,20 @@ __metadata:
     "@lit-protocol/types": "npm:7.0.0"
     "@lit-protocol/uint8arrays": "npm:7.0.0"
     "@lit-protocol/wasm": "npm:7.0.0"
+=======
+    "@lit-protocol/access-control-conditions": "npm:7.0.1-alpha-0"
+    "@lit-protocol/accs-schemas": "npm:^0.0.20"
+    "@lit-protocol/constants": "npm:7.0.1-alpha-0"
+    "@lit-protocol/contracts": "npm:^0.0.74"
+    "@lit-protocol/contracts-sdk": "npm:7.0.1-alpha-0"
+    "@lit-protocol/crypto": "npm:7.0.1-alpha-0"
+    "@lit-protocol/logger": "npm:7.0.1-alpha-0"
+    "@lit-protocol/misc": "npm:7.0.1-alpha-0"
+    "@lit-protocol/nacl": "npm:7.0.1-alpha-0"
+    "@lit-protocol/types": "npm:7.0.1-alpha-0"
+    "@lit-protocol/uint8arrays": "npm:7.0.1-alpha-0"
+    "@lit-protocol/wasm": "npm:7.0.1-alpha-0"
+>>>>>>> 9fe50dd (migrating packages):wrapped-keys/nodejs/yarn.lock
     "@openagenda/verror": "npm:^3.1.4"
     ajv: "npm:^8.12.0"
     bech32: "npm:^2.0.0"
@@ -1070,6 +1186,7 @@ __metadata:
     siwe: "npm:^2.3.2"
     tslib: "npm:1.14.1"
     util: "npm:0.12.5"
+<<<<<<< HEAD:pkp-sign-openai/nodejs/yarn.lock
   checksum: 10c0/6b51fdbef18163700b8fecf33525f05a1d9ae992ee1aeb426f1e96ba21e2e70c14f4ff328b5d5787fa959417fc3f195f00a84d0b462ab8faa67525da0f26d276
   languageName: node
   linkType: hard
@@ -1077,10 +1194,20 @@ __metadata:
 "@lit-protocol/crypto@npm:7.0.0":
   version: 7.0.0
   resolution: "@lit-protocol/crypto@npm:7.0.0"
+=======
+  checksum: 10c0/72dc2629de1ef7662761de908dc28a031798347ba094c205cedd5cc0012dba2bebae22626f10a44a167c8995ea0a2dc66b7fdd1ec6b1535853417c563b526805
+  languageName: node
+  linkType: hard
+
+"@lit-protocol/crypto@npm:7.0.1-alpha-0":
+  version: 7.0.1-alpha-0
+  resolution: "@lit-protocol/crypto@npm:7.0.1-alpha-0"
+>>>>>>> 9fe50dd (migrating packages):wrapped-keys/nodejs/yarn.lock
   dependencies:
     "@ethersproject/abstract-provider": "npm:5.7.0"
     "@ethersproject/contracts": "npm:5.7.0"
     "@ethersproject/providers": "npm:5.7.2"
+<<<<<<< HEAD:pkp-sign-openai/nodejs/yarn.lock
     "@lit-protocol/accs-schemas": "npm:^0.0.15"
     "@lit-protocol/constants": "npm:7.0.0"
     "@lit-protocol/logger": "npm:7.0.0"
@@ -1089,6 +1216,17 @@ __metadata:
     "@lit-protocol/types": "npm:7.0.0"
     "@lit-protocol/uint8arrays": "npm:7.0.0"
     "@lit-protocol/wasm": "npm:7.0.0"
+=======
+    "@lit-protocol/accs-schemas": "npm:^0.0.20"
+    "@lit-protocol/constants": "npm:7.0.1-alpha-0"
+    "@lit-protocol/contracts": "npm:^0.0.74"
+    "@lit-protocol/logger": "npm:7.0.1-alpha-0"
+    "@lit-protocol/misc": "npm:7.0.1-alpha-0"
+    "@lit-protocol/nacl": "npm:7.0.1-alpha-0"
+    "@lit-protocol/types": "npm:7.0.1-alpha-0"
+    "@lit-protocol/uint8arrays": "npm:7.0.1-alpha-0"
+    "@lit-protocol/wasm": "npm:7.0.1-alpha-0"
+>>>>>>> 9fe50dd (migrating packages):wrapped-keys/nodejs/yarn.lock
     "@openagenda/verror": "npm:^3.1.4"
     ajv: "npm:^8.12.0"
     bech32: "npm:^2.0.0"
@@ -1098,6 +1236,7 @@ __metadata:
     siwe: "npm:^2.3.2"
     tslib: "npm:1.14.1"
     util: "npm:0.12.5"
+<<<<<<< HEAD:pkp-sign-openai/nodejs/yarn.lock
   checksum: 10c0/aaf712182559d513c0bdb67d05b36a4086c42f00a49c04e713c6284426e4882ec390e6838450ea0f780627f93b9246ffe42c5dda3f4572151b73784b5996de7c
   languageName: node
   linkType: hard
@@ -1105,6 +1244,41 @@ __metadata:
 "@lit-protocol/lit-auth-client@npm:^7.0.0":
   version: 7.0.0
   resolution: "@lit-protocol/lit-auth-client@npm:7.0.0"
+=======
+  checksum: 10c0/1316c772c015340e959fe179309562e19d36a54d55dca8d5589a15b1bef5427f03e5ebebc39ef5780afd7dcc002c2804908b281ec21c5ea044302c9be51bc9eb
+  languageName: node
+  linkType: hard
+
+"@lit-protocol/encryption@npm:7.0.1-alpha-0":
+  version: 7.0.1-alpha-0
+  resolution: "@lit-protocol/encryption@npm:7.0.1-alpha-0"
+  dependencies:
+    "@ethersproject/abstract-provider": "npm:5.7.0"
+    "@ethersproject/contracts": "npm:5.7.0"
+    "@ethersproject/providers": "npm:5.7.2"
+    "@lit-protocol/accs-schemas": "npm:^0.0.20"
+    "@lit-protocol/constants": "npm:7.0.1-alpha-0"
+    "@lit-protocol/contracts": "npm:^0.0.74"
+    "@lit-protocol/logger": "npm:7.0.1-alpha-0"
+    "@lit-protocol/misc": "npm:7.0.1-alpha-0"
+    "@lit-protocol/types": "npm:7.0.1-alpha-0"
+    "@lit-protocol/uint8arrays": "npm:7.0.1-alpha-0"
+    "@openagenda/verror": "npm:^3.1.4"
+    ajv: "npm:^8.12.0"
+    bech32: "npm:^2.0.0"
+    depd: "npm:^2.0.0"
+    ethers: "npm:^5.7.1"
+    siwe: "npm:^2.3.2"
+    tslib: "npm:1.14.1"
+    util: "npm:0.12.5"
+  checksum: 10c0/301f9d2c5316daeb17612858456e25a4ce52848b124a3bdb3d537ecf6e173a9d9d8e9915c7541f3c1a524f37fce7b94b356820783b18c87ab9326d068bcfcd08
+  languageName: node
+  linkType: hard
+
+"@lit-protocol/lit-auth-client@npm:7.0.1-alpha-0":
+  version: 7.0.1-alpha-0
+  resolution: "@lit-protocol/lit-auth-client@npm:7.0.1-alpha-0"
+>>>>>>> 9fe50dd (migrating packages):wrapped-keys/nodejs/yarn.lock
   dependencies:
     "@ethersproject/abi": "npm:5.7.0"
     "@ethersproject/abstract-provider": "npm:5.7.0"
@@ -1114,6 +1288,7 @@ __metadata:
     "@ethersproject/strings": "npm:5.7.0"
     "@ethersproject/transactions": "npm:5.7.0"
     "@ethersproject/wallet": "npm:5.7.0"
+<<<<<<< HEAD:pkp-sign-openai/nodejs/yarn.lock
     "@lit-protocol/access-control-conditions": "npm:7.0.0"
     "@lit-protocol/accs-schemas": "npm:^0.0.15"
     "@lit-protocol/auth-browser": "npm:7.0.0"
@@ -1131,6 +1306,26 @@ __metadata:
     "@lit-protocol/types": "npm:7.0.0"
     "@lit-protocol/uint8arrays": "npm:7.0.0"
     "@lit-protocol/wasm": "npm:7.0.0"
+=======
+    "@lit-protocol/access-control-conditions": "npm:7.0.1-alpha-0"
+    "@lit-protocol/accs-schemas": "npm:^0.0.20"
+    "@lit-protocol/auth-browser": "npm:7.0.1-alpha-0"
+    "@lit-protocol/auth-helpers": "npm:7.0.1-alpha-0"
+    "@lit-protocol/constants": "npm:7.0.1-alpha-0"
+    "@lit-protocol/contracts": "npm:^0.0.74"
+    "@lit-protocol/contracts-sdk": "npm:7.0.1-alpha-0"
+    "@lit-protocol/core": "npm:7.0.1-alpha-0"
+    "@lit-protocol/crypto": "npm:7.0.1-alpha-0"
+    "@lit-protocol/lit-node-client": "npm:7.0.1-alpha-0"
+    "@lit-protocol/lit-node-client-nodejs": "npm:7.0.1-alpha-0"
+    "@lit-protocol/logger": "npm:7.0.1-alpha-0"
+    "@lit-protocol/misc": "npm:7.0.1-alpha-0"
+    "@lit-protocol/misc-browser": "npm:7.0.1-alpha-0"
+    "@lit-protocol/nacl": "npm:7.0.1-alpha-0"
+    "@lit-protocol/types": "npm:7.0.1-alpha-0"
+    "@lit-protocol/uint8arrays": "npm:7.0.1-alpha-0"
+    "@lit-protocol/wasm": "npm:7.0.1-alpha-0"
+>>>>>>> 9fe50dd (migrating packages):wrapped-keys/nodejs/yarn.lock
     "@openagenda/verror": "npm:^3.1.4"
     "@walletconnect/ethereum-provider": "npm:2.9.2"
     ajv: "npm:^8.12.0"
@@ -1151,6 +1346,7 @@ __metadata:
     tweetnacl: "npm:^1.0.3"
     tweetnacl-util: "npm:^0.15.1"
     util: "npm:0.12.5"
+<<<<<<< HEAD:pkp-sign-openai/nodejs/yarn.lock
   checksum: 10c0/9ad24a087f234229331691d765ef66eb3da82089a04aff9cff54b1b8f7bb556b1eacb8c759244130f4ae015616c5d83cf136bf6d9671272193b9b57519ffdc2f
   languageName: node
   linkType: hard
@@ -1158,12 +1354,22 @@ __metadata:
 "@lit-protocol/lit-node-client-nodejs@npm:7.0.0":
   version: 7.0.0
   resolution: "@lit-protocol/lit-node-client-nodejs@npm:7.0.0"
+=======
+  checksum: 10c0/45dac95a020b3ebfc8608b79bc71caeabefdba01d57083d7a2c37b0c9674a958af60e5b4d8bd8ec6c2b0414b051ffd38eb80ee1b31b104cd095ce8499b41b6e3
+  languageName: node
+  linkType: hard
+
+"@lit-protocol/lit-node-client-nodejs@npm:7.0.1-alpha-0":
+  version: 7.0.1-alpha-0
+  resolution: "@lit-protocol/lit-node-client-nodejs@npm:7.0.1-alpha-0"
+>>>>>>> 9fe50dd (migrating packages):wrapped-keys/nodejs/yarn.lock
   dependencies:
     "@ethersproject/abi": "npm:5.7.0"
     "@ethersproject/abstract-provider": "npm:5.7.0"
     "@ethersproject/contracts": "npm:5.7.0"
     "@ethersproject/providers": "npm:5.7.2"
     "@ethersproject/transactions": "npm:5.7.0"
+<<<<<<< HEAD:pkp-sign-openai/nodejs/yarn.lock
     "@lit-protocol/access-control-conditions": "npm:7.0.0"
     "@lit-protocol/accs-schemas": "npm:^0.0.15"
     "@lit-protocol/auth-helpers": "npm:7.0.0"
@@ -1178,6 +1384,23 @@ __metadata:
     "@lit-protocol/types": "npm:7.0.0"
     "@lit-protocol/uint8arrays": "npm:7.0.0"
     "@lit-protocol/wasm": "npm:7.0.0"
+=======
+    "@lit-protocol/access-control-conditions": "npm:7.0.1-alpha-0"
+    "@lit-protocol/accs-schemas": "npm:^0.0.20"
+    "@lit-protocol/auth-helpers": "npm:7.0.1-alpha-0"
+    "@lit-protocol/constants": "npm:7.0.1-alpha-0"
+    "@lit-protocol/contracts": "npm:^0.0.74"
+    "@lit-protocol/contracts-sdk": "npm:7.0.1-alpha-0"
+    "@lit-protocol/core": "npm:7.0.1-alpha-0"
+    "@lit-protocol/crypto": "npm:7.0.1-alpha-0"
+    "@lit-protocol/logger": "npm:7.0.1-alpha-0"
+    "@lit-protocol/misc": "npm:7.0.1-alpha-0"
+    "@lit-protocol/misc-browser": "npm:7.0.1-alpha-0"
+    "@lit-protocol/nacl": "npm:7.0.1-alpha-0"
+    "@lit-protocol/types": "npm:7.0.1-alpha-0"
+    "@lit-protocol/uint8arrays": "npm:7.0.1-alpha-0"
+    "@lit-protocol/wasm": "npm:7.0.1-alpha-0"
+>>>>>>> 9fe50dd (migrating packages):wrapped-keys/nodejs/yarn.lock
     "@openagenda/verror": "npm:^3.1.4"
     ajv: "npm:^8.12.0"
     bech32: "npm:^2.0.0"
@@ -1193,6 +1416,7 @@ __metadata:
     siwe-recap: "npm:0.0.2-alpha.0"
     tslib: "npm:1.14.1"
     util: "npm:0.12.5"
+<<<<<<< HEAD:pkp-sign-openai/nodejs/yarn.lock
   checksum: 10c0/0abd21d285dc10c24f78cc4b73d72540d28cbfbcb66ab5c8e948150436dc7ddf93a99bfb56ce031f97b2b460b9c4572504c5903c66f2e913cb8dcf2c7238f14b
   languageName: node
   linkType: hard
@@ -1200,6 +1424,15 @@ __metadata:
 "@lit-protocol/lit-node-client@npm:7.0.0, @lit-protocol/lit-node-client@npm:^7.0.0":
   version: 7.0.0
   resolution: "@lit-protocol/lit-node-client@npm:7.0.0"
+=======
+  checksum: 10c0/35e6c57cc8cf7c6e09e7df844c98c17b3601e2ffeefae2287507e0db06ed15d1a8f028afff28ed316c6d0e66f63b4382f4e202bc0497933344a24fb3e9a27281
+  languageName: node
+  linkType: hard
+
+"@lit-protocol/lit-node-client@npm:7.0.1-alpha-0":
+  version: 7.0.1-alpha-0
+  resolution: "@lit-protocol/lit-node-client@npm:7.0.1-alpha-0"
+>>>>>>> 9fe50dd (migrating packages):wrapped-keys/nodejs/yarn.lock
   dependencies:
     "@ethersproject/abi": "npm:5.7.0"
     "@ethersproject/abstract-provider": "npm:5.7.0"
@@ -1209,6 +1442,7 @@ __metadata:
     "@ethersproject/strings": "npm:5.7.0"
     "@ethersproject/transactions": "npm:5.7.0"
     "@ethersproject/wallet": "npm:5.7.0"
+<<<<<<< HEAD:pkp-sign-openai/nodejs/yarn.lock
     "@lit-protocol/access-control-conditions": "npm:7.0.0"
     "@lit-protocol/accs-schemas": "npm:^0.0.15"
     "@lit-protocol/auth-browser": "npm:7.0.0"
@@ -1225,6 +1459,25 @@ __metadata:
     "@lit-protocol/types": "npm:7.0.0"
     "@lit-protocol/uint8arrays": "npm:7.0.0"
     "@lit-protocol/wasm": "npm:7.0.0"
+=======
+    "@lit-protocol/access-control-conditions": "npm:7.0.1-alpha-0"
+    "@lit-protocol/accs-schemas": "npm:^0.0.20"
+    "@lit-protocol/auth-browser": "npm:7.0.1-alpha-0"
+    "@lit-protocol/auth-helpers": "npm:7.0.1-alpha-0"
+    "@lit-protocol/constants": "npm:7.0.1-alpha-0"
+    "@lit-protocol/contracts": "npm:^0.0.74"
+    "@lit-protocol/contracts-sdk": "npm:7.0.1-alpha-0"
+    "@lit-protocol/core": "npm:7.0.1-alpha-0"
+    "@lit-protocol/crypto": "npm:7.0.1-alpha-0"
+    "@lit-protocol/lit-node-client-nodejs": "npm:7.0.1-alpha-0"
+    "@lit-protocol/logger": "npm:7.0.1-alpha-0"
+    "@lit-protocol/misc": "npm:7.0.1-alpha-0"
+    "@lit-protocol/misc-browser": "npm:7.0.1-alpha-0"
+    "@lit-protocol/nacl": "npm:7.0.1-alpha-0"
+    "@lit-protocol/types": "npm:7.0.1-alpha-0"
+    "@lit-protocol/uint8arrays": "npm:7.0.1-alpha-0"
+    "@lit-protocol/wasm": "npm:7.0.1-alpha-0"
+>>>>>>> 9fe50dd (migrating packages):wrapped-keys/nodejs/yarn.lock
     "@openagenda/verror": "npm:^3.1.4"
     "@walletconnect/ethereum-provider": "npm:2.9.2"
     ajv: "npm:^8.12.0"
@@ -1242,6 +1495,7 @@ __metadata:
     tweetnacl: "npm:^1.0.3"
     tweetnacl-util: "npm:^0.15.1"
     util: "npm:0.12.5"
+<<<<<<< HEAD:pkp-sign-openai/nodejs/yarn.lock
   checksum: 10c0/e82d3f4d8955a34464af50c07b7304cd56399d5fc221429a6d5f709a042da618baafa4b9c9df48508681d8dd7a37214f0f29b8de3a45547b91d9c9912528584d
   languageName: node
   linkType: hard
@@ -1254,11 +1508,27 @@ __metadata:
     "@lit-protocol/accs-schemas": "npm:^0.0.15"
     "@lit-protocol/constants": "npm:7.0.0"
     "@lit-protocol/types": "npm:7.0.0"
+=======
+  checksum: 10c0/22a596f3daea678e535d7e71cf733ec1054428d4d2adf83101fee84a6a12bf5bc1e96437ac4f2a9667c8099e2528707bb5d1b3a95008e091f8a520e560593f33
+  languageName: node
+  linkType: hard
+
+"@lit-protocol/logger@npm:7.0.1-alpha-0":
+  version: 7.0.1-alpha-0
+  resolution: "@lit-protocol/logger@npm:7.0.1-alpha-0"
+  dependencies:
+    "@ethersproject/abstract-provider": "npm:5.7.0"
+    "@lit-protocol/accs-schemas": "npm:^0.0.20"
+    "@lit-protocol/constants": "npm:7.0.1-alpha-0"
+    "@lit-protocol/contracts": "npm:^0.0.74"
+    "@lit-protocol/types": "npm:7.0.1-alpha-0"
+>>>>>>> 9fe50dd (migrating packages):wrapped-keys/nodejs/yarn.lock
     "@openagenda/verror": "npm:^3.1.4"
     depd: "npm:^2.0.0"
     ethers: "npm:^5.7.1"
     siwe: "npm:^2.3.2"
     tslib: "npm:1.14.1"
+<<<<<<< HEAD:pkp-sign-openai/nodejs/yarn.lock
   checksum: 10c0/2699fc64026324457d571935bc1ce8d1ab9a2f098c38adfceb42c0d20306a69d404285c6eb563d6f22580e35e8092d967d72be70675c5f1ed2f003347ffc55c1
   languageName: node
   linkType: hard
@@ -1272,11 +1542,28 @@ __metadata:
     "@lit-protocol/constants": "npm:7.0.0"
     "@lit-protocol/types": "npm:7.0.0"
     "@lit-protocol/uint8arrays": "npm:7.0.0"
+=======
+  checksum: 10c0/72d3f4d292210b9a1ca6ca3aa69a910f2b89326aacb5819a3722233fdfc86248cad4254312719e8982c80d0d589ecd76aa2e81de09f8504fdbaa7b81520822b2
+  languageName: node
+  linkType: hard
+
+"@lit-protocol/misc-browser@npm:7.0.1-alpha-0":
+  version: 7.0.1-alpha-0
+  resolution: "@lit-protocol/misc-browser@npm:7.0.1-alpha-0"
+  dependencies:
+    "@ethersproject/abstract-provider": "npm:5.7.0"
+    "@lit-protocol/accs-schemas": "npm:^0.0.20"
+    "@lit-protocol/constants": "npm:7.0.1-alpha-0"
+    "@lit-protocol/contracts": "npm:^0.0.74"
+    "@lit-protocol/types": "npm:7.0.1-alpha-0"
+    "@lit-protocol/uint8arrays": "npm:7.0.1-alpha-0"
+>>>>>>> 9fe50dd (migrating packages):wrapped-keys/nodejs/yarn.lock
     "@openagenda/verror": "npm:^3.1.4"
     depd: "npm:^2.0.0"
     ethers: "npm:^5.7.1"
     siwe: "npm:^2.3.2"
     tslib: "npm:1.14.1"
+<<<<<<< HEAD:pkp-sign-openai/nodejs/yarn.lock
   checksum: 10c0/80eb6355eef56d1ed052ae20bd9d9ff37125247b666088def8588477767c90fc72874fcc4a6560f9f714be96bc526cd1e1dbdf62dfd5dde95bb48b9ac638367c
   languageName: node
   linkType: hard
@@ -1284,14 +1571,31 @@ __metadata:
 "@lit-protocol/misc@npm:7.0.0":
   version: 7.0.0
   resolution: "@lit-protocol/misc@npm:7.0.0"
+=======
+  checksum: 10c0/61cec754250ce4b1ae147e1927bcea15e00851da5937c3653822431e85ff9355885322e81d89e9d610fc19b089460d4d16c01cfa7d92c1f28dfe4732fa83efbd
+  languageName: node
+  linkType: hard
+
+"@lit-protocol/misc@npm:7.0.1-alpha-0":
+  version: 7.0.1-alpha-0
+  resolution: "@lit-protocol/misc@npm:7.0.1-alpha-0"
+>>>>>>> 9fe50dd (migrating packages):wrapped-keys/nodejs/yarn.lock
   dependencies:
     "@ethersproject/abstract-provider": "npm:5.7.0"
     "@ethersproject/contracts": "npm:5.7.0"
     "@ethersproject/providers": "npm:5.7.2"
+<<<<<<< HEAD:pkp-sign-openai/nodejs/yarn.lock
     "@lit-protocol/accs-schemas": "npm:^0.0.15"
     "@lit-protocol/constants": "npm:7.0.0"
     "@lit-protocol/logger": "npm:7.0.0"
     "@lit-protocol/types": "npm:7.0.0"
+=======
+    "@lit-protocol/accs-schemas": "npm:^0.0.20"
+    "@lit-protocol/constants": "npm:7.0.1-alpha-0"
+    "@lit-protocol/contracts": "npm:^0.0.74"
+    "@lit-protocol/logger": "npm:7.0.1-alpha-0"
+    "@lit-protocol/types": "npm:7.0.1-alpha-0"
+>>>>>>> 9fe50dd (migrating packages):wrapped-keys/nodejs/yarn.lock
     "@openagenda/verror": "npm:^3.1.4"
     ajv: "npm:^8.12.0"
     bech32: "npm:^2.0.0"
@@ -1300,6 +1604,7 @@ __metadata:
     siwe: "npm:^2.3.2"
     tslib: "npm:1.14.1"
     util: "npm:0.12.5"
+<<<<<<< HEAD:pkp-sign-openai/nodejs/yarn.lock
   checksum: 10c0/5d34ec5a0a6e58cae4197d500e8219360b3b1e0328ab9d6103ad7bd96d9313c9ffb7389d1e27b52ab989767b61a63f842f7c719cb1566d77b01e37eb86e8605d
   languageName: node
   linkType: hard
@@ -1316,13 +1621,32 @@ __metadata:
 "@lit-protocol/types@npm:7.0.0":
   version: 7.0.0
   resolution: "@lit-protocol/types@npm:7.0.0"
+=======
+  checksum: 10c0/9590698c8e1dc747b5676a4d6702bf50463a5f8786f53d4fa85577ae708fc19e6299d60b11987e11dba2d7e30d6b8218b0d6ba08ca28f1e468b14013d138f9b9
+  languageName: node
+  linkType: hard
+
+"@lit-protocol/nacl@npm:7.0.1-alpha-0":
+  version: 7.0.1-alpha-0
+  resolution: "@lit-protocol/nacl@npm:7.0.1-alpha-0"
+  dependencies:
+    tslib: "npm:1.14.1"
+  checksum: 10c0/c31210b6587cacb5c00435dbe905c6b2134ee7cdac26d5ba13d2b8df6550d11f47f9b4fb218170e48306120488434180acc83e7478a17aa85b2cac70b4a4e1ad
+  languageName: node
+  linkType: hard
+
+"@lit-protocol/types@npm:7.0.1-alpha-0":
+  version: 7.0.1-alpha-0
+  resolution: "@lit-protocol/types@npm:7.0.1-alpha-0"
+>>>>>>> 9fe50dd (migrating packages):wrapped-keys/nodejs/yarn.lock
   dependencies:
     "@ethersproject/abstract-provider": "npm:5.7.0"
-    "@lit-protocol/accs-schemas": "npm:^0.0.15"
+    "@lit-protocol/accs-schemas": "npm:^0.0.20"
     depd: "npm:^2.0.0"
     ethers: "npm:^5.7.1"
     siwe: "npm:^2.3.2"
     tslib: "npm:1.14.1"
+<<<<<<< HEAD:pkp-sign-openai/nodejs/yarn.lock
   checksum: 10c0/94f7391cd529bf756b2203b706833adbbdf1d31f2655c7a76a0ab87f734b40da2d7e0b998f37271e9df4920c73dc983c995c20553a54b848e13c68cc9228fc4a
   languageName: node
   linkType: hard
@@ -1335,11 +1659,27 @@ __metadata:
     "@lit-protocol/accs-schemas": "npm:^0.0.15"
     "@lit-protocol/constants": "npm:7.0.0"
     "@lit-protocol/types": "npm:7.0.0"
+=======
+  checksum: 10c0/4d3b28ea79634bf3ec14f015597afe3d58f04e46e3683c09548e11cc988e0b33ec9f12087b8ceda94bf74960744b268bfdee8072fe642dd112fd1c9e9a6bf015
+  languageName: node
+  linkType: hard
+
+"@lit-protocol/uint8arrays@npm:7.0.1-alpha-0":
+  version: 7.0.1-alpha-0
+  resolution: "@lit-protocol/uint8arrays@npm:7.0.1-alpha-0"
+  dependencies:
+    "@ethersproject/abstract-provider": "npm:5.7.0"
+    "@lit-protocol/accs-schemas": "npm:^0.0.20"
+    "@lit-protocol/constants": "npm:7.0.1-alpha-0"
+    "@lit-protocol/contracts": "npm:^0.0.74"
+    "@lit-protocol/types": "npm:7.0.1-alpha-0"
+>>>>>>> 9fe50dd (migrating packages):wrapped-keys/nodejs/yarn.lock
     "@openagenda/verror": "npm:^3.1.4"
     depd: "npm:^2.0.0"
     ethers: "npm:^5.7.1"
     siwe: "npm:^2.3.2"
     tslib: "npm:1.14.1"
+<<<<<<< HEAD:pkp-sign-openai/nodejs/yarn.lock
   checksum: 10c0/4817828237e00a85026aa19072f841510f7e139d4ef4f6bafaaed06c467f2ca263ee2b9b287bea884a21fb959bff5941e613bc4a16a8efaf5bb9864ed1d6f21b
   languageName: node
   linkType: hard
@@ -1347,11 +1687,51 @@ __metadata:
 "@lit-protocol/wasm@npm:7.0.0":
   version: 7.0.0
   resolution: "@lit-protocol/wasm@npm:7.0.0"
+=======
+  checksum: 10c0/5dabcd1f5d538e2a0e2a70d14aca19621bc6e1807e9bd5a3a736072f4131c9342b200b7aed2ce5a3b4a4b4d22098236a4e84926d3da4ccfb41962d9dc9ed40bb
+  languageName: node
+  linkType: hard
+
+"@lit-protocol/wasm@npm:7.0.1-alpha-0":
+  version: 7.0.1-alpha-0
+  resolution: "@lit-protocol/wasm@npm:7.0.1-alpha-0"
+>>>>>>> 9fe50dd (migrating packages):wrapped-keys/nodejs/yarn.lock
   dependencies:
     ethers: "npm:^5.7.1"
     pako: "npm:^2.1.0"
     tslib: "npm:1.14.1"
+<<<<<<< HEAD:pkp-sign-openai/nodejs/yarn.lock
   checksum: 10c0/836a65eafec2528a1910d9c7306843e5cae912e68773edf928cdf747bcf439032f2c628a7029dab332635ae98d69782827564be232db7b816f90c425a858500e
+=======
+  checksum: 10c0/fc791798a681dcb250f61d084c0604fb6049bb3ec143f78347f21389d44a70477ec1869ea2961c172b04a844369cbc256c9764bcb5b599ee0cf2e2d3a92256f1
+  languageName: node
+  linkType: hard
+
+"@lit-protocol/wrapped-keys@npm:7.0.1-alpha-0":
+  version: 7.0.1-alpha-0
+  resolution: "@lit-protocol/wrapped-keys@npm:7.0.1-alpha-0"
+  dependencies:
+    "@ethersproject/abstract-provider": "npm:5.7.0"
+    "@ethersproject/contracts": "npm:5.7.0"
+    "@ethersproject/providers": "npm:5.7.2"
+    "@lit-protocol/accs-schemas": "npm:^0.0.20"
+    "@lit-protocol/constants": "npm:7.0.1-alpha-0"
+    "@lit-protocol/contracts": "npm:^0.0.74"
+    "@lit-protocol/encryption": "npm:7.0.1-alpha-0"
+    "@lit-protocol/logger": "npm:7.0.1-alpha-0"
+    "@lit-protocol/misc": "npm:7.0.1-alpha-0"
+    "@lit-protocol/types": "npm:7.0.1-alpha-0"
+    "@lit-protocol/uint8arrays": "npm:7.0.1-alpha-0"
+    "@openagenda/verror": "npm:^3.1.4"
+    ajv: "npm:^8.12.0"
+    bech32: "npm:^2.0.0"
+    depd: "npm:^2.0.0"
+    ethers: "npm:^5.7.1"
+    siwe: "npm:^2.3.2"
+    tslib: "npm:1.14.1"
+    util: "npm:0.12.5"
+  checksum: 10c0/f249d6617012672cafd8149a4ed9cfce100e05e6fb733ba7d8a49089df78f6dca83684bf0d98c4af27eb65d996c2e0b002876b9811c3b25d634a9a2d82d5a83b
+>>>>>>> 9fe50dd (migrating packages):wrapped-keys/nodejs/yarn.lock
   languageName: node
   linkType: hard
 
@@ -5909,6 +6289,37 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD:pkp-sign-openai/nodejs/yarn.lock
+=======
+"wrapped-keys-nodejs@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "wrapped-keys-nodejs@workspace:."
+  dependencies:
+    "@dotenvx/dotenvx": "npm:^0.44.1"
+    "@lit-protocol/auth-browser": "npm:7.0.1-alpha-0"
+    "@lit-protocol/auth-helpers": "npm:7.0.1-alpha-0"
+    "@lit-protocol/constants": "npm:7.0.1-alpha-0"
+    "@lit-protocol/contracts-sdk": "npm:7.0.1-alpha-0"
+    "@lit-protocol/lit-auth-client": "npm:7.0.1-alpha-0"
+    "@lit-protocol/lit-node-client": "npm:7.0.1-alpha-0"
+    "@lit-protocol/wrapped-keys": "npm:7.0.1-alpha-0"
+    "@solana/web3.js": "npm:^1.95.3"
+    "@types/chai": "npm:^4.3.16"
+    "@types/chai-json-schema": "npm:^1.4.10"
+    "@types/mocha": "npm:^10.0.6"
+    bs58: "npm:^5.0.0"
+    chai: "npm:^5.1.1"
+    chai-json-schema: "npm:^1.5.1"
+    ethers: "npm:v5"
+    mocha: "npm:^10.4.0"
+    tsc: "npm:^2.0.4"
+    tsx: "npm:^4.12.0"
+    tweetnacl: "npm:^1.0.3"
+    typescript: "npm:^5.4.5"
+  languageName: unknown
+  linkType: soft
+
+>>>>>>> 9fe50dd (migrating packages):wrapped-keys/nodejs/yarn.lock
 "wrappy@npm:1":
   version: 1.0.2
   resolution: "wrappy@npm:1.0.2"
