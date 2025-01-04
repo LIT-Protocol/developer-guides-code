@@ -2,6 +2,7 @@
   "name": "lit-developer-guides-code",
   "private": true,
   "workspaces": [
+    "apps/nextjs",
     "btc-trigger/nodejs",
     "conditional-signing/browser",
     "conditional-signing/nodejs",

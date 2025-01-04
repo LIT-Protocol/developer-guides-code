@@ -5,6 +5,15 @@ __metadata:
   version: 8
   cacheKey: 10c0
 
+"@bitcoin-js/tiny-secp256k1-asmjs@npm:^2.2.3":
+  version: 2.2.3
+  resolution: "@bitcoin-js/tiny-secp256k1-asmjs@npm:2.2.3"
+  dependencies:
+    uint8array-tools: "npm:0.0.7"
+  checksum: 10c0/45cb38271789a8268d5ccfa589d9548b8eeb16822a36e15658c49dee510d3de9ab4941571ea0c139409e3788826e923c759c99f2b6cf46d193776349e439a281
+  languageName: node
+  linkType: hard
+
 "@esbuild/aix-ppc64@npm:0.23.1":
   version: 0.23.1
   resolution: "@esbuild/aix-ppc64@npm:0.23.1"
@@ -2156,6 +2165,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "btc-trigger-nodejs@workspace:."
   dependencies:
+    "@bitcoin-js/tiny-secp256k1-asmjs": "npm:^2.2.3"
     "@lit-protocol/constants": "npm:^7.0.4"
     "@lit-protocol/lit-node-client": "npm:^7.0.4"
     "@mempool/mempool.js": "npm:^2.3.0"

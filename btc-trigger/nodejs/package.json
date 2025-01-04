@@ -7,6 +7,7 @@
     "test": "npx @dotenvx/dotenvx run -- mocha test/**/*.spec.ts"
   },
   "dependencies": {
+    "@bitcoin-js/tiny-secp256k1-asmjs": "^2.2.3",
     "@lit-protocol/constants": "^7.0.4",
     "@lit-protocol/lit-node-client": "^7.0.4",
     "@mempool/mempool.js": "^2.3.0",

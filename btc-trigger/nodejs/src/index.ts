@@ -10,11 +10,10 @@ import { LitContracts } from "@lit-protocol/contracts-sdk";
 import { LIT_NETWORKS_KEYS } from "@lit-protocol/types";
 import BN from "bn.js";
 import mempoolJS from "@mempool/mempool.js";
-import fetch from "node-fetch";
 import elliptic from "elliptic";
 import * as bitcoin from "bitcoinjs-lib";
 import * as ethers from "ethers";
-import * as ecc from "tiny-secp256k1";
+import * as ecc from "@bitcoin-js/tiny-secp256k1-asmjs";
 import * as bip66 from "bip66";
 import * as crypto from "crypto";
 
