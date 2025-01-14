@@ -2,7 +2,7 @@ import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import { LitActionResource, LitPKPResource } from "@lit-protocol/auth-helpers";
 import { LIT_ABILITY } from "@lit-protocol/constants";
 
-import { litActionCode } from "../litAction";
+import { litActionCode } from "./lit-action";
 import { getLitContracts } from "./get-lit-contracts";
 import { connectEthereumAccount } from "./connect-ethereum-account";
 import { getLitNodeClient } from "./get-lit-node-client";

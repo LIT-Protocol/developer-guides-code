@@ -37,5 +37,6 @@ Next click the `Get PKP Session Sigs` button to get PKP session signatures using
 ## Specific Files to Reference
 
 - [App.tsx](./src/App.tsx): Contains the frontend code and the code for authenticating the Google account
+- [lit/lit-action.ts](./src/lit/lit-action.ts): Contains the Lit Action code for authenticating a Google OAuth JWT to authorize signing using the PKP
 - [lit/mint-pkp.ts](./src/lit/mint-pkp.ts): Contains the code for minting a PKP and attaching the authenticated Google account as a permitted auth method
 - [lit/get-pkp-session-sigs.ts](./src/lit/get-pkp-session-sigs.ts): Contains the code for getting PKP session signatures using the authenticated Google account

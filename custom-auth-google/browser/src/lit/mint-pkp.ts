@@ -1,7 +1,7 @@
 import bs58 from "bs58";
 import IpfsHash from "typestub-ipfs-only-hash";
 
-import { litActionCode } from "../litAction";
+import { litActionCode } from "./lit-action";
 import { connectEthereumAccount } from "./connect-ethereum-account";
 import { getGoogleAuthMethodMetadata } from "./get-auth-method-metadata";
 import { getLitContracts } from "./get-lit-contracts";
