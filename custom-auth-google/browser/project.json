@@ -1,0 +1,6 @@
+{
+    "name": "lit-relayer-mintPKPThroughRelayer-browser",
+    "root": "lit-relayer/mintPKPThroughRelayer/browser",
+    "targets": {
+    }
+}
