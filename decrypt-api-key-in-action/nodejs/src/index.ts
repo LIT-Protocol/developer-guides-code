@@ -18,7 +18,7 @@ const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 const LIT_CAPACITY_CREDIT_TOKEN_ID =
   process.env["LIT_CAPACITY_CREDIT_TOKEN_ID"];
 
-export const decryptApiKey = async (alchemyUrl: string, key: string) => {
+export const decryptApiKey = async () => {
   let litNodeClient: LitNodeClient;
 
   try {
@@ -72,31 +72,26 @@ export const decryptApiKey = async (alchemyUrl: string, key: string) => {
 
     const accessControlConditions: AccessControlConditions = [
       {
-        contractAddress: "",
+        contractAddress: "evmBasic",
         standardContractType: "",
-        chain: "ethereum",
+        chain: "base",
         method: "eth_getBalance",
         parameters: [":userAddress", "latest"],
         returnValueTest: {
-          comparator: ">=",
-          value: "0",
+          comparator: "<=",
+          value: "1000000000000", // 0.000001 ETH
         },
       },
     ];
 
     console.log("🔐 Encrypting the API key...");
+
     const { ciphertext, dataToEncryptHash } = await encryptString(
       {
         accessControlConditions,
-        dataToEncrypt: key,
+        dataToEncrypt: "key",
       },
       litNodeClient
-    );
-    console.log("✅ Encrypted the API key");
-    console.log("ℹ️  The base64-encoded ciphertext:", ciphertext);
-    console.log(
-      "ℹ️  The hash of the data that was encrypted:",
-      dataToEncryptHash
     );
 
     console.log("🔄 Generating the Resource String...");
@@ -149,14 +144,15 @@ export const decryptApiKey = async (alchemyUrl: string, key: string) => {
       sessionSigs,
       code: litActionCode,
       jsParams: {
-        accessControlConditions,
-        ciphertext,
-        dataToEncryptHash,
-        alchemyUrl,
+        decryptRequest: {
+          accessControlConditions,
+          ciphertext,
+          dataToEncryptHash,
+        },
       },
     });
     console.log("✅ Executed the Lit Action");
-
+    console.log(litActionSignatures);
     return litActionSignatures;
   } catch (error) {
     console.error(error);

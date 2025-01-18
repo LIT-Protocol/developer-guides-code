@@ -1,45 +1,36 @@
 // @ts-nocheck
 
 const _litActionCode = async () => {
+  if (!decryptRequest) {
+    return null;
+  }
+
+  console.log(decryptRequest);
+
   try {
-    const apiKey = await Lit.Actions.decryptAndCombine({
-      accessControlConditions,
-      ciphertext,
-      dataToEncryptHash,
+    const decrypted = await Lit.Actions.decryptAndCombine({
+      accessControlConditions: decryptRequest.accessControlConditions,
+      ciphertext: decryptRequest.ciphertext,
+      dataToEncryptHash: decryptRequest.dataToEncryptHash,
       authSig: null,
-      chain: "ethereum",
+      chain: decryptRequest.chain,
     });
-
-    const blockNumber = await Lit.Actions.runOnce(
-      { waitForResponse: true, name: "ETH block number" },
-      async () => {
-        const resp = await fetch(`${alchemyUrl}${apiKey}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            jsonrpc: "2.0",
-            id: 1,
-            method: "eth_blockNumber",
-            params: [],
-          }),
-        });
-
-        let data = await resp.json();
-
-        if (data.result) {
-          data.result = parseInt(data.result, 16);
-          return data.result;
-        } else {
-          throw new Error("Failed to get block number");
-        }
-      }
-    );
-
-    Lit.Actions.setResponse({ response: blockNumber });
-  } catch (e) {
-    Lit.Actions.setResponse({ response: e.message });
+    Lit.Actions.setResponse({
+      response: JSON.stringify({
+        message: "Successfully decrypted data",
+        decrypted,
+        timestamp: Date.now().toString(),
+      }),
+    });
+    return decrypted;
+  } catch (err) {
+    Lit.Actions.setResponse({
+      response: JSON.stringify({
+        message: `failed to decrypt data: ${err.message}`,
+        timestamp: Date.now().toString(),
+      }),
+    });
+    return err.message;
   }
 };
 
