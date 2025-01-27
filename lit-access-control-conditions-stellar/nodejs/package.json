@@ -1,0 +1,27 @@
+{
+  "name": "lit-access-control-conditions-stellar-in-nodejs",
+  "version": "0.1.0",
+  "description": "Example of Lit Action Access Control Conditions using Stellar in Node.js",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build:lit-action": "deno task bundle",
+    "start": "npx @dotenvx/dotenvx run -- node --loader ts-node/esm src/index.ts",
+    "test:lit-action": "deno task test"
+  },
+  "dependencies": {
+    "@dotenvx/dotenvx": "^0.37.1",
+    "@lit-protocol/auth-helpers": "^6.0.0-beta.1",
+    "@lit-protocol/constants": "^6.0.0-beta.1",
+    "@lit-protocol/contracts-sdk": "^6.0.0-beta.1",
+    "@lit-protocol/lit-node-client-nodejs": "^6.0.0-beta.1",
+    "@stellar/stellar-base": "^11.1.0",
+    "ethers": "5.7.2"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "tsc": "^2.0.4",
+    "tslib": "^2.6.2",
+    "typescript": "^5.4.5"
+  }
+}
