@@ -1,28 +1,27 @@
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
-import { LitNetwork, ProviderType } from "@lit-protocol/constants";
-import { LitAuthClient, WebAuthnProvider } from "@lit-protocol/lit-auth-client";
+import { LIT_NETWORK} from "@lit-protocol/constants";
+import { LitRelay, WebAuthnProvider } from "@lit-protocol/lit-auth-client";
 
-export const litWebAuthnOAuth = async () => {
+export const litWebAuthnOAuthRegister = async () => {
   try {
     console.log("🔄 Connecting to the Lit network...");
     const litNodeClient = new LitNodeClient({
-      litNetwork: LitNetwork.DatilDev,
+      litNetwork: LIT_NETWORK.DatilDev,
       debug: false,
     });
     await litNodeClient.connect();
     console.log("✅ Connected to the Lit network");
 
     console.log("🔄 Initializing LitAuthClient and WebAuthnProvider...");
-    const litAuthClient = new LitAuthClient({
-      litRelayConfig: {
-        // Request a Lit Relay Server API key here: https://forms.gle/RNZYtGYTY9BcD9MEA
-        relayApiKey: "<Your Lit Relay Server API Key>",
-      },
+    const litRelay = new LitRelay({
+      relayUrl: LitRelay.getRelayUrl(LIT_NETWORK.DatilDev),
+      relayApiKey: 'test-api-key',
     });
-    const webAuthnProvider = litAuthClient.initProvider<WebAuthnProvider>(
-      ProviderType.WebAuthn
-    );
-    console.log("✅ Initialized LitAuthClient and WebAuthnProvider");
+
+    const webAuthnProvider = new WebAuthnProvider({
+      relay: litRelay,
+      litNodeClient,
+    });
 
     console.log("🔄 Acquiring passkey options...");
     const options = await webAuthnProvider.register();
@@ -31,6 +30,31 @@ export const litWebAuthnOAuth = async () => {
     console.log("🔄 Creating passkey and minting PKP...");
     const txHash = await webAuthnProvider.verifyAndMintPKPThroughRelayer(options);
     console.log("✅ Created passkey and minted PKP:", txHash);
+  } catch (error) {
+    console.error("Failed to connect to Lit Network:", error);
+  }
+};
+
+export const litWebAuthnOAuthAuthenticate = async () => {
+  try {
+    console.log("🔄 Connecting to the Lit network...");
+    const litNodeClient = new LitNodeClient({
+      litNetwork: LIT_NETWORK.DatilDev,
+      debug: false,
+    });
+    await litNodeClient.connect();
+    console.log("✅ Connected to the Lit network");
+
+    console.log("🔄 Initializing LitAuthClient and WebAuthnProvider...");
+    const litRelay = new LitRelay({
+      relayUrl: LitRelay.getRelayUrl(LIT_NETWORK.DatilDev),
+      relayApiKey: 'test-api-key',
+    });
+
+    const webAuthnProvider = new WebAuthnProvider({
+      relay: litRelay,
+      litNodeClient,
+    });
 
     console.log("🔄 Authenticating with passkey...");
     const authMethod = await webAuthnProvider.authenticate();
@@ -41,3 +65,4 @@ export const litWebAuthnOAuth = async () => {
     console.error("Failed to connect to Lit Network:", error);
   }
 };
+

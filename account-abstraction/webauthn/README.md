@@ -1,4 +1,4 @@
-# Google OAuth
+# Passkey/WebAuthn
 
 The `@lit-protocol/lit-auth-client` package simplifies the implementation of web authentication in your web applications. It provides a `LitAuthClient` class, which you can use to initialize a provider for web authentication.
 
