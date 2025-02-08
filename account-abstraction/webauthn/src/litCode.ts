@@ -3,9 +3,10 @@ import { LIT_NETWORK} from "@lit-protocol/constants";
 import { LitRelay, WebAuthnProvider } from "@lit-protocol/lit-auth-client";
 
 export const litWebAuthnOAuthRegister = async () => {
+  let litNodeClient: LitNodeClient;
   try {
     console.log("🔄 Connecting to the Lit network...");
-    const litNodeClient = new LitNodeClient({
+    litNodeClient = new LitNodeClient({
       litNetwork: LIT_NETWORK.DatilDev,
       debug: false,
     });
@@ -33,12 +34,16 @@ export const litWebAuthnOAuthRegister = async () => {
   } catch (error) {
     console.error("Failed to connect to Lit Network:", error);
   }
+  finally {
+    litNodeClient!.disconnect();
+  }
 };
 
 export const litWebAuthnOAuthAuthenticate = async () => {
+  let litNodeClient: LitNodeClient;
   try {
     console.log("🔄 Connecting to the Lit network...");
-    const litNodeClient = new LitNodeClient({
+    litNodeClient = new LitNodeClient({
       litNetwork: LIT_NETWORK.DatilDev,
       debug: false,
     });
@@ -63,6 +68,9 @@ export const litWebAuthnOAuthAuthenticate = async () => {
     console.log("**LOGGING FOR DEBUGGING PURPOSES, DO NOT EXPOSE**", authMethod);
   } catch (error) {
     console.error("Failed to connect to Lit Network:", error);
+  }
+  finally {
+    litNodeClient!.disconnect();
   }
 };
 
