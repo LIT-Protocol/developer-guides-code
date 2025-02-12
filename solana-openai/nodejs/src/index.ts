@@ -1,7 +1,7 @@
-import { LitNodeClient, encryptString } from "@lit-protocol/lit-node-client";
-import { LitNetwork, LIT_RPC } from "@lit-protocol/constants";
+import { LitNodeClient } from "@lit-protocol/lit-node-client";
+import { encryptString } from '@lit-protocol/encryption';
+import { LIT_NETWORK, LIT_RPC, LIT_ABILITY } from "@lit-protocol/constants";
 import {
-  LitAbility,
   LitActionResource,
   LitPKPResource,
 } from "@lit-protocol/auth-helpers";
@@ -22,8 +22,8 @@ const { generatePrivateKey } = api;
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 const OPENAI_API_KEY = getEnv("OPENAI_API_KEY");
 const LIT_PKP_PUBLIC_KEY = process.env["LIT_PKP_PUBLIC_KEY"];
-const LIT_NETWORK =
-  (process.env["LIT_NETWORK"] as LIT_NETWORKS_KEYS) || LitNetwork.DatilDev;
+const litNetwork =
+  (process.env["LIT_NETWORK"] as LIT_NETWORKS_KEYS) || LIT_NETWORK.DatilDev;
 
 export const solanaOpenAI = async () => {
   let litNodeClient: LitNodeClient;
@@ -43,7 +43,7 @@ export const solanaOpenAI = async () => {
 
     console.log("🔄 Connecting to the Lit network...");
     litNodeClient = new LitNodeClient({
-      litNetwork: LIT_NETWORK,
+      litNetwork: litNetwork,
       debug: false,
     });
     await litNodeClient.connect();
@@ -52,7 +52,7 @@ export const solanaOpenAI = async () => {
     console.log("🔄 Connecting LitContracts client to network...");
     const litContracts = new LitContracts({
       signer: ethersWallet,
-      network: LIT_NETWORK,
+      network: litNetwork,
       debug: false,
     });
     await litContracts.connect();
@@ -93,11 +93,11 @@ export const solanaOpenAI = async () => {
       resourceAbilityRequests: [
         {
           resource: new LitActionResource("*"),
-          ability: LitAbility.LitActionExecution,
+          ability: LIT_ABILITY.LitActionExecution,
         },
         {
           resource: new LitPKPResource("*"),
-          ability: LitAbility.PKPSigning,
+          ability: LIT_ABILITY.PKPSigning,
         },
       ],
     });

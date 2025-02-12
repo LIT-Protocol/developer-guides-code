@@ -1,4 +1,4 @@
-import ethers from "ethers";
+import * as ethers from "ethers";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
 import { LitNetwork } from "@lit-protocol/constants";
 

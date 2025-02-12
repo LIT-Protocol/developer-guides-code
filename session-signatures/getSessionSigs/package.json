@@ -9,9 +9,9 @@
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^0.44.1",
-    "@lit-protocol/auth-helpers": "^7.0.0-alpha.9",
-    "@lit-protocol/constants": "^7.0.0-alpha.9",
-    "@lit-protocol/lit-node-client": "^7.0.0-alpha.9",
+    "@lit-protocol/auth-helpers": "^7.0.4",
+    "@lit-protocol/constants": "^7.0.4",
+    "@lit-protocol/lit-node-client": "^7.0.4",
     "ethers": "v5"
   },
   "devDependencies": {

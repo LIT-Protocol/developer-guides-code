@@ -1,15 +1,31 @@
 import { LitContracts } from "@lit-protocol/contracts-sdk";
-import { LitNetwork } from "@lit-protocol/constants";
+import { LIT_NETWORK } from "@lit-protocol/constants";
 import { LIT_NETWORKS_KEYS } from "@lit-protocol/types";
 import * as ethers from "ethers";
 
-const LIT_NETWORK = process.env["LIT_NETWORK"] as LIT_NETWORKS_KEYS || LitNetwork.DatilDev;
+const LitNetwork = process.env["LIT_NETWORK"] as LIT_NETWORKS_KEYS || LIT_NETWORK.DatilDev;
 
 export const getEnv = (name: string): string => {
+  // Browser environment
+  if (typeof globalThis !== 'undefined' && 'window' in globalThis) {
+    const envMap: Record<string, string | undefined> = {
+      'ETHEREUM_PRIVATE_KEY': process.env.NEXT_PUBLIC_ETHEREUM_PRIVATE_KEY,
+      'OPENAI_API_KEY': process.env.NEXT_PUBLIC_OPENAI_API_KEY,
+      'LIT_PKP_PUBLIC_KEY': process.env.NEXT_PUBLIC_LIT_PKP_PUBLIC_KEY,
+    };
+    const env = envMap[name];
+    if (env === undefined || env === "")
+      throw new Error(
+        `Browser: ${name} ENV is not defined, please define it in the .env file`
+      );
+    return env;
+  }
+
+  // Node environment
   const env = process.env[name];
   if (env === undefined || env === "")
     throw new Error(
-      `${name} ENV is not defined, please define it in the .env file`
+      `Node: ${name} ENV is not defined, please define it in the .env file`
     );
   return env;
 };
@@ -19,7 +35,7 @@ export const mintPkp = async (ethersSigner: ethers.Wallet) => {
     console.log("🔄 Connecting LitContracts client to network...");
     const litContracts = new LitContracts({
       signer: ethersSigner,
-      network: LIT_NETWORK,
+      network: LitNetwork,
     });
     await litContracts.connect();
     console.log("✅ Connected LitContracts client to network");

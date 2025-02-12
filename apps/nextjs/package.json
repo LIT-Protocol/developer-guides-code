@@ -1,0 +1,47 @@
+{
+  "name": "new",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "playwright test --workers=1",
+    "test:debug": "playwright test --debug",
+    "test:conditional-signing": "playwright test tests/conditional-signing.spec.ts",
+    "test:decrypt-api-key-in-action": "playwright test tests/decrypt-api-key-in-action.spec.ts",
+    "test:eip-191-signing": "playwright test tests/eip-191-signing.spec.ts",
+    "test:encryption": "playwright test tests/encryption.spec.ts",
+    "test:lit-action-claim-key": "playwright test tests/lit-action-claim-key.spec.ts",
+    "test:lit-action-using-fetch": "playwright test tests/lit-action-using-fetch.spec.ts",
+    "test:paying-for-lit": "playwright test tests/paying-for-lit.spec.ts",
+    "test:session-signatures": "playwright test tests/session-signatures.spec.ts",
+    "test:sign-and-combine-ecdsa": "playwright test tests/sign-and-combine-ecdsa.spec.ts",
+    "test:solana-openai": "playwright test tests/solana-openai.spec.ts",
+    "test:wrapped-keys": "playwright test tests/wrapped-keys.spec.ts",
+    "test:btc-trigger": "playwright test tests/btc-trigger.spec.ts"
+  },
+  "dependencies": {
+    "@dotenvx/dotenvx": "^1.32.0",
+    "@solana/web3.js": "^1.95.5",
+    "dotenv": "^16.4.7",
+    "ethers": "^5.7.2",
+    "lucide-react": "^0.462.0",
+    "next": "14.2.17",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.17",
+    "pino-pretty": "^13.0.0",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  }
+}

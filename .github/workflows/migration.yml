@@ -1,0 +1,50 @@
+name: Package Migration
+on:
+  pull_request:
+    branches:
+      - master
+    types: [opened]
+  workflow_dispatch:
+
+jobs:
+  migrate-package:
+    if: ${{ github.actor == 'dependabot[bot]' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Run package migration
+        run: yarn upgrade:all
+
+      - name: Create 
+        id: commit-changes
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "GitHub Actions Bot"
+          
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
+          else
+            BRANCH_NAME="package-migration-branch-${{ github.sha }}"
+            git checkout -b "$BRANCH_NAME"
+          fi
+          
+          git add .
+          git commit -m "Automated package migration" || echo "No changes to commit"
+          
+          echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+
+      - name: Push changes
+        if: success()
+        run: |
+          git push --set-upstream origin "${{ steps.commit-changes.outputs.branch_name }}"
+          echo "Pushed to branch: ${{ steps.commit-changes.outputs.branch_name }}"

@@ -2,9 +2,9 @@ import { type LitNodeClient } from "@lit-protocol/lit-node-client";
 import {
   createSiweMessage,
   generateAuthSig,
-  LitAbility,
   LitAccessControlConditionResource,
 } from "@lit-protocol/auth-helpers";
+import { LIT_ABILITY } from "@lit-protocol/constants";
 import { AccessControlConditions } from "@lit-protocol/types";
 import { promises as fs } from "fs";
 import { join } from "path";
@@ -13,7 +13,7 @@ import { getEnv, getEthersSigner, getLitNodeClient } from "./utils";
 
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 
-export const runExample = async () => {
+export const encryptFile = async () => {
   let litNodeClient: LitNodeClient;
 
   try {
@@ -50,7 +50,7 @@ export const runExample = async () => {
       resourceAbilityRequests: [
         {
           resource: new LitAccessControlConditionResource("*"),
-          ability: LitAbility.AccessControlConditionDecryption,
+          ability: LIT_ABILITY.AccessControlConditionDecryption,
         },
       ],
       authNeededCallback: async ({

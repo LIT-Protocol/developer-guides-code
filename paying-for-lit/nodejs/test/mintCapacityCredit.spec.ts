@@ -1,7 +1,5 @@
 import { expect, use } from "chai";
 import chaiJsonSchema from "chai-json-schema";
-
-import { getEnv } from "../src/utils";
 import { mintCapacityCredit } from "../src/mintCapacityCredit";
 
 use(chaiJsonSchema);

@@ -2,6 +2,7 @@
   "name": "lit-developer-guides-code",
   "private": true,
   "workspaces": [
+    "apps/nextjs",
     "btc-trigger/nodejs",
     "conditional-signing/browser",
     "conditional-signing/nodejs",
@@ -23,22 +24,29 @@
     "siws-authentication/browser",
     "siws-encryption/browser",
     "siws-session-sigs/browser",
+    "solana-openai/nodejs",
     "starter-guides/browser",
     "starter-guides/nodejs",
     "templates/browser",
     "templates/nodejs",
     "wrapped-keys/eip-712/nodejs",
-    "wrapped-keys/nodejs"
+    "wrapped-keys/nodejs",
+    "hacker-guides/encryption/encrypt-file",
+    "hacker-guides/encryption/encrypt-large-file",
+    "hacker-guides/encryption/encrypt-string"
   ],
   "scripts": {
     "install:all": "yarn workspaces focus --all",
     "upgrade:all": "yarn workspaces foreach --all exec yarn up \"@lit-protocol/*@latest\"",
     "upgrade:all:alpha": "yarn workspaces foreach --all exec yarn up \"@lit-protocol/*@alpha\"",
     "clean": "yarn workspaces foreach --all exec rimraf node_modules && yarn rimraf node_modules",
-    "test-lit": "nx run-many --target=test-lit --all --parallel=1 --exclude=templates-nodejs,starter-guides-nodejs"
+    "test:node": "nx run-many --target=test-lit --all --parallel=1 --exclude=templates-nodejs,starter-guides-nodejs,btc-trigger-nodejs",
+    "test:browser": "cd apps/nextjs && npm run test",
+    "test": "run-p test:node test:browser"
   },
   "devDependencies": {
     "node-gyp": "^11.0.0",
+    "npm-run-all": "^4.1.5",
     "nx": "19.6.3",
     "rimraf": "^6.0.1"
   }
