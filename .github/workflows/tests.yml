@@ -95,9 +95,9 @@ jobs:
         run: |
           echo "ETHEREUM_PRIVATE_KEY=${{ secrets.ETHEREUM_PRIVATE_KEY }}" > $GITHUB_WORKSPACE/lit-action-claim-key/nodejs/.env
 
-      - name: Create .env file for wrapped-keys/eip712
+      - name: Create .env file for wrapped-keys/eip-712
         run: |
-          echo "ETHEREUM_PRIVATE_KEY=${{ secrets.ETHEREUM_PRIVATE_KEY }}" > $GITHUB_WORKSPACE/wrapped-keys/eip712/nodejs/.env
+          echo "ETHEREUM_PRIVATE_KEY=${{ secrets.ETHEREUM_PRIVATE_KEY }}" > $GITHUB_WORKSPACE/wrapped-keys/eip-712/nodejs/.env
 
       - name: Create .env file for conditional-signing
         run: |
