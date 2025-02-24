@@ -79,6 +79,34 @@ jobs:
           echo "ETHEREUM_PRIVATE_KEY=${{ secrets.ETHEREUM_PRIVATE_KEY }}" > $GITHUB_WORKSPACE/solana-openai/nodejs/.env
           echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> $GITHUB_WORKSPACE/solana-openai/nodejs/.env
 
+      - name: Create .env file for hacker-guides/encryption/encrypt-large-file
+        run: |
+          echo "ETHEREUM_PRIVATE_KEY=${{ secrets.ETHEREUM_PRIVATE_KEY }}" > $GITHUB_WORKSPACE/hacker-guides/encryption/encrypt-large-file/.env
+
+      - name: Create .env file for hacker-guides/encryption/encrypt-string
+        run: |
+          echo "ETHEREUM_PRIVATE_KEY=${{ secrets.ETHEREUM_PRIVATE_KEY }}" > $GITHUB_WORKSPACE/hacker-guides/encryption/encrypt-string/.env
+
+      - name: Create .env file for hacker-guides/encryption/encrypt-file
+        run: |
+          echo "ETHEREUM_PRIVATE_KEY=${{ secrets.ETHEREUM_PRIVATE_KEY }}" > $GITHUB_WORKSPACE/hacker-guides/encryption/encrypt-file/.env
+
+      - name: Create .env file for lit-action-claim-key
+        run: |
+          echo "ETHEREUM_PRIVATE_KEY=${{ secrets.ETHEREUM_PRIVATE_KEY }}" > $GITHUB_WORKSPACE/lit-action-claim-key/nodejs/.env
+
+      - name: Create .env file for wrapped-keys/eip712
+        run: |
+          echo "ETHEREUM_PRIVATE_KEY=${{ secrets.ETHEREUM_PRIVATE_KEY }}" > $GITHUB_WORKSPACE/wrapped-keys/eip712/nodejs/.env
+
+      - name: Create .env file for conditional-signing
+        run: |
+          echo "ETHEREUM_PRIVATE_KEY=${{ secrets.ETHEREUM_PRIVATE_KEY }}" > $GITHUB_WORKSPACE/conditional-signing/nodejs/.env
+
+      - name: Create .env file for eip-191-signing
+        run: |
+          echo "ETHEREUM_PRIVATE_KEY=${{ secrets.ETHEREUM_PRIVATE_KEY }}" > $GITHUB_WORKSPACE/eip-191-signing/nodejs/.env
+
       - name: Run Tests in Node.js
         run: yarn test:node
         continue-on-error: false
