@@ -79,10 +79,6 @@ jobs:
           echo "ETHEREUM_PRIVATE_KEY=${{ secrets.ETHEREUM_PRIVATE_KEY }}" > $GITHUB_WORKSPACE/solana-openai/nodejs/.env
           echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> $GITHUB_WORKSPACE/solana-openai/nodejs/.env
 
-      - name: Create .env file for siws-encryption-lit-action-logic
-        run: |
-          echo "ETHEREUM_PRIVATE_KEY=${{ secrets.ETHEREUM_PRIVATE_KEY }}" > $GITHUB_WORKSPACE/siws-encryption-lit-action-logic/nodejs/.env
-
       - name: Run Tests in Node.js
         run: yarn test:node
         continue-on-error: false
