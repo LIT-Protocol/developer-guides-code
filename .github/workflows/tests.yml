@@ -10,6 +10,7 @@ on:
 
 jobs:
   node-test:
+    environment: env
     runs-on: ubuntu-latest
 
     steps:
