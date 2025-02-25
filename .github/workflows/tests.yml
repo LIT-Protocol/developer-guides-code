@@ -113,6 +113,7 @@ jobs:
       - name: Create .env file for wrapped-keys/nodejs tests
         run: |
           echo "ETHEREUM_PRIVATE_KEY=${{ secrets.ETHEREUM_PRIVATE_KEY }}" > $GITHUB_WORKSPACE/wrapped-keys/nodejs/.env
+          echo "SOLANA_PRIVATE_KEY=${{ secrets.SOLANA_PRIVATE_KEY }}" >> $GITHUB_WORKSPACE/wrapped-keys/nodejs/.env
 
       - name: Create .env file for conditional-signing/nodejs tests
         run: |
