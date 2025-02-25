@@ -42,7 +42,8 @@
     "clean": "yarn workspaces foreach --all exec rimraf node_modules && yarn rimraf node_modules",
     "test:node": "nx run-many --target=test-lit --all --parallel=1 --exclude=templates-nodejs,starter-guides-nodejs,btc-trigger-nodejs",
     "test:browser": "cd apps/nextjs && npm run test",
-    "test": "run-p test:node test:browser"
+    "test": "run-p test:node test:browser",
+    "singleTest": "nx run wrapped-keys-nodejs:test-lit"
   },
   "devDependencies": {
     "node-gyp": "^11.0.0",

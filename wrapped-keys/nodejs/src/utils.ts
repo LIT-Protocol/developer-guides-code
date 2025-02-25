@@ -2,10 +2,6 @@ import * as ethers from "ethers";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
 import { LIT_NETWORK } from "@lit-protocol/constants";
 import { LIT_NETWORKS_KEYS } from "@lit-protocol/types";
-import { config } from "@dotenvx/dotenvx";
-
-// Load environment variables
-config();
 
 export const getEnv = (name: string): string => {
   // Browser environment
@@ -37,7 +33,6 @@ export const mintPkp = async (ethersSigner: ethers.Wallet) => {
     const litContracts = new LitContracts({
       signer: ethersSigner,
       network: LIT_NETWORK.DatilDev as LIT_NETWORKS_KEYS,
-      debug: false,
     });
     await litContracts.connect();
     console.log("✅ Connected LitContracts client to network");
