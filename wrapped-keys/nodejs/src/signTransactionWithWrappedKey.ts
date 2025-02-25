@@ -1,15 +1,15 @@
 import * as ethers from "ethers";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
-import { LIT_RPC, LIT_NETWORK, LIT_ABILITY } from "@lit-protocol/constants";
+import { LIT_RPC, LIT_NETWORK } from "@lit-protocol/constants";
 import { EthWalletProvider } from "@lit-protocol/lit-auth-client";
-import { LitActionResource } from "@lit-protocol/auth-helpers";
+import { LitActionResource, LitAbility } from "@lit-protocol/auth-helpers";
 import {
   api,
   EthereumLitTransaction,
   SerializedTransaction,
   SignTransactionWithEncryptedKeyParams,
 } from "@lit-protocol/wrapped-keys";
-
+import { LIT_NETWORKS_KEYS } from "@lit-protocol/types";
 const { signTransactionWithEncryptedKey } = api;
 
 import { getEnv } from "./utils";
@@ -33,7 +33,7 @@ export const signTransactionWithWrappedKey = async (
 
     console.log("🔄 Connecting to Lit network...");
     litNodeClient = new LitNodeClient({
-      litNetwork: LIT_NETWORK.DatilDev,
+      litNetwork: LIT_NETWORK.DatilDev as LIT_NETWORKS_KEYS,
       debug: false,
     });
     await litNodeClient.connect();
@@ -52,7 +52,7 @@ export const signTransactionWithWrappedKey = async (
       resourceAbilityRequests: [
         {
           resource: new LitActionResource("*"),
-          ability: LIT_ABILITY.LitActionExecution,
+          ability: LitAbility.LitActionExecution,
         },
       ],
       expiration: new Date(Date.now() + 1000 * 60 * 10).toISOString(), // 10 minutes

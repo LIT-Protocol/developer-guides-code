@@ -252,9 +252,14 @@ describe("Signing a Solana transaction using generateWrappedKey and signTransact
 
     expect(signedTransaction).to.match(RegExp("^[A-Za-z0-9+/]+={0,2}$"));
 
+    // convert signature from base64 to base58
+    const signedTxnAsB58 = bs58.encode(
+      Buffer.from(signedTransaction as string, "base64")
+    );
+
     // Wait for confirmation
     const confirmation = await solanaConnection.confirmTransaction({
-      signature: signedTransaction as string,
+      signature: signedTxnAsB58,
       blockhash: blockhash,
       lastValidBlockHeight: lastValidBlockHeight,
     });
@@ -471,10 +476,13 @@ describe("Signing a Solana transaction using importPrivateKey and signTransactio
     );
 
     expect(signedTransaction).to.match(RegExp("^[A-Za-z0-9+/]+={0,2}$"));
+    const signedTxnAsB58 = bs58.encode(
+      Buffer.from(signedTransaction as string, "base64")
+    );
 
     // Wait for confirmation
     const confirmation = await solanaConnection.confirmTransaction({
-      signature: signedTransaction as string,
+      signature: signedTxnAsB58,
       blockhash: blockhash,
       lastValidBlockHeight: lastValidBlockHeight,
     });
