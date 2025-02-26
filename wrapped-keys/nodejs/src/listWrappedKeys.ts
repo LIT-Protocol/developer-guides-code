@@ -1,7 +1,7 @@
 import * as ethers from "ethers";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
-import { LIT_RPC, LIT_NETWORK } from "@lit-protocol/constants";
-import { LitActionResource, LitAbility } from "@lit-protocol/auth-helpers";
+import { LIT_RPC, LIT_NETWORK, LIT_ABILITY } from "@lit-protocol/constants";
+import { LitActionResource } from "@lit-protocol/auth-helpers";
 import { EthWalletProvider } from "@lit-protocol/lit-auth-client";
 import { api } from "@lit-protocol/wrapped-keys";
 import { LIT_NETWORKS_KEYS } from "@lit-protocol/types";
@@ -41,7 +41,7 @@ export const listWrappedKeys = async (pkpPublicKey: string) => {
       resourceAbilityRequests: [
         {
           resource: new LitActionResource("*"),
-          ability: LitAbility.LitActionExecution,
+          ability: LIT_ABILITY.LitActionExecution,
         },
       ],
       expiration: new Date(Date.now() + 1000 * 60 * 10).toISOString(), // 10 minutes
