@@ -7,3 +7,4 @@ node_modules
 .nx
 .secrets
 .pnp.*
+.DS_Store
