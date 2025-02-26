@@ -5442,7 +5442,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@solana/web3.js@npm:^1.36.0, @solana/web3.js@npm:^1.63.1, @solana/web3.js@npm:^1.95.4, @solana/web3.js@npm:^1.95.5":
+"@solana/web3.js@npm:1.98.0, @solana/web3.js@npm:^1.36.0, @solana/web3.js@npm:^1.63.1, @solana/web3.js@npm:^1.95.4, @solana/web3.js@npm:^1.95.5":
   version: 1.98.0
   resolution: "@solana/web3.js@npm:1.98.0"
   dependencies:
@@ -22354,7 +22354,7 @@ __metadata:
     "@lit-protocol/lit-auth-client": "npm:^7.0.4"
     "@lit-protocol/lit-node-client": "npm:^7.0.4"
     "@lit-protocol/wrapped-keys": "npm:^7.0.4"
-    "@solana/web3.js": "npm:1.95.3"
+    "@solana/web3.js": "npm:1.98.0"
     "@types/chai": "npm:^4.3.16"
     "@types/chai-json-schema": "npm:^1.4.10"
     "@types/mocha": "npm:^10.0.6"
