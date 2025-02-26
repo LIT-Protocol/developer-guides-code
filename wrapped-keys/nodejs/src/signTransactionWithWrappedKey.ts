@@ -9,7 +9,7 @@ import {
   SerializedTransaction,
   SignTransactionWithEncryptedKeyParams,
 } from "@lit-protocol/wrapped-keys";
-
+import { LIT_NETWORKS_KEYS } from "@lit-protocol/types";
 const { signTransactionWithEncryptedKey } = api;
 
 import { getEnv } from "./utils";
@@ -33,7 +33,7 @@ export const signTransactionWithWrappedKey = async (
 
     console.log("🔄 Connecting to Lit network...");
     litNodeClient = new LitNodeClient({
-      litNetwork: LIT_NETWORK.DatilDev,
+      litNetwork: LIT_NETWORK.DatilDev as LIT_NETWORKS_KEYS,
       debug: false,
     });
     await litNodeClient.connect();

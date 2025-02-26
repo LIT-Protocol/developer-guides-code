@@ -1,13 +1,14 @@
 import * as ethers from "ethers";
 import { LitContracts } from "@lit-protocol/contracts-sdk";
 import { LIT_NETWORK } from "@lit-protocol/constants";
-
+import { LIT_NETWORKS_KEYS } from "@lit-protocol/types";
+import fs from "fs";
 export const getEnv = (name: string): string => {
   // Browser environment
-  if (typeof globalThis !== 'undefined' && 'window' in globalThis) {
+  if (typeof globalThis !== "undefined" && "window" in globalThis) {
     const envMap: Record<string, string | undefined> = {
-      'ETHEREUM_PRIVATE_KEY': process.env.NEXT_PUBLIC_ETHEREUM_PRIVATE_KEY,
-      'SOLANA_PRIVATE_KEY': process.env.NEXT_PUBLIC_SOLANA_PRIVATE_KEY,
+      ETHEREUM_PRIVATE_KEY: process.env.NEXT_PUBLIC_ETHEREUM_PRIVATE_KEY,
+      SOLANA_PRIVATE_KEY: process.env.NEXT_PUBLIC_SOLANA_PRIVATE_KEY,
     };
     const env = envMap[name];
     if (env === undefined || env === "")
@@ -16,7 +17,7 @@ export const getEnv = (name: string): string => {
       );
     return env;
   }
-  
+
   // Node environment
   const env = process.env[name];
   if (env === undefined || env === "")
@@ -31,7 +32,7 @@ export const mintPkp = async (ethersSigner: ethers.Wallet) => {
     console.log("🔄 Connecting LitContracts client to network...");
     const litContracts = new LitContracts({
       signer: ethersSigner,
-      network: LIT_NETWORK.DatilDev,
+      network: LIT_NETWORK.DatilDev as LIT_NETWORKS_KEYS,
     });
     await litContracts.connect();
     console.log("✅ Connected LitContracts client to network");

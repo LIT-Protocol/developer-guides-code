@@ -26,7 +26,7 @@
     "ethers": "v5"
   },
   "devDependencies": {
-    "@solana/web3.js": "1.95.3",
+    "@solana/web3.js": "1.98.0",
     "@types/chai": "^4.3.16",
     "@types/chai-json-schema": "^1.4.10",
     "@types/mocha": "^10.0.6",

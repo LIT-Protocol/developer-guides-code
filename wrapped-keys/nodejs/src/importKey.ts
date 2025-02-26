@@ -4,7 +4,7 @@ import { LIT_RPC, LIT_NETWORK, LIT_ABILITY } from "@lit-protocol/constants";
 import { LitActionResource } from "@lit-protocol/auth-helpers";
 import { EthWalletProvider } from "@lit-protocol/lit-auth-client";
 import { api } from "@lit-protocol/wrapped-keys";
-
+import { LIT_NETWORKS_KEYS } from "@lit-protocol/types";
 const { importPrivateKey } = api;
 
 import { getEnv } from "./utils";
@@ -28,7 +28,7 @@ export const importKey = async (
 
     console.log("🔄 Connecting to Lit network...");
     litNodeClient = new LitNodeClient({
-      litNetwork: LIT_NETWORK.DatilDev,
+      litNetwork: LIT_NETWORK.DatilDev as LIT_NETWORKS_KEYS,
       debug: false,
     });
     await litNodeClient.connect();
