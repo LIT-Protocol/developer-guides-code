@@ -53,8 +53,8 @@ describe("Signing an Ethereum transaction using generateWrappedKey and signTrans
 
   it("should sign an Ethereum transaction", async () => {
     const litTransaction: EthereumLitTransaction = {
-      chainId: 175177,
-      chain: "chronicleTestnet",
+      chainId: 175188,
+      chain: "yellowstone",
       toAddress: ethersSigner.address,
       value: "0.0001",
       // Manually specifying because the generated private key doesn't hold a balance and ethers
@@ -252,14 +252,9 @@ describe("Signing a Solana transaction using generateWrappedKey and signTransact
 
     expect(signedTransaction).to.match(RegExp("^[A-Za-z0-9+/]+={0,2}$"));
 
-    // convert signature from base64 to base58
-    const signedTxnAsB58 = bs58.encode(
-      Buffer.from(signedTransaction as string, "base64")
-    );
-
     // Wait for confirmation
     const confirmation = await solanaConnection.confirmTransaction({
-      signature: signedTxnAsB58,
+      signature: signedTransaction as string,
       blockhash: blockhash,
       lastValidBlockHeight: lastValidBlockHeight,
     });
@@ -330,10 +325,11 @@ describe("Signing a Solana transaction using generateWrappedKey and signTransact
 
     expect(signedTransaction).to.match(RegExp("^[A-Za-z0-9+/]+={0,2}$"));
 
-    testTransaction.addSignature(
-      wrappedKeyPublicKey,
-      Buffer.from(signedTransaction as string, "base64")
+    const signedTransactionBuffer = Buffer.from(
+      bs58.decode(signedTransaction!)
     );
+
+    testTransaction.addSignature(wrappedKeyPublicKey, signedTransactionBuffer);
     const serializedSignedTransaction = testTransaction.serialize();
     const txSig = await solanaConnection.sendRawTransaction(
       serializedSignedTransaction
@@ -477,9 +473,13 @@ describe("Signing a Solana transaction using importPrivateKey and signTransactio
 
     expect(signedTransaction).to.match(RegExp("^[A-Za-z0-9+/]+={0,2}$"));
 
+    const signedTransactionBuffer = Buffer.from(
+      bs58.decode(signedTransaction!)
+    );
+
     testTransaction.addSignature(
       solanaKeypair.publicKey,
-      Buffer.from(signedTransaction as string, "base64")
+      signedTransactionBuffer
     );
     const serializedSignedTransaction = testTransaction.serialize();
     const txSig = await solanaConnection.sendRawTransaction(

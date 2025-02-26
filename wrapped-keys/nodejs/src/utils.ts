@@ -4,16 +4,6 @@ import { LIT_NETWORK } from "@lit-protocol/constants";
 import { LIT_NETWORKS_KEYS } from "@lit-protocol/types";
 import fs from "fs";
 export const getEnv = (name: string): string => {
-  // print CWD
-  console.log("CWD", process.cwd());
-  // list files in CWD
-  console.log("Files in CWD", fs.readdirSync(process.cwd()));
-
-  // if .env file exists, read and print it
-  if (fs.existsSync(".env")) {
-    console.log("Contents of .env file:", fs.readFileSync(".env", "utf8"));
-  }
-
   // Browser environment
   if (typeof globalThis !== "undefined" && "window" in globalThis) {
     const envMap: Record<string, string | undefined> = {
