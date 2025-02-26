@@ -109,7 +109,7 @@ jobs:
       - name: Create .env file for conditional-signing/nodejs tests
         run: |
           echo "ETHEREUM_PRIVATE_KEY=${{ secrets.ETHEREUM_PRIVATE_KEY }}" > $GITHUB_WORKSPACE/conditional-signing/nodejs/.env
-          echo "CHAIN_TO_CHECK_CONDITION_ON=ethereum" > $GITHUB_WORKSPACE/conditional-signing/nodejs/.env
+          echo "CHAIN_TO_CHECK_CONDITION_ON=ethereum" >> $GITHUB_WORKSPACE/conditional-signing/nodejs/.env
 
       - name: Create .env file for eip-191-signing/nodejs tests
         run: |
