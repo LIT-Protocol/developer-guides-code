@@ -42,6 +42,7 @@ describe("conditionalSigning", () => {
 
   it("Should succeed with a funded account", async () => {
     const signedTx = await conditionalSigning();
+    console.log("signedTx", signedTx);
     expect(signedTx).to.be.jsonSchema(conditionalSigningResponseSchemaFunded);
   }).timeout(100_000);
 });
