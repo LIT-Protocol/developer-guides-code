@@ -74,6 +74,7 @@ jobs:
         run: |
           echo "ETHEREUM_PRIVATE_KEY=${{ secrets.ETHEREUM_PRIVATE_KEY }}" > $GITHUB_WORKSPACE/decrypt-api-key-in-action/nodejs/.env
           echo "SOLANA_PRIVATE_KEY=${{ secrets.SOLANA_PRIVATE_KEY }}" >> $GITHUB_WORKSPACE/decrypt-api-key-in-action/nodejs/.env
+          echo "ALCHEMY_API_KEY=${{ secrets.ALCHEMY_API_KEY }}" >> $GITHUB_WORKSPACE/decrypt-api-key-in-action/nodejs/.env
 
       - name: Create .env file for various hacker guides
         run: |
