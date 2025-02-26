@@ -102,6 +102,7 @@ jobs:
       - name: Create .env file for sign-and-combine-ecdsa/nodejs tests
         run: |
           echo "ETHEREUM_PRIVATE_KEY=${{ secrets.ETHEREUM_PRIVATE_KEY }}" > $GITHUB_WORKSPACE/sign-and-combine-ecdsa/nodejs/.env
+          echo "CHAIN_TO_SEND_TX_ON=yellowstone" >> $GITHUB_WORKSPACE/sign-and-combine-ecdsa/nodejs/.env
 
       - name: Create .env file for lit-action-claim-key/nodejs tests
         run: |
