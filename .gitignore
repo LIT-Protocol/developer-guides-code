@@ -8,3 +8,4 @@ node_modules
 .secrets
 .pnp.*
 
+.DS_Store
