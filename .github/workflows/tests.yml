@@ -36,7 +36,7 @@ jobs:
       - name: Create .env file for payment-delegation-db-relayer
         run: |
           echo "ETHEREUM_PRIVATE_KEY=${{ secrets.ETHEREUM_PRIVATE_KEY }}" > $GITHUB_WORKSPACE/payment-delegation-db-relayer/nodejs/.env
-          echo "LIT_NETWORK=${{ secrets.LIT_NETWORK }}" >> $GITHUB_WORKSPACE/payment-delegation-db-relayer/nodejs/.env
+          echo "LIT_NETWORK=datil" >> $GITHUB_WORKSPACE/payment-delegation-db-relayer/nodejs/.env
           echo "LIT_RELAYER_API_KEY=${{ secrets.LIT_RELAYER_API_KEY }}" >> $GITHUB_WORKSPACE/payment-delegation-db-relayer/nodejs/.env
           echo "LIT_PAYER_SECRET_KEY=${{ secrets.LIT_PAYER_SECRET_KEY }}" >> $GITHUB_WORKSPACE/payment-delegation-db-relayer/nodejs/.env
 
