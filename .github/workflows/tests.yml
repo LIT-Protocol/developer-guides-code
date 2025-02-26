@@ -88,10 +88,6 @@ jobs:
           echo "ETHEREUM_PRIVATE_KEY=${{ secrets.ETHEREUM_PRIVATE_KEY }}" > $GITHUB_WORKSPACE/session-signatures/getPkpSessionSigs/.env
           echo "ETHEREUM_PRIVATE_KEY=${{ secrets.ETHEREUM_PRIVATE_KEY }}" > $GITHUB_WORKSPACE/session-signatures/getSessionSigs/.env
 
-      - name: Create .env file for payment-delegation-db-relayer/nodejs tests
-        run: |
-          echo "ETHEREUM_PRIVATE_KEY=${{ secrets.ETHEREUM_PRIVATE_KEY }}" > $GITHUB_WORKSPACE/payment-delegation-db-relayer/nodejs/.env
-
       - name: Create .env file for decrypt-api-key-in-action/nodejs tests
         run: |
           echo "ETHEREUM_PRIVATE_KEY=${{ secrets.ETHEREUM_PRIVATE_KEY }}" > $GITHUB_WORKSPACE/decrypt-api-key-in-action/nodejs/.env
