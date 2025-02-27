@@ -1,11 +1,11 @@
 import * as ethers from "ethers";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
-import { encryptString } from '@lit-protocol/encryption';
+import { encryptString } from "@lit-protocol/encryption";
 import { LIT_RPC, LIT_NETWORK, LIT_ABILITY } from "@lit-protocol/constants";
 import { LitActionResource } from "@lit-protocol/auth-helpers";
 import { EthWalletProvider } from "@lit-protocol/lit-auth-client";
 import { api } from "@lit-protocol/wrapped-keys";
-
+import { LIT_NETWORKS_KEYS } from "@lit-protocol/types";
 const { storeEncryptedKey } = api;
 
 import { getEnv } from "./utils";
@@ -30,7 +30,7 @@ export const storeWrappedKey = async (
 
     console.log("🔄 Connecting to Lit network...");
     litNodeClient = new LitNodeClient({
-      litNetwork: LIT_NETWORK.DatilDev,
+      litNetwork: LIT_NETWORK.DatilDev as LIT_NETWORKS_KEYS,
       debug: false,
     });
     await litNodeClient.connect();

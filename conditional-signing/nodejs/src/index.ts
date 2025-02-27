@@ -14,7 +14,8 @@ import { getEnv } from "./utils";
 const ETHEREUM_PRIVATE_KEY = getEnv("ETHEREUM_PRIVATE_KEY");
 const CHAIN_TO_CHECK_CONDITION_ON = getEnv("CHAIN_TO_CHECK_CONDITION_ON");
 const LIT_PKP_PUBLIC_KEY = process.env["LIT_PKP_PUBLIC_KEY"];
-const LIT_CAPACITY_CREDIT_TOKEN_ID = process.env["LIT_CAPACITY_CREDIT_TOKEN_ID"];
+const LIT_CAPACITY_CREDIT_TOKEN_ID =
+  process.env["LIT_CAPACITY_CREDIT_TOKEN_ID"];
 
 export const conditionalSigning = async () => {
   let litNodeClient: LitNodeClient;
@@ -134,14 +135,16 @@ export const conditionalSigning = async () => {
             parameters: [":userAddress", "latest"],
             returnValueTest: {
               comparator: ">=",
-              value: "1",
+              value: "0",
             },
           },
         ],
         authSig: await (async () => {
           const toSign = await createSiweMessage({
             uri: "http://localhost",
-            expiration: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(), // 24 hours
+            expiration: new Date(
+              Date.now() + 1000 * 60 * 60 * 24
+            ).toISOString(), // 24 hours
             walletAddress: await ethersWallet.getAddress(),
             nonce: await litNodeClient.getLatestBlockhash(),
             resources: [
@@ -158,7 +161,9 @@ export const conditionalSigning = async () => {
           });
         })(),
         chain: CHAIN_TO_CHECK_CONDITION_ON,
-        dataToSign: ethers.utils.arrayify(ethers.utils.keccak256([1, 2, 3, 4, 5])),
+        dataToSign: ethers.utils.arrayify(
+          ethers.utils.keccak256([1, 2, 3, 4, 5])
+        ),
         publicKey: pkpInfo.publicKey,
       },
     });
